@@ -1,0 +1,51 @@
+:root {
+  /* main color */
+  --main1: #ffbe58; /*빛 주황색 메인 색깔*/
+  --point1: #ffa518; /*생생한 주황색 포인트 색깔*/
+  --point2: #5799ff; /*빛 파란색 포인트 색깔*/
+  --main2: #ffd697; /*창백한 주황색 포인트 색깔*/
+
+  /*gray*/
+  --gray1: #222222;
+  --gray2: #555555;
+  --gray3: #717171;
+  --gray4: #8f8f8f;
+  --gray5: #b7b7b7;
+  --gray6: #d6d6d6;
+  --gray7: #efefef;
+  --gray8: #ffffff;
+
+  /*line-color*/
+  --line1: #222222;
+  --line2: #d6d6d6;
+  --line3: #eaeced;
+  --line4: #f6f6f6;
+  --line5: #f8f9fa;
+}
+@font-face {
+  font-family: ns-l;
+  src: url(/public/font/NotoSansKR-Light.ttf);
+}
+@font-face {
+  font-family: ns-r;
+  src: url(/public/font/NotoSansKR-Regular.ttf);
+}
+@font-face {
+  font-family: ns-b;
+  src: url(/public/font/NotoSansKR-Bold.ttf);
+}
+@font-face {
+  font-family: ns-black;
+  src: url(/public/font/NotoSansKR-Black.ttf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  font-family: ns-r;
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+}
