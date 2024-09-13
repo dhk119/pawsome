@@ -1,2 +1,6 @@
 김대헌 2024-09-11 16:08
 npm install
+npm install react-router-dom
+npm install axios
+npm install sweetalert2
+npm install recoil
