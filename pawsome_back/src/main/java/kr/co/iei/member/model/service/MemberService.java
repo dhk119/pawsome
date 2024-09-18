@@ -12,33 +12,30 @@ import kr.co.iei.util.JwtUtils;
 
 @Service
 public class MemberService {
-	
-	@Autowired
-	MemberDao memberDao;
-	
-	@Autowired
-	private BCryptPasswordEncoder encoder;
-	
-	@Autowired
-	JwtUtils jwtUtil;
-
-	@Transactional
-	public int insertMember(MemberDTO member) {
-		String encPw = encoder.encode(member.getMemberPw());
-		member.setMemberPw(encPw);
-		int result = memberDao.insertMember(member);
-		return result;
-	}
-
-	public LoginMemberDTO login(MemberDTO member) {
-		MemberDTO m = memberDao.selectOneMember(member.getMemberEmail());
-		if(m != null && encoder.matches(member.getMemberPw(), m.getMemberPw())) {
-			String accessToken = jwtUtil.createAccessToken(m.getMemberEmail(), m.getMemberLevel());
-			String refreshToken = jwtUtil.createRefreshToken(m.getMemberEmail(), m.getMemberLevel());
-			LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken, m.getMemberEmail(), m.getMemberLevel());
-			return loginMember;
-		}
-		return null;
-	}
+//	@Autowired
+//	private MemberDao memberDao;
+////	@Autowired
+////	private BCryptPasswordEncoder encoder;
+////	@Autowired
+////	private JwtUtils jwtUtil;
+//
+//	@Transactional
+//	public int insertMember(MemberDTO member) {
+////		String encPw = encoder.encode(member.getMemberPw());
+////		member.setMemberPw(encPw);
+//		int result = memberDao.insertMember(member);
+//		return result;
+//	}
+//
+//	public LoginMemberDTO login(MemberDTO member) {
+//		MemberDTO m = memberDao.selectOneMember(member.getMemberEmail());
+////		if(m != null && encoder.matches(member.getMemberPw(), m.getMemberPw())) {
+////			String accessToken = jwtUtil.createAccessToken(m.getMemberEmail(), m.getMemberLevel());
+////			String refreshToken = jwtUtil.createRefreshToken(m.getMemberEmail(), m.getMemberLevel());
+////			LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken, m.getMemberEmail(), m.getMemberLevel());
+////			return loginMember;
+////		}
+//		return null;
+//	}
 
 }
