@@ -5,7 +5,6 @@ import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import InquiryFrm from "./InquiryFrm";
-import Quill from "quill";
 
 const InquiryWrite = () => {
   const navigate = useNavigate();
@@ -25,12 +24,12 @@ const InquiryWrite = () => {
       const form = new FormData();
       form.append("inquiryTitle", inquiryTitle);
       form.append("inquiryContent", inquiryContent);
+      form.append("inquiryType", inquiryType);
       form.append("memberEmail", loginEmail);
       axios
         .post(`${backServer}/inquiry`, form)
         .then((res) => {
-          console.log(res.data);
-          if (res.data) {
+          if (res.data > 0) {
             navigate("/inquiry/list");
           } else {
             Swal.fire({
@@ -56,8 +55,12 @@ const InquiryWrite = () => {
           inquiryTitle={inquiryTitle}
           setInquiryTitle={inputTitle}
           loginEmail={loginEmail}
+          inquiryType={inquiryType}
+          setInquiryType={inputType}
         />
-        <div></div>
+        <div>
+          <textarea onChange={setInquiryContent}>{inquiryContent}</textarea>
+        </div>
         <div className="button-zone">
           <button type="submit">등록하기</button>
         </div>
