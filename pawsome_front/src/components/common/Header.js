@@ -4,7 +4,6 @@ import { useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { SidebarData } from "./SidebarData";
-import { IconContext } from "react-icons";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   loginEmailState,
@@ -43,7 +42,7 @@ const MainNavi = () => {
           <Link to="#">마켓</Link>
         </li>
         <li>
-          <Link to="#">커뮤니티</Link>
+          <Link to="/board/allList">커뮤니티</Link>
         </li>
       </ul>
     </nav>
@@ -96,20 +95,20 @@ const HeaderLink = () => {
                     <Link to={item.path}>
                       {item.icons}
                       <span>{item.title}</span>
-                      <>
-                        <ul className="sub-items">
-                          {item.sub.map((subItem, i) => {
-                            return (
-                              <li key={subItem + i}>
-                                <Link to={subItem.path}>
-                                  <span>{subItem.title}</span>
-                                </Link>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </>
                     </Link>
+                    <>
+                      <ul className="sub-items">
+                        {item.sub.map((subItem, i) => {
+                          return (
+                            <li key={subItem + i}>
+                              <Link to={subItem.path}>
+                                <span>{subItem.title}</span>
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </>
                   </li>
                 );
               })}

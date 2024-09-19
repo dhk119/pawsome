@@ -23,7 +23,7 @@ export const SidebarData = [
     sub: [
       {
         title: "전체",
-        path: "#",
+        path: "/board/allList",
       },
       {
         title: "오산완",
@@ -31,7 +31,7 @@ export const SidebarData = [
       },
       {
         title: "자유 게시판",
-        path: "/board",
+        path: "#",
       },
     ],
   },
