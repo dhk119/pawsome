@@ -3,12 +3,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import Swal from "sweetalert2";
-import { loginEmailState, memberTypeState } from "../utils/RecoilData";
+import { loginEmailState, memberLevelState } from "../utils/RecoilData";
 
 const Login = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
-  const [memberType, setMemberType] = useRecoilState(memberTypeState);
-
+  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [member, setMember] = useState({ memberEmail: "", memberPw: "" });
   const navigate = useNavigate();
@@ -27,8 +26,9 @@ const Login = () => {
     axios
       .post(`${backServer}/member/login`, member)
       .then((res) => {
+        console.log(res);
         setLoginEmail(res.data.memberEmail);
-        setMemberType(res.data.memberType);
+        setMemberLevel(res.data.memberLevel);
         //로그인 이후 axios 요청 시 발급받은 토큰값을 자동으로 axios에 추가하는 설정
         axios.defaults.headers.common["Authorization"] = res.data.accessToken;
         //로그인 상태를 지속적으로 유지시키기위해 발급받은 refreshToken을 브라우저에 저장
@@ -76,10 +76,9 @@ const Login = () => {
             />
           </div>
         </div>
-        <button type="submit">
-            로그인
-        </button>
+        <button type="submit">로그인</button>
       </form>
+      <Link to="/join">회원가입</Link>
     </section>
   );
 };

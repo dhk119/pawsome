@@ -5,6 +5,13 @@ import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { SidebarData } from "./SidebarData";
 import { IconContext } from "react-icons";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  loginEmailState,
+  memberLevelState,
+  isLoginState,
+} from "../utils/RecoilData";
+import axios from "axios";
 
 const Header = () => {
   return (
@@ -46,10 +53,29 @@ const HeaderLink = () => {
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
 
+  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
+  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const isLogin = useRecoilValue(isLoginState);
+
+  console.log("test : ", loginEmail, memberLevel);
+
+  const logout = () => {
+    setLoginEmail("");
+    setMemberLevel(0);
+    delete axios.defaults.headers.common["Authorization"];
+    window.localStorage.removeItem("refreshToken");
+  };
   return (
     <ul className="user-menu">
       <li>
         <Link to="/login">로그인</Link>
+        {/* {isLogin ? (
+          <Link to="/login">로그인</Link>
+        ) : (
+          <Link to="#" onClick={logout}>
+            로그아웃
+          </Link>
+        )} */}
       </li>
       <li>
         <>

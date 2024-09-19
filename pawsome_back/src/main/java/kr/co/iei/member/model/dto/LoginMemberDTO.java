@@ -11,5 +11,5 @@ public class LoginMemberDTO {
 	private String accessToken;
 	private String refreshToken;
 	private String memberEmail;
-	private int memberType;
+	private int memberLevel;
 }
