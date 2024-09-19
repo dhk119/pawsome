@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import * as FaIcons from "react-icons/fa";
 
 const BoardList = () => {
-  const [boardList, setBoardList] = useState([]);
   return (
     <section className="section board-wrap">
       <nav className="nav board-nav">
@@ -29,21 +29,28 @@ const BoardList = () => {
       </nav>
       <div className="list-board">
         <ul className="posting-wrap">
-          {boardList.map((board, i) => {
-            return <BoardItem key={"board-" + i} board={board} />;
-          })}
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img src="/image/paw.png" />
+                </div>
+                <div>댓글 갯수</div>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
+      <div className="up-btn">
+        <button>
+          <FaIcons.FaArrowCircleUp style={{ width: "80px", height: "80px" }} />
+        </button>
+      </div>
     </section>
-  );
-};
-const BoardItem = (props) => {
-  const board = props.board;
-  const navigate = useNavigate();
-  return (
-    <li className="posting-item">
-      <div></div>
-    </li>
   );
 };
 export default BoardList;

@@ -100,7 +100,6 @@ a {
 }
 .header a:hover {
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .user-menu {
   display: flex;
