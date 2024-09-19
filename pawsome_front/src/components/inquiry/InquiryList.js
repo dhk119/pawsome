@@ -51,6 +51,9 @@ const InquiryList = () => {
               </tr>
             );
           })}
+          <div>
+            <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+          </div>
         </tbody>
       </table>
     </section>
