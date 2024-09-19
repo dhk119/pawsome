@@ -100,6 +100,7 @@ a {
 }
 .header a:hover {
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .user-menu {
   display: flex;
@@ -136,11 +137,7 @@ a {
 }
 .nav-text {
   color: var(--gray8);
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  padding: 8px 0px 8px 16px;
-  height: 60px;
+  padding: 8px 20px;
 }
 
 .nav-text a {
@@ -167,6 +164,7 @@ a {
 }
 .nav-menu-items li:hover .sub-items {
   display: block;
+  padding: 10px;
 }
 /*풋터*/
 .footer {
