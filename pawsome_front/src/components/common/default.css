@@ -38,7 +38,7 @@
   font-family: ns-black;
   src: url(/public/font/NotoSansKR-Black.ttf);
 }
-
+/*전체 css*/
 * {
   margin: 0;
   padding: 0;
@@ -58,7 +58,7 @@ a {
   position: relative;
   background-color: var(--gray8);
 }
-
+/*헤더*/
 .header {
   background-color: var(--gray8);
   width: 100%;
@@ -77,16 +77,14 @@ a {
 
 .header a {
   color: var(--main1);
+  font-family: ns-b;
+  font-size: 20px;
 }
 
 .logo {
-  margin-right: 24px;
+  margin-right: 480px;
 }
 
-.logo > a {
-  font-family: ns-black;
-  font-size: 28px;
-}
 .nav {
   flex: 1;
 }
@@ -99,4 +97,111 @@ a {
 .nav > ul > li {
   margin: 0px 15px;
   position: relative;
+}
+.header a:hover {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+.user-menu {
+  display: flex;
+  align-items: center;
+}
+.user-menu > li {
+  margin: 0px 15px;
+  position: relative;
+}
+.burger-menu {
+  font-size: 40px;
+}
+/*풋터*/
+.footer {
+  background-color: var(--main1);
+}
+.footer > div {
+  max-width: 1400px;
+  padding: 20px 10px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.footer > div > p {
+  margin: 10px 0px;
+  font-family: ns-b;
+  font-size: 16px;
+  color: var(--gray8);
+  float: right;
+}
+.footer > div > ul {
+  list-style-type: none;
+  overflow: hidden;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+.footer > div > ul > li {
+  float: left;
+}
+.footer > div > ul > li > a {
+  padding-right: 20px;
+  color: var(--gray8);
+}
+/*메인*/
+.search-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 30px auto;
+}
+.search-input-wrap {
+  display: flex;
+  box-sizing: border-box;
+  border: 2px solid #ffa518;
+  border-radius: 15px;
+  width: 500px;
+  padding: 5px;
+}
+.search-btn {
+  border-style: none;
+  background-color: transparent;
+}
+.search-btn:hover {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+.search-input:hover {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+.search-icon {
+  width: 45px;
+  height: 45px;
+  color: #ffa518;
+  padding: 5px;
+}
+.search-input {
+  border-style: none;
+  width: 400px;
+  text-align: center;
+}
+.commercial-wrap {
+  box-sizing: border-box;
+  margin: 30px auto;
+}
+.commercial-image {
+  box-sizing: border-box;
+}
+.commercial-image > img {
+  width: 100%;
+  height: 700px;
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+.commercial-text {
+  padding: 200px 100px;
+  font-size: 50px;
+  font-weight: 900;
+  position: absolute;
+  color: var(--gray8);
+}
+.commercial-text > p {
+  font-size: 18px;
+  font-weight: 300;
+}
+.map-wrap {
+  margin: 30px auto;
 }

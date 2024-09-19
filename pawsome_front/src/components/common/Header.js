@@ -14,6 +14,7 @@ const Header = () => {
           </Link>
         </div>
         <MainNavi />
+        <HeaderLink />
       </div>
     </header>
   );
@@ -37,4 +38,21 @@ const MainNavi = () => {
   );
 };
 
+const HeaderLink = () => {
+  return (
+    <ul className="user-menu">
+      <li>
+        <Link to="#">로그인</Link>
+      </li>
+      <li>
+        <span
+          className="material-icons burger-menu"
+          style={{ color: "#ffbe58" }}
+        >
+          menu
+        </span>
+      </li>
+    </ul>
+  );
+};
 export default Header;

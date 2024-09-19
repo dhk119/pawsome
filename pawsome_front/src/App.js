@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import Join from "./components/member/Join";
 import Login from "./components/member/Login";
 import AdminMain from "./components/admin/AdminMain";
+import Main from "./components/common/Main";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -23,6 +24,7 @@ function App() {
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin/*" element={<AdminMain />} />
+          <Route path="/" element={<Main />} />
         </Routes>
       </main>
       <Footer />
