@@ -1,5 +1,12 @@
 import { Link } from "react-router-dom";
 import "./default.css";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  loginEmailState,
+  memberLevelState,
+  isLoginState,
+} from "../utils/RecoilData";
+import axios from "axios";
 
 const Header = () => {
   return (
@@ -39,10 +46,29 @@ const MainNavi = () => {
 };
 
 const HeaderLink = () => {
+  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
+  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const isLogin = useRecoilValue(isLoginState);
+
+  console.log("test : ", loginEmail, memberLevel);
+
+  const logout = () => {
+    setLoginEmail("");
+    setMemberLevel(0);
+    delete axios.defaults.headers.common["Authorization"];
+    window.localStorage.removeItem("refreshToken");
+  };
   return (
     <ul className="user-menu">
       <li>
-        <Link to="#">로그인</Link>
+        <Link to="/login">로그인</Link>
+        {/* {isLogin ? (
+          <Link to="/login">로그인</Link>
+        ) : (
+          <Link to="#" onClick={logout}>
+            로그아웃
+          </Link>
+        )} */}
       </li>
       <li>
         <span

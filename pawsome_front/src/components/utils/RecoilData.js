@@ -2,11 +2,11 @@ import { atom, selector } from "recoil";
 
 const loginEmailState = atom({
   key: "loginEmailState",
-  default: "test",
+  default: "",
 });
 
-const memberTypeState = atom({
-  key: "memberTypeState",
+const memberLevelState = atom({
+  key: "memberLevelState",
   default: 0,
 });
 
@@ -14,9 +14,9 @@ const isLoginState = selector({
   key: "isLoginState",
   get: (state) => {
     const loginEmail = state.get(loginEmailState);
-    const memberType = state.get(memberTypeState);
-    return loginEmail !== "" && memberType !== 0;
+    const memberLevel = state.get(memberLevelState);
+    return loginEmail !== "test" && memberLevel !== 0;
   },
 });
 
-export { loginEmailState, memberTypeState, isLoginState };
+export { loginEmailState, memberLevelState, isLoginState };
