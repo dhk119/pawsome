@@ -76,19 +76,32 @@ const ProductFrm = (props) => {
             </tr>
             <tr>
               <th>
-                <label htmlFor="typeCategory">제품 품종</label>
+                <div>제품 품종</div>
               </th>
-              <td>
+              <th>
+                <label htmlFor="dog">강아지</label>
                 <div className="input-item">
                   <input
-                    type="text"
-                    id="typeCategory"
+                    type="radio"
+                    id="dog"
                     name="typeCategory"
-                    value={typeCategory}
+                    value={1}
                     onChange={setTypeCategory}
                   ></input>
                 </div>
-              </td>
+              </th>
+              <th>
+                <label htmlFor="cat">고양이</label>
+                <div className="input-item">
+                  <input
+                    type="radio"
+                    id="cat"
+                    name="typeCategory"
+                    value={2}
+                    onChange={setTypeCategory}
+                  ></input>
+                </div>
+              </th>
             </tr>
             <tr>
               <th>
@@ -155,6 +168,9 @@ const ProductFrm = (props) => {
               </td>
             </tr>
             <tr>
+              <th>
+                <div>공개여부</div>
+              </th>
               <th>
                 <label htmlFor="show">공개</label>
                 <div className="input-item">
