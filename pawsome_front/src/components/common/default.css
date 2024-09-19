@@ -246,6 +246,7 @@ a {
   height: 700px;
   object-fit: cover;
   object-position: 50% 40%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .commercial-text {
   padding: 200px 100px;
@@ -269,15 +270,18 @@ a {
 .map-title > span {
   margin-left: 60px;
   margin-bottom: 5px;
-  font-size: 24px;
+  font-size: 26px;
+  font-weight: bold;
   color: var(--point1);
 }
 .map-title > span:last-child {
   font-size: 16px;
+  font-weight: 200;
 }
 .map-wrap > div:last-child > a > div {
   border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .map-wrap > div:last-child > a > div > img {
-  margin-left: 65%;
+  margin-left: 55%;
 }
