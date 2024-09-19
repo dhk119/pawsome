@@ -20,7 +20,6 @@ function App() {
       <Header />
       <main className="content">
         <Routes>
-          <Route path="/"></Route>
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin/*" element={<AdminMain />} />
