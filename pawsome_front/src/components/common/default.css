@@ -130,6 +130,7 @@ a {
   top: 1;
   right: -100%;
   transition: 850ms;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .nav-menu.active {
   right: 0;
@@ -259,4 +260,24 @@ a {
 }
 .map-wrap {
   margin: 30px auto;
+  width: 95%;
+}
+.map-title {
+  display: flex;
+  flex-direction: column;
+}
+.map-title > span {
+  margin-left: 60px;
+  margin-bottom: 5px;
+  font-size: 24px;
+  color: var(--point1);
+}
+.map-title > span:last-child {
+  font-size: 16px;
+}
+.map-wrap > div:last-child > a > div {
+  border-radius: 10px;
+}
+.map-wrap > div:last-child > a > div > img {
+  margin-left: 65%;
 }
