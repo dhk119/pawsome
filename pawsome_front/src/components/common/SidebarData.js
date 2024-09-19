@@ -31,7 +31,7 @@ export const SidebarData = [
       },
       {
         title: "자유 게시판",
-        path: "#",
+        path: "/board/list",
       },
     ],
   },

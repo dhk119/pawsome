@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const BoardList = () => {
+  const [boardList, setBoardList] = useState([]);
   return (
     <section className="section board-wrap">
       <nav className="nav board-nav">
         <ul>
           <li>
-            <Link to="#">전체</Link>
+            <Link to="/board/allList">전체</Link>
           </li>
           <li>
             <Link to="#">댕댕이</Link>
@@ -26,18 +28,22 @@ const BoardList = () => {
         </ul>
       </nav>
       <div className="list-board">
-        <ul>
-          <li>#태그</li>
-          <li>#태그</li>
-          <li>#태그</li>
-          <li>#태그</li>
-          <li>#태그</li>
-          <li>#태그</li>
-          <li>#태그</li>
+        <ul className="posting-wrap">
+          {boardList.map((board, i) => {
+            return <BoardItem key={"board-" + i} board={board} />;
+          })}
         </ul>
       </div>
     </section>
   );
 };
-
+const BoardItem = (props) => {
+  const board = props.board;
+  const navigate = useNavigate();
+  return (
+    <li className="posting-item">
+      <div></div>
+    </li>
+  );
+};
 export default BoardList;
