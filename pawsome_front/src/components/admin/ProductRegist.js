@@ -108,6 +108,7 @@ const ProductRegist = () => {
             setProductThumb={inputThumb}
             productDetail={productDetail}
             setProductDetail={inputDetail}
+            memberEmail={memberEmail}
           ></ProductFrm>;
         }}
       ></form>
