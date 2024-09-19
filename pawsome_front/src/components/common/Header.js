@@ -61,14 +61,13 @@ const HeaderLink = () => {
   return (
     <ul className="user-menu">
       <li>
-        <Link to="/login">로그인</Link>
-        {/* {isLogin ? (
+        {isLogin ? (
           <Link to="/login">로그인</Link>
         ) : (
           <Link to="#" onClick={logout}>
             로그아웃
           </Link>
-        )} */}
+        )}
       </li>
       <li>
         <span

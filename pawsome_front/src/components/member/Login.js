@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import Swal from "sweetalert2";
 import { loginEmailState, memberLevelState } from "../utils/RecoilData";
+import "./member.css";
 
 const Login = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
@@ -15,6 +16,7 @@ const Login = () => {
     const name = e.target.name;
     setMember({ ...member, [name]: e.target.value });
   };
+
   const login = () => {
     if (member.memberEmail === "" || member.memberPw === "") {
       Swal.fire({
@@ -44,42 +46,43 @@ const Login = () => {
       });
   };
   return (
-    <section>
-      <div>로그인</div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          login();
-        }}
-      >
-        <div>
-          <label>이메일</label>
-          <div>
+    <div className="body">
+      <div className="login-page">
+        <div className="form">
+          <form
+            className="login-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              login();
+            }}
+          >
             <input
               type="text"
               name="memberEmail"
               id="memberEmail"
               value={member.memberEmail}
               onChange={changeMember}
+              placeholder="이메일"
             />
-          </div>
-        </div>
-        <div>
-          <label>비밀번호</label>
-          <div>
             <input
               type="password"
               name="memberPw"
               id="memberPw"
               value={member.memberPw}
               onChange={changeMember}
+              placeholder="비밀번호"
             />
-          </div>
+            <button type="submit">로그인</button>
+            <p className="message">
+              계정이 없으신가요?
+              <Link to="/join" className="join">
+                회원가입
+              </Link>
+            </p>
+          </form>
         </div>
-        <button type="submit">로그인</button>
-      </form>
-      <Link to="/join">회원가입</Link>
-    </section>
+      </div>
+    </div>
   );
 };
 

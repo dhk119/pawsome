@@ -2,7 +2,7 @@ import { atom, selector } from "recoil";
 
 const loginEmailState = atom({
   key: "loginEmailState",
-  default: "",
+  default: "test",
 });
 
 const memberLevelState = atom({
@@ -15,7 +15,7 @@ const isLoginState = selector({
   get: (state) => {
     const loginEmail = state.get(loginEmailState);
     const memberLevel = state.get(memberLevelState);
-    return loginEmail !== "test" && memberLevel !== 0;
+    return loginEmail !== "" && memberLevel !== 0;
   },
 });
 

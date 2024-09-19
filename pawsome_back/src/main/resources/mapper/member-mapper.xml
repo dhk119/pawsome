@@ -3,7 +3,7 @@
 <mapper namespace="kr.co.iei.member.model.dao.MemberDao">
 
 	<insert id="insertMember">
-		insert into member values(#{memberEmail},#{memberNickname},#{memberPw},#{memberName},#{memberAddr1},#{memberAddr2},#{memberAddr3},0,'member_img.png',sysdate,'site')
+		insert into member values(#{memberEmail},#{memberNickname},#{memberPw},#{memberName},#{memberAddr1},#{memberAddr2},#{memberAddr3},2,'member_img.png',sysdate,'site')
 	</insert>
 	
 	<select id="selectOneMember" resultType="member">
