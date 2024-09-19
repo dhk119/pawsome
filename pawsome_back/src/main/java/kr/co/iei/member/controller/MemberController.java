@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpSession;
@@ -65,5 +66,10 @@ public class MemberController {
 	public ResponseEntity<Integer> checkNickname(@PathVariable String memberNickname) {
 		int result = memberService.checkNickname(memberNickname);
 		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping("/naver-login")
+	public Object naverLogin() {
+		return null;
 	}
 }

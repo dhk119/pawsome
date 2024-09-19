@@ -14,6 +14,7 @@ import InquiryMain from "./components/inquiry/InquiryMain";
 import { useEffect } from "react";
 import axios from "axios";
 import BoardMain from "./components/board/BoardMain";
+import NaverCallback from "./components/member/NaverCallback";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -58,6 +59,7 @@ function App() {
           <Route path="/inquiry/*" element={<InquiryMain />} />
           <Route path="/" element={<Main />} />
           <Route path="/board/*" element={<BoardMain />} />
+          <Route path="/callback" element={<NaverCallback />} />
         </Routes>
       </main>
       <Footer />
