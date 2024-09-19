@@ -10,6 +10,7 @@ const InquiryWrite = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [inquiryTitle, setInquiryTitle] = useState("");
   const [inquiryContent, setInquiryContent] = useState("");
+  const [inquiryType, setInquiryType] = useState(0);
   return (
     <>
       <div></div>
