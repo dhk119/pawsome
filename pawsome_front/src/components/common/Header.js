@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
 import "./default.css";
+import { useState } from "react";
+import * as FaIcons from "react-icons/fa";
+import * as AiIcons from "react-icons/ai";
+import { SidebarData } from "./SidebarData";
+import { IconContext } from "react-icons";
 
 const Header = () => {
   return (
@@ -37,20 +42,54 @@ const MainNavi = () => {
     </nav>
   );
 };
-
 const HeaderLink = () => {
+  const [sidebar, setSidebar] = useState(false);
+  const showSidebar = () => setSidebar(!sidebar);
+
   return (
     <ul className="user-menu">
       <li>
-        <Link to="#">로그인</Link>
+        <Link to="/login">로그인</Link>
       </li>
       <li>
-        <span
-          className="material-icons burger-menu"
-          style={{ color: "#ffbe58" }}
-        >
-          menu
-        </span>
+        <>
+          <div className="navbar">
+            <Link to="#" className="menu-bars">
+              {sidebar ? (
+                <AiIcons.AiOutlineClose onClick={showSidebar} />
+              ) : (
+                <FaIcons.FaBars onClick={showSidebar} />
+              )}
+            </Link>
+          </div>
+          <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+            <ul className="nav-menu-items" onClick={showSidebar}>
+              {SidebarData.map((item, index) => {
+                return (
+                  <li key={index} className={item.cName}>
+                    <Link to={item.path}>
+                      {item.icons}
+                      <span>{item.title}</span>
+                      <>
+                        <ul className="sub-items">
+                          {item.sub.map((subItem, i) => {
+                            return (
+                              <li key={subItem + i}>
+                                <Link to={subItem.path}>
+                                  <span>{subItem.title}</span>
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </>
       </li>
     </ul>
   );

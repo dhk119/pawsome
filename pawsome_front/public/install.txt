@@ -8,3 +8,6 @@ npm install recoil
 
 김대헌 2024-09-13 17:48
 npm install quill@2.0.2
+
+김대헌 2024-09-19
+npm install react-icons --save
