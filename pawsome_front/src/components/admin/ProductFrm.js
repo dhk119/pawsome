@@ -156,19 +156,29 @@ const ProductFrm = (props) => {
             </tr>
             <tr>
               <th>
-                <label htmlFor="productShow">제품 등록 여부</label>
-              </th>
-              <td>
+                <label htmlFor="show">공개</label>
                 <div className="input-item">
                   <input
-                    type="text"
-                    id="productShow"
+                    type="radio"
+                    id="show"
                     name="productShow"
-                    value={productShow}
+                    value={"Y"}
                     onChange={setProductShow}
                   ></input>
                 </div>
-              </td>
+              </th>
+              <th>
+                <label htmlFor="hidden">비공개</label>
+                <div className="input-item">
+                  <input
+                    type="radio"
+                    id="hidden"
+                    name="productShow"
+                    value={"N"}
+                    onChange={setProductShow}
+                  ></input>
+                </div>
+              </th>
             </tr>
             <tr>
               <th>제품 등록 관리자 이메일</th>
