@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
+import Main from "./components/common/Main";
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
       <Header />
       <main className="content">
         <Routes>
-          <Route path="/"></Route>
+          <Route path="/" element={<Main />} />
         </Routes>
       </main>
       <Footer />
