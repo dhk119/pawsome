@@ -34,21 +34,23 @@ const Main = () => {
         </div>
       </div>
       <div className="map-wrap">
-        <div className="page-title">
-          <span className="material-icons">pets</span>
+        <div className="map-title">
+          <span className="material-icons" style={{ color: "#ffa518" }}>
+            pets
+          </span>
           <span>동물병원</span>
-          <p>#가까운 동물병원을 찾아보세요~</p>
+          <span>#가까운 동물병원을 찾아보세요</span>
         </div>
         <div>
-          <Link>
+          <Link to="#">
             <div
               style={{
                 width: "100%",
-                height: "279px",
-                backgroundColor: "#5799ff",
+                height: "402px",
+                backgroundColor: "#ffbe58",
               }}
             >
-              <img src="#"></img>
+              <img src="/image/doctordog.png" />
             </div>
           </Link>
         </div>

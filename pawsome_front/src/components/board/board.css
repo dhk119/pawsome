@@ -35,6 +35,37 @@
   min-height: 800px;
   padding: 50px 30px;
 }
-.list-board > ul > li {
+.posting-wrap {
+  width: 100%;
+}
+.posting-wrap > li {
   padding: 30px 20px;
+}
+.list-list {
+  border: 2px solid #ffa518;
+  border-radius: 15px;
+  padding: 0px 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.start {
+  display: flex;
+  flex-direction: column;
+}
+.start > div {
+  margin: 10px;
+}
+.end {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0px 10px;
+}
+.end > div {
+  margin: 10px;
+  padding-top: 18px;
+}
+.up-btn > button {
+  border: none;
+  background-color: transparent;
 }

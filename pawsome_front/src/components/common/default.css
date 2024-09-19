@@ -100,7 +100,6 @@ a {
 }
 .header a:hover {
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .user-menu {
   display: flex;
@@ -122,7 +121,8 @@ a {
 }
 .nav-menu {
   background-color: var(--point1);
-  width: 392px;
+  border-top-left-radius: 15px;
+  width: 300px;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -130,6 +130,7 @@ a {
   top: 1;
   right: -100%;
   transition: 850ms;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .nav-menu.active {
   right: 0;
@@ -153,6 +154,7 @@ a {
 .nav-text a:hover {
   background-color: #fff;
   color: var(--point1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .nav-menu-items {
@@ -244,6 +246,7 @@ a {
   height: 700px;
   object-fit: cover;
   object-position: 50% 40%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .commercial-text {
   padding: 200px 100px;
@@ -258,4 +261,27 @@ a {
 }
 .map-wrap {
   margin: 30px auto;
+  width: 95%;
+}
+.map-title {
+  display: flex;
+  flex-direction: column;
+}
+.map-title > span {
+  margin-left: 60px;
+  margin-bottom: 5px;
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--point1);
+}
+.map-title > span:last-child {
+  font-size: 16px;
+  font-weight: 200;
+}
+.map-wrap > div:last-child > a > div {
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+.map-wrap > div:last-child > a > div > img {
+  margin-left: 55%;
 }
