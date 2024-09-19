@@ -52,11 +52,11 @@ const InquiryList = () => {
               </tr>
             );
           })}
-          <div>
-            <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
-          </div>
         </tbody>
       </table>
+      <ul>
+        <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+      </ul>
     </section>
   );
 };
