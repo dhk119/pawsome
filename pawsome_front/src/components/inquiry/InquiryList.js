@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { isLoginState } from "../utils/RecoilData";
+import PageNavi from "../utils/PageNavi";
 
 const InquiryList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
