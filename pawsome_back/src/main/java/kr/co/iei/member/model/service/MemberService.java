@@ -54,4 +54,14 @@ public class MemberService {
 		return null;
 	}
 
+	public int checkEmail(String memberEmail) {
+		int result = memberDao.checkEmail(memberEmail);
+		return result;
+	}
+
+	public int checkNickname(String memberNickname) {
+		int result = memberDao.checkNickname(memberNickname);
+		return result;
+	}
+
 }

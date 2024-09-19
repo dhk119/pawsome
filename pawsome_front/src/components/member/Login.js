@@ -17,6 +17,16 @@ const Login = () => {
     setMember({ ...member, [name]: e.target.value });
   };
 
+  //네이버 로그인
+  const NAVER_CLIENT_ID = "mDIMmlDCzICGJPSiZ68R";
+  const REDIRECT_URI = "http://localhost:3000/callback"; // Callback URL
+  const STATE = "flase";
+  const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=${STATE}&redirect_uri=${REDIRECT_URI}`;
+
+  const NaverLogin = () => {
+    window.location.href = NAVER_AUTH_URL;
+  };
+
   const login = () => {
     if (member.memberEmail === "" || member.memberPw === "") {
       Swal.fire({
@@ -80,6 +90,7 @@ const Login = () => {
               </Link>
             </p>
           </form>
+          <button onClick={NaverLogin}>네이버 로그인</button>
         </div>
       </div>
     </div>

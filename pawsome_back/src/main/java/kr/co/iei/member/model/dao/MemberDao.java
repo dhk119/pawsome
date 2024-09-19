@@ -11,4 +11,8 @@ public interface MemberDao {
 
 	MemberDTO selectOneMember(String memberEmail);
 
+	int checkEmail(String memberEmail);
+
+	int checkNickname(String memberNickname);
+
 }

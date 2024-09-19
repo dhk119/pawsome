@@ -38,6 +38,69 @@ const Join = () => {
     };
   }, []);
 
+  // 0 : 아직 입력하지않은 상태, 1 : 정규표현식, 중복체크 모두 통과한 경우
+  // 2 : 정규표현식을 만족하지 못한 상태, 3 : 이메일이 중복인경우
+  const [emailCheck, setEmailCheck] = useState(0);
+  const checkEmail = () => {
+    //이메일 유효성 검사
+    //1. 정규표현식 검사
+    //2. DB 중복체크
+    const emailReg = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    if (!emailReg.test(member.memberEmail)) {
+      setEmailCheck(2);
+    } else {
+      axios
+        .get(`${backServer}/member/memberEmail/${member.memberId}/check-email`)
+        .then((res) => {
+          console.log(res);
+          if (res.data === 1) {
+            setEmailCheck(3);
+          } else if (res.data === 0) {
+            setEmailCheck(1);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const [nicknameCheck, setNicknameCheck] = useState(0);
+  const checkNickname = () => {
+    axios
+      .get(
+        `${backServer}/member/memberNickname/${member.memberNickname}/check-nicknmae`
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.data === 1) {
+          setNicknameCheck(3); //닉네임 중복
+        } else if (res.data === 0) {
+          setNicknameCheck(1); //정규표현식 통과
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const pwMessage = useRef(null);
+  const checkPw = () => {
+    pwMessage.current.classList.remove("valid");
+    pwMessage.current.classList.remove("invalid");
+    if (member.memberPw === memberPwRe) {
+      pwMessage.current.innerText = "비밀번호가 일치합니다.";
+      pwMessage.current.classList.add("valid");
+    } else {
+      pwMessage.current.innerText = "비밀번호가 일치하지 않습니다.";
+      pwMessage.current.classList.add("invalid");
+    }
+  };
+  const [memberPwRe, setMemberPwRe] = useState("");
+  const changeMemberPwRe = (e) => {
+    setMemberPwRe(e.target.value);
+  };
+
   const join = () => {
     axios
       .post(`${backServer}/member`, member)
@@ -85,8 +148,27 @@ const Join = () => {
               name="memberEmail"
               value={member.memberEmail}
               onChange={changeMember}
+              onBlur={checkEmail}
               placeholder="이메일"
             />
+            <p
+              className={
+                "input-msg" +
+                (emailCheck === 0
+                  ? ""
+                  : emailCheck === 1
+                  ? " valid"
+                  : " invalid")
+              }
+            >
+              {emailCheck === 0
+                ? ""
+                : emailCheck === 1
+                ? "사용가능한 이메일 입니다."
+                : emailCheck === 2
+                ? "이메일 양식에 맞지 않습니다."
+                : "이미 사용중인 이메일 입니다."}
+            </p>
 
             <input
               type="password"
@@ -96,13 +178,22 @@ const Join = () => {
               placeholder="비밀번호"
             />
 
-            <input type="password" placeholder="비밀번호 확인" />
+            <input
+              type="password"
+              id="memberPwRe"
+              value={memberPwRe}
+              onChange={changeMemberPwRe}
+              onBlur={checkPw}
+              placeholder="비밀번호 확인"
+            />
+            <p className="input-msg" ref={pwMessage}></p>
 
             <input
               type="text"
               name="memberNickname"
               value={member.memberNickname}
               onChange={changeMember}
+              onBlur={checkNickname}
               placeholder="닉네임"
             />
 
