@@ -100,6 +100,7 @@ a {
 }
 .header a:hover {
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .user-menu {
   display: flex;
@@ -109,8 +110,61 @@ a {
   margin: 0px 15px;
   position: relative;
 }
-.burger-menu {
-  font-size: 40px;
+.navbar {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.menu-bar {
+  margin-right: 2rem;
+  font-size: 2rem;
+  background: none;
+}
+.nav-menu {
+  background-color: var(--point1);
+  width: 392px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 1;
+  right: -100%;
+  transition: 850ms;
+}
+.nav-menu.active {
+  right: 0;
+  transition: 350ms;
+}
+.nav-text {
+  color: var(--gray8);
+  padding: 8px 20px;
+}
+
+.nav-text a {
+  color: var(--gray8);
+  width: 95%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  border-radius: 4px;
+}
+.nav-text a:hover {
+  background-color: #fff;
+  color: var(--point1);
+}
+
+.nav-menu-items {
+  width: 100%;
+  display: block;
+}
+.sub-items {
+  display: none;
+}
+.nav-menu-items li:hover .sub-items {
+  display: block;
+  padding: 10px;
 }
 /*풋터*/
 .footer {

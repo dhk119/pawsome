@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ProductFrm from "./ProductFrm";
+import Swal from "sweetalert2";
 
 const ProductRegist = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -30,30 +31,39 @@ const ProductRegist = () => {
   const [memberEmail, setMemberEmail] = useState("loginEmail");
   const inputName = (e) => {
     setProductName(e.target.value);
+    setProduct({ ...product, productName: e.target.value });
   };
   const inputCompany = (e) => {
     setProductCompany(e.target.value);
+    setProduct({ ...product, productCompany: e.target.value });
   };
   const inputTypeCategory = (e) => {
     setTypeCategory(e.target.value);
+    setProduct({ ...product, typeCategory: e.target.value });
   };
   const inputMainCategory = (e) => {
     setMainCategory(e.target.value);
+    setProduct({ ...product, mainCategory: e.target.value });
   };
   const inputSubCategory = (e) => {
     setSubCategory(e.target.value);
+    setProduct({ ...product, subCategory: e.target.value });
   };
   const inputPrice = (e) => {
     setProductPrice(e.target.value);
+    setProduct({ ...product, productPrice: e.target.value });
   };
   const inputThumb = (e) => {
     setProductThumb(e.target.value);
+    setProduct({ ...product, productThumb: e.target.value });
   };
   const inputDetail = (e) => {
     setProductDetail(e.target.value);
+    setProduct({ ...product, productDetail: e.target.value });
   };
   const inputShow = (e) => {
     setProductShow(e.target.value);
+    setProduct({ ...product, productShow: e.target.value });
   };
   const registProduct = () => {
     if (
@@ -63,25 +73,17 @@ const ProductRegist = () => {
       mainCategory !== "" &&
       subCategory !== "" &&
       productPrice !== 0 &&
-      productThumb !== "" &&
       productDetail !== "" &&
-      productRegDate !== "" &&
       productShow !== ""
     ) {
-      setProduct({
-        productName: productName,
-        productCompany: productCompany,
-        typeCategory: typeCategory,
-        mainCategory: mainCategory,
-        subCategory: subCategory,
-        productPrice: productPrice,
-        productThumb: productThumb,
-        productDetail: productDetail,
-        productRegDate: productRegDate,
-        productShow: productShow,
-        memberEmail: memberEmail,
-      });
       console.log(product);
+    } else {
+      Swal.fire({
+        text: "누락된 입력 값이 있습니다",
+        icon: "info",
+        iconColor: "var(--main1)",
+        confirmButtonColor: "var(--point1)",
+      });
     }
   };
   return (
@@ -91,27 +93,34 @@ const ProductRegist = () => {
         className="product-regist-frm"
         onSubmit={(e) => {
           e.preventDefault();
-          <ProductFrm
-            productName={productName}
-            setProductName={inputName}
-            productCompany={productCompany}
-            setProductCompany={inputCompany}
-            typeCategory={typeCategory}
-            setTypeCategory={inputTypeCategory}
-            mainCategory={mainCategory}
-            setMainCategory={inputMainCategory}
-            subCategory={subCategory}
-            setSubCategory={inputSubCategory}
-            productPrice={productPrice}
-            setProductPrice={inputPrice}
-            productThumb={productThumb}
-            setProductThumb={inputThumb}
-            productDetail={productDetail}
-            setProductDetail={inputDetail}
-            memberEmail={memberEmail}
-          ></ProductFrm>;
+          registProduct();
         }}
-      ></form>
+      >
+        <ProductFrm
+          productName={productName}
+          setProductName={inputName}
+          productCompany={productCompany}
+          setProductCompany={inputCompany}
+          typeCategory={typeCategory}
+          setTypeCategory={inputTypeCategory}
+          mainCategory={mainCategory}
+          setMainCategory={inputMainCategory}
+          subCategory={subCategory}
+          setSubCategory={inputSubCategory}
+          productPrice={productPrice}
+          setProductPrice={inputPrice}
+          productThumb={productThumb}
+          setProductThumb={inputThumb}
+          productDetail={productDetail}
+          setProductDetail={inputDetail}
+          productShow={productShow}
+          setProductShow={inputShow}
+          memberEmail={memberEmail}
+        ></ProductFrm>
+        <div className="button-zone">
+          <button type="submit">등록하기</button>
+        </div>
+      </form>
     </>
   );
 };

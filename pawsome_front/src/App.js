@@ -10,8 +10,10 @@ import Join from "./components/member/Join";
 import Login from "./components/member/Login";
 import AdminMain from "./components/admin/AdminMain";
 import Main from "./components/common/Main";
+import InquiryMain from "./components/inquiry/InquiryMain";
 import { useEffect } from "react";
 import axios from "axios";
+import BoardMain from "./components/board/BoardMain";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -53,7 +55,9 @@ function App() {
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin/*" element={<AdminMain />} />
+          <Route path="/inquiry/*" element={<InquiryMain />} />
           <Route path="/" element={<Main />} />
+          <Route path="/board/*" element={<BoardMain />} />
         </Routes>
       </main>
       <Footer />
