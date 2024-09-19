@@ -37,9 +37,280 @@ const BoardList = () => {
               </div>
               <div className="end">
                 <div>
-                  <img src="/image/paw.png" />
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
                 </div>
-                <div>댓글 갯수</div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div className="list-list">
+              <div className="start">
+                <div>#태그</div>
+                <div>제목, 작성자, 조회수, 좋아요</div>
+              </div>
+              <div className="end">
+                <div>
+                  <img
+                    src="/image/paw.png"
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </div>
+                <div>
+                  <p>댓글 갯수</p>
+                </div>
               </div>
             </div>
           </li>
@@ -47,7 +318,9 @@ const BoardList = () => {
       </div>
       <div className="up-btn">
         <button>
-          <FaIcons.FaArrowCircleUp style={{ width: "80px", height: "80px" }} />
+          <FaIcons.FaArrowCircleUp
+            style={{ width: "40px", height: "40px", marginTop: "30px" }}
+          />
         </button>
       </div>
     </section>

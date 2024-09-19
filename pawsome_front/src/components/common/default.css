@@ -121,7 +121,8 @@ a {
 }
 .nav-menu {
   background-color: var(--point1);
-  width: 392px;
+  border-top-left-radius: 15px;
+  width: 300px;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -152,6 +153,7 @@ a {
 .nav-text a:hover {
   background-color: #fff;
   color: var(--point1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .nav-menu-items {
