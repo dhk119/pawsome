@@ -5,52 +5,8 @@ import { FaRegHeart } from "react-icons/fa";
 
 const ProductList = () => {
   return (
-    <section className="section productList-wrap">
-      <nav className="nav type-nav">
-        <ul>
-          <li>
-            <Link to="#">전체</Link>
-          </li>
-          <li>
-            <Link to="#">댕댕이</Link>
-          </li>
-          <li>
-            <Link to="#">냥냥이</Link>
-          </li>
-        </ul>
-      </nav>
-      <nav className="nav main-nav">
-        <ul>
-          <li>
-            <Link to="#">전체</Link>
-          </li>
-          <li>
-            <Link to="#">사료</Link>
-          </li>
-          <li>
-            <Link to="#">간식</Link>
-          </li>
-          <li>
-            <Link to="#">영양제</Link>
-          </li>
-          <li>
-            <Link to="#">식기용품</Link>
-          </li>
-          <li>
-            <Link to="#">위생용품</Link>
-          </li>
-          <li>
-            <Link to="#">장난감</Link>
-          </li>
-          <li>
-            <Link to="#">패션</Link>
-          </li>
-          <li>
-            <Link to="#">하우스</Link>
-          </li>
-        </ul>
-      </nav>
-      <div className="best-item"></div>
+    <>
+      <div className="page-title">전체</div>
       <div className="productList-title">
         <div className="productList-category">
           <Link to="#">전체</Link>
@@ -225,7 +181,7 @@ const ProductList = () => {
           </div>
         </div>
       </div>
-    </section>
+    </>
   );
 };
 
