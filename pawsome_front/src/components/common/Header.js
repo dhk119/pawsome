@@ -39,7 +39,7 @@ const MainNavi = () => {
           <Link to="#">시설</Link>
         </li>
         <li>
-          <Link to="#">마켓</Link>
+          <Link to="/market/productList">마켓</Link>
         </li>
         <li>
           <Link to="/board/allList">커뮤니티</Link>
