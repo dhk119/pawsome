@@ -27,7 +27,7 @@ const Main = () => {
           <span>PAWSOME에서 함께하세요.</span>
           <br />
           <br />
-          <p>반려동물과 함께한 즐거운 시간들을 함께 공유하고 즐겨보세요</p>
+          <p>반려동물과 함께한 즐거운 시간들을 공유하고 즐겨보세요.</p>
         </div>
         <div className="commercial-image">
           <img src="/image/mainpet2.jpg" />

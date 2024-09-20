@@ -172,6 +172,7 @@ const Join = () => {
     <div className="body">
       <div className="join-page">
         <div className="form">
+          <h2>회원가입</h2>
           <form
             className="join-form"
             onSubmit={(e) => {
@@ -287,7 +288,6 @@ const Join = () => {
               onChange={changeMember}
               placeholder="주소"
             />
-
             <input
               type="text"
               name="memberAddr3"
@@ -296,7 +296,24 @@ const Join = () => {
               ref={detailAddressRef}
               placeholder="상세주소"
             />
-
+            <div className="terms-wrap">
+              <div>
+                <input type="checkbox" name="all" id="all"></input>
+                <label htmlFor="all">약관 전체동의</label>
+              </div>
+              <div>
+                <input type="checkbox" name="terms1" id="terms1"></input>
+                <label htmlFor="terms1">만 14세 이상입니다</label>
+              </div>
+              <div>
+                <input type="checkbox" name="terms2" id="terms2"></input>
+                <label htmlFor="terms2">서비스 이용약관 동의</label>
+              </div>
+              <div>
+                <input type="checkbox" name="terms3" id="terms3"></input>
+                <label htmlFor="terms3">개인정보 수집 및 이용 동의</label>
+              </div>
+            </div>
             <button type="submit">회원가입</button>
           </form>
         </div>

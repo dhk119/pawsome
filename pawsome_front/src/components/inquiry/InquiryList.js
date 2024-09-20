@@ -41,7 +41,7 @@ const InquiryList = () => {
               <tr
                 key={"inquiry" + i}
                 onClick={() => {
-                  navigate(`#`);
+                  navigate(`/inquiry/view/${inquiry.inquiryNo}`);
                 }}
               >
                 <td>{inquiry.inquiryNo}</td>

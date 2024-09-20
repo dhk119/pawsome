@@ -37,4 +37,14 @@ public class InquiryService {
 		int result=inquiryDao.insertInquiry(inquiry);
 		return result;
 	}
+
+	public Inquiry selectOneInquiry(int inquiryNo) {
+		Inquiry inquiry=inquiryDao.selectOneInquiry(inquiryNo);
+		return inquiry;
+	}
+	@Transactional
+	public int deleteInquiry(int inquiryNo) {
+		int result=inquiryDao.deleteInquiry(inquiryNo);
+		return result;
+	}
 }
