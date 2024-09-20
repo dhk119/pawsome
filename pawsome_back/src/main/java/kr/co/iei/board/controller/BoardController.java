@@ -19,6 +19,9 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	@GetMapping("/list/{tag}/{reqpage}")
-	public ResponseEntity<Map> list(@PathVariable int reqPage, @PathVariable int tag)
+	@GetMapping("/list/{tag}/{reqPage}")
+	public ResponseEntity<Map> list(@PathVariable int reqPage, @PathVariable int tag){
+		Map map = boardService.selectBoardTag(reqPage, tag);
+		return ResponseEntity.ok(map);
+	}
 }

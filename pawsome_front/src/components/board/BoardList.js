@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { isLoginState } from "../utils/RecoilData";
 import ScrollToTop from "react-scroll-to-top";
@@ -16,32 +16,50 @@ const BoardList = () => {
       .get(`${backServer}/board/list/${tag}/${reqPage}`)
       .then((res) => {
         console.log(res);
+        setBoardList(res.data.list);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [reqPage, tag]);
+  const changeTag = (e) => {
+    setTag(e.target.id);
+    setReqPage(1);
+  };
+  console.log(tag);
   return (
     <section className="section board-wrap">
       <nav className="nav board-nav">
         <ul>
           <li>
-            <Link to="/board/allList">전체</Link>
+            <span onClick={changeTag} id="0">
+              전체
+            </span>
           </li>
           <li>
-            <Link to="#">댕댕이</Link>
+            <span onClick={changeTag} id="1">
+              댕댕이
+            </span>
           </li>
           <li>
-            <Link to="#">냥냥이</Link>
+            <span onClick={changeTag} id="2">
+              냥냥이
+            </span>
           </li>
           <li>
-            <Link to="#">일상</Link>
+            <span onClick={changeTag} id="3">
+              일상
+            </span>
           </li>
           <li>
-            <Link to="#">정보공유</Link>
+            <span onClick={changeTag} id="4">
+              정보공유
+            </span>
           </li>
           <li>
-            <Link to="#">오산완</Link>
+            <span onClick={changeTag} id="5">
+              오산완
+            </span>
           </li>
         </ul>
       </nav>
@@ -51,12 +69,12 @@ const BoardList = () => {
             {isLogin ? <Link to="#">글쓰기</Link> : ""}
           </div>
           <div className="board-list-wrap">
-            {/* <ul className="posting-wrap">
+            <ul className="posting-wrap">
               {boardList.map((board, i) => {
-                return <BoardItem />;
+                return <BoardItem board={board} />;
               })}
               ;
-            </ul> */}
+            </ul>
             <div className="list-list">
               <div className="start">
                 <div>#태그</div>
@@ -83,37 +101,45 @@ const BoardList = () => {
     </section>
   );
 };
-// const BoardItem = (props) => {
-//   const board = props.board;
-//   const [boardLike, setBoardLike] = useState(0);
-//   const navigate = useNavigate();
-//   return (
-//     <li
-//       className="posting-item"
-//       onClick={() => {
-//         navigate(`/board/view/${board.boardNo}`);
-//       }}
-//     >
-//       <div className="posting-info">
-//         <div className="posting-tag">{board.boardTag}</div>
-//         <div className="posting-sub-info">
-//           {board.boardTitle} {board.memberNickname} {board.readCount}{" "}
-//           {boardLike}
-//         </div>
-//       </div>
-//       <div className="posting-img">
-//         <img
-//           onScroll={
-//             board.boardThumb
-//               ? `localhost3000:8282/board/thumb/${board.boardThumb}`
-//               : ""
-//           }
-//         ></img>
-//       </div>
-//       <div>
-//         <div>댓글갯수</div>
-//       </div>
-//     </li>
-//   );
-// };
+const BoardTag = (props) => {
+  const tag = props.tag;
+  const setTag = props.setTag;
+  const reqPage = props.reqPage;
+  const setReqPage = props.setReqPage;
+  return <li>{tag}전체</li>;
+};
+
+const BoardItem = (props) => {
+  const board = props.board;
+  const [boardLike, setBoardLike] = useState(0);
+  const navigate = useNavigate();
+  return (
+    <li
+      className="posting-item"
+      onClick={() => {
+        navigate(`/board/view/${board.boardNo}`);
+      }}
+    >
+      <div className="posting-info">
+        <div className="posting-tag">{board.boardTag}</div>
+        <div className="posting-sub-info">
+          {board.boardTitle} {board.memberNickname} {board.readCount}{" "}
+          {boardLike}
+        </div>
+      </div>
+      <div className="posting-img">
+        <img
+          onScroll={
+            board.boardThumb
+              ? `localhost3000:8282/board/thumb/${board.boardThumb}`
+              : ""
+          }
+        ></img>
+      </div>
+      <div>
+        <div>댓글갯수</div>
+      </div>
+    </li>
+  );
+};
 export default BoardList;
