@@ -39,10 +39,28 @@
   min-height: 800px;
   padding: 50px 30px;
 }
-.posting-wrap {
+/*글쓰기 전용 css*/
+.write-wrap {
+  display: flex;
+  justify-content: end;
+  margin-right: 50px;
+}
+.write-wrap > a {
+  border-radius: 30px;
+  color: var(--point1);
+  border: 2px solid #ffa518;
+  padding: 5px 30px;
+}
+.write-wrap > a:hover {
+  background-color: #ffa518;
+  color: var(--gray8);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+/*자유게시판 리스트*/
+.board-all-wrap {
   width: 100%;
 }
-.posting-wrap > li {
+.board-all-wrap > div {
   padding: 30px 20px;
 }
 .list-list {
@@ -68,8 +86,4 @@
 .end > div {
   margin: 10px;
   padding-top: 18px;
-}
-.up-btn > button {
-  border: none;
-  background-color: transparent;
 }
