@@ -1,9 +1,12 @@
+import ImageResize from "@looop/quill-image-resize-module-react";
 import axios from "axios";
 import { useMemo, useRef, useState } from "react";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+Quill.register("modules/ImageResize", ImageResize);
 
 const QuillEditor = (props) => {
+  const [value, setValue] = useState("");
   const formats = [
     "font",
     "header",
@@ -70,15 +73,15 @@ const QuillEditor = (props) => {
         ],
         handlers: { image: imageHandler },
       },
+      ImageResize: {
+        parchment: Quill.import("parchment"),
+      },
     };
   }, []);
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const inquiryContent = props.inquiryContent;
   const setInquiryContent = props.setInquiryContent;
   const editorRef = useRef(null);
-  const changeValue = () => {
-    setInquiryContent();
-  };
 
   return (
     <div>
@@ -86,8 +89,8 @@ const QuillEditor = (props) => {
         theme="snow"
         ref={editorRef}
         formats={formats}
-        onChange={changeValue}
-        value={inquiryContent}
+        onChange={setValue}
+        value={value}
         modules={modules}
         style={{ width: "100%", height: "300px" }}
       ></ReactQuill>
