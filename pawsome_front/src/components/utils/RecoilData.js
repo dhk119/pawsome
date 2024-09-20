@@ -4,10 +4,6 @@ const loginEmailState = atom({
   key: "loginEmailState",
   default: "test",
 });
-const loginNicknameState = atom({
-  key: "loginNicknameState",
-  default: "",
-});
 const memberLevelState = atom({
   key: "memberLevelState",
   default: 0,

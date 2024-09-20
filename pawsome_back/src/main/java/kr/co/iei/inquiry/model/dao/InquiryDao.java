@@ -20,4 +20,6 @@ public interface InquiryDao {
 
 	int deleteInquiry(int inquiryNo);
 
+	int updateInquiry(Inquiry inquiry);
+
 }

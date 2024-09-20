@@ -64,7 +64,6 @@ const InquiryWrite = () => {
           <QuillEditor
             inquiryContent={inquiryContent}
             setInquiryContent={setInquiryContent}
-            type={0}
           ></QuillEditor>
         </div>
         <div className="button-zone">

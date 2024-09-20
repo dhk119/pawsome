@@ -109,6 +109,9 @@ a {
   margin: 0px 15px;
   position: relative;
 }
+.user-menu > li > a:last-child {
+  margin-left: 15px;
+}
 .navbar {
   display: flex;
   justify-content: end;
@@ -136,7 +139,26 @@ a {
   right: 0;
   transition: 350ms;
 }
-.nav-text {
+
+.nav-menu-items > li:first-child > a {
+  color: var(--gray8);
+  margin: 15px auto;
+  padding: 0px 16px;
+  display: flex;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  width: 95%;
+  height: 100%;
+  border-radius: 4px;
+}
+.nav-menu-items > li:first-child > a:hover {
+  background-color: #fff;
+  color: var(--point1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.nav-menu-items > li:first-child > a .nav-text {
   color: var(--gray8);
   padding: 8px 20px;
 }
@@ -281,7 +303,15 @@ a {
 .map-wrap > div:last-child > a > div {
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-between;
 }
-.map-wrap > div:last-child > a > div > img {
-  margin-left: 55%;
+.map-wrap > div:last-child > a > div > img:first-child {
+  width: 270px;
+  height: 270px;
+  margin-top: 132px;
+  margin-left: 70px;
+}
+.map-wrap > div:last-child > a > div > img:last-child {
+  margin-right: 120px;
 }
