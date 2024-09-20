@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -7,6 +7,11 @@ const QuillEditor = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const inquiryContent = props.inquiryContent;
   const setInquiryContent = props.setInquiryContent;
+  const editorRef = useRef(null);
+  const changeValue = () => {
+    //const editorData = editorRef.current.getInstance().getHTML();
+    setInquiryContent();
+  };
   const uploadImage = (file, callbackfunc) => {
     const form = new FormData();
     form.append("image", file);
@@ -30,6 +35,9 @@ const QuillEditor = (props) => {
           [{ header: [1, 2, 3, 4, 5, false] }],
           ["bold", "underline"],
         ],
+        handlers: {
+          image: uploadImage,
+        },
       },
     }),
     []
@@ -38,10 +46,10 @@ const QuillEditor = (props) => {
     <div>
       <ReactQuill
         theme="snow"
-        onChange={setInquiryContent}
+        ref={editorRef}
+        onChange={changeValue}
         value={inquiryContent}
         modules={modules}
-        hooks={{ addImageBlobHook: uploadImage }}
       ></ReactQuill>
     </div>
   );
