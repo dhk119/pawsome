@@ -52,18 +52,19 @@ const MainNavi = () => {
 const HeaderLink = () => {
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
-
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
   const isLogin = useRecoilValue(isLoginState);
+  const [loginNickname, setLoginNickname] = useRecoilState(loginNicknameState);
 
   console.log("test : ", loginEmail, memberLevel);
 
   const logout = () => {
     setLoginEmail("");
     setMemberLevel(0);
+    setLoginNickname("");
     delete axios.defaults.headers.common["Authorization"];
     window.localStorage.removeItem("refreshToken");
   };

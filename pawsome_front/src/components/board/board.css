@@ -9,6 +9,10 @@
   justify-content: center;
   margin: 30px auto;
 }
+.board-nav > ul {
+  min-width: 1400px;
+  margin-left: 280px;
+}
 .board-nav > ul > li {
   text-align: center;
 }
