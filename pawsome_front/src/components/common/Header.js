@@ -9,6 +9,7 @@ import {
   loginEmailState,
   memberLevelState,
   isLoginState,
+  memberNicknameState,
 } from "../utils/RecoilData";
 import axios from "axios";
 
@@ -54,6 +55,8 @@ const HeaderLink = () => {
 
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const [memberNickname, setMemberNickname] =
+    useRecoilState(memberNicknameState);
   const isLogin = useRecoilValue(isLoginState);
 
   console.log("test : ", loginEmail, memberLevel);
@@ -92,6 +95,15 @@ const HeaderLink = () => {
           </div>
           <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
             <ul className="nav-menu-items" onClick={showSidebar}>
+              <li>
+                {isLogin ? (
+                  <>
+                    <Link to="/mypage">{memberNickname}</Link>
+                  </>
+                ) : (
+                  ""
+                )}
+              </li>
               {SidebarData.map((item, index) => {
                 return (
                   <li key={index} className={item.cName}>

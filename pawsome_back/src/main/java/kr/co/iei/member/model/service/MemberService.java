@@ -32,7 +32,7 @@ public class MemberService {
 		if(m != null && encoder.matches(member.getMemberPw(), m.getMemberPw())) {
 			String accessToken = jwtUtil.createAccessToken(m.getMemberEmail(), m.getMemberLevel());
 			String refreshToken = jwtUtil.createRefreshToken(m.getMemberEmail(), m.getMemberLevel());
-			LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken, m.getMemberEmail(), m.getMemberLevel());
+			LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken, m.getMemberEmail(), m.getMemberLevel(), m.getMemberNickname());
 			return loginMember;
 		}
 		return null;

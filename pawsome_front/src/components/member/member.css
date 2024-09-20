@@ -1,5 +1,6 @@
-.body {
-  margin: 0 auto;
+* {
+  margin: 0;
+  padding: 0;
 }
 
 .login-page,
@@ -75,12 +76,22 @@
   background-color: var(--main1);
 }
 
-.input-msg {
-  margin-top: 5px;
-}
 .input-msg.valid {
   color: #5799ff;
 }
 .input-msg.invalid {
   color: red;
+}
+
+.form > h2 {
+  color: var(--point1);
+}
+
+.form > h3 {
+  color: var(--point1);
+  margin: 10px 0 5px;
+}
+
+.social-login > img {
+  width: 50px;
 }
