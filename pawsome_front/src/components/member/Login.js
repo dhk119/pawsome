@@ -3,12 +3,19 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import Swal from "sweetalert2";
-import { loginEmailState, memberLevelState } from "../utils/RecoilData";
+import {
+  loginEmailState,
+  memberLevelState,
+  memberNicknameState,
+} from "../utils/RecoilData";
 import "./member.css";
 
 const Login = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const [memberNickname, setMemberNickname] =
+    useRecoilState(memberNicknameState);
+  useRecoilState(memberNicknameState);
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [member, setMember] = useState({ memberEmail: "", memberPw: "" });
   const navigate = useNavigate();
@@ -41,6 +48,8 @@ const Login = () => {
         console.log(res);
         setLoginEmail(res.data.memberEmail);
         setMemberLevel(res.data.memberLevel);
+        setMemberNickname(res.data.memberNickname);
+
         //로그인 이후 axios 요청 시 발급받은 토큰값을 자동으로 axios에 추가하는 설정
         axios.defaults.headers.common["Authorization"] = res.data.accessToken;
         //로그인 상태를 지속적으로 유지시키기위해 발급받은 refreshToken을 브라우저에 저장
@@ -59,6 +68,7 @@ const Login = () => {
     <div className="body">
       <div className="login-page">
         <div className="form">
+          <h2>로그인</h2>
           <form
             className="login-form"
             onSubmit={(e) => {
@@ -90,7 +100,10 @@ const Login = () => {
               </Link>
             </p>
           </form>
-          <button onClick={NaverLogin}>네이버 로그인</button>
+          <h3>간편하게 회원가입 하기</h3>
+          <div className="social-login">
+            <img onClick={NaverLogin} src="/image/naver_btn.png" />
+          </div>
         </div>
       </div>
     </div>
