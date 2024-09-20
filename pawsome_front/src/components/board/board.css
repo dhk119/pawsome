@@ -16,7 +16,7 @@
 .board-nav > ul > li {
   text-align: center;
 }
-.board-nav > ul > li > a {
+.board-nav > ul > li > span {
   color: #ffa518;
   font-family: ns-b;
   border: 2px solid #ffa518;
@@ -24,7 +24,7 @@
   line-height: 30px;
   padding: 10px 50px;
 }
-.board-nav > ul > li a:hover {
+.board-nav > ul > li span:hover {
   background-color: #ffa518;
   color: #fff;
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
