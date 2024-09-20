@@ -17,7 +17,6 @@ const NaverCallback = () => {
     const state = urlParams.get("state");
 
     if (code) {
-      // 네이버 서버에 인증 코드로 로그인 요청
       axios
         .get(`${backServer}/member/naver-login?code=${code}&state=${state}`)
         .then((res) => {
@@ -25,7 +24,6 @@ const NaverCallback = () => {
           setMemberLevel(res.data.memberLevel);
           console.log(res);
           console.log("테스트!!!!!!!!!!!!!!!!!!");
-          // 로그인 후 받은 토큰을 저장
           axios.defaults.headers.common["Authorization"] = res.data.accessToken;
           window.localStorage.setItem("refreshToken", res.data.refreshToken);
           navigate("/");
