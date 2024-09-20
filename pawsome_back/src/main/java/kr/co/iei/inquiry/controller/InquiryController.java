@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +55,11 @@ public class InquiryController {
 	@DeleteMapping(value = "/{inquiryNo}")
 	public ResponseEntity<Integer> deleteinquiry(@PathVariable int inquiryNo){
 		int result=inquiryService.deleteInquiry(inquiryNo);
-			return ResponseEntity.ok(result); 
+		return ResponseEntity.ok(result); 
+	}
+	@PatchMapping
+	public ResponseEntity<Integer> updateinquiry(@ModelAttribute Inquiry inquiry){
+		int result=inquiryService.updateInquiry(inquiry);
+		return ResponseEntity.ok(result);
 	}
 }

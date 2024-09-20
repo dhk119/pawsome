@@ -22,13 +22,31 @@ const InquiryUpdate = () => {
   const inputType = (e) => {
     setInquiryType(e.target.value);
   };
-  const updateInquiry = () => {};
+  const updateInquiry = () => {
+    if (inquiryTitle !== "" && inquiryContent !== "") {
+      const form = new FormData();
+      form.append("inquiryNo", inquiryNo);
+      form.append("inquiryTitle", inquiryTitle);
+      form.append("inquiryContent", inquiryContent);
+      form.append("inquiryType", inquiryType);
+      axios
+        .patch(`${backServer}/inquiry`, form)
+        .then((res) => {
+          if (res.data > 0) {
+            navigate(`/inquiry/view/${inquiryNo}`);
+          } else {
+          }
+        })
+        .catch((err) => {});
+    }
+  };
   useEffect(() => {
     axios
       .get(`${backServer}/inquiry/inquiryNo/${inquiryNo}`)
       .then((res) => {
         setInquiryTitle(res.data.inquiryTitle);
         setInquiryContent(res.data.inquiryContent);
+        console.log(res.data.inquiryType);
         setInquiryType(res.data.inquiryType);
         setInquiryRegDate(res.data.inquiryRegDate);
       })
