@@ -11,3 +11,6 @@ npm install quill@2.0.2
 
 김대헌 2024-09-19
 npm install react-icons --save
+
+이승환 2024-09-20 12:12
+npm install react-quill

@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginEmailState } from "../utils/RecoilData";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import InquiryFrm from "./InquiryFrm";
+import ReactQuill from "react-quill";
+import QuillEditor from "../utils/QuillEditor";
 
 const InquiryWrite = () => {
   const navigate = useNavigate();
@@ -59,7 +61,11 @@ const InquiryWrite = () => {
           setInquiryType={inputType}
         />
         <div>
-          <textarea onChange={setInquiryContent}>{inquiryContent}</textarea>
+          <QuillEditor
+            inquiryContent={inquiryContent}
+            setInquiryContent={setInquiryContent}
+            type={0}
+          ></QuillEditor>
         </div>
         <div className="button-zone">
           <button type="submit">등록하기</button>
