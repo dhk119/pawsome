@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginEmailState } from "../utils/RecoilData";
 import axios from "axios";
+import DOMPurify from "dompurify";
 
 const InquiryView = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;

@@ -5,7 +5,7 @@ const loginEmailState = atom({
   default: "test",
 });
 const loginNicknameState = atom({
-  key: "loginNicknameStaet",
+  key: "loginNicknameState",
   default: "",
 });
 const memberLevelState = atom({
@@ -28,4 +28,10 @@ const isLoginState = selector({
   },
 });
 
-export { loginEmailState, memberLevelState, isLoginState, memberNicknameState };
+export {
+  loginEmailState,
+  memberLevelState,
+  isLoginState,
+  memberNicknameState,
+  loginNicknameState,
+};

@@ -10,6 +10,7 @@ import {
   memberLevelState,
   isLoginState,
   memberNicknameState,
+  loginNicknameState,
 } from "../utils/RecoilData";
 import axios from "axios";
 
