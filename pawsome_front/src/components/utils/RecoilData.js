@@ -24,10 +24,4 @@ const isLoginState = selector({
   },
 });
 
-export {
-  loginEmailState,
-  memberLevelState,
-  isLoginState,
-  memberNicknameState,
-  loginNicknameState,
-};
+export { loginEmailState, memberLevelState, isLoginState, memberNicknameState };
