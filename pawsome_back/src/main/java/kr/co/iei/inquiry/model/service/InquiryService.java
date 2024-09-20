@@ -47,4 +47,9 @@ public class InquiryService {
 		int result=inquiryDao.deleteInquiry(inquiryNo);
 		return result;
 	}
+	@Transactional
+	public int updateInquiry(Inquiry inquiry) {
+		int result=inquiryDao.updateInquiry(inquiry);
+		return result;
+	}
 }

@@ -35,7 +35,7 @@ const InquiryFrm = (props) => {
                   <div>타입</div>
                 </th>
                 <th>
-                  <label htmlFor="account">계정관련</label>
+                  <label htmlFor="account">계정 관련</label>
                   <div className="input-item">
                     <input
                       type="radio"

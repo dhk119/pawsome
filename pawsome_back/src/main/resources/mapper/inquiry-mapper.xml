@@ -16,4 +16,7 @@
 	<delete id="deleteInquiry">
 		delete from inquiry where inquiry_no=#{inquiryNo}	
 	</delete>
+	<update id="updateInquiry">
+		update inquiry set inquiry_title=#{inquiryTitle}, inquiry_content=#{inquiryContent}, inquiry_type=#{inquiryType} where inquiry_no=#{inquiryNo}
+	</update>
 </mapper>
