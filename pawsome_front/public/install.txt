@@ -14,3 +14,5 @@ npm install react-icons --save
 
 문정원 2024-09-20 10:19
 npm i bootstrap@5.3.3
+이승환 2024-09-20 12:12
+npm install react-quill
