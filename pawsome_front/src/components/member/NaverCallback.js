@@ -23,6 +23,8 @@ const NaverCallback = () => {
         .then((res) => {
           setLoginEmail(res.data.memberEmail);
           setMemberLevel(res.data.memberLevel);
+          console.log(res);
+          console.log("테스트!!!!!!!!!!!!!!!!!!");
           // 로그인 후 받은 토큰을 저장
           axios.defaults.headers.common["Authorization"] = res.data.accessToken;
           window.localStorage.setItem("refreshToken", res.data.refreshToken);
