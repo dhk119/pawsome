@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,5 +45,15 @@ public class InquiryController {
 		String savepath=root+"/editor/";
 		String filepath=fileUtil.upload(savepath, image);
 		return ResponseEntity.ok("/editor/"+filepath);
+	}
+	@GetMapping("/inquiryNo/{inquiryNo}")
+	public ResponseEntity<Inquiry> selectOneInquiry(@PathVariable int inquiryNo){
+		Inquiry inquiry=inquiryService.selectOneInquiry(inquiryNo);
+		return ResponseEntity.ok(inquiry);
+	}
+	@DeleteMapping(value = "/{inquiryNo}")
+	public ResponseEntity<Integer> deleteinquiry(@PathVariable int inquiryNo){
+		int result=inquiryService.deleteInquiry(inquiryNo);
+			return ResponseEntity.ok(result); 
 	}
 }

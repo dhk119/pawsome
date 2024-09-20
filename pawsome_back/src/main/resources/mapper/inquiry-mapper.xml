@@ -10,4 +10,10 @@
 	<insert id="insertInquiry">
 		insert into inquiry values(inquiry_seq.nextval, #{inquiryTitle},#{inquiryContent},sysdate,#{inquiryType},#{memberEmail})
 	</insert>
+	<select id="selectOneInquiry" resultType="inquiry">
+		select * from inquiry where inquiry_no=#{inquiryNo}
+	</select>
+	<delete id="deleteInquiry">
+		delete from inquiry where inquiry_no=#{inquiryNo}	
+	</delete>
 </mapper>

@@ -16,4 +16,8 @@ public interface InquiryDao {
 
 	int insertInquiry(Inquiry inquiry);
 
+	Inquiry selectOneInquiry(int inquiryNo);
+
+	int deleteInquiry(int inquiryNo);
+
 }

@@ -61,7 +61,7 @@ const InquiryView = () => {
         </div>
         {loginEmail === inquiry.memberEmail ? (
           <div>
-            <Link to={`/inquiry/update/${inquiry.memberEmail}`}>수정</Link>
+            <Link to={`/inquiry/update/${inquiry.inquiryNo}`}>수정</Link>
             <button type="button" onClick={deleteBoard}>
               삭제
             </button>
