@@ -66,14 +66,13 @@ const BoardList = () => {
       <div className="list-board">
         <div className="board-all-wrap">
           <div className="write-wrap">
-            {isLogin ? <Link to="#">글쓰기</Link> : ""}
+            {isLogin ? <Link to="/board/write">글쓰기</Link> : ""}
           </div>
           <div className="board-list-wrap">
             <ul className="posting-wrap">
               {boardList.map((board, i) => {
                 return <BoardItem board={board} />;
               })}
-              ;
             </ul>
             <div className="list-list">
               <div className="start">
