@@ -1,8 +1,26 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import * as FaIcons from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { isLoginState } from "../utils/RecoilData";
+import ScrollToTop from "react-scroll-to-top";
+import axios from "axios";
 
 const BoardList = () => {
+  const isLogin = useRecoilValue(isLoginState);
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [boardList, setBoardList] = useState([]);
+  const [reqPage, setReqPage] = useState(1);
+  const [tag, setTag] = useState(0);
+  useEffect(() => {
+    axios
+      .get(`${backServer}/board/list/${tag}/${reqPage}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [reqPage, tag]);
   return (
     <section className="section board-wrap">
       <nav className="nav board-nav">
@@ -28,8 +46,17 @@ const BoardList = () => {
         </ul>
       </nav>
       <div className="list-board">
-        <ul className="posting-wrap">
-          <li>
+        <div className="board-all-wrap">
+          <div className="write-wrap">
+            {isLogin ? <Link to="#">글쓰기</Link> : ""}
+          </div>
+          <div className="board-list-wrap">
+            {/* <ul className="posting-wrap">
+              {boardList.map((board, i) => {
+                return <BoardItem />;
+              })}
+              ;
+            </ul> */}
             <div className="list-list">
               <div className="start">
                 <div>#태그</div>
@@ -47,17 +74,46 @@ const BoardList = () => {
                 </div>
               </div>
             </div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
       <div className="up-btn">
-        <button>
-          <FaIcons.FaArrowCircleUp
-            style={{ width: "40px", height: "40px", marginTop: "30px" }}
-          />
-        </button>
+        <ScrollToTop smooth />
       </div>
     </section>
   );
 };
+// const BoardItem = (props) => {
+//   const board = props.board;
+//   const [boardLike, setBoardLike] = useState(0);
+//   const navigate = useNavigate();
+//   return (
+//     <li
+//       className="posting-item"
+//       onClick={() => {
+//         navigate(`/board/view/${board.boardNo}`);
+//       }}
+//     >
+//       <div className="posting-info">
+//         <div className="posting-tag">{board.boardTag}</div>
+//         <div className="posting-sub-info">
+//           {board.boardTitle} {board.memberNickname} {board.readCount}{" "}
+//           {boardLike}
+//         </div>
+//       </div>
+//       <div className="posting-img">
+//         <img
+//           onScroll={
+//             board.boardThumb
+//               ? `localhost3000:8282/board/thumb/${board.boardThumb}`
+//               : ""
+//           }
+//         ></img>
+//       </div>
+//       <div>
+//         <div>댓글갯수</div>
+//       </div>
+//     </li>
+//   );
+// };
 export default BoardList;

@@ -62,6 +62,7 @@ function App() {
           <Route path="/board/*" element={<BoardMain />} />
           <Route path="/callback" element={<NaverCallback />} />
           <Route path="/market/*" element={<MarketMain />} />
+          {/* <Route path="/map" element={<Map />} /> */}
         </Routes>
       </main>
       <Footer />

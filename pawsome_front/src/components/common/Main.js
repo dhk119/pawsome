@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ScrollToTop from "react-scroll-to-top";
 const Main = () => {
   return (
     <section className="section" style={{ width: "100%" }}>
@@ -35,10 +36,15 @@ const Main = () => {
       </div>
       <div className="map-wrap">
         <div className="map-title">
-          <span className="material-icons" style={{ color: "#ffa518" }}>
-            pets
+          <span>
+            <span
+              className="material-icons"
+              style={{ color: "#ffa518", marginRight: "15px" }}
+            >
+              pets
+            </span>
+            동물병원
           </span>
-          <span>동물병원</span>
           <span>#가까운 동물병원을 찾아보세요</span>
         </div>
         <div>
@@ -50,10 +56,16 @@ const Main = () => {
                 backgroundColor: "#ffbe58",
               }}
             >
+              <img src="/image/nursecat.png" />
+              <img src="/image/map.png" style={{ marginRight: "210px" }} />
               <img src="/image/doctordog.png" />
             </div>
           </Link>
         </div>
+      </div>
+      <div className="market-preview-wrap"></div>
+      <div className="up-btn">
+        <ScrollToTop smooth />
       </div>
     </section>
   );

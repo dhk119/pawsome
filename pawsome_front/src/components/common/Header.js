@@ -3,6 +3,7 @@ import "./default.css";
 import { useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
+import { IoPersonCircleOutline } from "react-icons/io5";
 import { SidebarData } from "./SidebarData";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
@@ -57,14 +58,13 @@ const HeaderLink = () => {
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
   const isLogin = useRecoilValue(isLoginState);
-  const [loginNickname, setLoginNickname] = useRecoilState(loginNicknameState);
 
   console.log("test : ", loginEmail, memberLevel);
 
   const logout = () => {
     setLoginEmail("");
     setMemberLevel(0);
-    setLoginNickname("");
+    setMemberNickname("");
     delete axios.defaults.headers.common["Authorization"];
     window.localStorage.removeItem("refreshToken");
   };
@@ -73,6 +73,7 @@ const HeaderLink = () => {
       <li>
         {isLogin ? (
           <>
+            <Link to="#">장바구니</Link>
             <Link to="#" onClick={logout}>
               로그아웃
             </Link>
@@ -99,7 +100,10 @@ const HeaderLink = () => {
               <li>
                 {isLogin ? (
                   <>
-                    <Link to="/mypage">{memberNickname}</Link>
+                    <Link to="/mypage">
+                      <IoPersonCircleOutline />
+                      {memberNickname}
+                    </Link>
                   </>
                 ) : (
                   ""
