@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import ProductList from "./ProductList";
+import "./market.css";
 
 const MarketMain = () => {
   return (

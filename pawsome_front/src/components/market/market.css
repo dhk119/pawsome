@@ -1,0 +1,145 @@
+.productList-wrap {
+  width: 1400px;
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: center;
+}
+.type-nav {
+  display: flex;
+  justify-content: center;
+  margin: 15px auto;
+}
+.type-nav > ul {
+  margin: 0;
+}
+.type-nav > ul > li {
+  text-align: center;
+}
+.type-nav > ul > li > a {
+  border: 2px solid #ffa518;
+  border-radius: 10px;
+  margin: 0;
+  line-height: 40px;
+  font-family: ns-b;
+  color: #ffa518;
+  padding: 5px 50px;
+}
+.type-nav > ul > li > a:hover {
+  background-color: #ffa518;
+  color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.main-nav {
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
+}
+.main-nav > ul > li {
+  text-align: center;
+  width: 100px;
+  margin: 0;
+  /*border: 1px solid #ffa518;*/
+}
+.main-nav > ul > li > a {
+  color: #ffa518;
+  line-height: 30px;
+}
+.main-nav > ul > li:hover {
+  background-color: #ffbe58;
+}
+.main-nav > ul > li:hover > a {
+  color: #fff;
+}
+
+.best-item {
+  height: 250px;
+  width: 100%;
+  background-color: #ffd697;
+}
+
+.productList-title {
+  width: 100%;
+  font-size: 14px;
+}
+.productList-title > .productList-category > a {
+  color: #000;
+  margin: 0 3px;
+}
+.productList-filter {
+  display: flex;
+  justify-content: space-between;
+}
+.productList-filter > .number {
+  height: 25px;
+}
+.productList-filter > .number > .text {
+  vertical-align: middle;
+  font-size: 14px;
+  line-height: 25px;
+}
+.productList-filter > .number > .icon > svg {
+  vertical-align: middle;
+  font-size: 16px;
+  margin: 3px;
+}
+.filter {
+  display: flex;
+}
+.filter > * {
+  margin: 0 10px;
+}
+.productList-filter > .filter > a {
+  color: #000;
+}
+.productList-filter > .filter > a:hover {
+  color: #ffa518;
+  font-family: ns-b;
+}
+.productList-filter > .filter > .now {
+  color: #ffa518;
+  font-family: ns-b;
+}
+
+.productList-content {
+  width: 100%;
+  margin: 20px auto;
+  display: flex;
+  flex-wrap: wrap; /*width 넘어가면 아래로*/
+}
+.product-wrap {
+  /*border: 1px solid #ccc;*/
+  padding: 10px;
+  width: 200px;
+  margin: 0px 30px;
+}
+.product-wrap:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.product-thumb {
+  width: 200px;
+  height: 200px;
+  align-self: center;
+  position: relative;
+}
+.product-thumb > img {
+  width: 100%;
+  align-self: center;
+}
+.product-info > * {
+  padding: 3px;
+}
+.product-info > .product-name {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+  overflow-wrap: break-word; /*영단어 줄바꿈*/
+}
+.product-thumb > .product-like {
+  text-align: right;
+  margin-right: 5px;
+  color: #fc1111;
+  font-size: 24px;
+  padding: 0;
+  position: absolute;
+  left: 87%;
+}
