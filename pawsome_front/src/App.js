@@ -59,11 +59,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/admin/*" element={<AdminMain />} />
           <Route path="/inquiry/*" element={<InquiryMain />} />
-          <Route path="/" element={<Main />} />
+          <Route path="/*" element={<Main />} />
           <Route path="/board/*" element={<BoardMain />} />
           <Route path="/callback" element={<NaverCallback />} />
           <Route path="/market/*" element={<MarketMain />} />
-          {/* <Route path="/map" element={<Map />} /> */}
           <Route path="/mypage" element={<Mypage />} />
         </Routes>
       </main>
