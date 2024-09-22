@@ -11,7 +11,6 @@ import {
   memberLevelState,
   isLoginState,
   memberNicknameState,
-  loginNicknameState,
 } from "../utils/RecoilData";
 import axios from "axios";
 
@@ -45,7 +44,7 @@ const MainNavi = () => {
           <Link to="/market/productList">마켓</Link>
         </li>
         <li>
-          <Link to="/board/allList">커뮤니티</Link>
+          <Link to="/board/list">커뮤니티</Link>
         </li>
       </ul>
     </nav>

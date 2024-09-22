@@ -87,3 +87,91 @@
   margin: 10px;
   padding-top: 18px;
 }
+.board-content-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 50px auto;
+}
+.board-inside-wrap {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  width: 1200px;
+}
+
+.writeFrm-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/*게시글 작성 태그 nav*/
+.menu1-bars > button {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  padding: 10px;
+  gap: 400px;
+}
+
+.nav-menu1 {
+  border: 2px solid #ffa518;
+  border-radius: 15px;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 1;
+  right: -100%;
+  transition: 850ms;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+.nav-menu1.active {
+  right: 20%;
+  transition: 350ms;
+}
+.nav-menu1-items > li > span {
+  color: var(--point2);
+  margin: 15px auto;
+  padding: 0px 16px;
+  border-radius: 4px;
+  height: 100%;
+  width: 95%;
+}
+.nav-menu1-items > li > span:hover {
+  color: var(--gray8);
+  background-color: var(--point2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+.writeFrm-btn > div > button {
+  border: 2px solid #ffa518;
+  border-radius: 15px;
+  padding: 2px 20px;
+  background-color: transparent;
+  color: #ffa518;
+  margin: 15px auto;
+  font-size: 16px;
+}
+.writeFrm-btn > div > button:hover {
+  background-color: #ffa518;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+.writeFrm-btn > div > a {
+  border: 2px solid #ffa518;
+  border-radius: 15px;
+  padding: 2px 20px;
+  background-color: transparent;
+  color: #ffa518;
+  margin: 15px auto;
+}
+.writeFrm-btn > div > a:hover {
+  background-color: #ffa518;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
