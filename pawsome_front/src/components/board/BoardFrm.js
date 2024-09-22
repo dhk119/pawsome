@@ -14,10 +14,23 @@ const BoardFrm = (props) => {
   const setBoardFile = props.setBoardFile;
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
-  const [tag, setTag] = useState("");
   const changeTag = (e) => {
     console.log(e);
-    setTag(e.target.innerText);
+    setBoardTag(e.target.innerText);
+  };
+  //첨부파일 화면에 띄울 state
+  const [showBoardFile, setShowBoardFile] = useState([]);
+  //첨부파일 추가시 동작할 함수
+  const addBoardFile = (e) => {
+    const files = e.currentTarget.files; //배열처럼 보이지만 배열이 아니기 때문에 직접for문써서 넣어주기
+    const fileArr = new Array(); //글작성 시 전송할 파일 배열
+    const filenameArr = new Array(); //화면에 노출시킬 파일이름 배열
+    for (let i = 0; i < files.length; i++) {
+      fileArr.push(files[i]);
+      filenameArr.push(files[i].name);
+    }
+    setBoardFile([...boardFile, ...fileArr]);
+    setShowBoardFile([...showBoardFile, ...filenameArr]);
   };
   return (
     <div className="board-writeFrm">
@@ -30,20 +43,20 @@ const BoardFrm = (props) => {
                   {sidebar ? (
                     <button onClick={showSidebar}>
                       <span style={{ color: "#ccc" }}>
-                        {tag === "" ? "주제를 선택해 주세요" : tag}
+                        {boardTag === "" ? "주제를 선택해 주세요" : boardTag}
                       </span>
                       <span>
                         <AiIcons.AiOutlineClose
                           onClick={() => {
-                            setTag("");
+                            setBoardTag("");
                           }}
                         />
                       </span>
                     </button>
                   ) : (
                     <button onClick={showSidebar}>
-                      <span style={{ color: "#ccc" }}>
-                        {tag === "" ? "주제를 선택해 주세요" : tag}
+                      <span style={{ color: "#ffa518" }}>
+                        {boardTag === "" ? "주제를 선택해 주세요" : boardTag}
                       </span>
                       <span>
                         <AiIcons.AiOutlineRight />
@@ -97,7 +110,30 @@ const BoardFrm = (props) => {
             </>
           </li>
           <li>
-            <input placeholder="제목을 입력해 주세요"></input>
+            <input
+              className="board-content-title"
+              placeholder="제목을 입력해 주세요"
+            ></input>
+          </li>
+          <li>
+            <div className="board-img-wrap">
+              <label htmlFor="boardFile">
+                <img src="/image/default_img.png" />
+              </label>
+              <input
+                className="img-file"
+                type="file"
+                id="boardFile"
+                onChange={addBoardFile}
+                multiple
+              />
+            </div>
+          </li>
+          <li>
+            <div className="board-write-alert">
+              <AiIcons.AiOutlineAlert /> 욕설, 광고 등{" "}
+              <Link to="#">운영정책</Link>위반시 제재를 받으실 수 있습니다.
+            </div>
           </li>
         </ul>
       </div>
