@@ -38,7 +38,7 @@ const MainNavi = () => {
     <nav className="nav">
       <ul>
         <li>
-          <Link to="#">시설</Link>
+          <Link to="/petplant">시설</Link>
         </li>
         <li>
           <Link to="/market/productList">마켓</Link>
