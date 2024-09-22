@@ -17,7 +17,8 @@ import BoardMain from "./components/board/BoardMain";
 import NaverCallback from "./components/member/NaverCallback";
 import MarketMain from "./components/market/MarketMain";
 import Mypage from "./components/member/Mypage";
-import PetPlant from "./components/plant/PetPlant";
+import PlantMain from "./components/service/ServiceMain";
+import ServiceMain from "./components/service/ServiceMain";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -65,7 +66,7 @@ function App() {
           <Route path="/callback" element={<NaverCallback />} />
           <Route path="/market/*" element={<MarketMain />} />
           <Route path="/mypage" element={<Mypage />} />
-          <Route path="/petplant" element={<PetPlant />} />
+          <Route path="/service/*" element={<ServiceMain />} />
         </Routes>
       </main>
       <Footer />
