@@ -119,29 +119,34 @@
   padding: 10px;
   width: 200px;
   margin: 0px 30px;
+  margin-bottom: 10px;
 }
 .product-wrap:hover {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
-.product-thumb {
+.product-wrap > .product-thumb {
   width: 200px;
   height: 200px;
   align-self: center;
   position: relative;
 }
-.product-thumb > img {
+.product-wrap > .product-thumb > img {
   width: 100%;
   align-self: center;
 }
-.product-info > * {
+.product-wrap > .product-info {
+  width: 100%;
+}
+.product-wrap > .product-info > * {
   padding: 3px;
 }
-.product-info > .product-name {
+.product-wrap > .product-info > .product-name {
   border-bottom: 1px solid #ccc;
   padding-bottom: 5px;
   overflow-wrap: break-word; /*영단어 줄바꿈*/
+  font-size: 20px;
 }
-.product-thumb > .product-like {
+.product-wrap > .product-thumb > .product-like {
   text-align: right;
   margin-right: 5px;
   color: #fc1111;
@@ -164,42 +169,46 @@
   width: 400px;
   margin-right: 60px;
 }
-.product-info {
+.productDetail > .product-info {
   width: 800px;
 }
-.product-info > * {
+.productDetail > .product-info > * {
   margin: 10px 0;
 }
-.product-info > .product-name {
+.productDetail > .product-info > .product-category > a {
+  color: #000;
+}
+.productDetail > .product-info > .product-name {
   padding-bottom: 20px;
   font-size: 26px;
 }
-.product-info > .product-price {
+.productDetail > .product-info > .product-price {
   font-size: 20px;
   padding-top: 5px;
   padding-bottom: 20px;
 }
-.product-info > .product-btn {
+.productDetail > .product-info > .product-btn {
   margin-top: 30px;
 }
 .product-btn {
   display: flex;
   justify-content: space-around;
 }
-.product-btn > button {
+.product-btn > a {
   border: 2px solid #ffa518;
   width: 200px;
   background-color: #fff;
   border-radius: 10px;
   font-size: 18px;
-  margin: 0;
+  margin: 0 20px;
   line-height: 40px;
   font-family: ns-b;
   color: #ffa518;
   padding: 5px 20px;
   cursor: pointer;
+  text-align: center;
 }
-.product-btn > button:hover {
+.product-btn > a:hover {
   background-color: #ffa518;
   color: #fff;
 }
@@ -211,26 +220,22 @@
   background-color: #fff;
   border: 1px solid #ffd697;
 }
-.detail-menu-wrap > li {
+.detail-menu-wrap li {
   float: left;
   padding: 15px;
   cursor: pointer;
+  color: #000;
 }
 .tab:hover {
   background-color: #ffd697;
 }
-.detail-menu-wrap > .active-tab {
+.detail-menu-wrap .active-tab {
   background-color: #ffd697;
+  font-family: ns-b;
 }
 .tab-content {
-  padding: 15px;
+  padding: 20px 50px;
   border: 1px solid #ffd697;
   border-top: none;
-  /*margin-bottom: 40px;*/
-}
-.tab-content > div {
-  display: none;
-}
-.tab-content > .active-content {
-  display: block;
+  margin-bottom: 40px;
 }

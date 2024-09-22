@@ -53,7 +53,8 @@ const MarketMain = () => {
       <div className="best-item"></div>
       <Routes>
         <Route path="productList" element={<ProductList />}></Route>;
-        <Route path="productDetail" element={<ProductDetail />}></Route>
+        <Route path="productDetail/*" element={<ProductDetail />}></Route>
+        {/*별처리 해주어야 서브라우팅 사용 가능 (하위에서 전환가능하게)*/}
       </Routes>
     </section>
   );

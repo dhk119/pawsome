@@ -36,6 +36,7 @@ const ProductList = () => {
         </div>
       </div>
       <div className="productList-content">
+        {/* navigate로 click => 상품 번호 같이 넘겨주는 걸로(주소창에 변경있게) */}
         <div className="product-wrap">
           <div className="product-thumb">
             <div className="product-like">

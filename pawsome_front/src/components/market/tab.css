@@ -1,0 +1,38 @@
+/*review*/
+.review-wrap {
+  width: 100%;
+  align-self: center;
+}
+.star-wrap {
+  height: 300px;
+  background-color: antiquewhite;
+}
+.review-detail {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+}
+.review-detail > .review-title {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ccc;
+}
+.review-detail > .review-title > div {
+  display: flex;
+}
+.writer {
+  width: 200px;
+}
+.review-detail > .review-content {
+  padding: 10px 15px;
+}
+
+/*guide*/
+.guide-wrap > .content-wrap {
+  margin-bottom: 20px;
+}
+.guide-wrap > .content-wrap > .title {
+  font-size: 18px;
+  font-family: ns-b;
+  margin-bottom: 5px;
+}
