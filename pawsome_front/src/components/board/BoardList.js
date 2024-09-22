@@ -10,10 +10,10 @@ const BoardList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [boardList, setBoardList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
-  const [tag, setTag] = useState(0);
+  const [boardTag, setBoardTag] = useState(0);
   useEffect(() => {
     axios
-      .get(`${backServer}/board/list/${tag}/${reqPage}`)
+      .get(`${backServer}/board/list/${boardTag}/${reqPage}`)
       .then((res) => {
         console.log(res);
         setBoardList(res.data.list);
@@ -21,12 +21,12 @@ const BoardList = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPage, tag]);
+  }, [reqPage, boardTag]);
   const changeTag = (e) => {
-    setTag(e.target.id);
+    setBoardTag(e.target.id);
     setReqPage(1);
   };
-  console.log(tag);
+  console.log(boardTag);
   return (
     <section className="section board-wrap">
       <nav className="nav board-nav">
@@ -101,11 +101,11 @@ const BoardList = () => {
   );
 };
 const BoardTag = (props) => {
-  const tag = props.tag;
-  const setTag = props.setTag;
+  const boardTag = props.boardTag;
+  const setBoardTag = props.setBoardTag;
   const reqPage = props.reqPage;
   const setReqPage = props.setReqPage;
-  return <li>{tag}전체</li>;
+  return <li>{boardTag}전체</li>;
 };
 
 const BoardItem = (props) => {
