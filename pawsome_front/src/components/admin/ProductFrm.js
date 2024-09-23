@@ -165,10 +165,10 @@ const ProductFrm = (props) => {
             </tr>
             <tr>
               <th>
-                <div>공개여부</div>
+                <div>등록여부</div>
               </th>
               <th>
-                <label htmlFor="show">공개</label>
+                <label htmlFor="show">등록</label>
                 <div className="input-item">
                   <input
                     type="radio"
@@ -180,7 +180,7 @@ const ProductFrm = (props) => {
                 </div>
               </th>
               <th>
-                <label htmlFor="hidden">비공개</label>
+                <label htmlFor="hidden">미등록</label>
                 <div className="input-item">
                   <input
                     type="radio"
