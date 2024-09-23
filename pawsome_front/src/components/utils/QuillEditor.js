@@ -7,6 +7,13 @@ Quill.register("modules/ImageResize", ImageResize);
 
 const QuillEditor = (props) => {
   const [value, setValue] = useState("");
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const inquiryContent = props.inquiryContent;
+  const boardContent = props.boardContent;
+  const setInquiryContent = props.setInquiryContent;
+  const setBoardContent = props.setBoardContent;
+  const type = props.type;
+  const editorRef = useRef(null);
   const formats = [
     "font",
     "header",
@@ -78,22 +85,29 @@ const QuillEditor = (props) => {
       },
     };
   }, []);
-  const backServer = process.env.REACT_APP_BACK_SERVER;
-  const inquiryContent = props.inquiryContent;
-  const setInquiryContent = props.setInquiryContent;
-  const editorRef = useRef(null);
-
   return (
     <div>
-      <ReactQuill
-        theme="snow"
-        ref={editorRef}
-        formats={formats}
-        onChange={setValue}
-        value={value}
-        modules={modules}
-        style={{ width: "100%", height: "300px" }}
-      ></ReactQuill>
+      {type === 0 ? (
+        <ReactQuill
+          theme="snow"
+          ref={editorRef}
+          formats={formats}
+          onChange={setInquiryContent}
+          value={inquiryContent}
+          modules={modules}
+          style={{ width: "100%", height: "300px" }}
+        ></ReactQuill>
+      ) : (
+        <ReactQuill
+          theme="snow"
+          ref={editorRef}
+          formats={formats}
+          onChange={setBoardContent}
+          value={boardContent}
+          modules={modules}
+          style={{ width: "100%", height: "300px" }}
+        ></ReactQuill>
+      )}
     </div>
   );
 };

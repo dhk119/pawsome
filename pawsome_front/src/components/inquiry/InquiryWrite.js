@@ -64,10 +64,13 @@ const InquiryWrite = () => {
           <QuillEditor
             inquiryContent={inquiryContent}
             setInquiryContent={setInquiryContent}
+            type={0}
           ></QuillEditor>
         </div>
         <div className="button-zone">
-          <button type="submit">등록하기</button>
+          <button type="submit" style={{ marginTop: "50px" }}>
+            등록하기
+          </button>
         </div>
       </form>
     </section>
