@@ -59,21 +59,6 @@ const ProductList = () => {
         {productList.map((product, i) => {
           return <ProductItem key={"product-" + i} product={product} />;
         })}
-
-        {/* 
-        <div className="product-wrap">
-          <div className="product-thumb">
-            <div className="product-like">
-              <FaRegHeart />
-            </div>
-            <img src="/image/basicimage.png"></img>
-          </div>
-          <div className="product-info">
-            <div className="product-name">상품명</div>
-            <div className="product-price">상품가격</div>
-          </div>
-        </div>
-         */}
       </div>
     </>
   );
