@@ -20,7 +20,7 @@ const ProductList = () => {
   return (
     <section>
       <div>제품 리스트</div>
-      {isLogin ? <Link to="/admmin/productRegist">제품등록</Link> : ""}
+      {isLogin ? <Link to="/admin/productRegist">제품등록</Link> : ""}
       <table>
         <thead>
           <tr>
@@ -30,6 +30,7 @@ const ProductList = () => {
             <th>카테고리</th>
             <th>가격</th>
             <th>썸네일</th>
+            <th>제품상세</th>
             <th>등록일</th>
             <th>상품등록</th>
             <th>등록 관리자</th>
@@ -45,9 +46,12 @@ const ProductList = () => {
                 <td>{product.mainCategory}</td>
                 <td>{product.productPrice}</td>
                 <td>
-                  <img src={product.productThumb}></img>
+                  <img
+                    src={`${backServer}/product/thumb/${product.productThumb}`}
+                  ></img>
                 </td>
                 <td>{product.productDetail}</td>
+                <td>{product.productRegDate}</td>
                 <td>{product.productShow}</td>
                 <td>{product.memberEmail}</td>
               </tr>

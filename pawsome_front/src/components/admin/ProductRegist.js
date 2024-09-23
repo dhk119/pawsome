@@ -4,9 +4,11 @@ import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import { loginEmailState } from "../utils/RecoilData";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ProductRegist = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
   const [product, setProduct] = useState({
     productNo: 0,
     productName: "",
@@ -77,7 +79,10 @@ const ProductRegist = () => {
             processData: false,
           },
         })
-        .then((res) => {});
+        .then((res) => {
+          navigate("/admin/productList");
+        })
+        .catch((err) => {});
     } else {
       Swal.fire({
         text: "누락된 입력 값이 있습니다",
