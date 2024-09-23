@@ -43,23 +43,23 @@ const BoardFrm = (props) => {
             <div className="navbar1">
               <Link to="#" className="menu1-bars">
                 {sidebar ? (
-                  <button onClick={showSidebar}>
+                  <div onClick={showSidebar}>
                     <span style={{ color: "#ccc" }}>
                       {boardTag === 0 ? "주제를 선택해 주세요" : boardTag}
                     </span>
                     <span>
                       <AiIcons.AiOutlineClose />
                     </span>
-                  </button>
+                  </div>
                 ) : (
-                  <button onClick={showSidebar}>
-                    <span style={{ color: "#ffa518" }}>
+                  <div onClick={showSidebar}>
+                    <span style={{ color: "#ccc" }}>
                       {boardTag === 0 ? "주제를 선택해 주세요" : boardTag}
                     </span>
                     <span>
                       <AiIcons.AiOutlineRight />
                     </span>
-                  </button>
+                  </div>
                 )}
               </Link>
             </div>
