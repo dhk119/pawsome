@@ -117,17 +117,16 @@ const BoardFrm = (props) => {
         </li>
         <li>
           {boardTag == "#오산완" && (
-            <div id="map-box" style={{ textAlign: "center" }}>
+            <div
+              id="map-box"
+              style={{
+                textAlign: "center",
+              }}
+            >
               <span>
                 * 현재 위치가 나오지 않으면 위치 사용을 허용으로 변경해주세요. *
               </span>
-              <div
-                id="walkMap"
-                style={{
-                  width: "500px",
-                  height: "400px",
-                }}
-              >
+              <div id="walkMap">
                 <WalkMap />
               </div>
               <span style={{ fontSize: "12px" }}>
