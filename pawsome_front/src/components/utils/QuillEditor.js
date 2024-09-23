@@ -8,11 +8,8 @@ Quill.register("modules/ImageResize", ImageResize);
 const QuillEditor = (props) => {
   const [value, setValue] = useState("");
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const inquiryContent = props.inquiryContent;
-  const boardContent = props.boardContent;
-  const setInquiryContent = props.setInquiryContent;
-  const setBoardContent = props.setBoardContent;
-  const type = props.type;
+  const content = props.content;
+  const setContent = props.setContent;
   const editorRef = useRef(null);
   const formats = [
     "font",
@@ -87,27 +84,15 @@ const QuillEditor = (props) => {
   }, []);
   return (
     <div>
-      {type === 0 ? (
-        <ReactQuill
-          theme="snow"
-          ref={editorRef}
-          formats={formats}
-          onChange={setInquiryContent}
-          value={inquiryContent}
-          modules={modules}
-          style={{ width: "100%", height: "300px" }}
-        ></ReactQuill>
-      ) : (
-        <ReactQuill
-          theme="snow"
-          ref={editorRef}
-          formats={formats}
-          onChange={setBoardContent}
-          value={boardContent}
-          modules={modules}
-          style={{ width: "100%", height: "300px" }}
-        ></ReactQuill>
-      )}
+      <ReactQuill
+        theme="snow"
+        ref={editorRef}
+        formats={formats}
+        onChange={setContent}
+        value={content}
+        modules={modules}
+        style={{ width: "100%", height: "300px" }}
+      ></ReactQuill>
     </div>
   );
 };
