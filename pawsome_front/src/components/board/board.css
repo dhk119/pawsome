@@ -69,6 +69,7 @@
   padding: 0px 10px;
   display: flex;
   justify-content: space-between;
+  margin: 15px;
 }
 .start {
   display: flex;
@@ -90,17 +91,16 @@
 .board-content-wrap {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
-  margin: 50px auto;
+  margin: 100px auto;
 }
 .board-inside-wrap {
   display: flex;
   align-items: center;
   flex-direction: column;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  width: 1200px;
+  width: 1000px;
+  border: 3px solid #ffa518;
+  border-radius: 30px;
 }
 
 .writeFrm-btn {
@@ -117,7 +117,9 @@
   padding: 10px;
   gap: 400px;
 }
-
+.menu1-bars > button:hover {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
 .nav-menu1 {
   border: 2px solid #ffa518;
   border-radius: 15px;
@@ -132,7 +134,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .nav-menu1.active {
-  right: 20%;
+  right: 15%;
   transition: 350ms;
 }
 
@@ -176,14 +178,13 @@
   color: #fff;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
+
 .board-content-title {
-  display: flex;
-  justify-content: center;
-  margin: 10px;
+  padding: 10px;
+  margin: 10px auto;
+  width: 529px;
   border: none;
   border-bottom: 1px solid #ccc;
-  width: 100%;
-  padding: 10px;
 }
 .board-img-wrap > label > img {
   border: 1px solid #ffa518;
@@ -193,12 +194,39 @@
   border-radius: 15px;
   margin: 10px auto;
 }
+.board-img-wrap > label:hover {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
 .board-img-wrap > input {
   display: none;
 }
 .board-write-alert {
   border: 1px solid #ccc;
+  border-radius: 15px;
+  text-align: center;
+  color: #ccc;
+  font-size: 14px;
+  margin-top: 10px;
 }
+
+.more-list {
+  display: flex;
+  justify-content: center;
+  border: 2px solid #ffa518;
+  border-radius: 15px;
+  padding: 2px 10px;
+  background-color: transparent;
+  color: #ffa518;
+  margin: 15px auto;
+  width: 50px;
+}
+.more-list:hover {
+  background-color: #ffa518;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+
 /*산책 지도*/
 .distance-box {
   background-color: rgba(255, 255, 255, 0.486);

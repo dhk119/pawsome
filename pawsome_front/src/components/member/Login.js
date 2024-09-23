@@ -26,7 +26,7 @@ const Login = () => {
 
   //네이버 로그인
   const NAVER_CLIENT_ID = "mDIMmlDCzICGJPSiZ68R";
-  const REDIRECT_URI = "http://localhost:3000/callback"; // Callback URL
+  const REDIRECT_URI = "http://localhost:3000/callback/naver"; // Callback URL
   const STATE = "flase";
   const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=${STATE}&redirect_uri=${REDIRECT_URI}`;
 
@@ -100,7 +100,7 @@ const Login = () => {
               </Link>
             </p>
           </form>
-          <h3>간편하게 회원가입 하기</h3>
+          <h3>간편하게 로그인 하기</h3>
           <div className="social-login">
             <img onClick={NaverLogin} src="/image/naver_btn.png" />
           </div>

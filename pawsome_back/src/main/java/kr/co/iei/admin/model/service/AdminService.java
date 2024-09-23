@@ -35,5 +35,10 @@ public class AdminService {
 		map.put("pi",pi);
 		return map;
 	}
+	@Transactional
+	public int updateShow(ProductDTO product) {
+		int result=marketDao.updateShow(product);
+		return result;
+	}
 	
 }

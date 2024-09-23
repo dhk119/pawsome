@@ -2,12 +2,19 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { loginEmailState, memberLevelState } from "../utils/RecoilData";
+import {
+  loginEmailState,
+  memberLevelState,
+  memberNicknameState,
+} from "../utils/RecoilData";
 import Swal from "sweetalert2";
 
 const NaverCallback = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const [memberNickname, setMemberNickname] =
+    useRecoilState(memberNicknameState);
+  useRecoilState(memberNicknameState);
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
 
@@ -22,21 +29,24 @@ const NaverCallback = () => {
         .then((res) => {
           setLoginEmail(res.data.memberEmail);
           setMemberLevel(res.data.memberLevel);
-          console.log(res);
-          console.log("테스트!!!!!!!!!!!!!!!!!!");
-          axios.defaults.headers.common["Authorization"] = res.data.accessToken;
-          window.localStorage.setItem("refreshToken", res.data.refreshToken);
-          navigate("/");
+          setMemberNickname(res.data.memberNickname);
+          if (res.data.isMember) {
+            axios.defaults.headers.common["Authorization"] =
+              res.data.accessToken;
+            window.localStorage.setItem("refreshToken", res.data.refreshToken);
+            navigate("/");
+          } else {
+            Swal.fire({ text: "회원가입이 필요합니다.", icon: "error" });
+            navigate("/naverjoin", {
+              state: { naverUserInfo: res.data, isMember: false },
+            });
+          }
         })
         .catch((err) => {
-          console.error(err);
-          Swal.fire({
-            text: "네이버 로그인에 실패했습니다.",
-            icon: "error",
-          });
+          Swal.fire({ text: "로그인에 실패했습니다.", icon: "error" });
         });
     }
-  }, [backServer, navigate, setLoginEmail, setMemberLevel]);
+  }, []);
 
   return <div>로딩...</div>;
 };
