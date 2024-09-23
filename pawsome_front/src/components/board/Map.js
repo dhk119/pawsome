@@ -63,7 +63,17 @@ const Map = () => {
     }
   }, []);
 
-  return <div id="map" style={{ width: "100%", height: "400px" }} />;
+  return (
+    <div
+      id="map"
+      style={{
+        width: "1200px",
+        marginLeft: "350px",
+        minHeight: "800px",
+        margin: "100px auto",
+      }}
+    />
+  );
 };
 
 export default Map;

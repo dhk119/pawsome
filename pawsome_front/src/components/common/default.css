@@ -314,3 +314,23 @@ a {
 .map-wrap > div:last-child > a > div > img:last-child {
   margin-right: 120px;
 }
+.map-wrap > div:last-child a:hover {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+.api-wrap {
+  display: flex;
+  justify-content: center;
+  gap: 200px;
+}
+.weather-wrap {
+  width: 500px;
+  height: 500px;
+  margin: 50px;
+  background-color: var(--main1);
+}
+.video-wrap {
+  width: 500px;
+  height: 500px;
+  margin: 50px;
+  background-color: var(--main1);
+}

@@ -23,18 +23,24 @@ const BoardFrm = (props) => {
   //첨부파일 화면에 띄울 state
   const [showBoardFile, setShowBoardFile] = useState([]);
   //첨부파일 추가시 동작할 함수
+  const [countImg, setCountImg] = useState(0);
   const addBoardFile = (e) => {
     const files = e.currentTarget.files; //배열처럼 보이지만 배열이 아니기 때문에 직접for문써서 넣어주기
     const fileArr = new Array(); //글작성 시 전송할 파일 배열
-    const filenameArr = new Array(); //화면에 노출시킬 파일이름 배열
+    const fileimgArr = new Array(); //화면에 노출시킬 파일이미지 배열
     for (let i = 0; i < files.length; i++) {
       fileArr.push(files[i]);
-      filenameArr.push(files[i].name);
+      const reader = new FileReader();
+      reader.readAsDataURL(files[i]);
+      reader.onloadend = () => {
+        fileimgArr.push(reader.result);
+        setShowBoardFile(fileimgArr);
+      };
     }
     setBoardFile([...boardFile, ...fileArr]);
-    setShowBoardFile([...showBoardFile, ...filenameArr]);
+    setShowBoardFile([...showBoardFile, ...fileimgArr]);
+    setCountImg(showBoardFile.length);
   };
-
   return (
     <div className="board-writeFrm">
       <ul>
@@ -151,6 +157,22 @@ const BoardFrm = (props) => {
               onChange={addBoardFile}
               multiple
             />
+            {showBoardFile.map((fileimg, i) => {
+              const deleteFile = () => {
+                boardFile.splice(i, 1);
+                setBoardFile([...boardFile]);
+                showBoardFile.splice(i, 1);
+                setShowBoardFile([...showBoardFile]);
+              };
+              return (
+                <div className="preview-img" key={"newFile-" + i}>
+                  <img className="fileimg" src={fileimg} />
+                  <span className="del-file-icon" onClick={deleteFile}>
+                    <AiIcons.AiOutlineCloseCircle />
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </li>
         <li>
