@@ -18,5 +18,6 @@ public class BoardDTO {
 	private String boardThumb;
 	private int readCount;
 	private String regDate;
-	private String memberEmail;
+	private String memberNickname;
+	private int boardLike;
 }
