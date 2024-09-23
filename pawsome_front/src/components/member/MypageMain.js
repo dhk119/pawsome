@@ -6,8 +6,10 @@ import {
   memberNicknameState,
 } from "../utils/RecoilData";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { Link, Route, Routes } from "react-router-dom";
+import MypageProfile from "./MypageProfile";
 
-const Mypage = () => {
+const MypageMain = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
   const [memberNickname, setMemberNickname] =
@@ -18,29 +20,32 @@ const Mypage = () => {
     <div className="mypage-body">
       <div className="side-bar">
         <div className="user-info">
-          <div className="profile-img"></div>
+          <div>
+            <img className="profile-img" src="/image/paw.png" />
+          </div>
           <div>{memberNickname}</div>
         </div>
         <div className="profile-menu">
           <ul>
-            <li>프로필</li>
-            <li>일정</li>
-            <li>주문조회</li>
+            <li>
+              <Link to="/mypage/profile">프로필</Link>
+            </li>
+            <li>
+              <Link to="#">일정</Link>
+            </li>
+            <li>
+              <Link to="#">주문조회</Link>
+            </li>
           </ul>
         </div>
       </div>
       <div className="mypage-wrap">
-        <div className="profile-card">
-          <img />
-          test
-        </div>
-        <div className="pet-card">
-          <img />
-          test
-        </div>
+        <Routes>
+          <Route path="/profile" element={<MypageProfile />} />
+        </Routes>
       </div>
     </div>
   );
 };
 
-export default Mypage;
+export default MypageMain;

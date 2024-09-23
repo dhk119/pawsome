@@ -120,4 +120,10 @@ public class MemberController {
 	    return ResponseEntity.ok(result);
 	}
 	
+	@PostMapping(value = "/profile")
+	public ResponseEntity<MemberDTO> selectOneMember(String loginEmail) {
+		MemberDTO member = memberService.selectOneMember(loginEmail);
+		return ResponseEntity.ok(member);
+	}
+	
 }
