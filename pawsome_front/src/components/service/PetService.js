@@ -10,13 +10,13 @@ const PetService = () => {
             <Link to="/service/allMap">반려동물 시설 검색</Link>
           </li>
           <li>
-            <Link to="#">멍BTI</Link>
+            <Link to="/service/mbti">멍BTI</Link>
           </li>
           <li>
-            <Link to="#">사료추천</Link>
+            <Link to="/service/feedSuggest">사료추천</Link>
           </li>
           <li>
-            <Link to="#">반려동물 등록 조회</Link>
+            <Link to="/service/recordList">반려동물 등록 조회</Link>
           </li>
         </ul>
       </nav>
