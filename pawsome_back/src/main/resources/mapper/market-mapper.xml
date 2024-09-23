@@ -4,4 +4,10 @@
 	<insert id="insertProduct">
 		insert into product values (product_seq.nextval,#{productName},#{typeCategory},#{mainCategory},#{productPrice},#{productThumb},#{productDetail},sysdate,#{productShow},#{memberEmail})
 	</insert>
+	<select id="totalCount" resultType="int">
+		select count(*) from product
+	</select>
+	<select id="selectProductList" resultType="product">
+		select * from (select rownum as rnum, b.* from(SELECT * from product order by product_no desc)b) where rnum BETWEEN #{start} and #{end}
+	</select>
 </mapper>

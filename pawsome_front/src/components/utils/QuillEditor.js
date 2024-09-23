@@ -1,6 +1,6 @@
 import ImageResize from "@looop/quill-image-resize-module-react";
 import axios from "axios";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 Quill.register("modules/ImageResize", ImageResize);

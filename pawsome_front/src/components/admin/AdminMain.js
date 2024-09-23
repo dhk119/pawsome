@@ -8,8 +8,8 @@ const AdminMain = () => {
       <div>
         <section>
           <Routes>
-            <Route path="productregist" element={<ProductRegist />}></Route>
-            <Route path="productlist" element={<ProductList />}></Route>
+            <Route path="productRegist" element={<ProductRegist />}></Route>
+            <Route path="productList" element={<ProductList />}></Route>
           </Routes>
         </section>
       </div>
