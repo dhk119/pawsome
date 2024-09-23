@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import { isLoginState } from "../utils/RecoilData";
 import { Link } from "react-router-dom";
 import PageNavi from "../utils/PageNavi";
+import { Switch } from "@mui/material";
 
 const ProductList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -17,6 +18,10 @@ const ProductList = () => {
       setPi(res.data.pi);
     });
   }, [reqPage]);
+  const changeShow = (i, productShow) => {
+    productList[i].productShow = productShow;
+    setProductList([...productList]);
+  };
   return (
     <section>
       <div>제품 리스트</div>
@@ -38,6 +43,21 @@ const ProductList = () => {
         </thead>
         <tbody>
           {productList.map((product, i) => {
+            const handleChange = () => {
+              const productShow = product.productShow === "Y" ? "N" : "Y";
+              const obj = {
+                productNo: product.productNo,
+                productShow: productShow,
+              };
+              axios
+                .patch(`${backServer}/admin/product`, obj)
+                .then((res) => {
+                  changeShow(i, productShow);
+                  console.log(res.data);
+                })
+                .catch(() => {});
+              changeShow(i, productShow);
+            };
             return (
               <tr key={"product" + i}>
                 <td>{product.productNo}</td>
@@ -52,7 +72,12 @@ const ProductList = () => {
                 </td>
                 <td>{product.productDetail}</td>
                 <td>{product.productRegDate}</td>
-                <td>{product.productShow}</td>
+                <td>
+                  <Switch
+                    checked={product.productShow === "Y"}
+                    onChange={handleChange}
+                  />
+                </td>
                 <td>{product.memberEmail}</td>
               </tr>
             );

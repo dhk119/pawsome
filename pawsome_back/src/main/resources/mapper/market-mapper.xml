@@ -21,4 +21,7 @@
 	<select id="selectProductAllList" resultType="product">
 		select * from (select rownum as rnum, b.* from(SELECT * from product order by product_no desc)b) where rnum BETWEEN #{start} and #{end}
 	</select>
+	<update id="updateShow">
+		update product set product_show=#{productShow} where product_no=#{productNo}
+	</update>
 </mapper>
