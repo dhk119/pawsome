@@ -67,137 +67,120 @@ const ProductFrm = (props) => {
             onChange={changeThumb}
           ></input>
         </div>
-        <table className="tbl">
-          <thead></thead>
-          <tbody>
-            <tr>
-              <th>
-                <label htmlFor="productName">제품명</label>
-              </th>
-              <td>
-                <div className="input-item">
-                  <input
-                    type="text"
-                    id="productName"
-                    name="productName"
-                    value={productName}
-                    onChange={setProductName}
-                  ></input>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <div>제품 품종</div>
-              </th>
-              <th>
-                <label htmlFor="dog">강아지</label>
-                <div className="input-item">
-                  <input
-                    type="radio"
-                    id="dog"
-                    name="typeCategory"
-                    value={1}
-                    onChange={setTypeCategory}
-                  ></input>
-                </div>
-              </th>
-              <th>
-                <label htmlFor="cat">고양이</label>
-                <div className="input-item">
-                  <input
-                    type="radio"
-                    id="cat"
-                    name="typeCategory"
-                    value={2}
-                    onChange={setTypeCategory}
-                  ></input>
-                </div>
-              </th>
-            </tr>
-            <tr>
-              <th>
-                <label htmlFor="mainCategory">제품 메인 카테고리</label>
-              </th>
-              <td>
-                <div className="input-item">
-                  <input
-                    type="text"
-                    id="mainCategory"
-                    name="mainCategory"
-                    value={mainCategory}
-                    onChange={setMainCategory}
-                  ></input>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <label htmlFor="productPrice">제품 가격</label>
-              </th>
-              <td>
-                <div className="input-item">
-                  <input
-                    type="text"
-                    id="productPrice"
-                    name="productPrice"
-                    value={productPrice}
-                    onChange={setProductPrice}
-                  ></input>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <label htmlFor="productDetail">제품 상세정보</label>
-              </th>
-              <td>
-                <div className="input-item">
-                  <input
-                    type="text"
-                    id="productDetail"
-                    name="productDetail"
-                    value={productDetail}
-                    onChange={setProductDetail}
-                  ></input>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <div>등록여부</div>
-              </th>
-              <th>
-                <label htmlFor="show">등록</label>
-                <div className="input-item">
-                  <input
-                    type="radio"
-                    id="show"
-                    name="productShow"
-                    value={"Y"}
-                    onChange={setProductShow}
-                  ></input>
-                </div>
-              </th>
-              <th>
-                <label htmlFor="hidden">미등록</label>
-                <div className="input-item">
-                  <input
-                    type="radio"
-                    id="hidden"
-                    name="productShow"
-                    value={"N"}
-                    onChange={setProductShow}
-                  ></input>
-                </div>
-              </th>
-            </tr>
-            <tr>
-              <th>제품 등록 관리자 이메일</th>
-              <td>{memberEmail}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div>
+          <div>
+            <label htmlFor="productName">제품명</label>
+          </div>
+          <div>
+            <div className="admin-input-item">
+              <input
+                type="text"
+                id="productName"
+                name="productName"
+                value={productName}
+                onChange={setProductName}
+              ></input>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div>
+            <div>제품 품종</div>
+          </div>
+          <div className="admin-input-wrap">
+            <label htmlFor="dog">강아지</label>
+            <input
+              type="radio"
+              id="dog"
+              name="typeCategory"
+              value={1}
+              onChange={setTypeCategory}
+            ></input>
+            <label htmlFor="cat">고양이</label>
+            <input
+              type="radio"
+              id="cat"
+              name="typeCategory"
+              value={2}
+              onChange={setTypeCategory}
+            ></input>
+          </div>
+        </div>
+        <div>
+          <div>
+            <label htmlFor="mainCategory">제품 메인 카테고리</label>
+          </div>
+          <div>
+            <div className="admin-input-item">
+              <input
+                type="text"
+                id="mainCategory"
+                name="mainCategory"
+                value={mainCategory}
+                onChange={setMainCategory}
+              ></input>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div>
+            <label htmlFor="productPrice">제품 가격</label>
+          </div>
+          <div>
+            <div className="admin-input-item">
+              <input
+                type="text"
+                id="productPrice"
+                name="productPrice"
+                value={productPrice}
+                onChange={setProductPrice}
+              ></input>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div>
+            <label htmlFor="productDetail">제품 상세정보</label>
+          </div>
+          <div>
+            <div className="admin-input-item">
+              <input
+                type="text"
+                id="productDetail"
+                name="productDetail"
+                value={productDetail}
+                onChange={setProductDetail}
+              ></input>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div>
+            <div>등록여부</div>
+          </div>
+          <div className="admin-input-wrap">
+            <label htmlFor="show">등록</label>
+            <input
+              type="radio"
+              id="show"
+              name="productShow"
+              value={"Y"}
+              onChange={setProductShow}
+            ></input>
+            <label htmlFor="hidden">미등록</label>
+            <input
+              type="radio"
+              id="hidden"
+              name="productShow"
+              value={"N"}
+              onChange={setProductShow}
+            ></input>
+          </div>
+        </div>
+        <div>
+          <div>제품 등록 관리자 이메일</div>
+          <div>{memberEmail}</div>
+        </div>
       </div>
     </div>
   );

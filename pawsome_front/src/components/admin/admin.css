@@ -1,0 +1,94 @@
+body {
+  color: var(--gray1);
+  font: 14px/24px;
+}
+.admin-tbl {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+admin-tbl th,
+td {
+  padding: 6px 15px;
+}
+admin-tbl th {
+  background: var(--point1);
+  color: #fff;
+  text-align: left;
+}
+admin-tbl tr:first-child th:first-child {
+  border-top-left-radius: 6px;
+}
+admin-tbl tr:first-child th:last-child {
+  border-top-right-radius: 6px;
+}
+admin-tbl td {
+  border-right: 1px solid var(--main1);
+  border-bottom: 1px solid var(--main1);
+}
+admin-tbl td:first-child {
+  border-left: 1px solid var(--main1);
+}
+admin-tbl tr:nth-child(even) td {
+  background: var(--main2);
+}
+admin-tbl tr:last-child td:first-child {
+  border-bottom-left-radius: 6px;
+}
+admin-tbl tr:last-child td:last-child {
+  border-bottom-right-radius: 6px;
+}
+.write {
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  margin-left: 40px;
+  margin-bottom: 20px;
+  background-color: var(--main1);
+  text-align: center;
+  border-radius: 10px;
+}
+.write > a {
+  color: #fff;
+}
+.admin-title {
+  text-align: center;
+  font-size: xx-large;
+  color: var(--point1);
+  font-family: ns-b;
+}
+.admin-input-item {
+  display: flex;
+  gap: 10px;
+}
+.admin-input-item > input {
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.5;
+  border: none;
+  border-bottom: 1px solid var(--gray5);
+  padding: 8px 0px;
+}
+.admin-input-wrap > input[type="radio"] {
+  display: none;
+}
+.admin-input-wrap > input[type="radio"] + label {
+  position: relative;
+  display: block;
+  flex-grow: 1;
+  padding: 8px 0 8px 30px;
+  cursor: pointer;
+  background-color: var(--main1);
+}
+.admin-input-wrap > input[type="radio"] + label::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 24px;
+  height: 24px;
+  color: var(--main3);
+  border-radius: 50%;
+  background-color: var(--main1);
+}

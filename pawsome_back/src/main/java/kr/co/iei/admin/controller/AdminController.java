@@ -45,7 +45,6 @@ public class AdminController {
 	}
 	@PatchMapping(value = "/product")
 	public ResponseEntity<Integer> showProduct(@RequestBody ProductDTO product){
-		System.out.println(product);
 		int result=adminService.updateShow(product);
 		return ResponseEntity.ok(result);
 	}
