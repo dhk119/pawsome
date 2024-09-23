@@ -3,7 +3,7 @@
 <mapper namespace="kr.co.iei.market.model.dao.MarketDao">
 	<select id="totalCount" resultType="int">
 		select count(*) from product
-		<if>
+		<if test="productShow = 'Y'">
 		where product_show='Y'
 		</if>
 	</select>
@@ -14,7 +14,7 @@
 					where product_show='Y' order by product_no desc)p)
 		where rnum between #{start} and #{end}
 	</select>
-</mapper>
+
 	<insert id="insertProduct">
 		insert into product values (product_seq.nextval,#{productName},#{typeCategory},#{mainCategory},#{productPrice},#{productThumb},#{productDetail},sysdate,#{productShow},#{memberEmail})
 	</insert>
