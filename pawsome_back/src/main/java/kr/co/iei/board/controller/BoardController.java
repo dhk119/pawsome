@@ -23,15 +23,19 @@ import kr.co.iei.util.FileUtils;
 public class BoardController {
 	@Autowired
 	private BoardService boardService;
+	
 	@Autowired
 	private FileUtils fileUtil;
+	
 	@Value("${file.root}")
 	public String root;
+	
 	@GetMapping("/list/{tag}/{reqPage}")
 	public ResponseEntity<Map> list(@PathVariable int reqPage, @PathVariable int tag){
 		Map map = boardService.selectBoardTag(reqPage, tag);
 		return ResponseEntity.ok(map);
 	}
+	
 	@PostMapping(value = "/editorImage")
 	public ResponseEntity<String> editorImage(@ModelAttribute MultipartFile image){
 		String savepath=root+"/editor/";

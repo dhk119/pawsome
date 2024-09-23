@@ -19,6 +19,7 @@ const BoardWrite = () => {
   const inputTitle = (e) => {
     setBoardTitle(e.target.value);
   };
+  const writeBoard = () => {};
   return (
     <section className="section board-content-wrap">
       <div className="board-inside-wrap">
@@ -52,7 +53,10 @@ const BoardWrite = () => {
               />
             </div>
             <div className="board-content-wrap">
-              <QuillEditor />
+              <QuillEditor
+                content={boardContent}
+                setContent={setBoardContent}
+              />
             </div>
           </form>
         </div>
