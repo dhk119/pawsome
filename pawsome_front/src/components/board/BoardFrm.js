@@ -131,8 +131,8 @@ const BoardFrm = (props) => {
           </li>
           <li>
             <div className="board-write-alert">
-              <AiIcons.AiOutlineAlert /> 욕설, 광고 등{" "}
-              <Link to="#">운영정책</Link>위반시 제재를 받으실 수 있습니다.
+              <AiIcons.AiOutlineAlert style={{ color: "red" }} /> 욕설, 광고 등{" "}
+              <Link to="#">운영정책</Link> 위반시 제재를 받으실 수 있습니다.
             </div>
           </li>
         </ul>

@@ -33,32 +33,32 @@ const BoardList = () => {
         <ul>
           <li>
             <span onClick={changeTag} id="0">
-              전체
+              #전체
             </span>
           </li>
           <li>
             <span onClick={changeTag} id="1">
-              댕댕이
+              #댕댕이
             </span>
           </li>
           <li>
             <span onClick={changeTag} id="2">
-              냥냥이
+              #냥냥이
             </span>
           </li>
           <li>
             <span onClick={changeTag} id="3">
-              일상
+              #일상
             </span>
           </li>
           <li>
             <span onClick={changeTag} id="4">
-              정보공유
+              #정보공유
             </span>
           </li>
           <li>
             <span onClick={changeTag} id="5">
-              오산완
+              #오산완
             </span>
           </li>
         </ul>
@@ -119,24 +119,28 @@ const BoardItem = (props) => {
         navigate(`/board/view/${board.boardNo}`);
       }}
     >
-      <div className="posting-info">
-        <div className="posting-tag">{board.boardTag}</div>
-        <div className="posting-sub-info">
-          {board.boardTitle} {board.memberNickname} {board.readCount}{" "}
-          {boardLike}
+      <div className="list-list">
+        <div className="posting-info start">
+          <div className="posting-tag">{board.boardTag === 1? "#댕댕이" : board.boardTag === 2? "#냥냥이" : }</div>
+          <div className="posting-sub-info">
+            {board.boardTitle} {board.memberNickname} {board.readCount}
+            {boardLike}
+          </div>
         </div>
-      </div>
-      <div className="posting-img">
-        <img
-          onScroll={
-            board.boardThumb
-              ? `localhost3000:8282/board/thumb/${board.boardThumb}`
-              : ""
-          }
-        ></img>
-      </div>
-      <div>
-        <div>댓글갯수</div>
+        <div className="end">
+          <div className="posting-img">
+            <img
+              src={
+                board.boardThumb
+                  ? `localhost:8282/board/thumb/${board.boardThumb}`
+                  : ""
+              }
+            ></img>
+          </div>
+          <div>
+            <div>{board.boardNo}</div>
+          </div>
+        </div>
       </div>
     </li>
   );

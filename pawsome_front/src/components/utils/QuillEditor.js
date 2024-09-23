@@ -26,7 +26,6 @@ const QuillEditor = (props) => {
     "h1",
     "image",
   ];
-  const [values, setValues] = useState();
   const imageHandler = () => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");

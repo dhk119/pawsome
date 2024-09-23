@@ -198,4 +198,8 @@
 }
 .board-write-alert {
   border: 1px solid #ccc;
+  border-radius: 15px;
+  text-align: center;
+  color: #ccc;
+  font-size: 12px;
 }
