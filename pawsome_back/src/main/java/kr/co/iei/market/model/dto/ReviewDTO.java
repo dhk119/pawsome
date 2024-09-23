@@ -14,7 +14,7 @@ public class ReviewDTO {
 	private int productNo;			//상품번호
 	private int reviewStar;			//별점
 	private String reviewContent;	//리뷰내용
-	private String reviewRegdate;	//리뷰 등록일
-	private String memberEmail;		//작성자
+	private String reviewRegDate;	//리뷰 등록일
+	private String reviewWriter;		//작성자
 	private List<ReviewFileDTO> fileList; //리뷰사진리스트
 }

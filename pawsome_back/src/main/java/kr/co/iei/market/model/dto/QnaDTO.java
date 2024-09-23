@@ -17,6 +17,6 @@ public class QnaDTO {
 	private String qnaContent;		//내용
 	private int qnaPublic;			//0-공개, 1-비공개
 	private String qnaRegDate;		//작성일
-	private String memberEmail;		//작성자
+	private String qnaWriter;		//작성자
 	private List<QnaFileDTO> fileList;	//Q&A사진 리스트
 }

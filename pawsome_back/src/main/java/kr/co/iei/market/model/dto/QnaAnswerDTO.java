@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class QnaAnswer {
+public class QnaAnswerDTO {
 	private int qnaAnswerNo;			//답글 번호
 	private int qnaNo;					//Q&A번호
 	private String qnaAnswerContent;	//답글 내용
 	private String qnaRegDate;			//답글 작성일
-	private String memberEmail;			//답글 작성자(관리자로 고정)
+	private String qnaAnswerWriter;			//답글 작성자(관리자로 고정)
 }
