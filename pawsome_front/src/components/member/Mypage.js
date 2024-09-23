@@ -1,12 +1,25 @@
 import "./mypage.css";
+import {
+  loginEmailState,
+  memberLevelState,
+  isLoginState,
+  memberNicknameState,
+} from "../utils/RecoilData";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 const Mypage = () => {
+  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
+  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const [memberNickname, setMemberNickname] =
+    useRecoilState(memberNicknameState);
+  const isLogin = useRecoilValue(isLoginState);
+
   return (
     <div className="mypage-body">
-      <div className="profile-wrap">
+      <div className="side-bar">
         <div className="user-info">
-          <div></div>
-          <div>홍길동</div>
+          <div className="profile-img"></div>
+          <div>{memberNickname}</div>
         </div>
         <div className="profile-menu">
           <ul>
@@ -16,8 +29,15 @@ const Mypage = () => {
           </ul>
         </div>
       </div>
-      <div className="">
-        <div></div>
+      <div className="mypage-wrap">
+        <div className="profile-card">
+          <img />
+          test
+        </div>
+        <div className="pet-card">
+          <img />
+          test
+        </div>
       </div>
     </div>
   );

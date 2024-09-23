@@ -22,21 +22,23 @@ const NaverCallback = () => {
         .then((res) => {
           setLoginEmail(res.data.memberEmail);
           setMemberLevel(res.data.memberLevel);
-          console.log(res);
-          console.log("테스트!!!!!!!!!!!!!!!!!!");
-          axios.defaults.headers.common["Authorization"] = res.data.accessToken;
-          window.localStorage.setItem("refreshToken", res.data.refreshToken);
-          navigate("/");
+          if (res.data.isMember) {
+            axios.defaults.headers.common["Authorization"] =
+              res.data.accessToken;
+            window.localStorage.setItem("refreshToken", res.data.refreshToken);
+            navigate("/");
+          } else {
+            Swal.fire({ text: "회원가입이 필요합니다.", icon: "error" });
+            navigate("/naverjoin", {
+              state: { naverUserInfo: res.data, isMember: false },
+            });
+          }
         })
         .catch((err) => {
-          console.error(err);
-          Swal.fire({
-            text: "네이버 로그인에 실패했습니다.",
-            icon: "error",
-          });
+          Swal.fire({ text: "로그인에 실패했습니다.", icon: "error" });
         });
     }
-  }, [backServer, navigate, setLoginEmail, setMemberLevel]);
+  }, []);
 
   return <div>로딩...</div>;
 };

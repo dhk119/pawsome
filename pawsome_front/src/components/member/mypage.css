@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.mypage-body {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: #ddd;
+}
+
+.side-bar {
+  width: 250px;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-img {
+  width: 150px;
+  height: 150px;
+  background-color: #ddd;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.user-info div:last-child {
+  font-size: 20px;
+  font-family: ns-b;
+  margin-top: 5px;
+}
+
+.user-info {
+  margin-bottom: 20px;
+}
+
+.profile-menu {
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.profile-menu li {
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.profile-menu li:hover {
+  color: var(--point1);
+  font-family: ns-b;
+}
+
+.mypage-wrap {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #fff;
+}
