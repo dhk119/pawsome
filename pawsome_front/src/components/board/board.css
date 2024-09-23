@@ -199,3 +199,11 @@
 .board-write-alert {
   border: 1px solid #ccc;
 }
+/*산책 지도*/
+.distance-box {
+  background-color: rgba(255, 255, 255, 0.486);
+  border: 1px solid red;
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+}
