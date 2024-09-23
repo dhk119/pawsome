@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BsBox } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
@@ -10,13 +10,21 @@ const ProductList = () => {
   const [productList, setProductList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
+  const [totalCount, setTotalCount] = useState();
+  const params = useParams();
+  const typeCategory = params.typeCategory;
+  const mainCategory = params.mainCategory;
+
   useEffect(() => {
     axios
-      .get(`${backServer}/market/productList/${reqPage}`)
+      .get(
+        `${backServer}/product/productList/${typeCategory}/${mainCategory}/${reqPage}`
+      )
       .then((res) => {
         console.log(res);
         setProductList(res.data.list);
         setPi(res.data.pi);
+        setTotalCount(res.data.totalCount);
       })
       .catch((err) => {
         console.log(err);
@@ -38,7 +46,9 @@ const ProductList = () => {
             <span className="icon">
               <BsBox />
             </span>
-            <span className="text"> 총 nn개의 상품이 검색되었습니다.</span>
+            <span className="text">
+              총 {totalCount}개의 상품이 검색되었습니다.
+            </span>
           </div>
           <div className="filter">
             <Link to="#" className="now">
@@ -72,7 +82,7 @@ const ProductItem = (props) => {
     <div
       className="product-wrap"
       onClick={() => {
-        navigate(`/market/productDetail/${product.productNo}`);
+        navigate(`/market/productDetail/${product.productNo}/detail`);
       }}
     >
       <div className="product-thumb">

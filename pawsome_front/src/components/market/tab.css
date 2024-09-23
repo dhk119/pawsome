@@ -9,14 +9,14 @@
 }
 .review-detail {
   margin-top: 20px;
-  border: 1px solid #ccc;
+  border: 3px solid #ffd697;
   font-size: 14px;
 }
 .review-detail > .review-title {
   display: flex;
   justify-content: space-between;
   padding: 10px 15px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ffd697;
 }
 .review-detail > .review-title > div {
   display: flex;

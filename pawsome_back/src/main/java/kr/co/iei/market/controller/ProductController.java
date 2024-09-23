@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import kr.co.iei.market.model.dto.ProductDTO;
 import kr.co.iei.market.model.service.ProductService;
 import kr.co.iei.util.FileUtils;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping(value="/market")
+@RequestMapping(value="/product")
 public class ProductController {
 	@Autowired
 	private ProductService productService;
@@ -26,9 +27,15 @@ public class ProductController {
 	@Value("${file.root}")
 	public String root;
 	
-	@GetMapping(value="/productList/{reqPage}")
-	public ResponseEntity<Map> productList (@PathVariable int reqPage) {
-		Map map = productService.selectProductList(reqPage);
+	@GetMapping(value="/productList/{typeCategory}/{mainCategory}/{reqPage}")
+	public ResponseEntity<Map> productList (@PathVariable int typeCategory, @PathVariable int mainCategory, @PathVariable int reqPage) {
+		Map map = productService.selectProductList(typeCategory, mainCategory, reqPage);
 		return ResponseEntity.ok(map);
+	}
+	
+	@GetMapping(value="/productDetail/{productNo}")
+	public ResponseEntity<ProductDTO> selectOneProduct(@PathVariable int productNo){
+		ProductDTO product = productService.selectOneProduct(productNo);
+		return ResponseEntity.ok(product);
 	}
 }

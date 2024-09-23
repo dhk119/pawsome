@@ -1,13 +1,30 @@
-import { useState } from "react";
-import { Link, NavLink, Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, NavLink, Route, Routes, useParams } from "react-router-dom";
 import Detail from "./tabComponent/Detail";
 import Review from "./tabComponent/Review";
 import Qna from "./tabComponent/Qna";
 import Guide from "./tabComponent/Guide";
 import "./tab.css";
+import axios from "axios";
 
 const ProductDetail = () => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const params = useParams(); //주소창에 데이터 가져오기
+  const productNo = params.productNo;
+  const [product, setProduct] = useState({});
   const [currentTab, setCurrentTab] = useState(0);
+  useEffect(() => {
+    axios
+      .get(`${backServer}/product/productDetail/${productNo}`)
+      .then((res) => {
+        console.log(res);
+        setProduct(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const tabArr = [
     { name: "상세정보", content: "상품 상세정보", url: "detail" },
     { name: "상품평", content: "상품 리뷰", url: "review" },
@@ -25,12 +42,34 @@ const ProductDetail = () => {
         </div>
         <div className="product-info">
           <div className="product-category">
-            <Link to="#">전체</Link>
+            <Link to="#">
+              {product.typeCategory === "1"
+                ? "댕댕이"
+                : product.typeCategory === "2"
+                ? "냥냥이"
+                : "전체"}
+            </Link>
             <span> {">"} </span>
-            <Link to="#">사료</Link>
+            <Link to="#">
+              {product.mainCategory === "feed"
+                ? "사료"
+                : product.mainCategory === "snack"
+                ? "간식"
+                : product.mainCategory === "nutrient"
+                ? "영양제"
+                : product.mainCategory === "tableware"
+                ? "식기용품"
+                : product.mainCategory === "hygiene"
+                ? "위생용품"
+                : product.mainCategory === "toy"
+                ? "장난감"
+                : product.mainCategory === "fashion"
+                ? "패션"
+                : "하우스"}
+            </Link>
           </div>
-          <div className="product-name">상품명</div>
-          <div className="product-price">상품금액</div>
+          <div className="product-name">{product.productName}</div>
+          <div className="product-price">{product.productPrice}원</div>
           <div className="product-amount">수량</div>
           <div className="product-totalprice">총 금액</div>
           <div className="product-btn">
@@ -63,28 +102,6 @@ const ProductDetail = () => {
           <Route path="guide" element={<Guide />} />
         </Routes>
       </div>
-      {/*
-          <div className="tab">
-            <div>상세정보</div>
-            <div>상품평</div>
-            <div>상품문의</div>
-            <div>주문/배송 안내</div>
-          </div>
-          <div className="tab-content">
-            <div className="product-detail">
-              <span>상품 상세정보</span>
-            </div>
-            <div className="product-review">
-              <span>리뷰</span>
-            </div>
-            <div className="product-qna">
-              <span>qna</span>
-            </div>
-            <div className="product-guide">
-              <spna>주문/배송 안내</spna>
-            </div>
-          </div>
-          */}
     </div>
   );
 };

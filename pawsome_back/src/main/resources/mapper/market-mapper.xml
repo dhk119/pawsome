@@ -4,8 +4,22 @@
 	<select id="totalCountAll" resultType="int">
 		select count(*) from product
 	</select>
+	<insert id="insertProduct">
+		insert into product values (product_seq.nextval,#{productName},#{typeCategory},#{mainCategory},#{productPrice},#{productThumb},#{productDetail},sysdate,#{productShow},#{memberEmail})
+	</insert>
+	<select id="selectProductAllList" resultType="product">
+		select * from (select rownum as rnum, b.* from(SELECT * from product order by product_no desc)b) where rnum BETWEEN #{start} and #{end}
+	</select>
+	
+	
 	<select id="totalCount" resultType="int">
 		select count(*) from product where product_show='Y'
+		<if test= "typeCategory!=0">
+			and type_category=#{typeCategory}
+		</if>
+		<if test= "mainCategory!=0">
+		 	and main_category=#{mainCategory}
+		</if>
 	</select>
 	<select id="selectProductList" resultType="product">
 		select * from
@@ -14,11 +28,7 @@
 					where product_show='Y' order by product_no desc)p)
 		where rnum between #{start} and #{end}
 	</select>
-
-	<insert id="insertProduct">
-		insert into product values (product_seq.nextval,#{productName},#{typeCategory},#{mainCategory},#{productPrice},#{productThumb},#{productDetail},sysdate,#{productShow},#{memberEmail})
-	</insert>
-	<select id="selectProductAllList" resultType="product">
-		select * from (select rownum as rnum, b.* from(SELECT * from product order by product_no desc)b) where rnum BETWEEN #{start} and #{end}
+	<select id="selectOneProduct" resultType="product">
+		select product_no, product_name, type_category, main_category, product_price, product_thumb, product_detail from product where product_no=#{productNo}
 	</select>
 </mapper>
