@@ -2,9 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.board.model.dao.BoardDao">
 	<select id="selectBoardTag" resultType="board">
-		select * from board
+		select * from 
+			(select rownum as rnum, b.* from 
+    			(select board_no,
+    				    board_tag,
+    				    board_title,
+    				    read_count,
+    				    to_char(reg_date,'yyyy-mm-dd hh:mm:ss')as reg_date,
+    				    member_nickname,
+    				    (select count(*) from board_like where board_like.board_no = board.board_no) like_count 
+        		from board order by board_no desc) b ) 
+		where rnum between #{start} and #{end}
 		<if test="tag != 0">
 		 where board_tag = #{tag}
 		 </if>
+	</select>
+	<select id="totalCount" resultType="int">
+		select count(*) from board <if test="tag!=0">where board_tag=#{tag}</if>
 	</select>
 </mapper>

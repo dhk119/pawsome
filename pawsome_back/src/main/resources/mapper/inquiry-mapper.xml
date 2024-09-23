@@ -5,7 +5,7 @@
 		select count(*) from inquiry
 	</select>
 	<select id="selectInquiryList" resultType="inquiry">
-		select * from (select rownum as rnum, b.* from(SELECT inquiry_no,inquiry_title,to_char(inquiry_reg_date)as inquiry_req_date,inquiry_type, member_email from inquiry order by inquiry_no desc)b) where rnum BETWEEN #{start} and #{end}
+		select * from (select rownum as rnum, b.* from(SELECT inquiry_no,inquiry_title,to_char(inquiry_reg_date)as inquiry_reg_date,inquiry_type, member_email from inquiry order by inquiry_no desc)b) where rnum BETWEEN #{start} and #{end}
 	</select>
 	<insert id="insertInquiry">
 		insert into inquiry values(inquiry_seq.nextval, #{inquiryTitle},#{inquiryContent},sysdate,#{inquiryType},#{memberEmail})

@@ -16,6 +16,7 @@ public interface MarketDao {
 	
 	List selectProductAllList(PageInfo pi);
 	
+	int updateShow(ProductDTO product);
 	
 	/*원희*/
 	int totalCount(int typeCategory, int mainCategory);
@@ -23,4 +24,6 @@ public interface MarketDao {
 	List selectProductList(PageInfo pi);
 
 	ProductDTO selectOneProduct(int productNo);
+	
+
 }

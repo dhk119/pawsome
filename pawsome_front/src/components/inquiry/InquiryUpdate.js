@@ -69,8 +69,8 @@ const InquiryUpdate = () => {
         />
         <div className="board-content-wrap">
           <QuillEditor
-            inquiryContent={inquiryContent}
-            setInquiryContent={setInquiryContent}
+            content={inquiryContent}
+            setContent={setInquiryContent}
           ></QuillEditor>
         </div>
         <div>

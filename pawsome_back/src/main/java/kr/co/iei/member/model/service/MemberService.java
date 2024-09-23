@@ -21,8 +21,10 @@ public class MemberService {
 
 	@Transactional
 	public int insertMember(MemberDTO member) {
-		String encPw = encoder.encode(member.getMemberPw());
-		member.setMemberPw(encPw);
+		if(member.getMemberPw() != null) {			
+			String encPw = encoder.encode(member.getMemberPw());
+			member.setMemberPw(encPw);
+		}
 		int result = memberDao.insertMember(member);
 		return result;
 	}
@@ -36,6 +38,14 @@ public class MemberService {
 			return loginMember;
 		}
 		return null;
+	}
+	
+	public LoginMemberDTO login(String memberEmail) {
+		MemberDTO m = memberDao.selectOneMember(memberEmail);
+		String accessToken = jwtUtil.createAccessToken(m.getMemberEmail(), m.getMemberLevel());
+		String refreshToken = jwtUtil.createRefreshToken(m.getMemberEmail(), m.getMemberLevel());
+		LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken, memberEmail, m.getMemberLevel(), m.getMemberNickname());
+		return loginMember;
 	}
 
 	public LoginMemberDTO refresh(String token) {
@@ -62,6 +72,11 @@ public class MemberService {
 	public int checkNickname(String memberNickname) {
 		int result = memberDao.checkNickname(memberNickname);
 		return result;
+	}
+
+	public MemberDTO selectOneMember(String memberEmail) {
+		MemberDTO member = memberDao.selectOneMember(memberEmail);
+		return member;
 	}
 
 }

@@ -38,6 +38,7 @@ public class MemberController {
 	
 	@PostMapping
 	public ResponseEntity<Integer> join(@RequestBody MemberDTO member) {
+		System.out.println(member);
 		int result = memberService.insertMember(member);
 		if(result > 0) {
 			return ResponseEntity.ok(result);
@@ -79,47 +80,50 @@ public class MemberController {
 	}
 	
 	@GetMapping("/naver-login")
-	public ResponseEntity<LoginMemberDTO> naverLogin(@RequestParam String code, @RequestParam String state) {	
-		String tokenUrl = String.format("%s?grant_type=authorization_code&client_id=%s&client_secret=%s&code=%s&state=%s",
-		                TOKEN_URL, CLIENT_ID, CLIENT_SECRET, code, state);
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<Map> tokenResponse = restTemplate.getForEntity(tokenUrl, Map.class);
-		        
-		String accessToken = (String) tokenResponse.getBody().get("access_token");
-		        
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer " + accessToken);
-		        
-		HttpEntity<String> entity = new HttpEntity<>(headers);
-		ResponseEntity<Map> userInfoResponse = restTemplate.exchange(USER_INFO_URL, HttpMethod.GET, entity, Map.class);
-		        
-		Map<String, Object> userInfo = userInfoResponse.getBody();
-		
-		System.out.println(userInfo); // 전체 사용자 정보 출력
-		
-		Map<String, Object> response = (Map<String, Object>) userInfo.get("response");
-		String memberId = (String) response.get("id"); // 사용자 고유 ID
-		String memberName = (String) response.get("name"); // 사용자 이름
+	public ResponseEntity<Map<String, Object>> naverLogin(@RequestParam String code, @RequestParam String state) {
+	    // 네이버 API로 토큰 요청
+	    String tokenUrl = String.format("%s?grant_type=authorization_code&client_id=%s&client_secret=%s&code=%s&state=%s",
+	                                    TOKEN_URL, CLIENT_ID, CLIENT_SECRET, code, state);
+	    RestTemplate restTemplate = new RestTemplate();
+	    ResponseEntity<Map> tokenResponse = restTemplate.getForEntity(tokenUrl, Map.class);
 
-		System.out.println("Member ID: " + memberId);
-		System.out.println("Member Name: " + memberName);
+	    String accessToken = (String) tokenResponse.getBody().get("access_token");
 
-//		// 로그인 처리
-//		int result = memberService.checkEmail(memberEmail);
-//		LoginMemberDTO loginMember = new LoginMemberDTO();
-//		if(result == 1) {
-//			loginMember = memberService.login(memberEmail);						
-//		} else {
-//			//소셜 회원가입 페이지로 이동하게 해야함
-//			return ResponseEntity.status(404).build();
-//		}	
-//
-//		// 응답 반환
-//		if(loginMember != null) {
-//			return ResponseEntity.ok(loginMember);
-//		} else {
-//			return ResponseEntity.status(404).build();
-//		}
-		return null;
+	    // 네이버 사용자 정보 요청
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.set("Authorization", "Bearer " + accessToken);
+	    HttpEntity<String> entity = new HttpEntity<>(headers);
+	    ResponseEntity<Map> userInfoResponse = restTemplate.exchange(USER_INFO_URL, HttpMethod.GET, entity, Map.class);
+
+	    Map<String, Object> response = (Map<String, Object>) userInfoResponse.getBody().get("response");
+	    String memberEmail = (String) response.get("email");
+	    
+	    // DB에서 해당 이메일로 회원가입 여부 확인
+	    int isMember = memberService.checkEmail(memberEmail);
+
+	    Map<String, Object> result = new HashMap<>();
+	    if (isMember == 1) {
+	        LoginMemberDTO loginMember = memberService.login(memberEmail);
+	        System.out.println("테스트!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	        System.out.println(loginMember);
+	        result.put("isMember", true);
+	        result.put("memberEmail", loginMember.getMemberEmail());
+	        result.put("memberLevel", loginMember.getMemberLevel());
+	        result.put("memberNickname", loginMember.getMemberNickname());
+	        result.put("accessToken", loginMember.getAccessToken());
+	        result.put("refreshToken", loginMember.getRefreshToken());
+	    } else {
+	        result.put("isMember", false);
+	        result.put("naverUserInfo", response);
+	    }
+	    
+	    return ResponseEntity.ok(result);
 	}
+	
+	@PostMapping(value = "/profile")
+	public ResponseEntity<MemberDTO> selectOneMember(String loginEmail) {
+		MemberDTO member = memberService.selectOneMember(loginEmail);
+		return ResponseEntity.ok(member);
+	}
+	
 }

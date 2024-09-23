@@ -31,4 +31,7 @@
 	<select id="selectOneProduct" resultType="product">
 		select product_no, product_name, type_category, main_category, product_price, product_thumb, product_detail from product where product_no=#{productNo}
 	</select>
+	<update id="updateShow">
+		update product set product_show=#{productShow} where product_no=#{productNo}
+	</update>
 </mapper>

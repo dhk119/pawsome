@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import ProductRegist from "./ProductRegist";
 import ProductList from "./ProductList";
-
+import "./admin.css";
 const AdminMain = () => {
   return (
     <>

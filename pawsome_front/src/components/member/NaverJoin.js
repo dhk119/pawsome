@@ -1,28 +1,42 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import ReactModal from "react-modal";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const Join = () => {
+const NaverJoin = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
+  const location = useLocation();
+  const { naverUserInfo } = location.state || {};
 
   // 주소 관련
   const postcodeRef = useRef(null);
   const addressRef = useRef(null);
   const detailAddressRef = useRef(null);
 
+  useEffect(() => {
+    console.log(naverUserInfo); // naverUserInfo가 제대로 들어오는지 확인
+  }, [naverUserInfo]);
+
   const [member, setMember] = useState({
     memberEmail: "",
-    memberPw: "",
     memberName: "",
     memberNickname: "",
-    memberAddr1: "", //우편번호
-    memberAddr2: "", //주소
-    memberAddr3: "", //상세주소
-    loginType: "site", //로그인 타입
+    memberAddr1: "", // 우편번호
+    memberAddr2: "", // 주소
+    memberAddr3: "", // 상세주소
+    loginType: "naver",
   });
+
+  useEffect(() => {
+    console.log(naverUserInfo);
+    setMember((prevMember) => ({
+      ...prevMember,
+      memberEmail: naverUserInfo.naverUserInfo.email || "",
+      memberName: naverUserInfo.naverUserInfo.name || "",
+    }));
+  }, [naverUserInfo]);
 
   const changeMember = (e) => {
     const name = e.target.name;
@@ -40,33 +54,6 @@ const Join = () => {
       document.body.removeChild(script);
     };
   }, []);
-
-  // 0 : 아직 입력하지않은 상태, 1 : 정규표현식, 중복체크 모두 통과한 경우
-  // 2 : 정규표현식을 만족하지 못한 상태, 3 : 이메일이 중복인경우
-  const [emailCheck, setEmailCheck] = useState(0);
-  const checkEmail = () => {
-    //이메일 유효성 검사
-    //1. 정규표현식 검사
-    //2. DB 중복체크
-    const emailReg = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-    if (!emailReg.test(member.memberEmail)) {
-      setEmailCheck(2);
-    } else {
-      axios
-        .get(`${backServer}/member/memberEmail/${member.memberId}/check-email`)
-        .then((res) => {
-          console.log(res);
-          if (res.data === 1) {
-            setEmailCheck(3);
-          } else if (res.data === 0) {
-            setEmailCheck(1);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
 
   const [nicknameCheck, setNicknameCheck] = useState(0);
   const checkNickname = () => {
@@ -90,23 +77,6 @@ const Join = () => {
           console.log(err);
         });
     }
-  };
-
-  const pwMessage = useRef(null);
-  const checkPw = () => {
-    pwMessage.current.classList.remove("valid");
-    pwMessage.current.classList.remove("invalid");
-    if (member.memberPw === memberPwRe) {
-      pwMessage.current.innerText = "비밀번호가 일치합니다.";
-      pwMessage.current.classList.add("valid");
-    } else {
-      pwMessage.current.innerText = "비밀번호가 일치하지 않습니다.";
-      pwMessage.current.classList.add("invalid");
-    }
-  };
-  const [memberPwRe, setMemberPwRe] = useState("");
-  const changeMemberPwRe = (e) => {
-    setMemberPwRe(e.target.value);
   };
 
   const nameMessage = useRef(null);
@@ -155,9 +125,7 @@ const Join = () => {
       terms.terms1 && // 만 14세 이상 동의
       terms.terms2 && // 서비스 이용약관 동의
       terms.terms3 && // 개인정보 수집 및 이용 동의
-      emailCheck === 1 && // 이메일이 유효하고 중복체크를 통과한 경우
       nicknameCheck === 1 && // 닉네임이 유효하고 중복체크를 통과한 경우
-      member.memberPw === memberPwRe && // 비밀번호와 비밀번호 확인이 일치하는지
       /^[가-힣]{2,10}$/.test(member.memberName) && // 이름이 유효한지
       member.memberAddr1 && // 우편번호가 입력되었는지
       member.memberAddr2 && // 주소가 입력되었는지
@@ -166,8 +134,6 @@ const Join = () => {
       axios
         .post(`${backServer}/member`, member)
         .then((res) => {
-          console.log(res);
-          console.log(member);
           navigate("/login");
         })
         .catch((err) => {
@@ -233,50 +199,10 @@ const Join = () => {
           >
             <input
               type="text"
-              id="memberEmail"
               name="memberEmail"
               value={member.memberEmail}
-              onChange={changeMember}
-              onBlur={checkEmail}
-              placeholder="이메일"
+              readOnly
             />
-            <p
-              className={
-                "input-msg" +
-                (emailCheck === 0
-                  ? ""
-                  : emailCheck === 1
-                  ? " valid"
-                  : " invalid")
-              }
-            >
-              {emailCheck === 0
-                ? ""
-                : emailCheck === 1
-                ? "사용가능한 이메일 입니다."
-                : emailCheck === 2
-                ? "이메일 양식에 맞지 않습니다."
-                : "이미 사용중인 이메일 입니다."}
-            </p>
-
-            <input
-              type="password"
-              name="memberPw"
-              value={member.memberPw}
-              onChange={changeMember}
-              placeholder="비밀번호"
-            />
-
-            <input
-              type="password"
-              id="memberPwRe"
-              value={memberPwRe}
-              onChange={changeMemberPwRe}
-              onBlur={checkPw}
-              placeholder="비밀번호 확인"
-            />
-            <p className="input-msg" ref={pwMessage}></p>
-
             <input
               type="text"
               id="memberNickname"
@@ -1868,4 +1794,4 @@ const Join = () => {
   );
 };
 
-export default Join;
+export default NaverJoin;
