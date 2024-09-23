@@ -4,14 +4,10 @@ const ProductFrm = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const productName = props.productName;
   const setProductName = props.setProductName;
-  const productCompany = props.productCompany;
-  const setProductCompany = props.setProductCompany;
   const typeCategory = props.typeCategory;
   const setTypeCategory = props.setTypeCategory;
   const mainCategory = props.mainCategory;
   const setMainCategory = props.setMainCategory;
-  const subCategory = props.subCategory;
-  const setSubCategory = props.setSubCategory;
   const productPrice = props.productPrice;
   const setProductPrice = props.setProductPrice;
   const productThumb = props.productThumb;
@@ -92,22 +88,6 @@ const ProductFrm = (props) => {
             </tr>
             <tr>
               <th>
-                <label htmlFor="productCompany">제품 브랜드</label>
-              </th>
-              <td>
-                <div className="input-item">
-                  <input
-                    type="text"
-                    id="productCompany"
-                    name="productCompany"
-                    value={productCompany}
-                    onChange={setProductCompany}
-                  ></input>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th>
                 <div>제품 품종</div>
               </th>
               <th>
@@ -147,22 +127,6 @@ const ProductFrm = (props) => {
                     name="mainCategory"
                     value={mainCategory}
                     onChange={setMainCategory}
-                  ></input>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <label htmlFor="subCategory">제품 서브 카테고리</label>
-              </th>
-              <td>
-                <div className="input-item">
-                  <input
-                    type="text"
-                    id="subCategory"
-                    name="subCategory"
-                    value={subCategory}
-                    onChange={setSubCategory}
                   ></input>
                 </div>
               </td>

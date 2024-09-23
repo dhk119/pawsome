@@ -10,11 +10,9 @@ const ProductRegist = () => {
   const [product, setProduct] = useState({
     productNo: 0,
     productName: "",
-    productCompany: "",
     typeCategory: 0,
     mainCategory: "",
-    subCategory: "",
-    productPrice: 0,
+    productPrice: null,
     productThumb: "",
     productDetail: "",
     productRegDate: "",
@@ -22,10 +20,8 @@ const ProductRegist = () => {
     memberEmail: "",
   });
   const [productName, setProductName] = useState("");
-  const [productCompany, setProductCompany] = useState("");
   const [typeCategory, setTypeCategory] = useState(0);
   const [mainCategory, setMainCategory] = useState("");
-  const [subCategory, setSubCategory] = useState("");
   const [productPrice, setProductPrice] = useState(0);
   const [thumb, setThumb] = useState("");
   const [productDetail, setProductDetail] = useState("");
@@ -35,10 +31,6 @@ const ProductRegist = () => {
     setProductName(e.target.value);
     setProduct({ ...product, productName: e.target.value });
   };
-  const inputCompany = (e) => {
-    setProductCompany(e.target.value);
-    setProduct({ ...product, productCompany: e.target.value });
-  };
   const inputTypeCategory = (e) => {
     setTypeCategory(e.target.value);
     setProduct({ ...product, typeCategory: e.target.value });
@@ -46,10 +38,6 @@ const ProductRegist = () => {
   const inputMainCategory = (e) => {
     setMainCategory(e.target.value);
     setProduct({ ...product, mainCategory: e.target.value });
-  };
-  const inputSubCategory = (e) => {
-    setSubCategory(e.target.value);
-    setProduct({ ...product, subCategory: e.target.value });
   };
   const inputPrice = (e) => {
     setProductPrice(e.target.value);
@@ -66,10 +54,8 @@ const ProductRegist = () => {
   const registProduct = () => {
     if (
       productName !== "" &&
-      productCompany !== "" &&
       typeCategory !== 0 &&
       mainCategory !== "" &&
-      subCategory !== "" &&
       productPrice !== 0 &&
       thumb !== "" &&
       productDetail !== "" &&
@@ -77,10 +63,8 @@ const ProductRegist = () => {
     ) {
       const form = new FormData();
       form.append("productName", productName);
-      form.append("productCompany", productCompany);
       form.append("typeCategory", typeCategory);
       form.append("mainCategory", mainCategory);
-      form.append("subCategory", subCategory);
       form.append("productPrice", productPrice);
       form.append("thumb", thumb);
       form.append("productDetail", productDetail);
@@ -116,14 +100,10 @@ const ProductRegist = () => {
         <ProductFrm
           productName={productName}
           setProductName={inputName}
-          productCompany={productCompany}
-          setProductCompany={inputCompany}
           typeCategory={typeCategory}
           setTypeCategory={inputTypeCategory}
           mainCategory={mainCategory}
           setMainCategory={inputMainCategory}
-          subCategory={subCategory}
-          setSubCategory={inputSubCategory}
           productPrice={productPrice}
           setProductPrice={inputPrice}
           productThumb={thumb}
