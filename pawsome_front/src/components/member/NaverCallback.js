@@ -2,12 +2,19 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { loginEmailState, memberLevelState } from "../utils/RecoilData";
+import {
+  loginEmailState,
+  memberLevelState,
+  memberNicknameState,
+} from "../utils/RecoilData";
 import Swal from "sweetalert2";
 
 const NaverCallback = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const [memberNickname, setMemberNickname] =
+    useRecoilState(memberNicknameState);
+  useRecoilState(memberNicknameState);
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
 
@@ -22,6 +29,7 @@ const NaverCallback = () => {
         .then((res) => {
           setLoginEmail(res.data.memberEmail);
           setMemberLevel(res.data.memberLevel);
+          setMemberNickname(res.data.memberNickname);
           if (res.data.isMember) {
             axios.defaults.headers.common["Authorization"] =
               res.data.accessToken;
