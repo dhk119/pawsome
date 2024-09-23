@@ -4,6 +4,8 @@ import { useRecoilValue } from "recoil";
 import { isLoginState } from "../utils/RecoilData";
 import ScrollToTop from "react-scroll-to-top";
 import axios from "axios";
+import MorePage from "../utils/MorePage";
+import PageNavi from "../utils/PageNavi";
 
 const BoardList = () => {
   const isLogin = useRecoilValue(isLoginState);
@@ -11,12 +13,15 @@ const BoardList = () => {
   const [boardList, setBoardList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
   const [boardTag, setBoardTag] = useState(0);
+  const [pi, setPi] = useState({});
   useEffect(() => {
     axios
       .get(`${backServer}/board/list/${boardTag}/${reqPage}`)
       .then((res) => {
         console.log(res);
-        setBoardList(res.data.list);
+        const array = boardList.concat(res.data.list);
+        setBoardList(array);
+        setPi(res.data.pi);
       })
       .catch((err) => {
         console.log(err);
@@ -27,6 +32,7 @@ const BoardList = () => {
     setReqPage(1);
   };
   console.log(boardTag);
+  console.log(boardList);
   return (
     <section className="section board-wrap">
       <nav className="nav board-nav">
@@ -70,27 +76,15 @@ const BoardList = () => {
           </div>
           <div className="board-list-wrap">
             <ul className="posting-wrap">
-              {boardList.map((board, i) => {
-                return <BoardItem board={board} />;
-              })}
+              {boardList
+                ? boardList.map((board, i) => {
+                    return <BoardItem board={board} />;
+                  })
+                : ""}
             </ul>
-            <div className="list-list">
-              <div className="start">
-                <div>#태그</div>
-                <div>제목, 작성자, 조회수, 좋아요</div>
-              </div>
-              <div className="end">
-                <div>
-                  <img
-                    src="/image/paw.png"
-                    style={{ width: "30px", height: "30px" }}
-                  />
-                </div>
-                <div>
-                  <p>댓글 갯수</p>
-                </div>
-              </div>
-            </div>
+          </div>
+          <div className="more-list">
+            <MorePage pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
           </div>
         </div>
       </div>
@@ -121,9 +115,27 @@ const BoardItem = (props) => {
     >
       <div className="list-list">
         <div className="posting-info start">
+<<<<<<< Updated upstream
           <div className="posting-tag">{board.boardTag === 1? "#댕댕이" : board.boardTag === 2? "#냥냥이" : }</div>
           <div className="posting-sub-info">
             {board.boardTitle} {board.memberNickname} {board.readCount}
+=======
+          <div className="posting-tag">
+            {board.boardTag === 1
+              ? "#댕댕이"
+              : board.boardTag === 2
+              ? "#냥냥이"
+              : board.boardTag === 3
+              ? "#일상"
+              : board.boardTag === 4
+              ? "#정보공유"
+              : board.boardTag === 5
+              ? "#오산완"
+              : "#전체"}
+          </div>
+          <div className="posting-sub-info">
+            {board.boardTitle}, {board.memberNickname}, {board.readCount},
+>>>>>>> Stashed changes
             {boardLike}
           </div>
         </div>
