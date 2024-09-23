@@ -52,7 +52,10 @@ const BoardWrite = () => {
               />
             </div>
             <div className="board-content-wrap">
-              <QuillEditor />
+              <QuillEditor
+                content={boardContent}
+                setContent={setBoardContent}
+              />
             </div>
           </form>
         </div>
