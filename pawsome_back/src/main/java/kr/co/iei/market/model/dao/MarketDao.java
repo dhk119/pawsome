@@ -19,4 +19,6 @@ public interface MarketDao {
 	List selectProductList(PageInfo pi);
 
 	List selectProductAllList(PageInfo pi);
+
+	int updateShow(ProductDTO product);
 }

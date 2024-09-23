@@ -91,19 +91,19 @@ export const SidebarData = [
       },
       {
         title: "반려동물 시설",
-        path: "#",
+        path: "/service/allMap",
       },
       {
         title: "멍비티아이",
-        path: "#",
+        path: "/service/mbti",
       },
       {
         title: "사료추천",
-        path: "#",
+        path: "/service/feedSuggest",
       },
       {
         title: "칩 등록 조회",
-        path: "#",
+        path: "/service/recordList",
       },
     ],
   },
