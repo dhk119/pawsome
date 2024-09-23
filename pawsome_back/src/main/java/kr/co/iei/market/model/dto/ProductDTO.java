@@ -1,5 +1,7 @@
 package kr.co.iei.market.model.dto;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Alias("product")
 public class ProductDTO {
 	private int productNo;				//상품 번호
 	private String productName;			//상품 이름

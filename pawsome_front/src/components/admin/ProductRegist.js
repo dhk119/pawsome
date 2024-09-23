@@ -1,6 +1,9 @@
 import { useState } from "react";
 import ProductFrm from "./ProductFrm";
 import Swal from "sweetalert2";
+import { useRecoilState } from "recoil";
+import { loginEmailState } from "../utils/RecoilData";
+import axios from "axios";
 
 const ProductRegist = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -24,11 +27,10 @@ const ProductRegist = () => {
   const [mainCategory, setMainCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
   const [productPrice, setProductPrice] = useState(0);
-  const [productThumb, setProductThumb] = useState("");
+  const [thumb, setThumb] = useState("");
   const [productDetail, setProductDetail] = useState("");
-  const [productRegDate, setProductRegDate] = useState("date");
   const [productShow, setProductShow] = useState("");
-  const [memberEmail, setMemberEmail] = useState("loginEmail");
+  const [memberEmail, setMemberEmail] = useRecoilState(loginEmailState);
   const inputName = (e) => {
     setProductName(e.target.value);
     setProduct({ ...product, productName: e.target.value });
@@ -53,10 +55,6 @@ const ProductRegist = () => {
     setProductPrice(e.target.value);
     setProduct({ ...product, productPrice: e.target.value });
   };
-  const inputThumb = (e) => {
-    setProductThumb(e.target.value);
-    setProduct({ ...product, productThumb: e.target.value });
-  };
   const inputDetail = (e) => {
     setProductDetail(e.target.value);
     setProduct({ ...product, productDetail: e.target.value });
@@ -73,10 +71,29 @@ const ProductRegist = () => {
       mainCategory !== "" &&
       subCategory !== "" &&
       productPrice !== 0 &&
+      thumb !== "" &&
       productDetail !== "" &&
       productShow !== ""
     ) {
-      console.log(product);
+      const form = new FormData();
+      form.append("productName", productName);
+      form.append("productCompany", productCompany);
+      form.append("typeCategory", typeCategory);
+      form.append("mainCategory", mainCategory);
+      form.append("subCategory", subCategory);
+      form.append("productPrice", productPrice);
+      form.append("thumb", thumb);
+      form.append("productDetail", productDetail);
+      form.append("productShow", productShow);
+      form.append("memberEmail", memberEmail);
+      axios
+        .post(`${backServer}/admin`, form, {
+          headers: {
+            contentType: "multipart/form-data",
+            processData: false,
+          },
+        })
+        .then((res) => {});
     } else {
       Swal.fire({
         text: "누락된 입력 값이 있습니다",
@@ -109,8 +126,8 @@ const ProductRegist = () => {
           setSubCategory={inputSubCategory}
           productPrice={productPrice}
           setProductPrice={inputPrice}
-          productThumb={productThumb}
-          setProductThumb={inputThumb}
+          productThumb={thumb}
+          setProductThumb={setThumb}
           productDetail={productDetail}
           setProductDetail={inputDetail}
           productShow={productShow}

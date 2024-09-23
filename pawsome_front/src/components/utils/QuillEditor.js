@@ -6,7 +6,6 @@ import "react-quill/dist/quill.snow.css";
 Quill.register("modules/ImageResize", ImageResize);
 
 const QuillEditor = (props) => {
-  const [value, setValue] = useState("");
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const content = props.content;
   const setContent = props.setContent;
@@ -30,7 +29,6 @@ const QuillEditor = (props) => {
     "h1",
     "image",
   ];
-  const [values, setValues] = useState();
   const imageHandler = () => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");

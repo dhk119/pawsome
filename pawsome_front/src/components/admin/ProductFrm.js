@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const ProductFrm = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -22,6 +22,7 @@ const ProductFrm = (props) => {
   const setProductShow = props.setProductShow;
   const memberEmail = props.memberEmail;
   const [productImg, setProductImg] = useState(null);
+  const thumbnailRef = useRef(null);
   const changeThumb = (e) => {
     const files = e.currentTarget.files;
     if (files.length !== 0 && files[0] !== 0) {
@@ -29,7 +30,7 @@ const ProductFrm = (props) => {
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onloadend = () => {
-        setProductImg = reader.result;
+        setProductImg(reader.result);
       };
     } else {
       setProductThumb("");
@@ -39,6 +40,37 @@ const ProductFrm = (props) => {
   return (
     <div>
       <div>
+        <div className="thumb-wrap">
+          {productImg ? (
+            <img
+              src={productImg}
+              onClick={() => {
+                thumbnailRef.current.click();
+              }}
+            ></img>
+          ) : productThumb ? (
+            <img
+              src={`${backServer}/admin/thumb/${productThumb}`}
+              onClick={() => {
+                thumbnailRef.current.click();
+              }}
+            ></img>
+          ) : (
+            <img
+              src="/image/default_img.png"
+              onClick={() => {
+                thumbnailRef.current.click();
+              }}
+            ></img>
+          )}
+          <input
+            ref={thumbnailRef}
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={changeThumb}
+          ></input>
+        </div>
         <table className="tbl">
           <thead></thead>
           <tbody>
