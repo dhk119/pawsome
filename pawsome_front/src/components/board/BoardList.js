@@ -115,11 +115,6 @@ const BoardItem = (props) => {
     >
       <div className="list-list">
         <div className="posting-info start">
-<<<<<<< Updated upstream
-          <div className="posting-tag">{board.boardTag === 1? "#댕댕이" : board.boardTag === 2? "#냥냥이" : }</div>
-          <div className="posting-sub-info">
-            {board.boardTitle} {board.memberNickname} {board.readCount}
-=======
           <div className="posting-tag">
             {board.boardTag === 1
               ? "#댕댕이"
@@ -135,7 +130,6 @@ const BoardItem = (props) => {
           </div>
           <div className="posting-sub-info">
             {board.boardTitle}, {board.memberNickname}, {board.readCount},
->>>>>>> Stashed changes
             {boardLike}
           </div>
         </div>

@@ -202,9 +202,6 @@
   border-radius: 15px;
   text-align: center;
   color: #ccc;
-<<<<<<< Updated upstream
-  font-size: 12px;
-=======
   font-size: 14px;
 }
 .more-list {
@@ -223,7 +220,6 @@
   color: #fff;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
->>>>>>> Stashed changes
 }
 /*산책 지도*/
 .distance-box {
