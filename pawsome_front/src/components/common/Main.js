@@ -48,7 +48,7 @@ const Main = () => {
           <span>#가까운 동물병원을 찾아보세요</span>
         </div>
         <div>
-          <Link to="#">
+          <Link to="/board/map">
             <div
               style={{
                 width: "100%",

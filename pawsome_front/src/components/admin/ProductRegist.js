@@ -1,17 +1,18 @@
 import { useState } from "react";
 import ProductFrm from "./ProductFrm";
 import Swal from "sweetalert2";
+import { useRecoilState } from "recoil";
+import { loginEmailState } from "../utils/RecoilData";
+import axios from "axios";
 
 const ProductRegist = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [product, setProduct] = useState({
     productNo: 0,
     productName: "",
-    productCompany: "",
     typeCategory: 0,
     mainCategory: "",
-    subCategory: "",
-    productPrice: 0,
+    productPrice: null,
     productThumb: "",
     productDetail: "",
     productRegDate: "",
@@ -19,23 +20,16 @@ const ProductRegist = () => {
     memberEmail: "",
   });
   const [productName, setProductName] = useState("");
-  const [productCompany, setProductCompany] = useState("");
   const [typeCategory, setTypeCategory] = useState(0);
   const [mainCategory, setMainCategory] = useState("");
-  const [subCategory, setSubCategory] = useState("");
   const [productPrice, setProductPrice] = useState(0);
-  const [productThumb, setProductThumb] = useState("");
+  const [thumb, setThumb] = useState("");
   const [productDetail, setProductDetail] = useState("");
-  const [productRegDate, setProductRegDate] = useState("date");
   const [productShow, setProductShow] = useState("");
-  const [memberEmail, setMemberEmail] = useState("loginEmail");
+  const [memberEmail, setMemberEmail] = useRecoilState(loginEmailState);
   const inputName = (e) => {
     setProductName(e.target.value);
     setProduct({ ...product, productName: e.target.value });
-  };
-  const inputCompany = (e) => {
-    setProductCompany(e.target.value);
-    setProduct({ ...product, productCompany: e.target.value });
   };
   const inputTypeCategory = (e) => {
     setTypeCategory(e.target.value);
@@ -45,17 +39,9 @@ const ProductRegist = () => {
     setMainCategory(e.target.value);
     setProduct({ ...product, mainCategory: e.target.value });
   };
-  const inputSubCategory = (e) => {
-    setSubCategory(e.target.value);
-    setProduct({ ...product, subCategory: e.target.value });
-  };
   const inputPrice = (e) => {
     setProductPrice(e.target.value);
     setProduct({ ...product, productPrice: e.target.value });
-  };
-  const inputThumb = (e) => {
-    setProductThumb(e.target.value);
-    setProduct({ ...product, productThumb: e.target.value });
   };
   const inputDetail = (e) => {
     setProductDetail(e.target.value);
@@ -68,15 +54,30 @@ const ProductRegist = () => {
   const registProduct = () => {
     if (
       productName !== "" &&
-      productCompany !== "" &&
       typeCategory !== 0 &&
       mainCategory !== "" &&
-      subCategory !== "" &&
       productPrice !== 0 &&
+      thumb !== "" &&
       productDetail !== "" &&
       productShow !== ""
     ) {
-      console.log(product);
+      const form = new FormData();
+      form.append("productName", productName);
+      form.append("typeCategory", typeCategory);
+      form.append("mainCategory", mainCategory);
+      form.append("productPrice", productPrice);
+      form.append("thumb", thumb);
+      form.append("productDetail", productDetail);
+      form.append("productShow", productShow);
+      form.append("memberEmail", memberEmail);
+      axios
+        .post(`${backServer}/admin`, form, {
+          headers: {
+            contentType: "multipart/form-data",
+            processData: false,
+          },
+        })
+        .then((res) => {});
     } else {
       Swal.fire({
         text: "누락된 입력 값이 있습니다",
@@ -99,18 +100,14 @@ const ProductRegist = () => {
         <ProductFrm
           productName={productName}
           setProductName={inputName}
-          productCompany={productCompany}
-          setProductCompany={inputCompany}
           typeCategory={typeCategory}
           setTypeCategory={inputTypeCategory}
           mainCategory={mainCategory}
           setMainCategory={inputMainCategory}
-          subCategory={subCategory}
-          setSubCategory={inputSubCategory}
           productPrice={productPrice}
           setProductPrice={inputPrice}
-          productThumb={productThumb}
-          setProductThumb={inputThumb}
+          productThumb={thumb}
+          setProductThumb={setThumb}
           productDetail={productDetail}
           setProductDetail={inputDetail}
           productShow={productShow}

@@ -37,15 +37,8 @@ public class InquiryController {
 	}
 	@PostMapping
 	public ResponseEntity<Integer> insertInquiry(@ModelAttribute Inquiry inquiry){
-		System.out.println(inquiry);
 		int result=inquiryService.insertInquiry(inquiry);
 		return ResponseEntity.ok(result);
-	}
-	@PostMapping(value = "/editorImage")
-	public ResponseEntity<String> editorImage(@ModelAttribute MultipartFile image){
-		String savepath=root+"/editor/";
-		String filepath=fileUtil.upload(savepath, image);
-		return ResponseEntity.ok("/editor/"+filepath);
 	}
 	@GetMapping("/inquiryNo/{inquiryNo}")
 	public ResponseEntity<Inquiry> selectOneInquiry(@PathVariable int inquiryNo){

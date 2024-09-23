@@ -1,17 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const ProductFrm = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const productName = props.productName;
   const setProductName = props.setProductName;
-  const productCompany = props.productCompany;
-  const setProductCompany = props.setProductCompany;
   const typeCategory = props.typeCategory;
   const setTypeCategory = props.setTypeCategory;
   const mainCategory = props.mainCategory;
   const setMainCategory = props.setMainCategory;
-  const subCategory = props.subCategory;
-  const setSubCategory = props.setSubCategory;
   const productPrice = props.productPrice;
   const setProductPrice = props.setProductPrice;
   const productThumb = props.productThumb;
@@ -22,6 +18,7 @@ const ProductFrm = (props) => {
   const setProductShow = props.setProductShow;
   const memberEmail = props.memberEmail;
   const [productImg, setProductImg] = useState(null);
+  const thumbnailRef = useRef(null);
   const changeThumb = (e) => {
     const files = e.currentTarget.files;
     if (files.length !== 0 && files[0] !== 0) {
@@ -29,7 +26,7 @@ const ProductFrm = (props) => {
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onloadend = () => {
-        setProductImg = reader.result;
+        setProductImg(reader.result);
       };
     } else {
       setProductThumb("");
@@ -39,6 +36,37 @@ const ProductFrm = (props) => {
   return (
     <div>
       <div>
+        <div className="thumb-wrap">
+          {productImg ? (
+            <img
+              src={productImg}
+              onClick={() => {
+                thumbnailRef.current.click();
+              }}
+            ></img>
+          ) : productThumb ? (
+            <img
+              src={`${backServer}/admin/thumb/${productThumb}`}
+              onClick={() => {
+                thumbnailRef.current.click();
+              }}
+            ></img>
+          ) : (
+            <img
+              src="/image/default_img.png"
+              onClick={() => {
+                thumbnailRef.current.click();
+              }}
+            ></img>
+          )}
+          <input
+            ref={thumbnailRef}
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={changeThumb}
+          ></input>
+        </div>
         <table className="tbl">
           <thead></thead>
           <tbody>
@@ -54,22 +82,6 @@ const ProductFrm = (props) => {
                     name="productName"
                     value={productName}
                     onChange={setProductName}
-                  ></input>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <label htmlFor="productCompany">제품 브랜드</label>
-              </th>
-              <td>
-                <div className="input-item">
-                  <input
-                    type="text"
-                    id="productCompany"
-                    name="productCompany"
-                    value={productCompany}
-                    onChange={setProductCompany}
                   ></input>
                 </div>
               </td>
@@ -115,22 +127,6 @@ const ProductFrm = (props) => {
                     name="mainCategory"
                     value={mainCategory}
                     onChange={setMainCategory}
-                  ></input>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <label htmlFor="subCategory">제품 서브 카테고리</label>
-              </th>
-              <td>
-                <div className="input-item">
-                  <input
-                    type="text"
-                    id="subCategory"
-                    name="subCategory"
-                    value={subCategory}
-                    onChange={setSubCategory}
                   ></input>
                 </div>
               </td>
