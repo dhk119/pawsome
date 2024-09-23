@@ -14,7 +14,7 @@ const ProductRegist = () => {
     productName: "",
     typeCategory: 0,
     mainCategory: "",
-    productPrice: null,
+    productPrice: 0,
     productThumb: "",
     productDetail: "",
     productRegDate: "",
@@ -119,7 +119,7 @@ const ProductRegist = () => {
           setProductShow={inputShow}
           memberEmail={memberEmail}
         ></ProductFrm>
-        <div className="button-zone">
+        <div className="button">
           <button type="submit">등록하기</button>
         </div>
       </form>

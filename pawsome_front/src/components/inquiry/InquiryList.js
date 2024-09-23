@@ -23,9 +23,11 @@ const InquiryList = () => {
   }, [reqPage]);
   return (
     <section className="section inquiry-list">
-      <div>문의사항</div>
-      {isLogin ? <Link to="/inquiry/write">글쓰기</Link> : ""}
-      <table className="inquiry-list-wrap">
+      <div className="admin-title">문의사항</div>
+      <div className="write">
+        {isLogin ? <Link to="/inquiry/write">글쓰기</Link> : ""}
+      </div>
+      <table className="admin-tbl">
         <thead>
           <tr>
             <th>문의번호</th>
@@ -47,7 +49,7 @@ const InquiryList = () => {
                 <td>{inquiry.inquiryNo}</td>
                 <td>{inquiry.inquiryTitle}</td>
                 <td>{inquiry.inquiryRegDate}</td>
-                <td>{inquiry.inquiryType}</td>
+                {inquiry.inquiryType === 1 ? <td></td> : <td></td>}
                 <td>{inquiry.memberEmail}</td>
               </tr>
             );

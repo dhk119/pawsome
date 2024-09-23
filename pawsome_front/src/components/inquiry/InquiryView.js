@@ -33,7 +33,7 @@ const InquiryView = () => {
   };
   return (
     <section>
-      <div>게시글</div>
+      <div className="page-title">게시글</div>
       <div>
         <div>
           <div>
