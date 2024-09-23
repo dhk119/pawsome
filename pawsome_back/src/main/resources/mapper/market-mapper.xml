@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.market.model.dao.MarketDao">
-	<select id="totalCount" resultType="int">
+	<select id="totalCountAll" resultType="int">
 		select count(*) from product
-		<if test="productShow = 'Y'">
-		where product_show='Y'
-		</if>
+	</select>
+	<select id="totalCount" resultType="int">
+		select count(*) from product where product_show='Y'
 	</select>
 	<select id="selectProductList" resultType="product">
 		select * from
@@ -18,7 +18,7 @@
 	<insert id="insertProduct">
 		insert into product values (product_seq.nextval,#{productName},#{typeCategory},#{mainCategory},#{productPrice},#{productThumb},#{productDetail},sysdate,#{productShow},#{memberEmail})
 	</insert>
-	<select id="selectAllProductList" resultType="product">
+	<select id="selectProductAllList" resultType="product">
 		select * from (select rownum as rnum, b.* from(SELECT * from product order by product_no desc)b) where rnum BETWEEN #{start} and #{end}
 	</select>
 </mapper>

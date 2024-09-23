@@ -11,9 +11,12 @@ import kr.co.iei.util.PageInfo;
 public interface MarketDao {
 
 	int insertProduct(ProductDTO product);
+	
+	int totalCountAll();
 
 	int totalCount();
 
 	List selectProductList(PageInfo pi);
 
+	List selectProductAllList(PageInfo pi);
 }
