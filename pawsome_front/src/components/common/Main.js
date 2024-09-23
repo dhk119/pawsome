@@ -63,6 +63,10 @@ const Main = () => {
           </Link>
         </div>
       </div>
+      <div className="api-wrap">
+        <div className="weather-wrap">날씨 api 자리</div>
+        <div className="video-wrap">동영상 api 자리</div>
+      </div>
       <div className="market-preview-wrap"></div>
       <div className="up-btn">
         <ScrollToTop smooth />

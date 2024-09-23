@@ -65,15 +65,14 @@ const Map = () => {
 
   return (
     <div
-      id="map-box"
+      id="map"
       style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        width: "1200px",
+        marginLeft: "350px",
+        minHeight: "800px",
+        margin: "100px auto",
       }}
-    >
-      <div id="map" style={{ width: "1200px", height: "600px" }} />;
-    </div>
+    />
   );
 };
 

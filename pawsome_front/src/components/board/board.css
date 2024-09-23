@@ -189,13 +189,16 @@
   border: none;
   border-bottom: 1px solid #ccc;
 }
+.board-img-wrap {
+  display: flex;
+}
 .board-img-wrap > label > img {
   border: 1px solid #ffa518;
   width: 50px;
   height: 50px;
   padding: 10px 10px;
   border-radius: 15px;
-  margin: 10px auto;
+  margin: 10px 10px;
 }
 .board-img-wrap > label:hover {
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
@@ -228,6 +231,22 @@
   color: #fff;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+
+.preview-img {
+  margin: 0 5px;
+}
+.fileimg {
+  border: 1px solid #ffa518;
+  width: 50px;
+  height: 50px;
+  padding: 10px 10px;
+  border-radius: 15px;
+  margin: 10px auto;
+  position: relative;
+}
+.del-file-icon {
+  position: absolute;
 }
 
 /*산책 지도*/
