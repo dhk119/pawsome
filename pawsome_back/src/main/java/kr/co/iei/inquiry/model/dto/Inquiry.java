@@ -1,5 +1,7 @@
 package kr.co.iei.inquiry.model.dto;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
@@ -17,4 +19,5 @@ public class Inquiry {
 	private String inquiryRegDate;
 	private int inquiryType;
 	private String memberEmail;
+	List<InquiryComment> inquiryCommentList;
 }

@@ -20,6 +20,8 @@ import MarketMain from "./components/market/MarketMain";
 import ServiceMain from "./components/service/ServiceMain";
 import NaverJoin from "./components/member/NaverJoin";
 import MypageMain from "./components/member/MypageMain";
+import PetInsert from "./components/member/PetInsert";
+import ForgotPw from "./components/member/ForgotPw";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -64,6 +66,7 @@ function App() {
         <Routes>
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-pw" element={<ForgotPw />} />
           <Route path="/admin/*" element={<AdminMain />} />
           <Route path="/inquiry/*" element={<InquiryMain />} />
           <Route path="/*" element={<Main />} />
@@ -71,6 +74,7 @@ function App() {
           <Route path="/callback/naver" element={<NaverCallback />} />
           <Route path="/market/*" element={<MarketMain />} />
           <Route path="/mypage/*" element={<MypageMain />} />
+          <Route path="/petinsert" element={<PetInsert />} />
           <Route path="/service/*" element={<ServiceMain />} />
           <Route path="/naverjoin" element={<NaverJoin />} />
         </Routes>

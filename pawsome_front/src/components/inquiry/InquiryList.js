@@ -24,13 +24,15 @@ const InquiryList = () => {
   return (
     <section className="section inquiry-list">
       <div className="admin-title">문의사항</div>
-      {isLogin ? (
-        <div className="admin-write">
-          <Link to="/inquiry/write">글쓰기</Link>
-        </div>
-      ) : (
-        ""
-      )}
+      <div className="admin-write-wrap">
+        {isLogin ? (
+          <div className="admin-write">
+            <Link to="/inquiry/write">글쓰기</Link>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
       <table className="admin-tbl">
         <thead>
           <tr>
@@ -53,7 +55,15 @@ const InquiryList = () => {
                 <td>{inquiry.inquiryNo}</td>
                 <td>{inquiry.inquiryTitle}</td>
                 <td>{inquiry.inquiryRegDate}</td>
-                {inquiry.inquiryType === 1 ? <td></td> : <td></td>}
+                {inquiry.inquiryType === 1 ? (
+                  <td>계정 관련</td>
+                ) : inquiry.inquiryType === 2 ? (
+                  <td>게시판 관련</td>
+                ) : inquiry.inquiryType === 3 ? (
+                  <td>기타</td>
+                ) : (
+                  ""
+                )}
                 <td>{inquiry.memberEmail}</td>
               </tr>
             );

@@ -12,7 +12,7 @@ const BoardMain = () => {
       <Route path="allList" element={<AllBoardList />} />
       <Route path="list" element={<BoardList />} />
       <Route path="write" element={<BoardWrite />} />
-      {/* <Route path="view/:boardNo" element={<BoardView />} /> */}
+      <Route path="view/:boardNo" element={<BoardView />} />
       <Route path="map" element={<Map />} />
       <Route path="walkMap" element={<WalkMap />} />
     </Routes>

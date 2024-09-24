@@ -3,7 +3,10 @@ import Map from "../board/Map";
 
 const AllMap = () => {
   return (
-    <>
+    <div className="map-container">
+      <Link to="/service/petService" style={{ color: "#ffa518" }}>
+        메인으로
+      </Link>
       <nav className="nav-box">
         <ul>
           <li className="nav-btn">
@@ -38,7 +41,7 @@ const AllMap = () => {
           <Map />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

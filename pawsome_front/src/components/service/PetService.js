@@ -4,7 +4,7 @@ import "./service.css";
 
 const PetService = () => {
   return (
-    <div>
+    <div className="service-container">
       <nav className="nav-box">
         <ul>
           <li className="nav-btn">

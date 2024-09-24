@@ -15,7 +15,7 @@ const InquiryFrm = (props) => {
                   <label htmlFor="inquiryTitle">제목</label>
                 </th>
                 <td className="inquiry-tilte-td">
-                  <div className="input-item">
+                  <div className="admin-input-item">
                     <input
                       type="text"
                       id="inquiryTitle"

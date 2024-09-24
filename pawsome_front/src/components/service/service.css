@@ -1,3 +1,15 @@
+/*
+@font-face {
+  font-family: "TTLaundryGothicB";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/TTLaundryGothicB.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+* {
+  font-family: "TTLaundryGothicB";
+}
+*/
 /*PetService,AllMap*/
 .nav-box {
   display: flex;
@@ -33,17 +45,70 @@
 .nav-box > ul > li:hover > a {
   color: #fff;
 }
+.service-container {
+  width: 1000px;
+  border-radius: 10px;
+  padding: 50px;
+  margin: 30px auto;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
+}
+.map-container {
+  width: 1300px;
+  border-radius: 10px;
+  padding: 50px;
+  margin: 30px auto;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
+}
 /*MBTI*/
 .mbti-container {
   display: flex;
   justify-content: center;
-  height: 800px;
 }
 
 .dog-mbti {
   width: 700px;
-  border: 2px solid #ffa518;
   border-radius: 10px;
   padding: 50px;
   margin: 30px;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
+  text-align: center;
+  color: #ffa518;
+}
+.start-btn {
+  font-size: x-large;
+  border-radius: 20px;
+  border: 2px solid #ffa518;
+  width: 300px;
+  margin: 20px auto;
+  height: 40px;
+}
+.start-btn:hover {
+  background-color: #ffa518;
+  color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  line-height: 44px;
+}
+.start-btn > span {
+  padding: 30px;
+}
+
+/*RecordList, FeedSugest*/
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.service-wrap {
+  width: 1000px;
+  border-radius: 10px;
+  padding: 50px;
+  margin: 30px;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
+  text-align: center;
+  color: #ffa518;
+}
+/*FeedSugest*/
+.feedtest {
+  margin-top: 50px;
 }

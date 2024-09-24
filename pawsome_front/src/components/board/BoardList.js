@@ -5,7 +5,6 @@ import { isLoginState } from "../utils/RecoilData";
 import ScrollToTop from "react-scroll-to-top";
 import axios from "axios";
 import MorePage from "../utils/MorePage";
-import PageNavi from "../utils/PageNavi";
 
 const BoardList = () => {
   const isLogin = useRecoilValue(isLoginState);
@@ -19,8 +18,12 @@ const BoardList = () => {
       .get(`${backServer}/board/list/${boardTag}/${reqPage}`)
       .then((res) => {
         console.log(res);
-        const array = boardList.concat(res.data.list);
-        setBoardList(array);
+        if (reqPage != 1) {
+          const array = boardList.concat(res.data.list);
+          setBoardList(array);
+        } else {
+          setBoardList(res.data.list);
+        }
         setPi(res.data.pi);
       })
       .catch((err) => {
@@ -31,8 +34,6 @@ const BoardList = () => {
     setBoardTag(e.target.id);
     setReqPage(1);
   };
-  console.log(boardTag);
-  console.log(boardList);
   return (
     <section className="section board-wrap">
       <nav className="nav board-nav">
@@ -83,9 +84,15 @@ const BoardList = () => {
                 : ""}
             </ul>
           </div>
-          <div className="more-list">
-            <MorePage pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
-          </div>
+          {reqPage !== pi.totalPage ? (
+            <span className="more-list">
+              <MorePage pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+            </span>
+          ) : pi.totalPage === 0 ? (
+            <span>등록된 게시글이 없습니다.</span>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <div className="up-btn">
@@ -94,18 +101,13 @@ const BoardList = () => {
     </section>
   );
 };
-const BoardTag = (props) => {
-  const boardTag = props.boardTag;
-  const setBoardTag = props.setBoardTag;
-  const reqPage = props.reqPage;
-  const setReqPage = props.setReqPage;
-  return <li>{boardTag}전체</li>;
-};
 
 const BoardItem = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   const board = props.board;
   const [boardLike, setBoardLike] = useState(0);
   const navigate = useNavigate();
+  console.log(board.boardThumb);
   return (
     <li
       className="posting-item"
@@ -135,13 +137,11 @@ const BoardItem = (props) => {
         </div>
         <div className="end">
           <div className="posting-img">
-            <img
-              src={
-                board.boardThumb
-                  ? `localhost:8282/board/thumb/${board.boardThumb}`
-                  : ""
-              }
-            ></img>
+            {board.boardThumb ? (
+              <img src={`${backServer}/board/${board.boardThumb}`}></img>
+            ) : (
+              ""
+            )}
           </div>
           <div>
             <div>{board.boardNo}</div>

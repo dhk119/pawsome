@@ -10,13 +10,28 @@
 	<insert id="insertInquiry">
 		insert into inquiry values(inquiry_seq.nextval, #{inquiryTitle},#{inquiryContent},sysdate,#{inquiryType},#{memberEmail})
 	</insert>
-	<select id="selectOneInquiry" resultType="inquiry">
+	<select id="selectOneInquiry" resultMap="getInquiry">
 		select * from inquiry where inquiry_no=#{inquiryNo}
 	</select>
+	<select id="selectInquiryCommentList" resultType="inquiryComment">
+		select INQUIRY_COMMENT_CONTENT,INQUIRY_COMMENT_REG_DATE,MEMBER_EMAIL from inquiry_comment where inquiry_no=#{inquiryNo}
+	</select>
+	<resultMap type="inquiry" id="getInquiry">
+		<result column="INQUIRY_NO" property="inquiryNo"/>
+		<result column="INQUIRY_title" property="inquiryTitle"/>
+		<result column="INQUIRY_content" property="inquiryContent"/>
+		<result column="INQUIRY_reg_date" property="inquiryRegDate"/>
+		<result column="INQUIRY_type" property="inquiryType"/>
+		<result column="member_email" property="memberEmail"/>
+		<collection property="inquiryCommentList" select="selectInquiryCommentList" column="inquiry_no" javaType="java.util.List" ofType="inquiryComment"/>
+	</resultMap>
 	<delete id="deleteInquiry">
 		delete from inquiry where inquiry_no=#{inquiryNo}	
 	</delete>
 	<update id="updateInquiry">
 		update inquiry set inquiry_title=#{inquiryTitle}, inquiry_content=#{inquiryContent}, inquiry_type=#{inquiryType} where inquiry_no=#{inquiryNo}
 	</update>
+	<insert id="insertInquiryComment">
+		insert into inquiry_comment values(inquiry_comment_seq.nextval,#{inquiryNo},#{inquiryCommentContent},sysdate,#{memberEmail})	
+	</insert>
 </mapper>
