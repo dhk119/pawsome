@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { type } from "@testing-library/user-event/dist/type";
 
 const Mbti = () => {
   const [qNumber, setPage] = useState(-1); // 초기값 -1로 설정

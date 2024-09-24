@@ -1,3 +1,4 @@
+/*
 @font-face {
   font-family: "TTLaundryGothicB";
   src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/TTLaundryGothicB.woff2")
@@ -8,6 +9,7 @@
 * {
   font-family: "TTLaundryGothicB";
 }
+*/
 /*PetService,AllMap*/
 .nav-box {
   display: flex;
