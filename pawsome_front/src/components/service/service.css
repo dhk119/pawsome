@@ -61,7 +61,6 @@
 .mbti-container {
   display: flex;
   justify-content: center;
-  height: 900px;
 }
 
 .dog-mbti {
@@ -73,6 +72,25 @@
   text-align: center;
   color: #ffa518;
 }
+.start-btn {
+  font-size: x-large;
+  border-radius: 20px;
+  border: 2px solid #ffa518;
+  width: 300px;
+  margin: 20px auto;
+  height: 40px;
+}
+.start-btn:hover {
+  background-color: #ffa518;
+  color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  line-height: 44px;
+}
+.start-btn > span {
+  padding: 30px;
+}
+
 /*RecordList, FeedSugest*/
 .container {
   display: flex;
