@@ -17,7 +17,7 @@
 		<if test= "typeCategory!=0">
 			and type_category=#{typeCategory}
 		</if>
-		<if test= "mainCategory!=0">
+		<if test= "mainCategory!='all'">
 		 	and main_category=#{mainCategory}
 		</if>
 	</select>
@@ -25,7 +25,14 @@
 		select * from
 			(select rownum as rnum, p.* from
 				(select product_no, product_name, product_price, product_thumb from product
-					where product_show='Y' order by product_no desc)p)
+					where product_show='Y'
+					<if test= "typeCategory!=0">
+						and type_category=#{typeCategory}
+					</if>
+					<if test= "mainCategory!='all'">
+					 	and main_category=#{mainCategory}
+					</if>
+					 order by product_no desc)p)
 		where rnum between #{start} and #{end}
 	</select>
 	<select id="selectOneProduct" resultType="product">

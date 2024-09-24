@@ -5,7 +5,6 @@ import { useMemo, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import InquiryFrm from "./InquiryFrm";
-import ReactQuill from "react-quill";
 import QuillEditor from "../utils/QuillEditor";
 
 const InquiryWrite = () => {
@@ -46,7 +45,7 @@ const InquiryWrite = () => {
   };
   return (
     <section>
-      <div className="page-title">문의사항 작성</div>
+      <div className="admin-title">문의사항 작성</div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -60,14 +59,18 @@ const InquiryWrite = () => {
           inquiryType={inquiryType}
           setInquiryType={inputType}
         />
-        <div>
+        <div className="inquiry-quill-editor">
           <QuillEditor
             content={inquiryContent}
             setContent={setInquiryContent}
           ></QuillEditor>
         </div>
-        <div className="button-zone">
-          <button type="submit" style={{ marginTop: "50px" }}>
+        <div className="admin-button-zone">
+          <button
+            type="submit"
+            className="admin-write-submit"
+            style={{ marginTop: "50px" }}
+          >
             등록하기
           </button>
         </div>

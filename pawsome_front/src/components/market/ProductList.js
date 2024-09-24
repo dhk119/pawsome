@@ -29,17 +29,58 @@ const ProductList = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPage]);
+  }, [typeCategory, mainCategory, reqPage]);
   return (
     <>
-      <div className="page-title">전체</div>
+      <div className="best-item"></div>
+      <div className="page-title">
+        {mainCategory === "feed"
+          ? "사료"
+          : mainCategory === "snack"
+          ? "간식"
+          : mainCategory === "nutrient"
+          ? "영양제"
+          : mainCategory === "tableware"
+          ? "식기용품"
+          : mainCategory === "hygiene"
+          ? "위생용품"
+          : mainCategory === "toy"
+          ? "장난감"
+          : mainCategory === "fashion"
+          ? "패션"
+          : mainCategory === "house"
+          ? "하우스"
+          : "전체"}
+      </div>
       <div className="productList-title">
         <div className="productList-category">
-          <Link to="#">전체</Link>
+          <Link to="#">
+            {typeCategory === "1"
+              ? "댕댕이"
+              : typeCategory === "2"
+              ? "냥냥이"
+              : "전체"}
+          </Link>
           <span> {">"} </span>
-          <Link to="#">전체</Link>
-          <span> {">"} </span>
-          <Link to="#">전체</Link>
+          <Link to="#">
+            {mainCategory === "feed"
+              ? "사료"
+              : mainCategory === "snack"
+              ? "간식"
+              : mainCategory === "nutrient"
+              ? "영양제"
+              : mainCategory === "tableware"
+              ? "식기용품"
+              : mainCategory === "hygiene"
+              ? "위생용품"
+              : mainCategory === "toy"
+              ? "장난감"
+              : mainCategory === "fashion"
+              ? "패션"
+              : mainCategory === "house"
+              ? "하우스"
+              : "전체"}
+          </Link>
         </div>
         <div className="productList-filter">
           <div className="number">
@@ -64,8 +105,6 @@ const ProductList = () => {
         </div>
       </div>
       <div className="productList-content">
-        {/* navigate로 click => 상품 번호 같이 넘겨주는 걸로(주소창에 변경있게) */}
-
         {productList.map((product, i) => {
           return <ProductItem key={"product-" + i} product={product} />;
         })}
@@ -82,7 +121,7 @@ const ProductItem = (props) => {
     <div
       className="product-wrap"
       onClick={() => {
-        navigate(`/market/productDetail/${product.productNo}/detail`);
+        navigate(`/market/main/productDetail/${product.productNo}/detail`);
       }}
     >
       <div className="product-thumb">

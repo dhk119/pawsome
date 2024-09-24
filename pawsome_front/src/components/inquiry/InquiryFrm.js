@@ -8,13 +8,13 @@ const InquiryFrm = (props) => {
     <>
       <div>
         <div>
-          <table className="tbl">
+          <table className="admin-frm">
             <tbody>
               <tr>
                 <th>
                   <label htmlFor="inquiryTitle">제목</label>
                 </th>
-                <td>
+                <td className="inquiry-tilte-td">
                   <div className="input-item">
                     <input
                       type="text"
@@ -34,7 +34,7 @@ const InquiryFrm = (props) => {
                 <th>
                   <div>타입</div>
                 </th>
-                <th>
+                <td className="admin-radio-td">
                   <label htmlFor="account">계정 관련</label>
                   <div className="input-item">
                     <input
@@ -45,8 +45,8 @@ const InquiryFrm = (props) => {
                       onChange={setInquiryType}
                     ></input>
                   </div>
-                </th>
-                <th>
+                </td>
+                <td className="admin-radio-td">
                   <label htmlFor="account">게시판 관련</label>
                   <div className="input-item">
                     <input
@@ -57,8 +57,8 @@ const InquiryFrm = (props) => {
                       onChange={setInquiryType}
                     ></input>
                   </div>
-                </th>
-                <th>
+                </td>
+                <td className="admin-radio-td">
                   <label htmlFor="else">기타</label>
                   <div className="input-item">
                     <input
@@ -69,7 +69,7 @@ const InquiryFrm = (props) => {
                       onChange={setInquiryType}
                     ></input>
                   </div>
-                </th>
+                </td>
               </tr>
             </tbody>
           </table>
