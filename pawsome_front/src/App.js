@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import {
   loginEmailState,
   memberLevelState,
+  memberNicknameState,
 } from "./components/utils/RecoilData";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
@@ -16,15 +17,18 @@ import axios from "axios";
 import BoardMain from "./components/board/BoardMain";
 import NaverCallback from "./components/member/NaverCallback";
 import MarketMain from "./components/market/MarketMain";
-import PlantMain from "./components/service/ServiceMain";
 import ServiceMain from "./components/service/ServiceMain";
 import NaverJoin from "./components/member/NaverJoin";
 import MypageMain from "./components/member/MypageMain";
+import PetInsert from "./components/member/PetInsert";
+import ForgotPw from "./components/member/ForgotPw";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const [memberNickname, setMemberNickname] =
+    useRecoilState(memberNicknameState);
 
   useEffect(() => {
     refreshLogin();
@@ -41,6 +45,7 @@ function App() {
           console.log(res);
           setLoginEmail(res.data.memberEmail);
           setMemberLevel(res.data.memberLevel);
+          setMemberNickname(res.data.memberNickname);
           axios.defaults.headers.common["Authorization"] = res.data.accessToken;
           window.localStorage.setItem("refreshToken", res.data.refreshToken);
         })
@@ -48,6 +53,7 @@ function App() {
           console.log(err);
           setLoginEmail("");
           setMemberLevel("");
+          setMemberNickname("");
           delete axios.defaults.headers.common["Authorization"];
           window.localStorage.removeItem("refreshToken");
         });
@@ -60,6 +66,7 @@ function App() {
         <Routes>
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-pw" element={<ForgotPw />} />
           <Route path="/admin/*" element={<AdminMain />} />
           <Route path="/inquiry/*" element={<InquiryMain />} />
           <Route path="/*" element={<Main />} />
@@ -67,6 +74,7 @@ function App() {
           <Route path="/callback/naver" element={<NaverCallback />} />
           <Route path="/market/*" element={<MarketMain />} />
           <Route path="/mypage/*" element={<MypageMain />} />
+          <Route path="/petinsert" element={<PetInsert />} />
           <Route path="/service/*" element={<ServiceMain />} />
           <Route path="/naverjoin" element={<NaverJoin />} />
         </Routes>

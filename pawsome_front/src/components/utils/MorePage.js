@@ -5,19 +5,17 @@ const MorePage = (props) => {
   const arr = new Array();
 
   arr.push(
-    <div key="next-page">
-      <span
-        onClick={() => {
-          console.log(reqPage);
-          console.log(pi.totalPage);
-          if (reqPage !== pi.totalPage) {
-            setReqPage(reqPage + 1);
-          }
-        }}
-      >
-        더보기
-      </span>
-    </div>
+    <span
+      onClick={() => {
+        console.log(reqPage);
+        console.log(pi.totalPage);
+        if (reqPage !== pi.totalPage) {
+          setReqPage(reqPage + 1);
+        }
+      }}
+    >
+      더보기
+    </span>
   );
   return <div>{arr}</div>;
 };

@@ -32,8 +32,8 @@ public class MemberService {
 	public LoginMemberDTO login(MemberDTO member) {
 		MemberDTO m = memberDao.selectOneMember(member.getMemberEmail());
 		if(m != null && encoder.matches(member.getMemberPw(), m.getMemberPw())) {
-			String accessToken = jwtUtil.createAccessToken(m.getMemberEmail(), m.getMemberLevel());
-			String refreshToken = jwtUtil.createRefreshToken(m.getMemberEmail(), m.getMemberLevel());
+			String accessToken = jwtUtil.createAccessToken(m.getMemberEmail(), m.getMemberLevel(), m.getMemberNickname());
+			String refreshToken = jwtUtil.createRefreshToken(m.getMemberEmail(), m.getMemberLevel(), m.getMemberNickname());
 			LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken, m.getMemberEmail(), m.getMemberLevel(), m.getMemberNickname());
 			return loginMember;
 		}
@@ -42,8 +42,8 @@ public class MemberService {
 	
 	public LoginMemberDTO login(String memberEmail) {
 		MemberDTO m = memberDao.selectOneMember(memberEmail);
-		String accessToken = jwtUtil.createAccessToken(m.getMemberEmail(), m.getMemberLevel());
-		String refreshToken = jwtUtil.createRefreshToken(m.getMemberEmail(), m.getMemberLevel());
+		String accessToken = jwtUtil.createAccessToken(m.getMemberEmail(), m.getMemberLevel(), m.getMemberNickname());
+		String refreshToken = jwtUtil.createRefreshToken(m.getMemberEmail(), m.getMemberLevel(), m.getMemberNickname());
 		LoginMemberDTO loginMember = new LoginMemberDTO(accessToken, refreshToken, memberEmail, m.getMemberLevel(), m.getMemberNickname());
 		return loginMember;
 	}
@@ -52,9 +52,9 @@ public class MemberService {
 		try {
 			LoginMemberDTO loginMember = jwtUtil.checkToken(token);				
 			String accessToken
-			= jwtUtil.createAccessToken(loginMember.getMemberEmail(), loginMember.getMemberLevel());
+			= jwtUtil.createAccessToken(loginMember.getMemberEmail(), loginMember.getMemberLevel(), loginMember.getMemberNickname());
 			String refreshToken
-			= jwtUtil.createRefreshToken(loginMember.getMemberEmail(), loginMember.getMemberLevel());
+			= jwtUtil.createRefreshToken(loginMember.getMemberEmail(), loginMember.getMemberLevel(), loginMember.getMemberNickname());
 			loginMember.setAccessToken(accessToken);
 			loginMember.setRefreshToken(refreshToken);
 			return loginMember;
@@ -74,8 +74,10 @@ public class MemberService {
 		return result;
 	}
 
-	public MemberDTO selectOneMember(String memberEmail) {
-		MemberDTO member = memberDao.selectOneMember(memberEmail);
+	public MemberDTO selectOneMember(String token) {
+		LoginMemberDTO loginMember = jwtUtil.checkToken(token);
+		MemberDTO member = memberDao.selectOneMember(loginMember.getMemberEmail());
+		member.setMemberPw(null);
 		return member;
 	}
 

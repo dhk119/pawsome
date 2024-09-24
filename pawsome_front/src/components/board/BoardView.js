@@ -1,10 +1,18 @@
 import { useState } from "react";
+import BoardNav from "./BoardNav";
+import { useParams } from "react-router-dom";
 
 const BoardView = () => {
-  const [board, setBoard] = useState({});
+  const params = useParams();
+  const boardNo = params.boardNo;
   return (
     <section className="section board-view-wrap">
-      <div className="page-title">#태그</div>
+      <BoardNav />
+      <div className="board-view-content">
+        <div></div>
+      </div>
+      <div className="other-board-content"></div>
+      <div className="reply-wrap"></div>
     </section>
   );
 };

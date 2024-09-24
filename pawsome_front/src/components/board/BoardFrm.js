@@ -17,7 +17,7 @@ const BoardFrm = (props) => {
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
   const changeTag = (e) => {
-    console.log(e);
+    console.log(e.target.innerText);
     setBoardTag(e.target.innerText);
   };
   //첨부파일 화면에 띄울 state
@@ -34,13 +34,13 @@ const BoardFrm = (props) => {
       reader.readAsDataURL(files[i]);
       reader.onloadend = () => {
         fileimgArr.push(reader.result);
-        setShowBoardFile(fileimgArr);
+        setShowBoardFile([...showBoardFile, ...fileimgArr]);
       };
     }
     setBoardFile([...boardFile, ...fileArr]);
-    setShowBoardFile([...showBoardFile, ...fileimgArr]);
     setCountImg(showBoardFile.length);
   };
+  console.log(showBoardFile);
   return (
     <div className="board-writeFrm">
       <ul>
@@ -118,6 +118,8 @@ const BoardFrm = (props) => {
             <input
               className="board-content-title"
               placeholder="제목을 입력해 주세요"
+              value={boardTitle}
+              onChange={setBoardTitle}
             ></input>
           </div>
         </li>

@@ -5,12 +5,16 @@ import { useState } from "react";
 import BoardFrm from "./BoardFrm";
 import QuillEditor from "../utils/QuillEditor";
 import ScrollToTop from "react-scroll-to-top";
+import axios from "axios";
+import { Swal } from "sweetalert2";
+import BoardList from "./BoardList";
 
 const BoardWrite = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
+  console.log(memberNickname);
   const [boardTag, setBoardTag] = useState(0);
   const [boardTitle, setBoardTitle] = useState("");
   const [boardThumb, setBoardThumb] = useState(null);
@@ -19,7 +23,53 @@ const BoardWrite = () => {
   const inputTitle = (e) => {
     setBoardTitle(e.target.value);
   };
-  const writeBoard = () => {};
+  console.log(boardContent);
+  console.log(boardTitle);
+  const writeBoard = () => {
+    console.log(memberNickname);
+    if (boardTitle !== "" && boardContent !== "") {
+      const form = new FormData();
+      form.append("boardTitle", boardTitle);
+      form.append("boardContent", boardContent);
+      form.append("memberNickname", memberNickname);
+      if (boardTag === "#댕댕이") {
+        form.append("boardTag", 1);
+      } else if (boardTag === "#냥냥이") {
+        form.append("boardTag", 2);
+      } else if (boardTag === "#일상") {
+        form.append("boardTag", 3);
+      } else if (boardTag === "#정보공유") {
+        form.append("boardTag", 4);
+      } else if (boardTag === "#오산완") {
+        form.append("boardTag", 5);
+      }
+      for (let i = 0; i < boardFile.length; i++) {
+        form.append("boardFile", boardFile[i]);
+      }
+      axios
+        .post(`${backServer}/board`, form, {
+          headers: {
+            contentType: "multipart/form-data",
+            processData: false,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data) {
+            navigate("/board/list");
+          } else {
+            Swal.fire({
+              title: "게시글 작성요망",
+              text: "게시글 작성해 주세요",
+              icon: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
     <section className="section board-content-wrap">
       <div className="board-inside-wrap">
@@ -29,6 +79,7 @@ const BoardWrite = () => {
             className="board-write-frm"
             onSubmit={(e) => {
               e.preventDefault();
+              writeBoard();
             }}
           >
             <div className="writeFrm-btn">
