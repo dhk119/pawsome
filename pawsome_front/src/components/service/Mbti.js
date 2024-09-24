@@ -31,10 +31,31 @@ const Mbti = () => {
       ],
     },
     {
-      question: "3. 강아지와 놀 때 어떤 방식으로 놀고 싶나요?",
+      question: "3. 가고 있는데 친구들이 모여 놀고 있다! 나는 어떻게 할까?",
       options: [
-        { type: "W", text: "공을 던져주며 같이 놀기" },
-        { type: "C", text: "조용히 책 읽기" },
+        { type: "E", text: "같이 놀자며 달려간다" },
+        { type: "I", text: "그냥 놀고있는 모습을 구경한다" },
+      ],
+    },
+    {
+      question: "4. 또 가고 있었는데 갈림길이 나왔다! 나는 어떤 길로 갈까?",
+      options: [
+        { type: "L", text: "혹시 몰라! 매일 매일 가던 왼쪽길!" },
+        { type: "A", text: "오늘은 특별하게 가야지! 오른쪽으로 가자!" },
+      ],
+    },
+    {
+      question:
+        "5. 갈림길을 넘었는데, 누군가가 길을 물어본다. 뭐라고 설명해줄까?",
+      options: [
+        {
+          type: "W",
+          text: "왼쪽길로 가시면 도서관이 나오는데 거기에서 오른쪽으로 가면 있어요! 라고 구체적으로 설명한다",
+        },
+        {
+          type: "C",
+          text: "저기 큰 도로 옆으로 쭉가세요! 라고 단순하게 큰길로 설명한다",
+        },
       ],
     },
     {
@@ -43,6 +64,7 @@ const Mbti = () => {
     },
     // 추가 질문 작성
   ];
+  const [showResults, setShowResults] = useState(false); // 결과 화면 표시 여부
 
   const answerClick = (type) => {
     setResults((prev) => ({ ...prev, [type]: prev[type] + 1 }));
@@ -53,18 +75,36 @@ const Mbti = () => {
     if (qNumber < questions.length - 1) {
       setPage(qNumber + 1);
     } else {
-      alert("테스트가 완료되었습니다.");
+      setShowResults(true); // 결과 화면 표시
       console.log("결과:", results);
     }
   };
 
+  const renderResults = () => {
+    // 결과를 계산하여 표시하는 로직
+    return (
+      <div className="results">
+        <h2>테스트 결과</h2>
+        <p>외향: {results.E}</p>
+        <p>내향: {results.I}</p>
+        <p>교감: {results.C}</p>
+        <p>본능: {results.W}</p>
+        <p>필요: {results.N}</p>
+        <p>신뢰: {results.T}</p>
+        <p>정착: {results.L}</p>
+        <p>모험: {results.A}</p>
+      </div>
+    );
+  };
   return (
     <div className="mbti-container">
       <Link to="/service/petService" style={{ color: "#ffa518" }}>
         메인으로
       </Link>
       <div className="dog-mbti">
-        <h2 style={{ margin: "20px" }}>
+        <h2
+          style={{ margin: "20px", fontWeight: "bolder", fontSize: "x-large" }}
+        >
           12문제로 알아보는 나의 강아지 유형 MBTI는? 테스트로 알아보자!
         </h2>
         {qNumber === -1 ? ( // 초기 상태에서 시작 버튼 보여주기 (0이되면 1번 문제 시작)
@@ -74,12 +114,16 @@ const Mbti = () => {
               style={{ width: "600px" }}
             />
             <br />
+            <br />
             <span className="start-btn" onClick={() => setPage(0)}>
               테스트 시작하기
             </span>
           </div>
+        ) : showResults ? ( // 결과 화면 표시
+          renderResults()
         ) : (
-          <div className="question-box" style={{ margin: "20px" }}>
+          <div className="qna-box" style={{ margin: "20px" }}>
+            <img src="/image/service/siba.png" style={{ width: "500px" }} />
             <div className="question">{questions[qNumber].question}</div>
             {questions[qNumber].options.map((option, index) => (
               <div
