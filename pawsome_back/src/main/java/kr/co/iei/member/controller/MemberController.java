@@ -104,8 +104,6 @@ public class MemberController {
 	    Map<String, Object> result = new HashMap<>();
 	    if (isMember == 1) {
 	        LoginMemberDTO loginMember = memberService.login(memberEmail);
-	        System.out.println("테스트!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	        System.out.println(loginMember);
 	        result.put("isMember", true);
 	        result.put("memberEmail", loginMember.getMemberEmail());
 	        result.put("memberLevel", loginMember.getMemberLevel());
@@ -121,8 +119,8 @@ public class MemberController {
 	}
 	
 	@PostMapping(value = "/profile")
-	public ResponseEntity<MemberDTO> selectOneMember(String loginEmail) {
-		MemberDTO member = memberService.selectOneMember(loginEmail);
+	public ResponseEntity<MemberDTO> selectOneMember(@RequestHeader("Authorization") String token) {
+		MemberDTO member = memberService.selectOneMember(token);
 		return ResponseEntity.ok(member);
 	}
 	

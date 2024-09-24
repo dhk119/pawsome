@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import {
   loginEmailState,
   memberLevelState,
+  memberNicknameState,
 } from "./components/utils/RecoilData";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
@@ -16,7 +17,6 @@ import axios from "axios";
 import BoardMain from "./components/board/BoardMain";
 import NaverCallback from "./components/member/NaverCallback";
 import MarketMain from "./components/market/MarketMain";
-import PlantMain from "./components/service/ServiceMain";
 import ServiceMain from "./components/service/ServiceMain";
 import NaverJoin from "./components/member/NaverJoin";
 import MypageMain from "./components/member/MypageMain";
@@ -25,6 +25,8 @@ function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const [memberNickname, setMemberNickname] =
+    useRecoilState(memberNicknameState);
 
   useEffect(() => {
     refreshLogin();
@@ -41,6 +43,7 @@ function App() {
           console.log(res);
           setLoginEmail(res.data.memberEmail);
           setMemberLevel(res.data.memberLevel);
+          setMemberNickname(res.data.memberNickname);
           axios.defaults.headers.common["Authorization"] = res.data.accessToken;
           window.localStorage.setItem("refreshToken", res.data.refreshToken);
         })
@@ -48,6 +51,7 @@ function App() {
           console.log(err);
           setLoginEmail("");
           setMemberLevel("");
+          setMemberNickname("");
           delete axios.defaults.headers.common["Authorization"];
           window.localStorage.removeItem("refreshToken");
         });
