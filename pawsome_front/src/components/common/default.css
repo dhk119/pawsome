@@ -189,6 +189,14 @@ a {
   display: block;
   padding: 10px;
 }
+.up-btn > .scroll-to-top {
+  background-color: #fff;
+  border: 2px solid #ffa518;
+  padding-top: 3px;
+}
+.up-btn > .scroll-to-top > svg path {
+  fill: #ffa518;
+}
 /*풋터*/
 .footer {
   background-color: var(--main1);
@@ -333,4 +341,8 @@ a {
   height: 500px;
   margin: 50px;
   background-color: var(--main1);
+}
+
+.content {
+  min-height: 100vh;
 }

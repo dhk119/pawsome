@@ -4,6 +4,7 @@ import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import ScrollToTop from "react-scroll-to-top";
 
 const ProductList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;

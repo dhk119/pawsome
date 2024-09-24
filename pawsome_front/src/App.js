@@ -22,6 +22,7 @@ import NaverJoin from "./components/member/NaverJoin";
 import MypageMain from "./components/member/MypageMain";
 import PetInsert from "./components/member/PetInsert";
 import ForgotPw from "./components/member/ForgotPw";
+import ScrollToTop from "react-scroll-to-top";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -80,6 +81,9 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      <div className="up-btn">
+        <ScrollToTop smooth />
+      </div>
     </div>
   );
 }
