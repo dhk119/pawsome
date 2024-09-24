@@ -1,0 +1,10 @@
+.quantity {
+  width: 30px;
+  padding: 5px;
+  cursor: pointer;
+}
+.amount {
+  text-align: center;
+  width: 50px;
+  padding: 5px;
+}
