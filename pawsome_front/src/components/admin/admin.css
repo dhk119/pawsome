@@ -3,42 +3,41 @@ body {
   font: 14px/24px;
 }
 .admin-tbl {
-  border-collapse: separate;
+  border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
 }
-admin-tbl th,
+.admin-tbl > thead > tr > th {
+  background-color: var(--point1);
+  height: 40px;
+  color: #fff;
+  text-align: center;
+}
+.admin-tbl > tbody > tr > th,
 td {
   padding: 6px 15px;
+  text-align: center;
+  font-weight: bold;
+  color: var(--gray1);
 }
-admin-tbl th {
-  background: var(--point1);
-  color: #fff;
-  text-align: left;
-}
-admin-tbl tr:first-child th:first-child {
+.admin-tbl > thead > tr:first-child th:first-child {
   border-top-left-radius: 6px;
 }
-admin-tbl tr:first-child th:last-child {
+.admin-tbl > thead > tr:first-child th:last-child {
   border-top-right-radius: 6px;
 }
-admin-tbl td {
-  border-right: 1px solid var(--main1);
-  border-bottom: 1px solid var(--main1);
-}
-admin-tbl td:first-child {
-  border-left: 1px solid var(--main1);
-}
-admin-tbl tr:nth-child(even) td {
+.admin-tbl > tbody > tr:nth-child(even) td {
   background: var(--main2);
 }
-admin-tbl tr:last-child td:first-child {
+.admin-tbl > thead,
+tbody > tr:last-child td:first-child {
   border-bottom-left-radius: 6px;
 }
-admin-tbl tr:last-child td:last-child {
+.admin-tbl > thead,
+tbody > tr:last-child td:last-child {
   border-bottom-right-radius: 6px;
 }
-.write {
+.admin-write {
   width: 100px;
   height: 40px;
   line-height: 40px;
@@ -47,9 +46,13 @@ admin-tbl tr:last-child td:last-child {
   background-color: var(--main1);
   text-align: center;
   border-radius: 10px;
-}
-.write > a {
+  box-sizing: border-box;
+  border: none;
   color: #fff;
+}
+.admin-write > a {
+  color: #fff;
+  font-weight: bold;
 }
 .admin-title {
   text-align: center;
@@ -91,4 +94,67 @@ admin-tbl tr:last-child td:last-child {
   color: var(--main3);
   border-radius: 50%;
   background-color: var(--main1);
+}
+#inquiryTitle {
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.5;
+  border: none;
+  border-bottom: 1px solid var(--gray5);
+  padding: 8px 0px;
+}
+.admin-frm {
+  margin-left: 100px;
+  margin-right: 100px;
+  box-sizing: border-box;
+  border-collapse: collapse;
+}
+.admin-frm > tbody > tr > th {
+  margin-left: 40px;
+  width: 250px;
+  box-sizing: border-box;
+  background-color: var(--point1);
+}
+.admin-frm > tbody > tr:nth-child(even) th {
+  background: var(--main1);
+}
+.admin-frm > tbody > tr:first-child th {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+.admin-frm > tbody > tr > td {
+  width: 250px;
+  text-align: center;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+.admin-button-zone {
+  overflow: hidden;
+}
+.admin-write-submit {
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 20px;
+  margin-right: 100px;
+  background-color: var(--point1);
+  text-align: center;
+  border-radius: 10px;
+  box-sizing: border-box;
+  border: none;
+  color: #fff;
+  float: right;
+}
+.inquiry-quill-editor {
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+.admin-radio-td {
+  text-align: center;
+  font-weight: bold;
+}
+.inquiry-tilte-td {
+  padding: 0;
 }

@@ -24,9 +24,13 @@ const InquiryList = () => {
   return (
     <section className="section inquiry-list">
       <div className="admin-title">문의사항</div>
-      <div className="write">
-        {isLogin ? <Link to="/inquiry/write">글쓰기</Link> : ""}
-      </div>
+      {isLogin ? (
+        <div className="admin-write">
+          <Link to="/inquiry/write">글쓰기</Link>
+        </div>
+      ) : (
+        ""
+      )}
       <table className="admin-tbl">
         <thead>
           <tr>

@@ -25,9 +25,14 @@ const ProductList = () => {
   return (
     <section>
       <div className="admin-title">제품 리스트</div>
-      <div className="write">
-        {isLogin ? <Link to="/admin/productRegist">제품등록</Link> : ""}
-      </div>
+
+      {isLogin ? (
+        <div className="admin-write">
+          <Link to="/admin/productRegist">제품등록</Link>
+        </div>
+      ) : (
+        ""
+      )}
       <table className="admin-tbl">
         <thead>
           <tr>
