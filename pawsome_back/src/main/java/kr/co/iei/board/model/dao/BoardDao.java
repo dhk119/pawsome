@@ -15,11 +15,13 @@ public interface BoardDao {
 
 	int totalCount(int tag);
 
-	List selectBoardTag(Map m);
+	List selectBoardList(Map m);
 
 	int insertBoard(BoardDTO board);
 	 
 	int insertBoardFile(BoardFileDTO boardFile);
+
+	int selectBoardNo();
 
 
 }

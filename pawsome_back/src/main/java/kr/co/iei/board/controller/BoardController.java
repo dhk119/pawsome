@@ -36,7 +36,8 @@ public class BoardController {
 	
 	@GetMapping("/list/{tag}/{reqPage}")
 	public ResponseEntity<Map> list(@PathVariable int reqPage, @PathVariable int tag){
-		Map map = boardService.selectBoardTag(reqPage, tag);
+		Map map = boardService.selectBoardList(reqPage, tag);
+		System.out.println(map);
 		return ResponseEntity.ok(map);
 	}
 	
@@ -48,20 +49,20 @@ public class BoardController {
 	}
 	
 	 @PostMapping 
-	 public ResponseEntity<Boolean> insertBoard(@ModelAttribute BoardDTO board,@ModelAttribute MultipartFile boardThumb, @ModelAttribute MultipartFile[] boardFile){
-		 System.out.println(board);
-		 if(boardThumb != null) { String savepath = root+"/board/";
-		 String filepath = fileUtil.upload(savepath, boardThumb);
-	     board.setBoardThumb(filepath);}
+	 public ResponseEntity<Boolean> insertBoard(@ModelAttribute BoardDTO board, @ModelAttribute MultipartFile[] boardFile){
+		
 		 List<BoardFileDTO> boardFileList = new ArrayList<BoardFileDTO>();
-		 if(boardFile != null) { String savepath = root + "/board/";
-		 for(MultipartFile file : boardFile) {
-			 BoardFileDTO fileDTO = new BoardFileDTO();
-			 String filename = file.getOriginalFilename();
-			 String filepath = fileUtil.upload(savepath, file);
-			 fileDTO.setFilename(filename);
-			 fileDTO.setFilepath(filepath); 
-			 boardFileList.add(fileDTO); } } 
+		 if(boardFile != null) { 
+			 String savepath = root + "/board/";
+			 for(MultipartFile file : boardFile) {
+				 BoardFileDTO fileDTO = new BoardFileDTO();
+				 String filename = file.getOriginalFilename();
+				 String filepath = fileUtil.upload(savepath, file);
+				 fileDTO.setFilename(filename);
+				 fileDTO.setFilepath(filepath); 
+				 boardFileList.add(fileDTO); 
+			}
+		} 
 		 int result = boardService.insertBoard(board, boardFileList); 
 		 return ResponseEntity.ok(result == 1+boardFileList.size());
 		 }

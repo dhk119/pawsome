@@ -21,7 +21,7 @@ public class BoardService {
 	@Autowired
 	private PageUtil pageUtil;
 
-	public Map selectBoardTag(int reqPage, int tag) {
+	public Map selectBoardList(int reqPage, int tag) {
 		int numPerPage = 10;
 		int pageNaviSize = 5;
 		int totalCount = boardDao.totalCount(tag);
@@ -30,7 +30,7 @@ public class BoardService {
 		m.put("start", pi.getStart());
 		m.put("end", pi.getEnd());
 		m.put("tag", tag);
-		List list = boardDao.selectBoardTag(m);
+		List list = boardDao.selectBoardList(m);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("pi", pi);
@@ -40,10 +40,12 @@ public class BoardService {
 	
 	  @Transactional
 	  public int insertBoard(BoardDTO board, List<BoardFileDTO> boardFileList) { 
+		  board.setBoardThumb(boardFileList.get(0).getFilepath());
 		 int result = boardDao.insertBoard(board);
-	  
+		 int boardNo = boardDao.selectBoardNo();
+		 
 		 for(BoardFileDTO boardFile : boardFileList) {
-		 boardFile.setBoardNo(board.getBoardNo());
+		 boardFile.setBoardNo(boardNo);
 		 result += boardDao.insertBoardFile(boardFile); } 
 		 return result; 
 		 }

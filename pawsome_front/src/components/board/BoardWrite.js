@@ -14,6 +14,7 @@ const BoardWrite = () => {
   const navigate = useNavigate();
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
+  console.log(memberNickname);
   const [boardTag, setBoardTag] = useState(0);
   const [boardTitle, setBoardTitle] = useState("");
   const [boardThumb, setBoardThumb] = useState(null);
@@ -25,12 +26,23 @@ const BoardWrite = () => {
   console.log(boardContent);
   console.log(boardTitle);
   const writeBoard = () => {
+    console.log(memberNickname);
     if (boardTitle !== "" && boardContent !== "") {
-      console.log(1);
       const form = new FormData();
       form.append("boardTitle", boardTitle);
       form.append("boardContent", boardContent);
       form.append("memberNickname", memberNickname);
+      if (boardTag === "#댕댕이") {
+        form.append("boardTag", 1);
+      } else if (boardTag === "#냥냥이") {
+        form.append("boardTag", 2);
+      } else if (boardTag === "#일상") {
+        form.append("boardTag", 3);
+      } else if (boardTag === "#정보공유") {
+        form.append("boardTag", 4);
+      } else if (boardTag === "#오산완") {
+        form.append("boardTag", 5);
+      }
       for (let i = 0; i < boardFile.length; i++) {
         form.append("boardFile", boardFile[i]);
       }

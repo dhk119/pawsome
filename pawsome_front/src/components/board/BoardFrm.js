@@ -17,7 +17,7 @@ const BoardFrm = (props) => {
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
   const changeTag = (e) => {
-    console.log(e);
+    console.log(e.target.innerText);
     setBoardTag(e.target.innerText);
   };
   //첨부파일 화면에 띄울 state
