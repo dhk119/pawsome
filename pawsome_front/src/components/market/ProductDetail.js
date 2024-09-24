@@ -38,7 +38,6 @@ const ProductDetail = () => {
   };
   return (
     <section className="section productList-wrap">
-      <MainNav />
       <div className="productDetail-wrap">
         <div className="productDetail">
           <div className="product-thumb">

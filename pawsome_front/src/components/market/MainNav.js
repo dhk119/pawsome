@@ -1,13 +1,24 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import ProductList from "./ProductList";
 import ProductDetail from "./ProductDetail";
 import { useState } from "react";
 
-const MainNav = (props) => {
-  const changeMain = props.changeMain;
-  const changeType = props.changeType;
+const MainNav = () => {
+  const [typeCategory, setTypeCategory] = useState(0);
+  const [mainCategory, setMainCategory] = useState("all");
+  const navigate = useNavigate();
+  const changeType = (e) => {
+    setTypeCategory(e.target.id);
+    setMainCategory("all");
+    navigate(`/market/main/productList/${e.target.id}/all`);
+  };
+  const changeMain = (e) => {
+    setMainCategory(e.target.id);
+    navigate(`/market/main/productList/${typeCategory}/${e.target.id}`);
+  };
+
   return (
-    <>
+    <section className="section productList-wrap">
       <nav className="nav type-nav">
         <ul>
           <li>
@@ -76,7 +87,14 @@ const MainNav = (props) => {
           </li>
         </ul>
       </nav>
-    </>
+      <Routes>
+        <Route
+          path="productList/:typeCategory/:mainCategory"
+          element={<ProductList />}
+        />
+        <Route path="productDetail/:productNo/*" element={<ProductDetail />} />
+      </Routes>
+    </section>
   );
 };
 

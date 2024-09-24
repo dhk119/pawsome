@@ -41,7 +41,7 @@ const MainNavi = () => {
           <Link to="/service/PetService">시설</Link>
         </li>
         <li>
-          <Link to="/market/main">마켓</Link>
+          <Link to="/market/main/productList/0/all">마켓</Link>
         </li>
         <li>
           <Link to="/board/list">커뮤니티</Link>

@@ -4,7 +4,6 @@ import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import MainNav from "./MainNav";
 
 const ProductList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -13,18 +12,9 @@ const ProductList = () => {
   const [pi, setPi] = useState({});
   const [totalCount, setTotalCount] = useState();
   const params = useParams();
-  const [typeCategory, setTypeCategory] = useState(0);
-  const [mainCategory, setMainCategory] = useState("all");
-  const changeType = (e) => {
-    setTypeCategory(e.target.id);
-    setMainCategory("all");
-    /*addclass now */
-  };
-  console.log(typeCategory);
-  const changeMain = (e) => {
-    setMainCategory(e.target.id);
-  };
-  console.log(mainCategory);
+  const typeCategory = params.typeCategory;
+  const mainCategory = params.mainCategory;
+
   useEffect(() => {
     axios
       .get(
@@ -41,8 +31,7 @@ const ProductList = () => {
       });
   }, [typeCategory, mainCategory, reqPage]);
   return (
-    <section className="section productList-wrap">
-      <MainNav changeMain={changeMain} changeType={changeType} />
+    <>
       <div className="best-item"></div>
       <div className="page-title">
         {mainCategory === "feed"
@@ -116,13 +105,11 @@ const ProductList = () => {
         </div>
       </div>
       <div className="productList-content">
-        {/* navigate로 click => 상품 번호 같이 넘겨주는 걸로(주소창에 변경있게) */}
-
         {productList.map((product, i) => {
           return <ProductItem key={"product-" + i} product={product} />;
         })}
       </div>
-    </section>
+    </>
   );
 };
 
@@ -134,7 +121,7 @@ const ProductItem = (props) => {
     <div
       className="product-wrap"
       onClick={() => {
-        navigate(`/market/productDetail/${product.productNo}/detail`);
+        navigate(`/market/main/productDetail/${product.productNo}/detail`);
       }}
     >
       <div className="product-thumb">
