@@ -7,6 +7,8 @@ import Guide from "./tabComponent/Guide";
 import "./tab.css";
 import axios from "axios";
 import MainNav from "./MainNav";
+import { MdOutlineProductionQuantityLimits } from "react-icons/md";
+import QuantityInput from "./QuantityInput";
 
 const ProductDetail = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -21,12 +23,22 @@ const ProductDetail = () => {
       .then((res) => {
         console.log(res);
         setProduct(res.data);
+        setTotal(res.data.productPrice);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  /* 수량 */
+  const [quantity, setQuantity] = useState(1);
+  const [total, setTotal] = useState(0);
+
+  const handleClickCounter = (num) => {
+    setQuantity(quantity + num);
+    setTotal(product.productPrice * (quantity + num));
+  };
+  /* 탭 */
   const tabArr = [
     { name: "상세정보", content: "상품 상세정보", url: "detail" },
     { name: "상품평", content: "상품 리뷰", url: "review" },
@@ -39,6 +51,7 @@ const ProductDetail = () => {
   return (
     <section className="section productList-wrap">
       <div className="productDetail-wrap">
+        <div className="line"></div>
         <div className="productDetail">
           <div className="product-thumb">
             <img src="/image/basicimage.png" />
@@ -46,9 +59,9 @@ const ProductDetail = () => {
           <div className="product-info">
             <div className="product-category">
               <Link to="#">
-                {product.typeCategory === "1"
+                {product.typeCategory === 1
                   ? "댕댕이"
-                  : product.typeCategory === "2"
+                  : product.typeCategory === 2
                   ? "냥냥이"
                   : "전체"}
               </Link>
@@ -73,8 +86,14 @@ const ProductDetail = () => {
             </div>
             <div className="product-name">{product.productName}</div>
             <div className="product-price">{product.productPrice}원</div>
-            <div className="product-amount">수량</div>
-            <div className="product-totalprice">총 금액</div>
+            <div className="product-amount">
+              <QuantityInput quantity={quantity} onClick={handleClickCounter} />
+            </div>
+
+            <div className="product-totalprice">
+              <span>총 금액</span> <span>{total}원</span>
+            </div>
+
             <div className="product-btn">
               <Link to="#">장바구니 담기</Link>
               <Link to="#">바로 구매</Link>
