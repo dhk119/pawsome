@@ -40,7 +40,7 @@ const QuillEditor = (props) => {
       const form = new FormData();
       form.append("image", file);
       axios
-        .post(`${backServer}/board/editorImage`, form, {
+        .post(`${backServer}/inquiry/editorImage`, form, {
           headers: {
             contentType: "multipart/form-data",
             processData: false,

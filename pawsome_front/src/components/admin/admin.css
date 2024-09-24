@@ -5,7 +5,9 @@ body {
 .admin-tbl {
   border-collapse: collapse;
   border-spacing: 0;
-  width: 100%;
+  width: 80%;
+  margin: 100px auto;
+  margin-top: 50px;
 }
 .admin-tbl > thead > tr > th {
   background-color: var(--point1);
@@ -37,12 +39,16 @@ tbody > tr:last-child td:first-child {
 tbody > tr:last-child td:last-child {
   border-bottom-right-radius: 6px;
 }
+.admin-write-wrap {
+  width: 80%;
+  margin: 100px auto;
+  margin-top: 40px;
+  margin-bottom: 0px;
+}
 .admin-write {
   width: 100px;
   height: 40px;
   line-height: 40px;
-  margin-left: 40px;
-  margin-bottom: 20px;
   background-color: var(--main1);
   text-align: center;
   border-radius: 10px;
@@ -53,12 +59,17 @@ tbody > tr:last-child td:last-child {
 .admin-write > a {
   color: #fff;
   font-weight: bold;
+  padding-left: 27.5px;
+  padding-right: 27.5px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 .admin-title {
   text-align: center;
   font-size: xx-large;
   color: var(--point1);
   font-family: ns-b;
+  margin-top: 50px;
 }
 .admin-input-item {
   display: flex;
@@ -100,18 +111,20 @@ tbody > tr:last-child td:last-child {
   font-size: 16px;
   line-height: 1.5;
   border: none;
-  border-bottom: 1px solid var(--gray5);
   padding: 8px 0px;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
 }
 .admin-frm {
-  margin-left: 100px;
-  margin-right: 100px;
+  margin: 100px auto;
+  margin-top: 50px;
+  margin-bottom: 0;
   box-sizing: border-box;
   border-collapse: collapse;
+  width: 80%;
 }
 .admin-frm > tbody > tr > th {
   margin-left: 40px;
-  width: 250px;
+  width: 20%;
   box-sizing: border-box;
   background-color: var(--point1);
 }
@@ -123,20 +136,23 @@ tbody > tr:last-child td:last-child {
   border-top-right-radius: 6px;
 }
 .admin-frm > tbody > tr > td {
-  width: 250px;
+  width: 20%;
   text-align: center;
   font-weight: bold;
   box-sizing: border-box;
 }
 .admin-button-zone {
   overflow: hidden;
+  width: 80%;
+  margin: 100px auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 .admin-write-submit {
   width: 100px;
   height: 40px;
   line-height: 40px;
   margin-bottom: 20px;
-  margin-right: 100px;
   background-color: var(--point1);
   text-align: center;
   border-radius: 10px;
@@ -146,9 +162,10 @@ tbody > tr:last-child td:last-child {
   float: right;
 }
 .inquiry-quill-editor {
-  margin-left: 100px;
-  margin-right: 100px;
+  width: 80%;
+  margin: 100px auto;
   margin-bottom: 10px;
+  margin-top: 0;
   box-sizing: border-box;
 }
 .admin-radio-td {
@@ -157,4 +174,106 @@ tbody > tr:last-child td:last-child {
 }
 .inquiry-tilte-td {
   padding: 0;
+}
+.inquiry-image {
+  width: 80%;
+  margin: 100px auto;
+  margin-top: 0px;
+}
+#inquiry-title {
+  height: 50px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+.admin-input-item > input {
+  text-align: center;
+}
+.admin-write-undo {
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  background-color: var(--main1);
+  text-align: center;
+  border-radius: 10px;
+  box-sizing: border-box;
+  border: none;
+  color: #fff;
+  float: right;
+}
+#admin-delete {
+  margin-right: 0;
+  margin-left: 10px;
+  font-size: 16px;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+#admin-update-btn {
+  color: #fff;
+  padding-left: 35px;
+  padding-right: 35px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+.inquiry-sub-title {
+  text-align: center;
+  font-size: x-large;
+  color: var(--point1);
+  font-family: ns-b;
+}
+button {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+.inquiry-noComment {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  font-weight: bold;
+}
+.inquiry-comment-input {
+  width: 80%;
+  margin: 100px auto;
+  overflow: hidden;
+}
+.inquiry-comment-input > * {
+  float: left;
+}
+.inquiry-comment-left {
+  font-size: large;
+  font-weight: bold;
+  background-color: var(--main1);
+  color: #fff;
+  border-radius: 50px;
+  width: 15%;
+  text-align: center;
+}
+.inquiry-comment-left > p {
+  line-height: 50px;
+}
+.inquiry-comment-right {
+  box-sizing: border-box;
+  float: right;
+  width: 80%;
+}
+.inquiry-textarea {
+  width: 85%;
+  float: left;
+}
+.inquiry-comment-right > .inquiry-textarea > textarea {
+  box-sizing: border-box;
+  width: 100%;
+  overflow: auto;
+  resize: none;
+  height: 50px;
+  border-color: var(--point1);
+  border-radius: 10px;
+}
+.inquiry-button-zone {
+  float: right;
+  width: 15%;
+}
+#inquiry-comment-button {
+  margin: 0;
+  height: 50px;
 }

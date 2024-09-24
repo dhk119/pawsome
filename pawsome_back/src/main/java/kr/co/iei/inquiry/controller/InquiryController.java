@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.inquiry.model.dto.Inquiry;
+import kr.co.iei.inquiry.model.dto.InquiryComment;
 import kr.co.iei.inquiry.model.service.InquiryService;
 import kr.co.iei.util.FileUtils;
 
@@ -34,6 +36,12 @@ public class InquiryController {
 	public ResponseEntity<Map> list(@PathVariable int reqPage){
 		Map map=inquiryService.selectInquiryList(reqPage);
 		return ResponseEntity.ok(map);
+	}
+	@PostMapping(value = "/editorImage")
+	public ResponseEntity<String> editorImage(@ModelAttribute MultipartFile image){
+		String savepath=root+"/editor/";
+		String filepath=fileUtil.upload(savepath, image);
+		return ResponseEntity.ok("/editor/"+filepath);
 	}
 	@PostMapping
 	public ResponseEntity<Integer> insertInquiry(@ModelAttribute Inquiry inquiry){
@@ -53,6 +61,11 @@ public class InquiryController {
 	@PatchMapping
 	public ResponseEntity<Integer> updateinquiry(@ModelAttribute Inquiry inquiry){
 		int result=inquiryService.updateInquiry(inquiry);
+		return ResponseEntity.ok(result);
+	}
+	@PostMapping(value = "/insertComment")
+	public ResponseEntity<Integer> insertInquiryComment(@RequestBody InquiryComment inquiryComment){
+		int result=inquiryService.insertInquiryComment(inquiryComment);
 		return ResponseEntity.ok(result);
 	}
 }
