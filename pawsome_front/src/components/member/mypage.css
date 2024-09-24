@@ -66,10 +66,33 @@
 
 .profile-wrap {
   background-color: #fff;
-  height: 300px;
   padding: 50px;
 }
+.profile-wrap > h2 {
+  margin-bottom: 20px;
+}
+.profile-btn-wrap {
+  text-align: right;
+}
+.profile-wrap button {
+  margin-top: 10px;
+  background-color: var(--point1);
+  border: none;
+  color: #fff;
+  width: 100px;
+  height: 30px;
+  font-family: ns-b;
+  font-size: 18px;
+}
 
+.member-addr {
+  display: flex;
+}
+.member-addr > div:last-child {
+  margin-left: 10px;
+}
+
+/* 반려동물 wrap */
 .pet-wrap {
   margin-top: 50px;
   background-color: #fff;

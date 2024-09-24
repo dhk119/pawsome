@@ -59,7 +59,9 @@ const HeaderLink = () => {
     useRecoilState(memberNicknameState);
   const isLogin = useRecoilValue(isLoginState);
 
-  console.log("test : ", loginEmail, memberLevel);
+  console.log("이메일 : ", loginEmail);
+  console.log("레벨 : ", memberLevel);
+  console.log("닉네임 : ", memberNickname);
 
   const logout = () => {
     setLoginEmail("");
