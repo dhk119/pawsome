@@ -25,6 +25,12 @@
   border-radius: 50%;
   margin-bottom: 15px;
 }
+.profile-img > img {
+  width: 150px;
+  height: 150px;
+
+  border-radius: 50%;
+}
 
 .user-info div:last-child {
   font-size: 20px;
@@ -68,13 +74,18 @@
   background-color: #fff;
   padding: 50px;
 }
-.profile-wrap > h2 {
+.profile-wrap > h2,
+.pet-wrap > h2 {
   margin-bottom: 20px;
+  color: var(--point1);
+  font-size: 30px;
 }
-.profile-btn-wrap {
+.profile-btn-wrap,
+.pet-btn-wrap {
   text-align: right;
 }
-.profile-wrap button {
+.profile-wrap button,
+.pet-wrap button {
   margin-top: 10px;
   background-color: var(--point1);
   border: none;
@@ -83,6 +94,8 @@
   height: 30px;
   font-family: ns-b;
   font-size: 18px;
+  cursor: pointer;
+  border-radius: 10px;
 }
 
 .member-addr {
@@ -98,4 +111,63 @@
   background-color: #fff;
   height: 200px;
   padding: 50px;
+}
+
+.pet-info {
+  border: 1px solid var(--gray4);
+}
+
+/* 반려동물 등록 */
+.pet-input-wrap {
+  width: 500px;
+  margin: 0 auto;
+  border: 1px solid black;
+}
+.pet-input {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pet-input-body {
+  height: 700px;
+}
+.pet-breed > label {
+  cursor: pointer;
+}
+.pet-breed > label > * {
+  font-size: 100px;
+}
+
+.breed-input {
+  display: none;
+}
+
+.breed-label {
+  cursor: pointer;
+}
+
+.breed-icon {
+  font-size: 100px;
+  color: var(--gray6);
+}
+
+.breed-input:checked + .breed-icon {
+  color: var(--point1);
+}
+
+.pet-gender-wrap > label {
+  background-color: var(--gray6);
+  display: inline-block;
+  width: 100px;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px 0;
+}
+
+.pet-gender-wrap > input {
+  display: none;
+}
+
+.pet-gender-wrap > input:checked + label {
+  background-color: var(--point1);
 }
