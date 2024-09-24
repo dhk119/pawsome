@@ -23,5 +23,7 @@ public interface BoardDao {
 
 	int selectBoardNo();
 
+	BoardDTO selectOneBoard(int boardNo);
+
 
 }

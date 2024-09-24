@@ -84,12 +84,14 @@ const BoardList = () => {
                 : ""}
             </ul>
           </div>
-          {reqPage !== pi.totalPage ? (
+          {pi.totalPage === 0 ? (
+            <div className="list-list">
+              <span>등록된 게시글이 없습니다.</span>
+            </div>
+          ) : reqPage !== pi.totalPage ? (
             <span className="more-list">
               <MorePage pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
             </span>
-          ) : pi.totalPage === 0 ? (
-            <span>등록된 게시글이 없습니다.</span>
           ) : (
             ""
           )}

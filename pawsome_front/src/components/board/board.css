@@ -253,6 +253,14 @@
   position: absolute;
 }
 
+.list-list > span {
+  margin-left: 43%;
+}
+.board-view-wrap {
+  min-height: 800px;
+  background-color: #ffa518;
+  margin: 50px auto;
+}
 /*산책 지도*/
 .distance-box {
   background-color: rgba(255, 255, 255, 0.486);

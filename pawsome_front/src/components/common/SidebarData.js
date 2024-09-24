@@ -22,16 +22,12 @@ export const SidebarData = [
     cName: "nav-text",
     sub: [
       {
-        title: "전체",
-        path: "/board/allList",
+        title: "자유 게시판",
+        path: "/board/list",
       },
       {
         title: "오산완",
         path: "#",
-      },
-      {
-        title: "자유 게시판",
-        path: "/board/list",
       },
     ],
   },

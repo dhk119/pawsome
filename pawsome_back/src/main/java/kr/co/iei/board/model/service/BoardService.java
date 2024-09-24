@@ -51,5 +51,11 @@ public class BoardService {
 		 }
 
 
+	public BoardDTO selectOneBoard(int boardNo) {
+		BoardDTO board = boardDao.selectOneBoard(boardNo);
+		return board;
+	}
+
+
 	
 }

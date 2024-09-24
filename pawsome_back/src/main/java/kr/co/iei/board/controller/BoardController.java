@@ -67,4 +67,9 @@ public class BoardController {
 		 return ResponseEntity.ok(result == 1+boardFileList.size());
 		 }
 	 
+	 @GetMapping(value="/boardNo/{boardNo}")
+	 public ResponseEntity<BoardDTO> selectOneBoard(@PathVariable int boardNo){
+		 BoardDTO board = boardService.selectOneBoard(boardNo);
+		 return ResponseEntity.ok(board);
+	 }
 }
