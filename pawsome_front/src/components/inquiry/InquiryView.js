@@ -33,7 +33,7 @@ const InquiryView = () => {
         setInquiryCommentList(res.data.inquiryCommentList);
       })
       .catch((err) => {});
-  }, [inquiryComment]);
+  }, [inquiryCommentList]);
   const deleteInquiry = () => {
     Swal.fire({
       text: "문의글을 삭제하시겠습니까?",
@@ -64,7 +64,9 @@ const InquiryView = () => {
     if (inquiryComment.inquiryCommentContent !== "") {
       axios
         .post(`${backServer}/inquiry/insertComment`, inquiryComment)
-        .then((res) => {});
+        .then((res) => {
+          setInquiryCommentList([...inquiryCommentList, inquiryComment]);
+        });
     } else {
       Swal.fire({
         text: "댓글 내용을 입력하세요",
