@@ -28,13 +28,14 @@ public class ProductController {
 	public String root;
 	
 	@GetMapping(value="/productList/{typeCategory}/{mainCategory}/{reqPage}")
-	public ResponseEntity<Map> productList (@PathVariable int typeCategory, @PathVariable int mainCategory, @PathVariable int reqPage) {
+	public ResponseEntity<Map> productList (@PathVariable int typeCategory, @PathVariable String mainCategory, @PathVariable int reqPage) {
 		Map map = productService.selectProductList(typeCategory, mainCategory, reqPage);
 		return ResponseEntity.ok(map);
 	}
 	
 	@GetMapping(value="/productDetail/{productNo}")
 	public ResponseEntity<ProductDTO> selectOneProduct(@PathVariable int productNo){
+		System.out.println(productNo);
 		ProductDTO product = productService.selectOneProduct(productNo);
 		return ResponseEntity.ok(product);
 	}

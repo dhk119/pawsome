@@ -4,6 +4,7 @@ import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import MainNav from "./MainNav";
 
 const ProductList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -12,9 +13,18 @@ const ProductList = () => {
   const [pi, setPi] = useState({});
   const [totalCount, setTotalCount] = useState();
   const params = useParams();
-  const typeCategory = params.typeCategory;
-  const mainCategory = params.mainCategory;
-
+  const [typeCategory, setTypeCategory] = useState(0);
+  const [mainCategory, setMainCategory] = useState("all");
+  const changeType = (e) => {
+    setTypeCategory(e.target.id);
+    setMainCategory("all");
+    /*addclass now */
+  };
+  console.log(typeCategory);
+  const changeMain = (e) => {
+    setMainCategory(e.target.id);
+  };
+  console.log(mainCategory);
   useEffect(() => {
     axios
       .get(
@@ -29,17 +39,59 @@ const ProductList = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPage]);
+  }, [typeCategory, mainCategory, reqPage]);
   return (
-    <>
-      <div className="page-title">전체</div>
+    <section className="section productList-wrap">
+      <MainNav changeMain={changeMain} changeType={changeType} />
+      <div className="best-item"></div>
+      <div className="page-title">
+        {mainCategory === "feed"
+          ? "사료"
+          : mainCategory === "snack"
+          ? "간식"
+          : mainCategory === "nutrient"
+          ? "영양제"
+          : mainCategory === "tableware"
+          ? "식기용품"
+          : mainCategory === "hygiene"
+          ? "위생용품"
+          : mainCategory === "toy"
+          ? "장난감"
+          : mainCategory === "fashion"
+          ? "패션"
+          : mainCategory === "house"
+          ? "하우스"
+          : "전체"}
+      </div>
       <div className="productList-title">
         <div className="productList-category">
-          <Link to="#">전체</Link>
+          <Link to="#">
+            {typeCategory === "1"
+              ? "댕댕이"
+              : typeCategory === "2"
+              ? "냥냥이"
+              : "전체"}
+          </Link>
           <span> {">"} </span>
-          <Link to="#">전체</Link>
-          <span> {">"} </span>
-          <Link to="#">전체</Link>
+          <Link to="#">
+            {mainCategory === "feed"
+              ? "사료"
+              : mainCategory === "snack"
+              ? "간식"
+              : mainCategory === "nutrient"
+              ? "영양제"
+              : mainCategory === "tableware"
+              ? "식기용품"
+              : mainCategory === "hygiene"
+              ? "위생용품"
+              : mainCategory === "toy"
+              ? "장난감"
+              : mainCategory === "fashion"
+              ? "패션"
+              : mainCategory === "house"
+              ? "하우스"
+              : "전체"}
+          </Link>
         </div>
         <div className="productList-filter">
           <div className="number">
@@ -70,7 +122,7 @@ const ProductList = () => {
           return <ProductItem key={"product-" + i} product={product} />;
         })}
       </div>
-    </>
+    </section>
   );
 };
 
