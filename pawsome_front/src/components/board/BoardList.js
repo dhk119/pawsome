@@ -19,8 +19,12 @@ const BoardList = () => {
       .get(`${backServer}/board/list/${boardTag}/${reqPage}`)
       .then((res) => {
         console.log(res);
-        const array = boardList.concat(res.data.list);
-        setBoardList(array);
+        if (reqPage != 1) {
+          const array = boardList.concat(res.data.list);
+          setBoardList(array);
+        } else {
+          setBoardList(res.data.list);
+        }
         setPi(res.data.pi);
       })
       .catch((err) => {

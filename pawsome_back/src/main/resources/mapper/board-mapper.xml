@@ -11,13 +11,20 @@
     				    to_char(reg_date,'yyyy-mm-dd hh:mm:ss')as reg_date,
     				    member_nickname,
     				    (select count(*) from board_like where board_like.board_no = board.board_no) like_count 
-        		from board order by board_no desc) b ) 
+        		from board 
+        		<if test="tag != 0">
+        			where board_tag = #{tag}
+        		</if>
+        		order by board_no desc) b ) 
 		where rnum between #{start} and #{end}
-		<if test="tag != 0">
-		 where board_tag = #{tag}
-		 </if>
 	</select>
 	<select id="totalCount" resultType="int">
 		select count(*) from board <if test="tag!=0">where board_tag=#{tag}</if>
 	</select>
+	<insert id="insertBoard">
+		insert into board values(board_seq.nextval,#{boardTag},#{boardTitle},#{boardContent},#{boardThumb},0,sysdate,#{memberNickname})
+	</insert>
+	<insert id="insertBoardFile">
+		insert into board_file values(board_file_seq.nextval,#{boardNo},#{filename},#{filepath})
+	</insert>
 </mapper>
