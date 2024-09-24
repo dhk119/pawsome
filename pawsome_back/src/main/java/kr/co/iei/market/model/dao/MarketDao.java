@@ -9,16 +9,21 @@ import kr.co.iei.util.PageInfo;
 
 @Mapper
 public interface MarketDao {
-
+	/*승환*/
 	int insertProduct(ProductDTO product);
 	
 	int totalCountAll();
-
-	int totalCount();
-
-	List selectProductList(PageInfo pi);
-
+	
 	List selectProductAllList(PageInfo pi);
-
+	
 	int updateShow(ProductDTO product);
+	
+	/*원희*/
+	int totalCount(int typeCategory, String mainCategory);
+
+	List selectProductList(int typeCategory, String mainCategory, int start, int end);
+
+	ProductDTO selectOneProduct(int productNo);
+	
+
 }

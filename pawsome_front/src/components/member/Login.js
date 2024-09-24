@@ -99,6 +99,12 @@ const Login = () => {
                 회원가입
               </Link>
             </p>
+            <p className="message">
+              비밀번호를 잊으셨나요?
+              <Link to="/forgot-pw" className="join">
+                비밀번호 찾기
+              </Link>
+            </p>
           </form>
           <h3>간편하게 로그인 하기</h3>
           <div className="social-login">

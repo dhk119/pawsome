@@ -41,7 +41,7 @@ const MainNavi = () => {
           <Link to="/service/PetService">시설</Link>
         </li>
         <li>
-          <Link to="/market/productList">마켓</Link>
+          <Link to="/market/main/productList/0/all">마켓</Link>
         </li>
         <li>
           <Link to="/board/list">커뮤니티</Link>
@@ -59,7 +59,9 @@ const HeaderLink = () => {
     useRecoilState(memberNicknameState);
   const isLogin = useRecoilValue(isLoginState);
 
-  console.log("test : ", loginEmail, memberLevel);
+  console.log("이메일 : ", loginEmail);
+  console.log("레벨 : ", memberLevel);
+  console.log("닉네임 : ", memberNickname);
 
   const logout = () => {
     setLoginEmail("");

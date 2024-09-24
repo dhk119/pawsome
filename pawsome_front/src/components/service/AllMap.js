@@ -4,18 +4,18 @@ import Map from "../board/Map";
 const AllMap = () => {
   return (
     <>
-      <nav className="nav type-nav">
+      <nav className="nav-box">
         <ul>
-          <li>
+          <li className="nav-btn">
             <Link to="#">동물병원</Link>
           </li>
-          <li>
+          <li className="nav-btn">
             <Link to="#">애견용품</Link>
           </li>
-          <li>
+          <li className="nav-btn">
             <Link to="#">애견호텔</Link>
           </li>
-          <li>
+          <li className="nav-btn">
             <Link to="#">산책공원</Link>
           </li>
         </ul>

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BsBox } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
@@ -10,35 +10,86 @@ const ProductList = () => {
   const [productList, setProductList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
+  const [totalCount, setTotalCount] = useState();
+  const params = useParams();
+  const typeCategory = params.typeCategory;
+  const mainCategory = params.mainCategory;
+
   useEffect(() => {
     axios
-      .get(`${backServer}/market/productList/${reqPage}`)
+      .get(
+        `${backServer}/product/productList/${typeCategory}/${mainCategory}/${reqPage}`
+      )
       .then((res) => {
         console.log(res);
         setProductList(res.data.list);
         setPi(res.data.pi);
+        setTotalCount(res.data.totalCount);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPage]);
+  }, [typeCategory, mainCategory, reqPage]);
   return (
     <>
-      <div className="page-title">전체</div>
+      <div className="best-item"></div>
+      <div className="page-title">
+        {mainCategory === "feed"
+          ? "사료"
+          : mainCategory === "snack"
+          ? "간식"
+          : mainCategory === "nutrient"
+          ? "영양제"
+          : mainCategory === "tableware"
+          ? "식기용품"
+          : mainCategory === "hygiene"
+          ? "위생용품"
+          : mainCategory === "toy"
+          ? "장난감"
+          : mainCategory === "fashion"
+          ? "패션"
+          : mainCategory === "house"
+          ? "하우스"
+          : "전체"}
+      </div>
       <div className="productList-title">
         <div className="productList-category">
-          <Link to="#">전체</Link>
+          <Link to="#">
+            {typeCategory === "1"
+              ? "댕댕이"
+              : typeCategory === "2"
+              ? "냥냥이"
+              : "전체"}
+          </Link>
           <span> {">"} </span>
-          <Link to="#">전체</Link>
-          <span> {">"} </span>
-          <Link to="#">전체</Link>
+          <Link to="#">
+            {mainCategory === "feed"
+              ? "사료"
+              : mainCategory === "snack"
+              ? "간식"
+              : mainCategory === "nutrient"
+              ? "영양제"
+              : mainCategory === "tableware"
+              ? "식기용품"
+              : mainCategory === "hygiene"
+              ? "위생용품"
+              : mainCategory === "toy"
+              ? "장난감"
+              : mainCategory === "fashion"
+              ? "패션"
+              : mainCategory === "house"
+              ? "하우스"
+              : "전체"}
+          </Link>
         </div>
         <div className="productList-filter">
           <div className="number">
             <span className="icon">
               <BsBox />
             </span>
-            <span className="text"> 총 nn개의 상품이 검색되었습니다.</span>
+            <span className="text">
+              총 {totalCount}개의 상품이 검색되었습니다.
+            </span>
           </div>
           <div className="filter">
             <Link to="#" className="now">
@@ -54,8 +105,6 @@ const ProductList = () => {
         </div>
       </div>
       <div className="productList-content">
-        {/* navigate로 click => 상품 번호 같이 넘겨주는 걸로(주소창에 변경있게) */}
-
         {productList.map((product, i) => {
           return <ProductItem key={"product-" + i} product={product} />;
         })}
@@ -72,7 +121,7 @@ const ProductItem = (props) => {
     <div
       className="product-wrap"
       onClick={() => {
-        navigate(`/market/productDetail/${product.productNo}`);
+        navigate(`/market/main/productDetail/${product.productNo}/detail`);
       }}
     >
       <div className="product-thumb">
