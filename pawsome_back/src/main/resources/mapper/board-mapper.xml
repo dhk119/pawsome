@@ -32,4 +32,16 @@
 	<insert id="insertBoardFile">
 		insert into board_file values(board_file_seq.nextval,#{boardNo},#{filename},#{filepath})
 	</insert>
+	<select id="selectOneBoard" resultType="board">
+		select 
+			board_no,
+			board_tag,
+			board_title,
+			board_content,
+			board_thumb,
+			read_count,
+			to_char(reg_date,'yyyy-mm-dd hh:mm:ss')as reg_date,
+			member_nickname
+		from board where board_no=#{boardNo}
+	</select>
 </mapper>
