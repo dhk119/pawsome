@@ -76,23 +76,45 @@
 }
 .start-btn {
   font-size: x-large;
+  font-weight: bolder;
   border-radius: 20px;
   border: 2px solid #ffa518;
-  width: 300px;
   margin: 20px auto;
   height: 40px;
+  padding: 5px 10px;
 }
 .start-btn:hover {
   background-color: #ffa518;
   color: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  line-height: 44px;
+  padding: 5px 10px;
 }
 .start-btn > span {
   padding: 30px;
 }
+.qna-box {
+  justify-content: center;
+}
+.question {
+  font-size: x-large;
+  font-weight: bolder;
+}
+.answer-box {
+  font-size: large;
+  font-weight: bolder;
+  border-radius: 20px;
+  border: 2px solid #ffa518;
+  height: 50px;
+  line-height: 50px;
+}
 
+.answer-box:hover {
+  background-color: #ffa518;
+  color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
 /*RecordList, FeedSugest*/
 .container {
   display: flex;
