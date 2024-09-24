@@ -1,10 +1,18 @@
 .quantity {
-  width: 30px;
+  width: 40px;
   padding: 5px;
   cursor: pointer;
+  border: 2px solid #ffa518;
+  background-color: #ffa518;
+  color: #fff;
+  font-size: 18px;
 }
 .amount {
   text-align: center;
   width: 50px;
   padding: 5px;
+  border: 2px solid #ffa518;
+  border-left: none;
+  border-right: none;
+  font-size: 18px;
 }

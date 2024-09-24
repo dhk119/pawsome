@@ -17,6 +17,7 @@ const ProductDetail = () => {
   console.log(productNo);
   const [product, setProduct] = useState({});
   const [currentTab, setCurrentTab] = useState(0);
+  const [productPrice, setProductPrice] = useState(0);
   useEffect(() => {
     axios
       .get(`${backServer}/product/productDetail/${productNo}`)
@@ -24,6 +25,7 @@ const ProductDetail = () => {
         console.log(res);
         setProduct(res.data);
         setTotal(res.data.productPrice);
+        setProductPrice(res.data.productPrice);
       })
       .catch((err) => {
         console.log(err);
@@ -48,6 +50,7 @@ const ProductDetail = () => {
   const selectTapHandler = (index) => {
     setCurrentTab(index);
   };
+
   return (
     <section className="section productList-wrap">
       <div className="productDetail-wrap">
@@ -85,13 +88,14 @@ const ProductDetail = () => {
               </Link>
             </div>
             <div className="product-name">{product.productName}</div>
-            <div className="product-price">{product.productPrice}원</div>
-            <div className="product-amount">
-              <QuantityInput quantity={quantity} onClick={handleClickCounter} />
+            <div className="product-price">
+              {productPrice.toLocaleString("ko-KR")}원
             </div>
+            <div className="product-amount"></div>
 
             <div className="product-totalprice">
-              <span>총 금액</span> <span>{total}원</span>
+              <QuantityInput quantity={quantity} onClick={handleClickCounter} />
+              <span>총 금액 {total.toLocaleString("ko-KR")}원</span>
             </div>
 
             <div className="product-btn">

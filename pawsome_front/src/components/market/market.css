@@ -178,7 +178,7 @@
   width: 800px;
 }
 .productDetail > .product-info > * {
-  margin: 10px 0;
+  margin: 15px 0;
 }
 .productDetail > .product-info > .product-category > a {
   color: #000;
@@ -193,12 +193,14 @@
   padding-bottom: 20px;
 }
 .productDetail > .product-info > .product-totalprice {
+  padding: 10px 0;
   font-size: 20px;
 }
 .productDetail > .product-info > .product-btn {
   margin-top: 30px;
 }
 .product-btn {
+  padding: 5px 0;
   display: flex;
   justify-content: space-around;
 }
@@ -248,4 +250,9 @@
 }
 .product-info > .product-name {
   border-bottom: 1px solid #ffd697;
+}
+.product-info > .product-totalprice {
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
 }
