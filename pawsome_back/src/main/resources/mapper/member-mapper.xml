@@ -27,6 +27,10 @@
 		select * from member where member_email=#{memberEmail}
 	</select>
 	
+	<select id="selectMemberPet" resultType="pet">
+		select * from pet where member_email=#{memberEmail}
+	</select>
+	
 	<select id="checkEmail" resultType="int">
 		select count(*) from member where member_email = #{memberEmail}
 	</select>

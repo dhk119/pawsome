@@ -25,6 +25,7 @@ const BoardWrite = () => {
   };
   console.log(boardContent);
   console.log(boardTitle);
+
   const writeBoard = () => {
     console.log(memberNickname);
     if (boardTitle !== "" && boardContent !== "") {

@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,10 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
+import kr.co.iei.board.model.dto.BoardDTO;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.member.model.dto.PetDTO;
 import kr.co.iei.member.model.service.MemberService;
 
 @CrossOrigin("*")
@@ -122,6 +126,13 @@ public class MemberController {
 	public ResponseEntity<MemberDTO> selectOneMember(@RequestHeader("Authorization") String token) {
 		MemberDTO member = memberService.selectOneMember(token);
 		return ResponseEntity.ok(member);
+	}
+	
+	@PostMapping(value = "/insertPet")
+	public ResponseEntity<Integer> insertPet(@ModelAttribute PetDTO pet, 
+			@ModelAttribute MultipartFile memberProfile) {
+		int result = memberService.insertPet(pet);
+		return ResponseEntity.ok(result);
 	}
 	
 }
