@@ -129,38 +129,44 @@ const Mbti = () => {
   };
 
   const renderResults = () => {
+    const result = setMbti();
+    let content = "";
+    mc.forEach((element) => {
+      if (element.mbti == result) {
+        content = element.contents;
+      }
+    });
     // 결과를 계산하여 표시하는 로직
     return (
       //결과 화면 출력함
       <div className="results">
         <h2>테스트 결과</h2>
-        <p>당신의 DBTI는? : {setMbti()}</p>
+        <p>당신의 DBTI는? : {result}</p>
+        <p>유형 :{content}</p>
       </div>
     );
   };
   // 최종 mbti 결과를 담을 상태
   const [mbtiContents, setMbtiContents] = useState([]);
-
+  const mc = [
+    { mbti: "WTIL", contents: ["엄마 껌딱지 겁쟁이"] },
+    { mbti: "WTIA", contents: ["조심스러운 관찰견"] },
+    { mbti: "WTEL", contents: ["초면엔 신중, 구면엔 친구"] },
+    { mbti: "WTEA", contents: ["허세부리는 호기심쟁이"] },
+    { mbti: "WNIL", contents: ["까칠한 지킬앤 하이드"] },
+    { mbti: "WNIA", contents: ["선긋는 외톨이 야생견"] },
+    { mbti: "WNIL", contents: ["패닉에 빠진 극소심견"] },
+    { mbti: "WNEA", contents: ["동네 대장 일진"] },
+    { mbti: "CTEL", contents: ["신이 내린 반려특화견"] },
+    { mbti: "CTEA", contents: ["인간사회 적응 만렙"] },
+    { mbti: "CTIA", contents: ["가족빼곤 다 싫어"] },
+    { mbti: "CTIL", contents: ["모범견계의 엄친아"] },
+    { mbti: "CNEA", contents: ["똥꼬발랄 핵인싸"] },
+    { mbti: "CNEL", contents: ["곱게자란 막내딸"] },
+    { mbti: "CNIL", contents: ["치고 빠지고 밀당 천재"] },
+    { mbti: "CNIA", contents: ["주위 관심없는 나 혼자 산다"] },
+  ];
   function setMbti() {
-    let mc = [
-      //한줄로 나올 수 있음 (contents)
-      { mbti: "WTIL", contents: ["엄마 껌딱지 겁쟁이"] },
-      { mbti: "WTIA", contents: ["조심스러운 관찰견"] },
-      { mbti: "WTEL", contents: ["초면엔 신중, 구면엔 친구"] },
-      { mbti: "WTEA", contents: ["허세부리는 호기심쟁이"] },
-      { mbti: "WNIL", contents: ["까칠한 지킬앤 하이드"] },
-      { mbti: "WNIA", contents: ["선긋는 외톨이 야생견"] },
-      { mbti: "WNIL", contents: ["패닉에 빠진 극소심견"] },
-      { mbti: "WNEA", contents: ["동네 대장 일진"] },
-      { mbti: "CTEL", contents: ["신이 내린 반려특화견"] },
-      { mbti: "CTEA", contents: ["인간사회 적응 만렙"] },
-      { mbti: "CTIA", contents: ["가족빼곤 다 싫어"] },
-      { mbti: "CTIL", contents: ["모범견계의 엄친아"] },
-      { mbti: "CNEA", contents: ["똥꼬발랄 핵인싸"] },
-      { mbti: "CNEL", contents: ["곱게자란 막내딸"] },
-      { mbti: "CNIL", contents: ["치고 빠지고 밀당 천재"] },
-      { mbti: "CNIA", contents: ["주위 관심없는 나 혼자 산다"] },
-    ];
     let WorC = //data : result(mbti문제푼결과)를 대표하는 변수
       results.find((data) => data.name === "W").count >
       results.find((data) => data.name === "C").count
