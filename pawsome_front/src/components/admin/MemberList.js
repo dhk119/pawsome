@@ -82,7 +82,6 @@ const MemberList = () => {
                 <td>{member.enrollDate}</td>
                 <td>{member.loginType}</td>
                 <td>{member.memberPhone}</td>
-                <td></td>
               </tr>
             );
           })}
