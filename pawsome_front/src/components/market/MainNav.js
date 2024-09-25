@@ -2,6 +2,7 @@ import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import ProductList from "./ProductList";
 import ProductDetail from "./ProductDetail";
 import { useState } from "react";
+import WriteQna from "./writeComponent/WriteQna";
 
 const MainNav = () => {
   const [typeCategory, setTypeCategory] = useState(0);
@@ -93,6 +94,10 @@ const MainNav = () => {
           element={<ProductList />}
         />
         <Route path="productDetail/:productNo/*" element={<ProductDetail />} />
+        <Route
+          path="productDetail/:productNo/qna/writeQna"
+          element={<WriteQna />}
+        />
       </Routes>
     </section>
   );

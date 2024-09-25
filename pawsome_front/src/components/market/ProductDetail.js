@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink, Route, Routes, useParams } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Route,
+  Routes,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import Detail from "./tabComponent/Detail";
 import Review from "./tabComponent/Review";
 import Qna from "./tabComponent/Qna";
@@ -31,11 +38,20 @@ const ProductDetail = () => {
         console.log(err);
       });
   }, []);
+  const navigate = useNavigate();
+  const changeType = () => {
+    navigate(`/market/main/productList/${product.typeCategory}/all`);
+  };
+  const changeMain = () => {
+    navigate(
+      `/market/main/productList/${product.typeCategory}/${product.mainCategory}`
+    );
+  };
 
   /* 수량 */
   const [quantity, setQuantity] = useState(1);
   const [total, setTotal] = useState(0);
-
+  const stock = 15; //수량 제한 기준
   const handleClickCounter = (num) => {
     setQuantity(quantity + num);
     setTotal(product.productPrice * (quantity + num));
@@ -55,21 +71,28 @@ const ProductDetail = () => {
     <section className="section productList-wrap">
       <div className="productDetail-wrap">
         <div className="line"></div>
+        <div className="page-title">상세정보</div>
         <div className="productDetail">
           <div className="product-thumb">
-            <img src="/image/basicimage.png" />
+            <img
+              src={
+                product.productThumb
+                  ? `${backServer}/product/thumb/${product.productThumb}`
+                  : "/image/basicimage.png"
+              }
+            />
           </div>
           <div className="product-info">
             <div className="product-category">
-              <Link to="#">
+              <span className="typeCategory" onClick={changeType}>
                 {product.typeCategory === 1
                   ? "댕댕이"
                   : product.typeCategory === 2
                   ? "냥냥이"
                   : "전체"}
-              </Link>
+              </span>
               <span> {">"} </span>
-              <Link to="#">
+              <span className="mainCategory" onClick={changeMain}>
                 {product.mainCategory === "feed"
                   ? "사료"
                   : product.mainCategory === "snack"
@@ -85,17 +108,42 @@ const ProductDetail = () => {
                   : product.mainCategory === "fashion"
                   ? "패션"
                   : "하우스"}
-              </Link>
+              </span>
             </div>
             <div className="product-name">{product.productName}</div>
             <div className="product-price">
               {productPrice.toLocaleString("ko-KR")}원
             </div>
-            <div className="product-amount"></div>
+            <div className="product-amount">
+              <div className="product-amount-wrap">
+                <table className="amount-tbl">
+                  <tbody>
+                    <tr>
+                      <th>상세옵션</th>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <th>배송비</th>
+                      <td>3,000원 (30,000원 이상 구매시, 무료 배송)</td>
+                    </tr>
+                    <tr>
+                      <th>주문 수량 안내</th>
+                      <td>
+                        최소 주문수량 1개 이상, 최대 주문수량 {stock}개 이하
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
             <div className="product-totalprice">
-              <QuantityInput quantity={quantity} onClick={handleClickCounter} />
-              <span>총 금액 {total.toLocaleString("ko-KR")}원</span>
+              <QuantityInput
+                quantity={quantity}
+                onClick={handleClickCounter}
+                stock={stock}
+              />
+              <span>Total | {total.toLocaleString("ko-KR")}원</span>
             </div>
 
             <div className="product-btn">
