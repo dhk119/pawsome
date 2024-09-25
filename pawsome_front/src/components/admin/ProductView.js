@@ -100,9 +100,34 @@ const ProductView = () => {
       });
     }
   };
+  const deleteProduct = () => {
+    Swal.fire({
+      text: "제품을 삭제하시겠습니까?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+      confirmButtonColor: "var(--point1)",
+      cancelButtonColor: "var(--main1)",
+      iconColor: "var(--main2)",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`${backServer}/admin/productNo/${productNo}`)
+          .then((res) => {
+            if (res.data > 0) {
+              navigate("/admin/productList");
+            } else {
+            }
+          })
+          .catch((err) => {});
+      } else if (result.isDismissed) {
+      }
+    });
+  };
   return (
     <>
-      <div className="admin-title">제품 수정</div>
+      <div className="admin-title">제품 상세</div>
       <form
         className="product-regist-frm"
         onSubmit={(e) => {
@@ -130,6 +155,14 @@ const ProductView = () => {
           memberEmail={memberEmail}
         ></ProductFrm>
         <div className="admin-button-zone">
+          <button
+            id="admin-delete"
+            className="admin-write-undo"
+            type="button"
+            onClick={deleteProduct}
+          >
+            삭제
+          </button>
           <button type="submit" className="admin-write-submit">
             수정하기
           </button>

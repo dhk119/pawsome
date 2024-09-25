@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -61,6 +62,11 @@ public class AdminController {
 			product.setProductThumb(filepath);
 		}
 		int result=adminService.updateProduct(product);
+		return ResponseEntity.ok(result);
+	}
+	@DeleteMapping(value = "/productNo/{productNo}")
+	public ResponseEntity<Integer> deleteProduct(@PathVariable int productNo){
+		int result=adminService.deleteProduct(productNo);
 		return ResponseEntity.ok(result);
 	}
 }

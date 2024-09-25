@@ -49,5 +49,10 @@ public class AdminService {
 		int result=marketDao.updateProduct(product);
 		return result;
 	}
+	@Transactional
+	public int deleteProduct(int productNo) {
+		int result=marketDao.deleteProduct(productNo);
+		return result;
+	}
 	
 }

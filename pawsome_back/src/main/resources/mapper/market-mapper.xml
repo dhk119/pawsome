@@ -47,4 +47,7 @@
 	<update id="updateProduct">
 		update product set product_name=#{productName},type_category=#{typeCategory},main_category=#{mainCategory},product_price=#{productPrice},product_thumb=#{productThumb},product_detail=#{productDetail}, product_show=#{productShow} where product_no=#{productNo}
 	</update>
+	<delete id="deleteProduct">
+		delete from product where product_no=#{productNo}
+	</delete>
 </mapper>
