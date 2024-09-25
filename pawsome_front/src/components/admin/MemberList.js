@@ -39,8 +39,8 @@ const MemberList = () => {
         </thead>
         <tbody>
           {memberList.map((member, i) => {
-            const handleChange = () => {
-              const memberLevel = member.memberLevel === 2 ? 1 : 2;
+            const handleChange = (e) => {
+              const memberLevel = e.target.value;
               const obj = {
                 memberEmail: member.memberEmail,
                 memberLevel: memberLevel,
@@ -48,10 +48,9 @@ const MemberList = () => {
               axios
                 .patch(`${backServer}/admin/member`, obj)
                 .then((res) => {
-                  changeLevel(i);
+                  changeLevel(i, memberLevel);
                 })
                 .catch(() => {});
-              changeLevel(i, memberLevel);
             };
             return (
               <tr key={"member" + i}>
@@ -62,13 +61,7 @@ const MemberList = () => {
                 <td>{member.memberAddr2}</td>
                 <td>{member.memberAddr3}</td>
                 <td>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={member.memberLevel}
-                    label="level"
-                    onChange={handleChange}
-                  >
+                  <Select value={member.memberLevel} onChange={handleChange}>
                     <MenuItem value={1}>관리자</MenuItem>
                     <MenuItem value={2}>일반회원</MenuItem>
                   </Select>

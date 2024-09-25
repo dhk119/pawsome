@@ -21,4 +21,6 @@ public interface MemberDao {
 	int totalCountMagnum();
 
 	List selectMemberListMagnum(PageInfo pi);
+
+	int updateMemberLevelMagnum(MemberDTO member);
 }
