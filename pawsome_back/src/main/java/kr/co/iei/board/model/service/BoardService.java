@@ -53,6 +53,8 @@ public class BoardService {
 
 	public BoardDTO selectOneBoard(int boardNo) {
 		BoardDTO board = boardDao.selectOneBoard(boardNo);
+		List<BoardFileDTO> fileList = boardDao.selectFileImage(boardNo);
+		board.setFileList(fileList);
 		return board;
 	}
 

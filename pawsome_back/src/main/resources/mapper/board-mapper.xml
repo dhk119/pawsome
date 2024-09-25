@@ -38,10 +38,15 @@
 			board_tag,
 			board_title,
 			board_content,
-			board_thumb,
 			read_count,
-			to_char(reg_date,'yyyy-mm-dd hh:mm:ss')as reg_date,
-			member_nickname
-		from board where board_no=#{boardNo}
+			to_char(reg_date,'yyyy-mm-dd')as reg_date,
+			member_nickname,
+			member_profile
+		from board
+		join member using(member_nickname)
+		where board_no=#{boardNo}
+	</select>
+	<select id="selectFileImage" resultType="boardFile">
+		select * from board_file where board_no =#{boardNo}
 	</select>
 </mapper>
