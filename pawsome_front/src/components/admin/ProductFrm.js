@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ProductFrm = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -10,6 +10,8 @@ const ProductFrm = (props) => {
   const setMainCategory = props.setMainCategory;
   const productPrice = props.productPrice;
   const setProductPrice = props.setProductPrice;
+  const thumb = props.thumb;
+  const setThumb = props.setThumb;
   const productThumb = props.productThumb;
   const setProductThumb = props.setProductThumb;
   const productDetail = props.productDetail;
@@ -22,14 +24,14 @@ const ProductFrm = (props) => {
   const changeThumb = (e) => {
     const files = e.currentTarget.files;
     if (files.length !== 0 && files[0] !== 0) {
-      setProductThumb(files[0]);
+      setThumb(files[0]);
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
       reader.onloadend = () => {
         setProductImg(reader.result);
       };
     } else {
-      setProductThumb("");
+      setThumb("");
       setProductImg("");
     }
   };
@@ -46,7 +48,7 @@ const ProductFrm = (props) => {
             ></img>
           ) : productThumb ? (
             <img
-              src={`${backServer}/admin/thumb/${productThumb}`}
+              src={`${backServer}/product/thumb/${productThumb}`}
               onClick={() => {
                 thumbnailRef.current.click();
               }}
@@ -89,24 +91,66 @@ const ProductFrm = (props) => {
           <div>
             <div className="admin-product-label">제품 품종</div>
           </div>
-          <div className="admin-input-wrap">
-            <label htmlFor="dog">강아지</label>
-            <input
-              type="radio"
-              id="dog"
-              name="typeCategory"
-              value={1}
-              onChange={setTypeCategory}
-            ></input>
-            <label htmlFor="cat">고양이</label>
-            <input
-              type="radio"
-              id="cat"
-              name="typeCategory"
-              value={2}
-              onChange={setTypeCategory}
-            ></input>
-          </div>
+          {typeCategory !== 1 && typeCategory !== 2 ? (
+            <div className="admin-input-wrap">
+              <label htmlFor="dog">강아지</label>
+              <input
+                type="radio"
+                id="dog"
+                name="typeCategory"
+                value={1}
+                onChange={setTypeCategory}
+              ></input>
+              <label htmlFor="cat">고양이</label>
+              <input
+                type="radio"
+                id="cat"
+                name="typeCategory"
+                value={2}
+                onChange={setTypeCategory}
+              ></input>
+            </div>
+          ) : typeCategory == 1 ? (
+            <div className="admin-input-wrap">
+              <label htmlFor="dog">강아지</label>
+              <input
+                type="radio"
+                id="dog"
+                name="typeCategory"
+                value={1}
+                onChange={setTypeCategory}
+                checked
+              ></input>
+              <label htmlFor="cat">고양이</label>
+              <input
+                type="radio"
+                id="cat"
+                name="typeCategory"
+                value={2}
+                onChange={setTypeCategory}
+              ></input>
+            </div>
+          ) : (
+            <div className="admin-input-wrap">
+              <label htmlFor="dog">강아지</label>
+              <input
+                type="radio"
+                id="dog"
+                name="typeCategory"
+                value={1}
+                onChange={setTypeCategory}
+              ></input>
+              <label htmlFor="cat">고양이</label>
+              <input
+                type="radio"
+                id="cat"
+                name="typeCategory"
+                value={2}
+                onChange={setTypeCategory}
+                checked
+              ></input>
+            </div>
+          )}
         </div>
         <div className="admin-product-wrap">
           <div>
@@ -166,24 +210,66 @@ const ProductFrm = (props) => {
           <div>
             <div className="admin-product-label">등록여부</div>
           </div>
-          <div className="admin-input-wrap">
-            <label htmlFor="show">등록</label>
-            <input
-              type="radio"
-              id="show"
-              name="productShow"
-              value={"Y"}
-              onChange={setProductShow}
-            ></input>
-            <label htmlFor="hidden">미등록</label>
-            <input
-              type="radio"
-              id="hidden"
-              name="productShow"
-              value={"N"}
-              onChange={setProductShow}
-            ></input>
-          </div>
+          {productShow !== "Y" && productShow !== "N" ? (
+            <div className="admin-input-wrap">
+              <label htmlFor="show">등록</label>
+              <input
+                type="radio"
+                id="show"
+                name="productShow"
+                value={"Y"}
+                onChange={setProductShow}
+              ></input>
+              <label htmlFor="hidden">미등록</label>
+              <input
+                type="radio"
+                id="hidden"
+                name="productShow"
+                value={"N"}
+                onChange={setProductShow}
+              ></input>
+            </div>
+          ) : productShow === "Y" ? (
+            <div className="admin-input-wrap">
+              <label htmlFor="show">등록</label>
+              <input
+                type="radio"
+                id="show"
+                name="productShow"
+                value={"Y"}
+                onChange={setProductShow}
+                checked
+              ></input>
+              <label htmlFor="hidden">미등록</label>
+              <input
+                type="radio"
+                id="hidden"
+                name="productShow"
+                value={"N"}
+                onChange={setProductShow}
+              ></input>
+            </div>
+          ) : (
+            <div className="admin-input-wrap">
+              <label htmlFor="show">등록</label>
+              <input
+                type="radio"
+                id="show"
+                name="productShow"
+                value={"Y"}
+                onChange={setProductShow}
+              ></input>
+              <label htmlFor="hidden">미등록</label>
+              <input
+                type="radio"
+                id="hidden"
+                name="productShow"
+                value={"N"}
+                onChange={setProductShow}
+                checked
+              ></input>
+            </div>
+          )}
         </div>
         <div className="admin-product-wrap">
           <div className="admin-product-label">제품 등록 관리자 이메일</div>

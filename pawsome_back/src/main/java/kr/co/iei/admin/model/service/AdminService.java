@@ -41,8 +41,13 @@ public class AdminService {
 		return result;
 	}
 	public ProductDTO selectOneProduct(int productNo) {
-		// TODO Auto-generated method stub
-		return null;
+		ProductDTO product=marketDao.selectOneProductMagnum(productNo);
+		return product;
+	}
+	@Transactional
+	public int updateProduct(ProductDTO product) {
+		int result=marketDao.updateProduct(product);
+		return result;
 	}
 	
 }

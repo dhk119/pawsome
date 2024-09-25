@@ -53,4 +53,14 @@ public class AdminController {
 		ProductDTO product=adminService.selectOneProduct(productNo);
 		return ResponseEntity.ok(product);
 	}
+	@PatchMapping
+	public ResponseEntity<Integer> updateProduct(@ModelAttribute ProductDTO product, @ModelAttribute MultipartFile thumb){
+		if(thumb!=null) {
+			String savepath=root+"/product/thumb/";
+			String filepath=fileUtil.upload(savepath, thumb);
+			product.setProductThumb(filepath);
+		}
+		int result=adminService.updateProduct(product);
+		return ResponseEntity.ok(result);
+	}
 }

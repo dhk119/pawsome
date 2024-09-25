@@ -41,4 +41,10 @@
 	<update id="updateShow">
 		update product set product_show=#{productShow} where product_no=#{productNo}
 	</update>
+	<select id="selectOneProductMagnum" resultType="product">
+		select product_name, type_category, main_category, product_price, product_thumb, product_detail, product_show, member_email from product where product_no=#{productNo}
+	</select>
+	<update id="updateProduct">
+		update product set product_name=#{productName},type_category=#{typeCategory},main_category=#{mainCategory},product_price=#{productPrice},product_thumb=#{productThumb},product_detail=#{productDetail}, product_show=#{productShow} where product_no=#{productNo}
+	</update>
 </mapper>

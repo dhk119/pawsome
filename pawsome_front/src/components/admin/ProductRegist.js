@@ -112,8 +112,8 @@ const ProductRegist = () => {
           setMainCategory={inputMainCategory}
           productPrice={productPrice}
           setProductPrice={inputPrice}
-          productThumb={thumb}
-          setProductThumb={setThumb}
+          thumb={thumb}
+          setThumb={setThumb}
           productDetail={productDetail}
           setProductDetail={inputDetail}
           productShow={productShow}
