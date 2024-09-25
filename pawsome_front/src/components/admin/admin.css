@@ -293,3 +293,15 @@ button {
 .admin-product-regist-wrap label {
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
 }
+.pageNavi-ul > * {
+  display: flex;
+  gap: 20px;
+  font-weight: bold;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+.pageNavi-frm {
+  justify-content: center;
+  display: flex;
+  gap: 20px;
+  margin-bottom: 100px;
+}

@@ -102,9 +102,11 @@ const ProductList = () => {
           })}
         </tbody>
       </table>
-      <ul>
-        <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
-      </ul>
+      <div className="pageNavi-frm">
+        <ul className="pageNavi-ul">
+          <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+        </ul>
+      </div>
     </section>
   );
 };
