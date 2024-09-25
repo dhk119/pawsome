@@ -22,9 +22,9 @@ const ProductRegist = () => {
     memberEmail: "",
   });
   const [productName, setProductName] = useState("");
-  const [typeCategory, setTypeCategory] = useState(0);
+  const [typeCategory, setTypeCategory] = useState("");
   const [mainCategory, setMainCategory] = useState("");
-  const [productPrice, setProductPrice] = useState(0);
+  const [productPrice, setProductPrice] = useState("");
   const [thumb, setThumb] = useState("");
   const [productDetail, setProductDetail] = useState("");
   const [productShow, setProductShow] = useState("");
@@ -56,9 +56,10 @@ const ProductRegist = () => {
   const registProduct = () => {
     if (
       productName !== "" &&
-      typeCategory !== 0 &&
+      typeCategory !== "" &&
       mainCategory !== "" &&
       productPrice !== 0 &&
+      productPrice !== "" &&
       thumb !== "" &&
       productDetail !== "" &&
       productShow !== ""

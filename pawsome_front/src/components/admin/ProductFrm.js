@@ -36,7 +36,7 @@ const ProductFrm = (props) => {
   return (
     <div>
       <div className="admin-product-regist-wrap">
-        <div className="thumb-wrap">
+        <div className="admin-thumb-wrap">
           {productImg ? (
             <img
               src={productImg}
