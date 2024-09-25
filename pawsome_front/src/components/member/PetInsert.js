@@ -5,6 +5,7 @@ import { loginEmailState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
 import { useState } from "react";
 import PetFrm from "./PetFrm";
+import axios from "axios";
 
 const PetInsert = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -12,11 +13,25 @@ const PetInsert = () => {
   const [memberEmail, setMemberEmail] = useRecoilState(loginEmailState);
   const [petName, setPetName] = useState("");
   const [petBirth, setPetBirth] = useState("");
-  const [petClasses, setPetClasses] = useState("");
+  const [petClasses, setPetClasses] = useState(0);
   const [petBreed, setPetBreed] = useState("");
-  const [neutering, setNeutering] = useState("");
+  const [neutering, setNeutering] = useState(0);
   const [petProfile, setPetProfile] = useState("");
-  const [petWeight, setPetWeight] = useState("");
+  const [petWeight, setPetWeight] = useState(0);
+
+  // const changePet = (e) => {
+  //   const name = e.target.name;
+  //   setPet({ ...pet, [name]: e.target.value });
+  // };
+
+  const insertPet = () => {
+    axios
+      .post(`${backServer}/member/pet`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {});
+  };
 
   return (
     <div className="pet-input-body">
@@ -25,6 +40,7 @@ const PetInsert = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            insertPet();
           }}
         >
           <PetFrm
@@ -44,9 +60,6 @@ const PetInsert = () => {
             petWeight={petWeight}
             setPetWeight={setPetWeight}
           />
-          <div className="pet-insert-btn">
-            <button type="submit">등록하기</button>
-          </div>
         </form>
       </div>
     </div>

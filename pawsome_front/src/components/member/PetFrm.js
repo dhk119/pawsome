@@ -26,16 +26,16 @@ const PetFrm = (props) => {
 
   const [selectedBreed, setSelectedBreed] = useState("");
 
-  const handleFileChange = (e) => {
+  const addFileChange = (e) => {
     props.setPetProfile(e.target.files[0]);
   };
 
   return (
     <div className="pet-input-form">
       <div className="image-upload">
-        <img src="/path/to/image-placeholder.png" className="pet-image" />
-        <label htmlFor="image-upload" className="image-upload-btn">
-          <input type="file" id="image-upload" onChange={handleFileChange} />
+        <img className="pet-image" />
+        <label>
+          <input type="file" onChange={addFileChange} />
         </label>
       </div>
 
@@ -133,7 +133,7 @@ const PetFrm = (props) => {
           name="neutering"
           id="yes"
           value="1"
-          checked={neutering}
+          checked={neutering === 1}
           onChange={setNeutering}
         />
         <label htmlFor="yes">YES</label>
@@ -142,7 +142,7 @@ const PetFrm = (props) => {
           name="neutering"
           id="no"
           value="2"
-          checked={neutering}
+          checked={neutering === 2}
           onChange={setNeutering}
         />
         <label htmlFor="no">NO</label>
@@ -157,6 +157,9 @@ const PetFrm = (props) => {
           value={petWeight}
           onChange={setPetWeight}
         />
+      </div>
+      <div className="pet-insert-btn">
+        <button type="submit">등록하기</button>
       </div>
     </div>
   );
