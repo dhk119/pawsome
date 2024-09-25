@@ -27,9 +27,9 @@ public class AdminService {
 	public Map selectProductList(int reqPage) {
 		int numPerPage=10;
 		int pageNaviSize=5;
-		int totalCount=marketDao.totalCountAll();
+		int totalCount=marketDao.totalCountMagnum();
 		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-		List list=marketDao.selectProductAllList(pi);
+		List list=marketDao.selectProductListMagnum(pi);
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("list",list);
 		map.put("pi",pi);

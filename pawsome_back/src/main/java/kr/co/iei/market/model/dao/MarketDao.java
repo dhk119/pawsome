@@ -12,9 +12,9 @@ public interface MarketDao {
 	/*승환*/
 	int insertProduct(ProductDTO product);
 	
-	int totalCountAll();
+	int totalCountMagnum();
 	
-	List selectProductAllList(PageInfo pi);
+	List selectProductListMagnum(PageInfo pi);
 	
 	int updateShow(ProductDTO product);
 	
