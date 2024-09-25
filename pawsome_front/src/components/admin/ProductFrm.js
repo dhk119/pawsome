@@ -35,7 +35,7 @@ const ProductFrm = (props) => {
   };
   return (
     <div>
-      <div>
+      <div className="admin-product-regist-wrap">
         <div className="thumb-wrap">
           {productImg ? (
             <img
@@ -67,9 +67,11 @@ const ProductFrm = (props) => {
             onChange={changeThumb}
           ></input>
         </div>
-        <div>
+        <div className="admin-product-wrap">
           <div>
-            <label htmlFor="productName">제품명</label>
+            <label htmlFor="productName" className="admin-product-label">
+              제품명
+            </label>
           </div>
           <div>
             <div className="admin-input-item">
@@ -83,9 +85,9 @@ const ProductFrm = (props) => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="admin-product-wrap">
           <div>
-            <div>제품 품종</div>
+            <div className="admin-product-label">제품 품종</div>
           </div>
           <div className="admin-input-wrap">
             <label htmlFor="dog">강아지</label>
@@ -106,9 +108,11 @@ const ProductFrm = (props) => {
             ></input>
           </div>
         </div>
-        <div>
+        <div className="admin-product-wrap">
           <div>
-            <label htmlFor="mainCategory">제품 메인 카테고리</label>
+            <label htmlFor="mainCategory" className="admin-product-label">
+              제품 메인 카테고리
+            </label>
           </div>
           <div>
             <div className="admin-input-item">
@@ -122,9 +126,11 @@ const ProductFrm = (props) => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="admin-product-wrap">
           <div>
-            <label htmlFor="productPrice">제품 가격</label>
+            <label htmlFor="productPrice" className="admin-product-label">
+              제품 가격
+            </label>
           </div>
           <div>
             <div className="admin-input-item">
@@ -138,9 +144,11 @@ const ProductFrm = (props) => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="admin-product-wrap">
           <div>
-            <label htmlFor="productDetail">제품 상세정보</label>
+            <label htmlFor="productDetail" className="admin-product-label">
+              제품 상세정보
+            </label>
           </div>
           <div>
             <div className="admin-input-item">
@@ -154,9 +162,9 @@ const ProductFrm = (props) => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="admin-product-wrap">
           <div>
-            <div>등록여부</div>
+            <div className="admin-product-label">등록여부</div>
           </div>
           <div className="admin-input-wrap">
             <label htmlFor="show">등록</label>
@@ -177,8 +185,8 @@ const ProductFrm = (props) => {
             ></input>
           </div>
         </div>
-        <div>
-          <div>제품 등록 관리자 이메일</div>
+        <div className="admin-product-wrap">
+          <div className="admin-product-label">제품 등록 관리자 이메일</div>
           <div>{memberEmail}</div>
         </div>
       </div>

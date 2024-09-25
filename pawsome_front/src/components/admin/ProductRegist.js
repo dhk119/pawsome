@@ -94,7 +94,7 @@ const ProductRegist = () => {
   };
   return (
     <>
-      <div className="page-title">제품 등록</div>
+      <div className="admin-title">제품 등록</div>
       <form
         className="product-regist-frm"
         onSubmit={(e) => {
@@ -119,8 +119,10 @@ const ProductRegist = () => {
           setProductShow={inputShow}
           memberEmail={memberEmail}
         ></ProductFrm>
-        <div className="button">
-          <button type="submit">등록하기</button>
+        <div className="admin-button-zone">
+          <button type="submit" className="admin-write-submit">
+            등록하기
+          </button>
         </div>
       </form>
     </>
