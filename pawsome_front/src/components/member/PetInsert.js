@@ -1,73 +1,51 @@
 import "./mypage.css";
 // import * as TbIcons from "react-icons/tb";
-import { TbDog } from "react-icons/tb";
-import { LuCat } from "react-icons/lu";
+
 import { loginEmailState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
+import { useState } from "react";
+import PetFrm from "./PetFrm";
 
 const PetInsert = () => {
-  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  //반려동물 정보 등록시 전송할 데이터
+  const [memberEmail, setMemberEmail] = useRecoilState(loginEmailState);
+  const [petName, setPetName] = useState("");
+  const [petBirth, setPetBirth] = useState("");
+  const [petClasses, setPetClasses] = useState("");
+  const [petBreed, setPetBreed] = useState("");
+  const [neutering, setNeutering] = useState("");
+  const [petProfile, setPetProfile] = useState("");
+  const [petWeight, setPetWeight] = useState("");
 
   return (
     <div className="pet-input-body">
       <div className="pet-input-wrap">
         <h2>반려동물 등록</h2>
-        <form>
-          <div className="pet-input">
-            <label>이름</label>
-            <input type="text" />
-          </div>
-          <div className="pet-input">
-            <label>생년월일</label>
-            <input type="date" />
-          </div>
-          <div className="pet-breed">
-            <label htmlFor="dog" className="breed-label">
-              <input
-                type="radio"
-                id="dog"
-                name="breed"
-                value="1"
-                className="breed-input"
-              />
-              <TbDog className="breed-icon dog-icon" />
-            </label>
-
-            <label htmlFor="cat" className="breed-label">
-              <input
-                type="radio"
-                id="cat"
-                name="breed"
-                value="2"
-                className="breed-input"
-              />
-              <LuCat className="breed-icon cat-icon" />
-            </label>
-          </div>
-          <div className="pet-input">
-            <label>품종</label>
-            <input type="text" />
-          </div>
-          <div className="pet-gender">
-            <div>성별</div>
-            <div className="pet-gender-wrap">
-              <input type="radio" name="gender" id="m" value="1" />
-              <label htmlFor="m">남</label>
-              <input type="radio" name="gender" id="f" value="2" />
-              <label htmlFor="f">여</label>
-            </div>
-          </div>
-          <div>
-            <label>중성화 여부</label>
-            <input type="radio" name="neutering" value="1" />
-            <input type="radio" name="neutering" value="2" />
-          </div>
-          <div className="pet-input">
-            <label>몸무게</label>
-            <input type="text" />
-          </div>
-          <div>
-            <button>등록</button>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <PetFrm
+            memberEmail={memberEmail}
+            petName={petName}
+            setPetName={setPetName}
+            petBirth={petBirth}
+            setPetBirth={setPetBirth}
+            petClasses={petClasses}
+            setPetClasses={setPetClasses}
+            petBreed={petBreed}
+            setPetBreed={setPetBreed}
+            neutering={neutering}
+            setNeutering={setNeutering}
+            petProfile={petProfile}
+            setPetProfile={setPetProfile}
+            petWeight={petWeight}
+            setPetWeight={setPetWeight}
+          />
+          <div className="pet-insert-btn">
+            <button type="submit">등록하기</button>
           </div>
         </form>
       </div>

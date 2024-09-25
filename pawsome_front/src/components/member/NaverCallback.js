@@ -36,7 +36,7 @@ const NaverCallback = () => {
             window.localStorage.setItem("refreshToken", res.data.refreshToken);
             navigate("/");
           } else {
-            Swal.fire({ text: "회원가입이 필요합니다.", icon: "error" });
+            Swal.fire({ text: "회원가입이 필요합니다.", icon: "info" });
             navigate("/naverjoin", {
               state: { naverUserInfo: res.data, isMember: false },
             });

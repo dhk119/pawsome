@@ -6,6 +6,7 @@ import {
 } from "../utils/RecoilData";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { SlArrowRight } from "react-icons/sl";
 
 const MypageProfile = () => {
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
@@ -15,6 +16,7 @@ const MypageProfile = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
 
   const [member, setMember] = useState({});
+  const [petList, setPetList] = useState([]);
 
   useEffect(() => {
     axios
@@ -22,6 +24,10 @@ const MypageProfile = () => {
       .then((res) => {
         console.log(res);
         setMember(res.data);
+        console.log(res.data.petList);
+        if (res.data.petList != null) {
+          setPetList(res.data.petList);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -35,7 +41,7 @@ const MypageProfile = () => {
         <div className="profile-img">
           <img src={`${backServer}/member/profile/${member.memberProfile}`} />
         </div>
-        <div>{member.memberName}</div>
+        <div className="member-name">{member.memberName}</div>
         <div>{member.memberEmail}</div>
         <div className="member-addr">
           <div>{member.memberAddr2}</div>
@@ -47,15 +53,25 @@ const MypageProfile = () => {
       </div>
       <div className="pet-wrap">
         <h2>반려동물</h2>
-        <div className="pet-info">
-          <div>
-            <img />
-          </div>
-          <div>
-            <div>해피</div>
-            <div>치와와</div>
-          </div>
-        </div>
+
+        {petList.length > 0 ? (
+          petList.map((pet, index) => (
+            <div className="pet-body" key={index}>
+              <div className="pet-img">
+                <img src={`${backServer}/member/pet/${pet.petProfile}`} />
+              </div>
+              <div className="pet-info">
+                <div className="pet-name">{pet.petName}</div>
+                <div>{pet.petBreed}</div>
+              </div>
+              <div className="pet-more-view">
+                <SlArrowRight />
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="pet-body">등록된 반려동물이 없습니다.</div>
+        )}
         <div className="pet-btn-wrap">
           <button>편집</button>
         </div>
