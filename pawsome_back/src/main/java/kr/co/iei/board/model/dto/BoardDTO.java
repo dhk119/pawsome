@@ -1,5 +1,7 @@
 package kr.co.iei.board.model.dto;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
@@ -20,4 +22,6 @@ public class BoardDTO {
 	private String regDate;
 	private String memberNickname;
 	private int boardLike;
+	private String memberProfile;
+	private List<BoardFileDTO> fileList;
 }

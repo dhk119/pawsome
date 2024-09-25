@@ -41,3 +41,6 @@ npm install html2canvas --force (삭제함..)
 
 이승환 2024-09-23 16:20
 npm install @mui/material @emotion/react @emotion/styled --force
+
+김대헌 2024-09-25 12:00
+npm i swiper --force

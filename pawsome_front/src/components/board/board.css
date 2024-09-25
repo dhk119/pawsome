@@ -258,8 +258,35 @@
 }
 .board-view-wrap {
   min-height: 800px;
-  background-color: #ffa518;
+  width: 1400px;
   margin: 50px auto;
+  border: 1px solid #ffa518;
+}
+.board-view-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.board-quill {
+  margin: 10px auto;
+}
+.boardView-btn {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+.boardView-btn > button {
+  padding: 10px 15px;
+  border-radius: 15px;
+  border: 1px solid #ffa518;
+  color: #ffa518;
+  background-color: transparent;
+}
+.boardView-btn > button:hover {
+  background-color: #ffa518;
+  color: var(--gray8);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 /*산책 지도*/
 .distance-box {
@@ -268,4 +295,27 @@
   padding: 5px;
   border-radius: 5px;
   font-weight: bold;
+}
+/*스와이퍼*/
+.boardSwiper {
+  width: 500px;
+  height: 500px;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

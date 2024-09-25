@@ -23,8 +23,6 @@ const BoardWrite = () => {
   const inputTitle = (e) => {
     setBoardTitle(e.target.value);
   };
-  console.log(boardContent);
-  console.log(boardTitle);
 
   const writeBoard = () => {
     console.log(memberNickname);
