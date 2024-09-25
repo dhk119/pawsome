@@ -69,4 +69,9 @@ public class AdminController {
 		int result=adminService.deleteProduct(productNo);
 		return ResponseEntity.ok(result);
 	}
+	@GetMapping(value = "/memberList/{reqPage}")
+	public ResponseEntity<Map> memberList(@PathVariable int reqPage){
+		Map map=adminService.selectMemberList(reqPage);
+		return ResponseEntity.ok(map);
+	}
 }
