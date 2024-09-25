@@ -135,7 +135,7 @@ const ProductItem = (props) => {
               ? `${backServer}/product/thumb/${product.productThumb}`
               : "/image/basicimage.png"
           }
-        ></img>
+        />
       </div>
       <div className="product-info">
         <div className="product-name">{product.productName}</div>

@@ -1,5 +1,7 @@
 package kr.co.iei.member.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.member.model.dto.PetDTO;
 import kr.co.iei.util.JwtUtils;
 
 @Service
@@ -78,7 +81,17 @@ public class MemberService {
 		LoginMemberDTO loginMember = jwtUtil.checkToken(token);
 		MemberDTO member = memberDao.selectOneMember(loginMember.getMemberEmail());
 		member.setMemberPw(null);
+		if(member != null) {
+			List list = memberDao.selectMemberPet(member.getMemberEmail());
+			member.setPetList(list);
+		}
 		return member;
+	}
+
+	@Transactional
+	public int insertPet(PetDTO pet) {
+		int result = memberDao.insertPet(pet);
+		return result;
 	}
 
 }

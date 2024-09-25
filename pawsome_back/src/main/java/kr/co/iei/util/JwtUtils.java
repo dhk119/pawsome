@@ -73,7 +73,6 @@ public class JwtUtils {
 										.build()	
 										.parse(token)
 										.getPayload();		
-		System.out.println(claims);
 		String memberEmail = (String)claims.get("memberEmail");
 		int memberLevel = (int)claims.get("memberLevel");
 		String memberNickname = (String)claims.get("memberNickname");

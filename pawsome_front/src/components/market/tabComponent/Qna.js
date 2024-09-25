@@ -12,7 +12,7 @@ const Qna = () => {
   return (
     <div className="qna-wrap">
       <div>
-        <Link to="#" className="qna-wrtie-btn">
+        <Link to="writeQna" className="qna-wrtie-btn">
           문의작성
         </Link>
       </div>

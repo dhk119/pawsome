@@ -1,5 +1,7 @@
 package kr.co.iei.member.model.dto;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
@@ -22,4 +24,5 @@ public class MemberDTO {
 	private String memberProfile;
 	private String enrollDate;
 	private String loginType;
+	private List<PetDTO> petList;
 }

@@ -6,7 +6,7 @@ import { FaPlus } from "react-icons/fa";
 const QuantityInput = (props) => {
   const quantity = props.quantity;
   const onClick = props.onClick;
-  const stock = 10; //수량 제한 기준
+  const stock = props.stock;
   return (
     <>
       <div>

@@ -12,9 +12,9 @@ const ProductRegist = () => {
   const [product, setProduct] = useState({
     productNo: 0,
     productName: "",
-    typeCategory: 0,
+    typeCategory: "",
     mainCategory: "",
-    productPrice: 0,
+    productPrice: "",
     productThumb: "",
     productDetail: "",
     productRegDate: "",
@@ -112,8 +112,8 @@ const ProductRegist = () => {
           setMainCategory={inputMainCategory}
           productPrice={productPrice}
           setProductPrice={inputPrice}
-          productThumb={thumb}
-          setProductThumb={setThumb}
+          thumb={thumb}
+          setThumb={setThumb}
           productDetail={productDetail}
           setProductDetail={inputDetail}
           productShow={productShow}
