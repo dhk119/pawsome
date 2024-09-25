@@ -2,12 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { isLoginState } from "../utils/RecoilData";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PageNavi from "../utils/PageNavi";
 import { Switch } from "@mui/material";
 
 const ProductList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
   const [productList, setProductList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
@@ -68,7 +69,12 @@ const ProductList = () => {
               changeShow(i, productShow);
             };
             return (
-              <tr key={"product" + i}>
+              <tr
+                key={"product" + i}
+                onClick={() => {
+                  navigate(`/admin/productView/${product.productNo}`);
+                }}
+              >
                 <td>{product.productNo}</td>
                 <td>{product.productName}</td>
                 <td>{product.typeCategory}</td>

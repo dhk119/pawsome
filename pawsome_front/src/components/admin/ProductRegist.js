@@ -12,9 +12,9 @@ const ProductRegist = () => {
   const [product, setProduct] = useState({
     productNo: 0,
     productName: "",
-    typeCategory: 0,
+    typeCategory: "",
     mainCategory: "",
-    productPrice: 0,
+    productPrice: "",
     productThumb: "",
     productDetail: "",
     productRegDate: "",

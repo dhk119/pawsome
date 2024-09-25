@@ -39,7 +39,7 @@ public class AdminController {
 		return ResponseEntity.ok(result);
 	}
 	@GetMapping(value = "/productList/{reqPage}")
-	public ResponseEntity<Map> list(@PathVariable int reqPage){
+	public ResponseEntity<Map> productList(@PathVariable int reqPage){
 		Map map=adminService.selectProductList(reqPage);
 		return ResponseEntity.ok(map);
 	}
@@ -47,5 +47,10 @@ public class AdminController {
 	public ResponseEntity<Integer> showProduct(@RequestBody ProductDTO product){
 		int result=adminService.updateShow(product);
 		return ResponseEntity.ok(result);
+	}
+	@GetMapping(value = "/productNo/{productNo}")
+	public ResponseEntity<ProductDTO> selectOneProduct(@PathVariable int productNo){
+		ProductDTO product=adminService.selectOneProduct(productNo);
+		return ResponseEntity.ok(product);
 	}
 }

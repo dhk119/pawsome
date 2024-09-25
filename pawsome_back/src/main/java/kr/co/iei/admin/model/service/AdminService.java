@@ -40,5 +40,9 @@ public class AdminService {
 		int result=marketDao.updateShow(product);
 		return result;
 	}
+	public ProductDTO selectOneProduct(int productNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
