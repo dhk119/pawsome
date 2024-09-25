@@ -16,14 +16,20 @@ public interface MarketDao {
 	
 	List selectProductListMagnum(PageInfo pi);
 	
+	ProductDTO selectOneProductMagnum(int productNo);
+	
 	int updateShow(ProductDTO product);
 	
+	int updateProduct(ProductDTO product);
+	
+	int deleteProduct(int productNo);
 	/*원희*/
 	int totalCount(int typeCategory, String mainCategory);
 
 	List selectProductList(int typeCategory, String mainCategory, int start, int end);
 
 	ProductDTO selectOneProduct(int productNo);
+
 	
 
 }

@@ -2,12 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { isLoginState } from "../utils/RecoilData";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PageNavi from "../utils/PageNavi";
 import { Switch } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 
 const ProductList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
   const [productList, setProductList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
@@ -22,17 +24,28 @@ const ProductList = () => {
     productList[i].productShow = productShow;
     setProductList([...productList]);
   };
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#ffa518",
+      },
+    },
+  });
+
   return (
     <section>
       <div className="admin-title">제품 리스트</div>
-
-      {isLogin ? (
-        <div className="admin-write">
-          <Link to="/admin/productRegist">제품등록</Link>
-        </div>
-      ) : (
-        ""
-      )}
+      <div className="admin-write-wrap">
+        {isLogin ? (
+          <div className="admin-write">
+            <Link to="/admin/productRegist" id="link-product-regist">
+              제품등록
+            </Link>
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
       <table className="admin-tbl">
         <thead>
           <tr>
@@ -65,7 +78,12 @@ const ProductList = () => {
               changeShow(i, productShow);
             };
             return (
-              <tr key={"product" + i}>
+              <tr
+                key={"product" + i}
+                onClick={() => {
+                  navigate(`/admin/productView/${product.productNo}`);
+                }}
+              >
                 <td>{product.productNo}</td>
                 <td>{product.productName}</td>
                 <td>{product.typeCategory}</td>
@@ -93,9 +111,11 @@ const ProductList = () => {
           })}
         </tbody>
       </table>
-      <ul>
-        <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
-      </ul>
+      <div className="pageNavi-frm">
+        <ul className="pageNavi-ul">
+          <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+        </ul>
+      </div>
     </section>
   );
 };

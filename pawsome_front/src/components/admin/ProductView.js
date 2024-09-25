@@ -1,34 +1,24 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import ProductFrm from "./ProductFrm";
 import Swal from "sweetalert2";
-import { useRecoilState } from "recoil";
-import { loginEmailState } from "../utils/RecoilData";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-const ProductRegist = () => {
+const ProductView = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
-  const [product, setProduct] = useState({
-    productNo: 0,
-    productName: "",
-    typeCategory: "",
-    mainCategory: "",
-    productPrice: "",
-    productThumb: "",
-    productDetail: "",
-    productRegDate: "",
-    productShow: "",
-    memberEmail: "",
-  });
+  const params = useParams();
+  const [product, setProduct] = useState({});
+  const productNo = params.productNo;
   const [productName, setProductName] = useState("");
   const [typeCategory, setTypeCategory] = useState("");
   const [mainCategory, setMainCategory] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [thumb, setThumb] = useState("");
+  const [productThumb, setProductThumb] = useState("");
   const [productDetail, setProductDetail] = useState("");
   const [productShow, setProductShow] = useState("");
-  const [memberEmail, setMemberEmail] = useRecoilState(loginEmailState);
+  const [memberEmail, setMemberEmail] = useState("");
   const inputName = (e) => {
     setProductName(e.target.value);
     setProduct({ ...product, productName: e.target.value });
@@ -53,35 +43,52 @@ const ProductRegist = () => {
     setProductShow(e.target.value);
     setProduct({ ...product, productShow: e.target.value });
   };
-  const registProduct = () => {
+  useEffect(() => {
+    axios.get(`${backServer}/admin/productNo/${productNo}`).then((res) => {
+      setProductName(res.data.productName);
+      setProductDetail(res.data.productDetail);
+      setProductPrice(res.data.productPrice);
+      setProductShow(res.data.productShow);
+      setProductThumb(res.data.productThumb);
+      setMainCategory(res.data.mainCategory);
+      setTypeCategory(res.data.typeCategory);
+      setMemberEmail(res.data.memberEmail);
+    });
+  }, []);
+  const updateProduct = () => {
     if (
       productName !== "" &&
       typeCategory !== "" &&
       mainCategory !== "" &&
       productPrice !== 0 &&
       productPrice !== "" &&
-      thumb !== "" &&
+      (thumb !== "" || (productThumb !== null && productThumb !== "")) &&
       productDetail !== "" &&
       productShow !== ""
     ) {
       const form = new FormData();
+      form.append("productNo", productNo);
       form.append("productName", productName);
       form.append("typeCategory", typeCategory);
       form.append("mainCategory", mainCategory);
       form.append("productPrice", productPrice);
-      form.append("thumb", thumb);
       form.append("productDetail", productDetail);
       form.append("productShow", productShow);
       form.append("memberEmail", memberEmail);
+      if (thumb !== "") {
+        form.append("thumb", thumb);
+      } else if (productThumb !== null && productThumb !== "") {
+        form.append("productThumb", productThumb);
+      }
       axios
-        .post(`${backServer}/admin`, form, {
+        .patch(`${backServer}/admin`, form, {
           headers: {
             contentType: "multipart/form-data",
             processData: false,
           },
         })
         .then((res) => {
-          navigate("/admin/productList");
+          navigate("/admin/productView/" + productNo);
         })
         .catch((err) => {});
     } else {
@@ -93,14 +100,39 @@ const ProductRegist = () => {
       });
     }
   };
+  const deleteProduct = () => {
+    Swal.fire({
+      text: "제품을 삭제하시겠습니까?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+      confirmButtonColor: "var(--point1)",
+      cancelButtonColor: "var(--main1)",
+      iconColor: "var(--main2)",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`${backServer}/admin/productNo/${productNo}`)
+          .then((res) => {
+            if (res.data > 0) {
+              navigate("/admin/productList");
+            } else {
+            }
+          })
+          .catch((err) => {});
+      } else if (result.isDismissed) {
+      }
+    });
+  };
   return (
     <>
-      <div className="admin-title">제품 등록</div>
+      <div className="admin-title">제품 상세</div>
       <form
         className="product-regist-frm"
         onSubmit={(e) => {
           e.preventDefault();
-          registProduct();
+          updateProduct();
         }}
       >
         <ProductFrm
@@ -114,6 +146,8 @@ const ProductRegist = () => {
           setProductPrice={inputPrice}
           thumb={thumb}
           setThumb={setThumb}
+          productThumb={productThumb}
+          setProductThumb={setProductThumb}
           productDetail={productDetail}
           setProductDetail={inputDetail}
           productShow={productShow}
@@ -121,12 +155,20 @@ const ProductRegist = () => {
           memberEmail={memberEmail}
         ></ProductFrm>
         <div className="admin-button-zone">
+          <button
+            id="admin-delete"
+            className="admin-write-undo"
+            type="button"
+            onClick={deleteProduct}
+          >
+            삭제
+          </button>
           <button type="submit" className="admin-write-submit">
-            등록하기
+            수정하기
           </button>
         </div>
       </form>
     </>
   );
 };
-export default ProductRegist;
+export default ProductView;

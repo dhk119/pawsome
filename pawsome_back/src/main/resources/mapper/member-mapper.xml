@@ -34,4 +34,13 @@
 	<select id="checkNickname" resultType="int">
 		select count(*) from member where member_nickname = #{memberNickname}
 	</select>
+	<select id="totalCountMagnum">
+		select count(*) from member
+	</select>
+	<select id="selectMemberListMagnum" resultType="member">
+		select * from (select rownum as rnum, b.* from(SELECT MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_NAME,MEMBER_ADDR1,MEMBER_ADDR2,MEMBER_ADDR3,MEMBER_LEVEL,MEMBER_PROFILE,ENROLL_DATE,LOGIN_TYPE,MEMBER_PHONE from member order by 1 desc)b) where rnum BETWEEN #{start} and #{end}
+	</select>
+	<update id="updateMemberLevelMagnum">
+		update member set member_level=#{memberLevel} where member_email=#{memberEmail}
+	</update>
 </mapper>
