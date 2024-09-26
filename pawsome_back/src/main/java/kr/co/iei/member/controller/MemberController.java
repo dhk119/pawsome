@@ -2,8 +2,10 @@ package kr.co.iei.member.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -21,12 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpSession;
-import kr.co.iei.board.model.dto.BoardDTO;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.PetDTO;
 import kr.co.iei.member.model.service.MemberService;
+import kr.co.iei.util.EmailSender;
+import kr.co.iei.util.FileUtils;
 
 @CrossOrigin("*")
 @RestController
@@ -34,6 +36,15 @@ import kr.co.iei.member.model.service.MemberService;
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private FileUtils fileUtil;
+	
+	@Value("${file.root}")
+	public String root;
+	
+	@Autowired
+	private EmailSender emailSender;
 	
 	private final String CLIENT_ID = "mDIMmlDCzICGJPSiZ68R"; // 네이버 클라이언트 ID
     private final String CLIENT_SECRET = "bmqkAwlkYr"; // 네이버 클라이언트 Secret
@@ -129,10 +140,71 @@ public class MemberController {
 	}
 	
 	@PostMapping(value = "/insertPet")
-	public ResponseEntity<Integer> insertPet(@ModelAttribute PetDTO pet, 
-			@ModelAttribute MultipartFile memberProfile) {
+	public ResponseEntity<Integer> insertPet(@ModelAttribute PetDTO pet, @ModelAttribute MultipartFile petProfile) {
+		System.out.println(pet);
+		System.out.println(petProfile);
+		if(petProfile != null) {
+			String savepath = root+"/member/pet/";
+			String filepath = fileUtil.upload(savepath, petProfile);
+			pet.setPetProfile(filepath);
+		}
 		int result = memberService.insertPet(pet);
 		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping(value = "/sendMailCode")
+	public ResponseEntity<String> sendMailCode(@RequestBody MemberDTO member) {
+		System.out.println(member);
+		String emailTitle = "pawsome 인증메일 입니다.";
+		
+		String loginType = memberService.selectOneEmail(member);
+		
+		if(loginType == null) {
+			return ResponseEntity.ok("no");
+		} else if(loginType.equals("site")) {	
+			Random r = new Random();
+			String ranCode = "";
+			for(int i=0; i<6; i++) {
+				int ranNum = r.nextInt(3); //0:숫자,1:대문자,2:소문자
+				if(ranNum == 0) {
+					int randomCode = r.nextInt(10);
+					ranCode += randomCode;
+				} else if(ranNum == 1) {
+					char randomCode = (char)(r.nextInt(26)+65);
+					ranCode += randomCode;
+				} else {
+					char randomCode = (char)(r.nextInt(26)+97);
+					ranCode += randomCode;
+				}
+			}
+			System.out.println("생성된 랜덤 코드: "+ranCode);
+			
+			String emailContent = "<div !important; width: 540px; height: 600px; border-top: 4px solid #ffa518; margin: 100px auto; padding: 30px 0; box-sizing: border-box;\">\r\n" + 
+					"	<h1 style=\"margin: 0; padding: 0 5px; font-size: 28px; font-weight: 400;\">\r\n" + 
+					"		<span style=\"font-size: 15px; margin: 0 0 10px 3px;\">PAWSOME</span><br />\r\n" + 
+					"		<span style=\"color: #ffa518;\">인증 코드</span> 안내입니다.\r\n" + 
+					"	</h1>\r\n" + 
+					"	<p style=\"font-size: 16px; line-height: 26px; margin-top: 50px; padding: 0 5px;\">\r\n" + 
+					"		안녕하세요.<br />\r\n" + 
+					"		비밀번호 찾기를 위한 인증 코드가 생성되었습니다.<br />\r\n" + 
+					"		사이트에 <b style=\"color: #ffa518;\">'인증 코드'</b>를 입력하세요.<br />\r\n" + 
+					"		감사합니다.\r\n" + 
+					"	</p>\r\n" + 
+					"\r\n" + 
+					"	<p style=\"font-size: 16px; margin: 40px 5px 20px; line-height: 28px;\">\r\n" + 
+					"		인증코드: <br />\r\n" + 
+					"		<span style=\"font-size: 24px;\">"+ranCode+"</span>\r\n" + 
+					"	</p>\r\n" +  
+					"</div>";
+			
+			System.out.println("제목 : "+emailTitle);
+			System.out.println("받는 사람 : " +member.getMemberEmail());
+			
+			emailSender.sendMail(emailTitle, member.getMemberEmail(), emailContent);
+			
+			return ResponseEntity.ok(ranCode);
+		} 
+		return ResponseEntity.ok(null);
 	}
 	
 }
