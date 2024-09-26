@@ -25,5 +25,7 @@ public interface BoardDao {
 
 	BoardDTO selectOneBoard(int boardNo);
 
+	List selectFileImage(int boardNo);
+
 
 }

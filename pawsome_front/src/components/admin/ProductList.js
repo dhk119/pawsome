@@ -5,7 +5,7 @@ import { isLoginState } from "../utils/RecoilData";
 import { Link, useNavigate } from "react-router-dom";
 import PageNavi from "../utils/PageNavi";
 import { Switch } from "@mui/material";
-import { createTheme } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const ProductList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -31,7 +31,6 @@ const ProductList = () => {
       },
     },
   });
-
   return (
     <section>
       <div className="admin-title">제품 리스트</div>
@@ -63,6 +62,9 @@ const ProductList = () => {
         </thead>
         <tbody>
           {productList.map((product, i) => {
+            const viewNavigate = () => {
+              navigate(`/admin/productView/${product.productNo}`);
+            };
             const handleChange = () => {
               const productShow = product.productShow === "Y" ? "N" : "Y";
               const obj = {
@@ -78,34 +80,79 @@ const ProductList = () => {
               changeShow(i, productShow);
             };
             return (
-              <tr
-                key={"product" + i}
-                onClick={() => {
-                  navigate(`/admin/productView/${product.productNo}`);
-                }}
-              >
-                <td>{product.productNo}</td>
-                <td>{product.productName}</td>
-                <td>{product.typeCategory}</td>
-                <td>{product.mainCategory}</td>
-                <td>{product.productPrice}</td>
+              <tr key={"product" + i}>
+                <td
+                  onClick={() => {
+                    viewNavigate();
+                  }}
+                >
+                  {product.productNo}
+                </td>
+                <td
+                  onClick={() => {
+                    viewNavigate();
+                  }}
+                >
+                  {product.productName}
+                </td>
+                <td
+                  onClick={() => {
+                    viewNavigate();
+                  }}
+                >
+                  {product.typeCategory}
+                </td>
+                <td
+                  onClick={() => {
+                    viewNavigate();
+                  }}
+                >
+                  {product.mainCategory}
+                </td>
+                <td
+                  onClick={() => {
+                    viewNavigate();
+                  }}
+                >
+                  {product.productPrice}
+                </td>
                 <td>
                   <img
                     src={`${backServer}/product/thumb/${product.productThumb}`}
                     style={{ width: "100%", height: "100%" }}
                   ></img>
                 </td>
-                <td>{product.productDetail}</td>
-                <td>{product.productRegDate}</td>
-                <td>
-                  <Switch
-                    checked={product.productShow === "Y"}
-                    onChange={handleChange}
-                    defaultChecked
-                    color="warning"
-                  />
+                <td
+                  onClick={() => {
+                    viewNavigate();
+                  }}
+                >
+                  {product.productDetail}
                 </td>
-                <td>{product.memberEmail}</td>
+                <td
+                  onClick={() => {
+                    viewNavigate();
+                  }}
+                >
+                  {product.productRegDate}
+                </td>
+                <td>
+                  <ThemeProvider theme={theme}>
+                    <Switch
+                      checked={product.productShow === "Y"}
+                      onChange={handleChange}
+                      defaultChecked
+                      color="primary"
+                    />
+                  </ThemeProvider>
+                </td>
+                <td
+                  onClick={() => {
+                    viewNavigate();
+                  }}
+                >
+                  {product.memberEmail}
+                </td>
               </tr>
             );
           })}
