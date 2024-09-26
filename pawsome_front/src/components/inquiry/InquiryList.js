@@ -26,12 +26,22 @@ const InquiryList = () => {
       <div className="admin-title">문의사항</div>
       <div className="admin-write-wrap">
         {isLogin ? (
-          <div className="admin-write">
-            <Link to="/inquiry/write">글쓰기</Link>
+          <div className="admin-top-left">
+            <div className="admin-write">
+              <Link to="/inquiry/write">글쓰기</Link>
+            </div>
           </div>
         ) : (
-          ""
+          <div className="admin-top-left">
+            <div className="admin-write"></div>
+          </div>
         )}
+        <div className="admin-top-mid"></div>
+        <div className="admin-search-wrap">
+          <div className="admin-write-right">
+            <button>검색</button>
+          </div>
+        </div>
       </div>
       <table className="admin-tbl">
         <thead>
