@@ -101,7 +101,7 @@ const Login = () => {
             </p>
             <p className="message">
               비밀번호를 잊으셨나요?
-              <Link to="/forgot-pw" className="join">
+              <Link to="/forgotPw" className="join">
                 비밀번호 찾기
               </Link>
             </p>

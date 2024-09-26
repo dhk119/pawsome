@@ -1,36 +1,68 @@
-import "./mypage.css";
-// import * as TbIcons from "react-icons/tb";
-
-import { loginEmailState } from "../utils/RecoilData";
-import { useRecoilState } from "recoil";
 import { useState } from "react";
-import PetFrm from "./PetFrm";
 import axios from "axios";
+import PetFrm from "./PetFrm"; // PetFrm을 재사용
+import { useRecoilState } from "recoil";
+import { loginEmailState } from "../utils/RecoilData";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const PetInsert = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  //반려동물 정보 등록시 전송할 데이터
-  const [memberEmail, setMemberEmail] = useRecoilState(loginEmailState);
-  const [petName, setPetName] = useState("");
-  const [petBirth, setPetBirth] = useState("");
-  const [petClasses, setPetClasses] = useState(0);
-  const [petBreed, setPetBreed] = useState("");
-  const [neutering, setNeutering] = useState(0);
-  const [petProfile, setPetProfile] = useState("");
-  const [petWeight, setPetWeight] = useState(0);
+  const navigate = useNavigate();
 
-  // const changePet = (e) => {
-  //   const name = e.target.name;
-  //   setPet({ ...pet, [name]: e.target.value });
-  // };
+  const [memberEmail] = useRecoilState(loginEmailState);
+  const [pet, setPet] = useState({
+    petName: "",
+    petBirth: "",
+    petClasses: "0",
+    petBreed: "",
+    petGender: "0",
+    neutering: "0",
+    petWeight: "",
+    petProfile: null,
+  });
 
-  const insertPet = () => {
+  const insertPet = (e) => {
+    const form = new FormData();
+    form.append("memberEmail", memberEmail);
+    form.append("petName", pet.petName);
+    form.append("petBirth", pet.petBirth);
+    form.append("petClasses", pet.petClasses);
+    form.append("petBreed", pet.petBreed);
+    form.append("petGender", pet.petGender);
+    form.append("neutering", pet.neutering);
+    form.append("petWeight", pet.petWeight);
+    if (pet.petProfile !== null) {
+      form.append("petProfile", pet.petProfile);
+    }
+
+    // FormData 디버깅 출력
+    console.log("=== FormData 내용 ===");
+    for (let pair of form.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+
     axios
-      .post(`${backServer}/member/pet`)
-      .then((res) => {
-        console.log(res);
+      .post(`${backServer}/member/insertPet`, form, {
+        headers: {
+          contentType: "multipart/form-data",
+          processData: false,
+        },
       })
-      .catch((err) => {});
+      .then((res) => {
+        if (res.data) {
+          navigate("/mypage/profile");
+        } else {
+          Swal.fire({
+            title: "에러가 발생했습니다.",
+            text: "다시 시도해주세요.",
+            icon: "error",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -43,23 +75,12 @@ const PetInsert = () => {
             insertPet();
           }}
         >
-          <PetFrm
-            memberEmail={memberEmail}
-            petName={petName}
-            setPetName={setPetName}
-            petBirth={petBirth}
-            setPetBirth={setPetBirth}
-            petClasses={petClasses}
-            setPetClasses={setPetClasses}
-            petBreed={petBreed}
-            setPetBreed={setPetBreed}
-            neutering={neutering}
-            setNeutering={setNeutering}
-            petProfile={petProfile}
-            setPetProfile={setPetProfile}
-            petWeight={petWeight}
-            setPetWeight={setPetWeight}
-          />
+          <PetFrm pet={pet} setPet={setPet} />
+          <div className="pet-btn-insert-wrap">
+            <button className="pet-insert-btn-wrap" type="submit">
+              등록하기
+            </button>
+          </div>
         </form>
       </div>
     </div>

@@ -2,6 +2,7 @@
   display: flex;
   width: 100%;
   background-color: var(--gray7);
+  min-height: 1000px;
 }
 
 .side-bar {
@@ -89,7 +90,7 @@
   background-color: var(--point1);
   border: none;
   color: #fff;
-  width: 100px;
+  width: 120px;
   height: 30px;
   font-family: ns-b;
   font-size: 18px;
@@ -278,15 +279,26 @@
 }
 
 .pet-insert-btn {
-  text-align: center;
-}
-
-.pet-insert-btn > button {
-  width: 100%;
+  width: 100px;
   height: 40px;
   background-color: var(--point1);
   color: #fff;
   border: none;
   font-size: 16px;
   cursor: pointer;
+}
+
+.pet-insert-btn-wrap {
+  width: 150px;
+  height: 40px;
+  background-color: var(--point1);
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.pet-btn-insert-wrap {
+  margin: 0 auto;
+  text-align: center;
 }
