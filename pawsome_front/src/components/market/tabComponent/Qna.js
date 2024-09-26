@@ -89,7 +89,17 @@ const QnaItem = (props) => {
         }}
       >
         <td>{qna.qnaNo}</td>
-        <td>{qna.qnaType}</td>
+        <td>
+          {qna.qnaType == 1
+            ? "전체"
+            : qna.qnaType == 2
+            ? "상품문의"
+            : qna.qnaType == 3
+            ? "배송문의"
+            : qna.qnaType == 4
+            ? "결제문의"
+            : "기타"}
+        </td>
         <td>{qna.qnaTitle}</td>
         <td>{qna.qnaWriter}</td>
         <td>{qna.qnaRegDate}</td>
