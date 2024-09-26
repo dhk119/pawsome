@@ -37,4 +37,7 @@
 	<update id="updateInquiryComment">
 		update inquiry_comment set inquiry_comment_content=#{inquiryCommentContent} where inquiry_comment_no=#{inquiryCommentNo}
 	</update>
+	<delete id="deleteInquiryComment">
+		delete from inquiry_comment where inquiry_comment_no=#{inquiryCommentNo}
+	</delete>
 </mapper>

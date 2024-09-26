@@ -82,7 +82,6 @@ const InquiryView = () => {
       axios
         .post(`${backServer}/inquiry/insertComment`, inquiryComment)
         .then((res) => {
-          setInquiryCommentList([...inquiryCommentList, inquiryComment]);
           setChangeCommentList([...changeCommentList, inquiryComment]);
         });
     } else {
@@ -181,7 +180,17 @@ const InquiryView = () => {
                 commentContentList.push(comment.inquiryCommentContent);
                 inquiryCommentContentList.push(comment.inquiryCommentContent);
                 console.log(inquiryCommentContentList);
-                const deleteInquiryComment = () => {};
+                const deleteInquiryComment = () => {
+                  const inquiryCommentNo =
+                    inquiryCommentContentList[i].inquiryCommentNo;
+                  axios
+                    .delete(
+                      `${backServer}/inquiry/inquiryComment/${inquiryCommentNo}`
+                    )
+                    .then((res) => {
+                      setChangeCommentList([]);
+                    });
+                };
                 const updateInquiryComment = () => {
                   setInquiryCommentContentList([]);
                   document.querySelectorAll(".inquiry-comment-text")[
