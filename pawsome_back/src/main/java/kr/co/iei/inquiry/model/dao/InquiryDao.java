@@ -26,5 +26,7 @@ public interface InquiryDao {
 	int insertInquiryComment(InquiryComment inquiryComment);
 
 	int updateInquiryComment(InquiryComment inquiryComment);
+
+	int deleteInquiryComment(int inquiryCommentNo);
 	
 }

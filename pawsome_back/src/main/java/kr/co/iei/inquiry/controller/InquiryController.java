@@ -54,7 +54,7 @@ public class InquiryController {
 		return ResponseEntity.ok(inquiry);
 	}
 	@DeleteMapping(value = "/{inquiryNo}")
-	public ResponseEntity<Integer> deleteinquiry(@PathVariable int inquiryNo){
+	public ResponseEntity<Integer> deleteInquiry(@PathVariable int inquiryNo){
 		int result=inquiryService.deleteInquiry(inquiryNo);
 		return ResponseEntity.ok(result); 
 	}
@@ -74,5 +74,10 @@ public class InquiryController {
 	public ResponseEntity<Integer> updatInquiryeComment(@ModelAttribute InquiryComment inquiryComment){
 		int result=inquiryService.updateInquiryComment(inquiryComment);
 		return ResponseEntity.ok(result);
+	}
+	@DeleteMapping(value = "/inquiryComment/{inquiryCommentNo}")
+	public ResponseEntity<Integer> deleteInquiryComment(@PathVariable int inquiryCommentNo){
+		int result=inquiryService.deleteInquiryComment(inquiryCommentNo);
+		return ResponseEntity.ok(result); 
 	}
 }
