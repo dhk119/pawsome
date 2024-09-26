@@ -344,7 +344,7 @@ a {
 }
 
 .content {
-  min-height: 100vh;
+  min-height: 600px;
 }
 .market-preview-wrap {
   display: flex;
