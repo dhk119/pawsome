@@ -94,4 +94,9 @@ public class MemberService {
 		return result;
 	}
 
+	public String selectOneEmail(MemberDTO member) {
+		String loginType = memberDao.selectOneEmail(member);
+		return loginType;
+	}
+
 }

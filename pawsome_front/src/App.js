@@ -67,7 +67,7 @@ function App() {
         <Routes>
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/forgot-pw" element={<ForgotPw />} />
+          <Route path="/forgotPw" element={<ForgotPw />} />
           <Route path="/admin/*" element={<AdminMain />} />
           <Route path="/inquiry/*" element={<InquiryMain />} />
           <Route path="/*" element={<Main />} />

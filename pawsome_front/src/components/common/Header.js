@@ -36,7 +36,7 @@ const Header = () => {
 const MainNavi = () => {
   return (
     <nav className="nav">
-      <ul>
+      <ul className="nav-ul">
         <li>
           <Link to="/service/PetService">서비스</Link>
         </li>

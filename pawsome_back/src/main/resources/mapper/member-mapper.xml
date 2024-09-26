@@ -47,4 +47,10 @@
 	<update id="updateMemberLevelMagnum">
 		update member set member_level=#{memberLevel} where member_email=#{memberEmail}
 	</update>
+	<insert id="insertPet">
+	  	insert into pet values(pet_seq.nextval, #{petName}, #{petClasses}, #{petBreed}, #{petBirth}, #{petGender}, #{neutering}, #{petProfile}, #{petWeight}, #{memberEmail})
+	</insert>
+	<select id="selectOneEmail" resultType="String">
+		select login_type from member where member_email=#{memberEmail} and member_name=#{memberName}
+	</select>
 </mapper>

@@ -32,5 +32,7 @@ public interface MemberDao {
 
 	List selectMemberPet(String memberEmail);
 
+	String selectOneEmail(MemberDTO member);
+
 
 }

@@ -1,41 +1,60 @@
-import { useState } from "react";
-import "./mypage.css";
 import { TbDog } from "react-icons/tb";
 import { LuCat } from "react-icons/lu";
+import { useRef, useState } from "react";
 
-const PetFrm = (props) => {
-  console.log(props);
+const PetFrm = ({ pet, setPet }) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const memberEmail = props.memberEmail;
-  const petName = props.petName;
-  const setPetName = props.setPetName;
-  const petBirth = props.petBirth;
-  const setPetBirth = props.setPetBirth;
-  const petClasses = props.petClasses;
-  const setPetClasses = props.setPetClasses;
-  const petBreed = props.petBreed;
-  const setPetBreed = props.setPetBreed;
-  const petGender = props.petGender;
-  const setPetGender = props.setPetGender;
-  const neutering = props.neutering;
-  const setNeutering = props.setNeutering;
-  const petProfile = props.petProfile;
-  const setPetProfile = props.setPetProfile;
-  const petWeight = props.petWeight;
-  const setPetWeight = props.setPetWeight;
 
-  const [selectedBreed, setSelectedBreed] = useState("");
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setPet((prevPet) => ({
+      ...prevPet,
+      [name]: value,
+    }));
+  };
 
-  const addFileChange = (e) => {
-    props.setPetProfile(e.target.files[0]);
+  const petImgRef = useRef(null);
+  const [petImgPreview, setPetImgPreview] = useState(null);
+
+  //사진 미리보기
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPet((prevPet) => ({
+        ...prevPet,
+        petProfile: file,
+      }));
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setPetImgPreview(reader.result);
+      };
+    } else {
+      setPetImgPreview("pet_img.png");
+    }
   };
 
   return (
     <div className="pet-input-form">
       <div className="image-upload">
-        <img className="pet-image" />
+        <img
+          alt="반려동물 이미지 미리보기"
+          src={petImgPreview || `${backServer}/member/pet/pet_img.png`}
+          className="pet-image"
+          onClick={() => {
+            petImgRef.current.click();
+          }}
+        />
         <label>
-          <input type="file" onChange={addFileChange} />
+          <input
+            ref={petImgRef}
+            type="file"
+            accept="image/*"
+            name="petProfile"
+            onChange={handleFileChange}
+            style={{ display: "none" }}
+          />
         </label>
       </div>
 
@@ -45,8 +64,8 @@ const PetFrm = (props) => {
           type="text"
           id="petName"
           name="petName"
-          value={petName}
-          onChange={setPetName}
+          value={pet.petName}
+          onChange={handleInputChange}
         />
       </div>
 
@@ -56,8 +75,8 @@ const PetFrm = (props) => {
           type="date"
           name="petBirth"
           id="petBirth"
-          value={petBirth}
-          onChange={setPetBirth}
+          value={pet.petBirth}
+          onChange={handleInputChange}
         />
       </div>
 
@@ -68,10 +87,11 @@ const PetFrm = (props) => {
             <input
               type="radio"
               id="dog"
-              name="breed"
+              name="petClasses"
               value="1"
-              checked={petClasses}
-              onChange={setPetClasses}
+              checked={pet.petClasses === "1"}
+              onChange={handleInputChange}
+              className="breed-input"
             />
             <TbDog className="breed-icon dog-icon" />
           </label>
@@ -80,10 +100,11 @@ const PetFrm = (props) => {
             <input
               type="radio"
               id="cat"
-              name="breed"
+              name="petClasses"
               value="2"
-              checked={petClasses}
-              onChange={setPetClasses}
+              checked={pet.petClasses === "2"}
+              onChange={handleInputChange}
+              className="breed-input"
             />
             <LuCat className="breed-icon cat-icon" />
           </label>
@@ -93,8 +114,9 @@ const PetFrm = (props) => {
       <div className="pet-input breeds">
         <label>품종</label>
         <select
-          value={selectedBreed}
-          onChange={(e) => setSelectedBreed(e.target.value)}
+          name="petBreed"
+          value={pet.petBreed}
+          onChange={handleInputChange}
         >
           <option value="진돗개">진돗개</option>
           <option value="허스키">허스키</option>
@@ -108,20 +130,20 @@ const PetFrm = (props) => {
         <div className="pet-title">성별</div>
         <input
           type="radio"
-          name="gender"
+          name="petGender"
           id="m"
           value="1"
-          checked={props.petGender === 1}
-          onChange={setPetGender}
+          checked={pet.petGender === "1"}
+          onChange={handleInputChange}
         />
         <label htmlFor="m">남</label>
         <input
           type="radio"
-          name="gender"
+          name="petGender"
           id="f"
           value="2"
-          checked={props.petGender === 2}
-          onChange={setPetGender}
+          checked={pet.petGender === "2"}
+          onChange={handleInputChange}
         />
         <label htmlFor="f">여</label>
       </div>
@@ -133,8 +155,8 @@ const PetFrm = (props) => {
           name="neutering"
           id="yes"
           value="1"
-          checked={neutering === 1}
-          onChange={setNeutering}
+          checked={pet.neutering === "1"}
+          onChange={handleInputChange}
         />
         <label htmlFor="yes">YES</label>
         <input
@@ -142,8 +164,8 @@ const PetFrm = (props) => {
           name="neutering"
           id="no"
           value="2"
-          checked={neutering === 2}
-          onChange={setNeutering}
+          checked={pet.neutering === "2"}
+          onChange={handleInputChange}
         />
         <label htmlFor="no">NO</label>
       </div>
@@ -154,12 +176,9 @@ const PetFrm = (props) => {
           type="text"
           id="petWeight"
           name="petWeight"
-          value={petWeight}
-          onChange={setPetWeight}
+          value={pet.petWeight}
+          onChange={handleInputChange}
         />
-      </div>
-      <div className="pet-insert-btn">
-        <button type="submit">등록하기</button>
       </div>
     </div>
   );

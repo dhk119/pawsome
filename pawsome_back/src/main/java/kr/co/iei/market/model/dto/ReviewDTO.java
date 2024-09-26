@@ -2,6 +2,8 @@ package kr.co.iei.market.model.dto;
 
 import java.util.List;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Alias (value="review")
 public class ReviewDTO {
 	private int reviewNo;			//리뷰번호
 	private int productNo;			//상품번호

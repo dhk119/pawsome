@@ -35,7 +35,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: start;
-  width: 1400px;
+  width: 60%;
   min-height: 800px;
   padding: 50px 30px;
 }
@@ -60,6 +60,7 @@
 .board-all-wrap {
   width: 100%;
 }
+
 .board-all-wrap > div {
   padding: 30px 20px;
 }
@@ -70,6 +71,9 @@
   display: flex;
   justify-content: space-between;
   margin: 15px;
+}
+.list-list:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .start {
   display: flex;
@@ -88,9 +92,37 @@
   margin: 10px;
   padding-top: 18px;
 }
+.reply-count {
+  background-color: var(--main2);
+  text-align: center;
+  border-radius: 10px;
+}
+.reply-count > div {
+  padding: 0 10px;
+}
 .posting-img > img {
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 60px;
+}
+.posting-tag {
+  display: flex;
+  align-items: start;
+}
+.posting-tag > div {
+  padding: 0 10px;
+}
+.posting-tag > div:first-child {
+  background-color: #ffd697;
+  text-align: center;
+  padding: 2px auto;
+  border-radius: 15px;
+}
+.posting-sub-info {
+  display: flex;
+  align-items: start;
+}
+.posting-sub-info > div {
+  padding: 0 5px;
 }
 .board-content-wrap {
   display: flex;
@@ -258,15 +290,69 @@
 }
 .board-view-wrap {
   min-height: 800px;
-  width: 1400px;
+  width: 70%;
   margin: 50px auto;
-  border: 1px solid #ffa518;
+  border: 2px solid #ffa518;
+  border-radius: 15px;
+  padding: 50px 50px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .board-view-content {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+.board-view-head {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 200px;
+  margin: 20px auto;
+  padding: 15px 30px;
+}
+.board-view-head > div:first-child {
+  background-color: #ffd697;
+  padding: 3px 10px;
+  border-radius: 15px;
+}
+.view-btn-zone {
+  display: flex;
+  gap: 10px;
+}
+.view-btn-zone > a {
+  background-color: #ffd697;
+  color: #fff;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.view-btn-zone > div:last-child > button {
+  background-color: #ffd697;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.board-view-memberinfo {
+  display: flex;
+  align-items: center;
+  gap: 230px;
+  margin: 30px auto;
+}
+.board-view-memberinfo1 {
+  display: flex;
+  gap: 10px;
+}
+.b-v-m {
+  display: flex;
+  padding-top: 10px;
+  gap: 10px;
+}
+.board-view-data {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-bottom: 8px;
 }
 .board-quill {
   margin: 10px auto;
@@ -315,8 +401,8 @@
 
 .swiper-slide img {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   object-fit: cover;
 }
 /*map*/
