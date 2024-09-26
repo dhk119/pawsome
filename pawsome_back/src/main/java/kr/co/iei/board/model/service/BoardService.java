@@ -54,10 +54,13 @@ public class BoardService {
 	public BoardDTO selectOneBoard(int boardNo) {
 		BoardDTO board = boardDao.selectOneBoard(boardNo);
 		List<BoardFileDTO> fileList = boardDao.selectFileImage(boardNo);
+		int readCount = boardDao.updateBoardCount(boardNo);
 		board.setFileList(fileList);
 		return board;
 	}
 
+
+	
 
 	
 }
