@@ -59,4 +59,9 @@ public class InquiryService {
 		int result=inquiryDao.insertInquiryComment(inquiryComment);
 		return result;
 	}
+	@Transactional
+	public int updateInquiryComment(InquiryComment inquiryComment) {
+		int result=inquiryDao.updateInquiryComment(inquiryComment);
+		return result;
+	}
 }

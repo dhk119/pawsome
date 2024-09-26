@@ -24,5 +24,7 @@ public interface InquiryDao {
 	int updateInquiry(Inquiry inquiry);
 
 	int insertInquiryComment(InquiryComment inquiryComment);
+
+	int updateInquiryComment(InquiryComment inquiryComment);
 	
 }

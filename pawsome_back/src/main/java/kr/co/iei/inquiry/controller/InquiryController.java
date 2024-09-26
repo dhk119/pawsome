@@ -65,7 +65,14 @@ public class InquiryController {
 	}
 	@PostMapping(value = "/insertComment")
 	public ResponseEntity<Integer> insertInquiryComment(@RequestBody InquiryComment inquiryComment){
+		System.out.println(inquiryComment.getInquiryNo());
+		System.out.println(inquiryComment.getMemberEmail());
 		int result=inquiryService.insertInquiryComment(inquiryComment);
+		return ResponseEntity.ok(result);
+	}
+	@PatchMapping(value = "/comment")
+	public ResponseEntity<Integer> updatInquiryeComment(@ModelAttribute InquiryComment inquiryComment){
+		int result=inquiryService.updateInquiryComment(inquiryComment);
 		return ResponseEntity.ok(result);
 	}
 }
