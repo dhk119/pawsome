@@ -5,6 +5,9 @@ import { isLoginState } from "../utils/RecoilData";
 import ScrollToTop from "react-scroll-to-top";
 import axios from "axios";
 import MorePage from "../utils/MorePage";
+import { TfiTimer } from "react-icons/tfi";
+import * as AiIcons from "react-icons/ai";
+import { TbEye } from "react-icons/tb";
 
 const BoardList = () => {
   const isLogin = useRecoilValue(isLoginState);
@@ -107,9 +110,7 @@ const BoardList = () => {
 const BoardItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const board = props.board;
-  const [boardLike, setBoardLike] = useState(0);
   const navigate = useNavigate();
-  console.log(board.boardThumb);
   return (
     <li
       className="posting-item"
@@ -120,21 +121,35 @@ const BoardItem = (props) => {
       <div className="list-list">
         <div className="posting-info start">
           <div className="posting-tag">
-            {board.boardTag === 1
-              ? "#댕댕이"
-              : board.boardTag === 2
-              ? "#냥냥이"
-              : board.boardTag === 3
-              ? "#일상"
-              : board.boardTag === 4
-              ? "#정보공유"
-              : board.boardTag === 5
-              ? "#오산완"
-              : "#전체"}
+            <div>
+              {board.boardTag === 1
+                ? "#댕댕이"
+                : board.boardTag === 2
+                ? "#냥냥이"
+                : board.boardTag === 3
+                ? "#일상"
+                : board.boardTag === 4
+                ? "#정보공유"
+                : board.boardTag === 5
+                ? "#오산완"
+                : "#전체"}
+            </div>
+            <div>{board.boardTitle}</div>
           </div>
           <div className="posting-sub-info">
-            {board.boardTitle}, {board.memberNickname}, {board.readCount},
-            {boardLike}
+            <div>{board.memberNickname}</div>
+            <div>
+              <TfiTimer />
+              {board.regDate}
+            </div>
+            <div>
+              <TbEye />
+              {board.readCount}
+            </div>
+            <div>
+              <AiIcons.AiFillHeart />
+              {board.boardLike}
+            </div>
           </div>
         </div>
         <div className="end">
@@ -145,8 +160,9 @@ const BoardItem = (props) => {
               ""
             )}
           </div>
-          <div>
-            <div>{board.boardNo}</div>
+          <div className="reply-count">
+            <div>{board.replyNo}</div>
+            <div>댓글</div>
           </div>
         </div>
       </div>
