@@ -319,3 +319,18 @@
   height: 100%;
   object-fit: cover;
 }
+/*map*/
+#pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#pagination a {
+  color: black;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+#pagination a.on {
+  font-weight: bold;
+}

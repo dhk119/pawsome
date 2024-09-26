@@ -44,3 +44,6 @@ npm install @mui/material @emotion/react @emotion/styled --force
 
 김대헌 2024-09-25 12:00
 npm i swiper --force
+
+이재호 2024-09-26 16:58
+npm install react-kakao-maps-sdk --force
