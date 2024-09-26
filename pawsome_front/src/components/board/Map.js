@@ -15,14 +15,17 @@ const Map = () => {
     const ps = new kakao.maps.services.Places();
     const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
-    const searchPlaces = () => {
+    const searchPlaces = (keyword) => {
       const keywordInput = document.getElementById("keyword");
       if (!keywordInput) {
         console.error("검색어 입력 요소가 없습니다.");
         return;
       }
 
-      var keyword = keywordInput.value;
+      // 키워드가 주어지면 해당 키워드로 검색
+      if (!keyword) {
+        keyword = keywordInput.value; // 검색어 입력창에서 키워드 가져오기
+      }
 
       if (!keyword.replace(/^\s+|\s+$/g, "")) {
         alert("키워드를 입력해주세요!");
@@ -107,14 +110,14 @@ const Map = () => {
           place.address_name +
           "</span>";
       } else {
-        itemStr += "    <span>" + place.address_name + "</span>";
+        itemStr += " <span>" + place.address_name + "</span>";
       }
 
       itemStr +=
-        "  <span class='tel'>" +
+        "<br /><span class='tel'>" +
         (place.phone || "전화번호 없음") +
         "</span>" +
-        "</div>";
+        "</div><hr />";
 
       el.innerHTML = itemStr;
       el.className = "item";
@@ -204,44 +207,100 @@ const Map = () => {
     };
 
     document
-      .getElementById("searchBtn")
-      .addEventListener("click", searchPlaces);
+      .getElementById("searchButton")
+      .addEventListener("click", () => searchPlaces());
+
+    // 검색 입력 후 엔터 키 이벤트
+    document.getElementById("keyword").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        searchPlaces();
+      }
+    });
+
+    // 페이지 로드 시 "당산 동물병원"으로 검색
+    searchPlaces("당산 동물병원");
   }, []);
 
   return (
-    <div style={{ position: "relative" }}>
+    <div
+      id="map-box"
+      style={{ position: "relative", textAlign: "center", color: "#FFA518" }}
+    >
+      <h3>
+        검색하실때 주변 지하철역이나 **동,**구를 이용해 검색해주세요. "예)당산
+        동물병원, 영등포구 동물병원"
+      </h3>
+
       <div
         id="map"
         style={{
           margin: "0 auto",
-          width: "1200px",
-          height: "600px",
-        }}
-      />
-      <div
-        id="menu_wrap"
-        style={{
-          margin: "0 auto",
-          position: "absolute",
-          top: "10px",
-          left: "10px",
-          background: "white",
-          padding: "10px",
-          zIndex: 100,
+          width: "1400px",
+          height: "700px",
         }}
       >
-        <input type="text" id="keyword" placeholder="검색어를 입력하세요" />
-        <button id="searchBtn">검색</button>
-        <ul
-          id="placesList"
+        <div
+          id="menu_wrap"
           style={{
+            background: "rgba(255, 255, 255, 0.85)", // 투명도 약간 높임
+            borderRadius: "10px",
+            color: "black",
+            textAlign: "left",
             margin: "0 auto",
-            listStyleType: "none",
-            maxHeight: "300px",
-            overflowY: "auto",
+            position: "absolute",
+            top: "10px",
+            left: "10px",
+            padding: "10px",
+            zIndex: 100,
           }}
-        ></ul>
-        <div id="pagination"></div>
+        >
+          <input
+            type="text"
+            id="keyword"
+            placeholder="검색어를 입력하세요"
+            style={{
+              width: "85%",
+              padding: "5px",
+              marginBottom: "10px",
+              borderRadius: "5px",
+              border: "3px solid #ffa518",
+            }}
+          />
+          <button
+            id="searchButton"
+            style={{
+              marginLeft: "5px",
+              marginBottom: "10px",
+              width: "10%",
+              height: "30px",
+              background: "#ffa518",
+              border: "20px",
+              fontWeight: "border",
+              color: "white",
+            }}
+          >
+            검색
+          </button>
+          <ul
+            id="placesList"
+            style={{
+              border: "2px solid #ffa518",
+              margin: "0 auto",
+              listStyleType: "none",
+              maxHeight: "500px",
+              overflowY: "auto", // 스크롤 가능하게
+              padding: "0",
+              borderRadius: "5px",
+            }}
+          ></ul>
+          <div
+            id="pagination"
+            style={{
+              textAlign: "center", // 가운데 정렬
+              marginTop: "10px",
+            }}
+          ></div>
+        </div>
       </div>
     </div>
   );
