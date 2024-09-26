@@ -43,6 +43,8 @@ public interface MarketDao {
 
 	int updateQna(QnaDTO qna);
 
+	int deleteQna(int qnaNo);
+
 	
 
 }

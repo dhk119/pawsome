@@ -57,6 +57,12 @@
   width: 100%;
   font-size: 14px;
 }
+.list-tbl-wrap > .list-tbl .main-tr {
+  cursor: pointer;
+}
+.list-tbl-wrap > .list-tbl .main-tr:hover {
+  background-color: #fff0d9;
+}
 .list-tbl th {
   background-color: #ffd697;
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -64,8 +65,13 @@ public class ProductController {
 	@PatchMapping
 	public ResponseEntity<Boolean> updateQna(@ModelAttribute QnaDTO qna){
 		int result = productService.updateQna(qna);
-		System.out.println(qna);
-		System.out.println(result);
 		return ResponseEntity.ok(result == 1);
+	}
+	
+	@DeleteMapping(value="/qna/{qnaNo}")
+	public ResponseEntity<Integer> deleteQna(@PathVariable int qnaNo){
+		System.out.println(qnaNo);
+		int result = productService.deleteQna(qnaNo);
+		return ResponseEntity.ok(result);
 	}
 }

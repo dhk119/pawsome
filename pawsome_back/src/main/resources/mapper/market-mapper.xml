@@ -74,4 +74,7 @@
 	<update id="updateQna">
 		update qna set qna_type=#{qnaType},qna_title=#{qnaTitle},qna_content=#{qnaContent},qna_public=#{qnaPublic} where qna_no=#{qnaNo}
 	</update>
+	<delete id="deleteQna">
+		delete from qna where qna_no=#{qnaNo}
+	</delete>
 </mapper>

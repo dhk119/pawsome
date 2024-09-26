@@ -4,6 +4,7 @@ import { memberNicknameState } from "../../utils/RecoilData";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import * as DOMPurify from "dompurify";
+import Swal from "sweetalert2";
 
 const Qna = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -75,9 +76,46 @@ const QnaItem = (props) => {
   const memberNickname = props.memberNickname;
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
+  const deleteQna = () => {
+    Swal.fire({
+      title: "정말 삭제하시겠습니까?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#ffa518",
+      confirmButtonText: "예",
+      cancelButtonText: "아니오",
+    }).then((result) => {
+      console.log(result);
+      if (result.isConfirmed) {
+        axios
+          .delete(`${backServer}/qna/${qna.qnaNo}`)
+          .then((res) => {
+            console.log(res);
+            if (res.data === 1) {
+              Swal.fire({
+                title: "삭제 성공",
+                text: "해당 문의가 삭제되었습니다.",
+                icon: "success",
+              });
+              navigate(`/market/main/productDetail/${productNo}/qna`);
+            } else {
+              Swal.fire({
+                title: "삭제 실패",
+                text: "나중에 다시 시도해주세요",
+                icon: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  };
   return (
     <>
       <tr
+        className="main-tr"
         onClick={() => {
           {
             qna.qnaPublic == 1
@@ -119,7 +157,8 @@ const QnaItem = (props) => {
             </td>
             {qna.qnaWriter === memberNickname ? (
               <td>
-                <div
+                <button
+                  type="button"
                   className="qna-wrtie-btn"
                   onClick={() => {
                     navigate(
@@ -127,8 +166,15 @@ const QnaItem = (props) => {
                     );
                   }}
                 >
-                  문의수정
-                </div>
+                  수정
+                </button>
+                <button
+                  type="button"
+                  className="qna-wrtie-btn"
+                  onClick={deleteQna}
+                >
+                  삭제
+                </button>
               </td>
             ) : (
               ""

@@ -73,4 +73,10 @@ public class ProductService {
 		int result = marketDao.updateQna(qna);
 		return result;
 	}
+
+	@Transactional
+	public int deleteQna(int qnaNo) {
+		int result = marketDao.deleteQna(qnaNo);
+		return 0;
+	}
 }
