@@ -1,5 +1,7 @@
 package kr.co.iei.market.model.dto;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Alias (value="qnaAnswer")
 public class QnaAnswerDTO {
 	private int qnaAnswerNo;			//답글 번호
 	private int qnaNo;					//Q&A번호

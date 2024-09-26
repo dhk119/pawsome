@@ -13,8 +13,6 @@ import Qna from "./tabComponent/Qna";
 import Guide from "./tabComponent/Guide";
 import "./tab.css";
 import axios from "axios";
-import MainNav from "./MainNav";
-import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import QuantityInput from "./QuantityInput";
 
 const ProductDetail = () => {

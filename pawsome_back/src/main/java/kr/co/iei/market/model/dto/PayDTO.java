@@ -1,5 +1,7 @@
 package kr.co.iei.market.model.dto;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Alias (value="pay")
 public class PayDTO {
 	private String payUid;			//결제번호
 	private int totalPrice;			//총 결제금액

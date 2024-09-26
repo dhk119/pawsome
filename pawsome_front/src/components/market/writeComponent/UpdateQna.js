@@ -1,14 +1,13 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { ImOpt } from "react-icons/im";
 import { useNavigate, useParams } from "react-router-dom";
 import "../write.css";
 import WriteFrm from "./WrtieFrm";
 import { useRecoilState } from "recoil";
+import { useEffect, useState } from "react";
 import { memberNicknameState } from "../../utils/RecoilData";
+import axios from "axios";
 import Swal from "sweetalert2";
 
-const WriteQna = () => {
+const UpdateQna = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const [memberNickname, setMemberNickname] =
@@ -23,6 +22,7 @@ const WriteQna = () => {
   };
   const productNo = params.productNo;
   const [product, setProduct] = useState({});
+  const qnaNo = params.qnaNo;
   useEffect(() => {
     axios
       .get(`${backServer}/product/productDetail/${productNo}`)
@@ -34,9 +34,26 @@ const WriteQna = () => {
         console.log(err);
       });
   }, []);
-  const writeQna = () => {
+
+  useEffect(() => {
+    axios
+      .get(`${backServer}/product/qna/${qnaNo}`)
+      .then((res) => {
+        console.log(res);
+        setQnaType(res.data.qnaType);
+        setQnaTitle(res.data.qnaTitle);
+        setQnaContent(res.data.qnaContent);
+        setQnaPublic(res.data.qnaPublic);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const updateQna = () => {
     if (qnaTitle !== "" && qnaContent !== "") {
       const form = new FormData();
+      form.append("qnaNo", qnaNo);
       form.append("qnaType", qnaType);
       form.append("qnaTitle", qnaTitle);
       form.append("qnaContent", qnaContent);
@@ -44,22 +61,25 @@ const WriteQna = () => {
       form.append("qnaPublic", qnaPublic);
       form.append("productNo", productNo);
       axios
-        .post(`${backServer}/product`, form)
+        .patch(`${backServer}/product`, form)
         .then((res) => {
           console.log(res);
           if (res.data) {
             Swal.fire({
-              title: "등록 성공",
-              text: "Q&A 등록을 완료했습니다.",
+              title: "수정 성공",
+              text: "Q&A 수정을 완료했습니다.",
               icon: "success",
             });
             navigate(`/market/main/productDetail/${productNo}/qna`);
           } else {
             Swal.fire({
-              title: "등록 실패",
+              title: "수정 실패",
               text: "나중에 다시 시도해주세요",
               icon: "error",
             });
+            navigate(
+              `/market/main/productDetail/${productNo}/qna/updateQna/${qnaNo}`
+            );
           }
         })
         .catch((err) => {
@@ -77,11 +97,11 @@ const WriteQna = () => {
           className="qna-writeFrm-wrap"
           onSubmit={(e) => {
             e.preventDefault();
-            writeQna();
+            updateQna();
           }}
         >
           <div className="qna-writeFrm-title">
-            <div>Q&A 작성</div>
+            <div>Q&A 수정</div>
           </div>
           <div className="qna-writeFrm-info">
             <WriteFrm
@@ -97,7 +117,7 @@ const WriteQna = () => {
             />
             <div className="submit-btn-wrap">
               <button type="submit" className="submit-btn">
-                Q&A 등록
+                Q&A 수정
               </button>
             </div>
           </div>
@@ -107,4 +127,4 @@ const WriteQna = () => {
   );
 };
 
-export default WriteQna;
+export default UpdateQna;

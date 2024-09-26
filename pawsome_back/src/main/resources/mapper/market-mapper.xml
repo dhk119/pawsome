@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="kr.co.iei.market.model.dao.MarketDao">
+	<!-- 승환 -->
 	<select id="totalCountMagnum" resultType="int">
 		select count(*) from product
 	</select>
@@ -10,8 +11,23 @@
 	<select id="selectProductListMagnum" resultType="product">
 		select * from (select rownum as rnum, b.* from(SELECT * from product order by product_no desc)b) where rnum BETWEEN #{start} and #{end}
 	</select>
+	<update id="updateShow">
+		update product set product_show=#{productShow} where product_no=#{productNo}
+	</update>
+	<select id="selectOneProductMagnum" resultType="product">
+		select product_name, type_category, main_category, product_price, product_thumb, product_detail, product_show, member_email from product where product_no=#{productNo}
+	</select>
+	<update id="updateProduct">
+		update product set product_name=#{productName},type_category=#{typeCategory},main_category=#{mainCategory},product_price=#{productPrice},product_thumb=#{productThumb},product_detail=#{productDetail}, product_show=#{productShow} where product_no=#{productNo}
+	</update>
+	<delete id="deleteProduct">
+		delete from product where product_no=#{productNo}
+	</delete>
 	
 	
+	
+	
+	<!-- 원희 -->
 	<select id="totalCount" resultType="int">
 		select count(*) from product where product_show='Y'
 		<if test= "typeCategory!=0">
@@ -38,16 +54,24 @@
 	<select id="selectOneProduct" resultType="product">
 		select product_no, product_name, type_category, main_category, product_price, product_thumb, product_detail from product where product_no=#{productNo}
 	</select>
-	<update id="updateShow">
-		update product set product_show=#{productShow} where product_no=#{productNo}
-	</update>
-	<select id="selectOneProductMagnum" resultType="product">
-		select product_name, type_category, main_category, product_price, product_thumb, product_detail, product_show, member_email from product where product_no=#{productNo}
+	<insert id="insertQna">
+		insert into qna values(qna_seq.nextval,#{productNo},#{qnaType},#{qnaTitle},#{qnaContent},#{qnaPublic},sysdate,#{qnaWriter})
+	</insert>
+	<select id="totalQnaCount" resultType="int">
+		select count(*) from qna where product_no=#{productNo}
 	</select>
-	<update id="updateProduct">
-		update product set product_name=#{productName},type_category=#{typeCategory},main_category=#{mainCategory},product_price=#{productPrice},product_thumb=#{productThumb},product_detail=#{productDetail}, product_show=#{productShow} where product_no=#{productNo}
+	<select id="selectQnaList" resultType="qna">
+		select * from
+			(select rownum as rnum, q.* from
+				(select qna_no,qna_type,qna_title,qna_content,qna_public,to_char(qna_reg_date,'YYYY-MM-DD HH:MM:SS') as qna_reg_date,qna_writer
+				,qna_answer_content,to_char(qna_answer_reg_date,'YYYY-MM-DD HH:MM:SS') as qna_answer_reg_date from qna left join qna_answer using(qna_no) 
+				where product_no=#{productNo} order by qna_no desc) q )
+		where rnum between #{start} and #{end}
+	</select>
+	<select id="selectQna" resultType="qna">
+		select qna_type,qna_title,qna_content,qna_public from qna where qna_no=#{qnaNo}
+	</select>
+	<update id="updateQna">
+		update qna set qna_type=#{qnaType},qna_title=#{qnaTitle},qna_content=#{qnaContent},qna_public=#{qnaPublic} where qna_no=#{qnaNo}
 	</update>
-	<delete id="deleteProduct">
-		delete from product where product_no=#{productNo}
-	</delete>
 </mapper>

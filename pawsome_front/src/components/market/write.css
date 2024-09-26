@@ -91,6 +91,7 @@
   margin: 5px;
 }
 .qna-writeFrm-info > .submit-btn-wrap {
+  margin-top: 25px;
   display: flex;
   justify-content: center;
 }
