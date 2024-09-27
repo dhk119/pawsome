@@ -44,3 +44,15 @@ npm install @mui/material @emotion/react @emotion/styled --force
 
 김대헌 2024-09-25 12:00
 npm i swiper --force
+
+이재호 2024-09-26 16:58
+npm install react-kakao-maps-sdk --force
+
+김대헌 2024-09-26 10:47 (공유하기 용)
+npm install react-i18next --force 
+
+김대헌 2024-09-26 10:56 (공유하기 용)
+npm install --save-dev @babel/plugin-proposal-private-property-in-object --force
+
+김대헌 2024-09-26 11:00 (모든게 같은 버전인지 체크위해)
+npm install react@latest react-dom@latest --force

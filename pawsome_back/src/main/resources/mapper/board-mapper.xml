@@ -10,7 +10,17 @@
     				    board_content,
     				    board_thumb,
     				    read_count,
-    				    to_char(reg_date,'yyyy-mm-dd hh:mm:ss')as reg_date,
+    				    (case  
+							when(trunc((sysdate - reg_date)*24*60)) <![CDATA[ < ]]> 60 
+							then(trunc((sysdate - reg_date)*24*60))||'분전' 
+							when(trunc((sysdate - reg_date)*24)) <![CDATA[ < ]]> 24 
+							then(trunc((sysdate - reg_date)*24))||'시간전' 
+							when trunc((sysdate - reg_date)) <![CDATA[ < ]]> 30 
+							then trunc((sysdate - reg_date)) || '일전' 
+    						when trunc((sysdate - reg_date) / 30) <![CDATA[ < ]]> 12 
+    						then trunc((sysdate - reg_date) / 30) || '개월전' 
+    						else trunc((sysdate - reg_date) / 365) || '년전'
+						end)as reg_date,
     				    member_nickname,
     				    (select count(*) from board_like where board_like.board_no = board.board_no) like_count 
         		from board 
@@ -39,7 +49,17 @@
 			board_title,
 			board_content,
 			read_count,
-			to_char(reg_date,'yyyy-mm-dd')as reg_date,
+			(case  
+				when(trunc((sysdate - reg_date)*24*60)) <![CDATA[ < ]]> 60 
+				then(trunc((sysdate - reg_date)*24*60))||'분전' 
+				when(trunc((sysdate - reg_date)*24)) <![CDATA[ < ]]> 24 
+				then(trunc((sysdate - reg_date)*24))||'시간전' 
+				when trunc((sysdate - reg_date)) <![CDATA[ < ]]> 30 
+				then trunc((sysdate - reg_date)) || '일전' 
+    			when trunc((sysdate - reg_date) / 30) <![CDATA[ < ]]> 12 
+    			then trunc((sysdate - reg_date) / 30) || '개월전' 
+    			else trunc((sysdate - reg_date) / 365) || '년전'
+			end)as reg_date,
 			member_nickname,
 			member_profile
 		from board
@@ -49,4 +69,7 @@
 	<select id="selectFileImage" resultType="boardFile">
 		select * from board_file where board_no =#{boardNo}
 	</select>
+	<update id="updateBoardCount">
+		update board set read_count = read_count+1 where board_no = #{boardNo}
+	</update>
 </mapper>
