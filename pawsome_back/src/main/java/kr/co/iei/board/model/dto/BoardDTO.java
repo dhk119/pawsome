@@ -24,5 +24,4 @@ public class BoardDTO {
 	private int boardLike;
 	private String memberProfile;
 	private List<BoardFileDTO> fileList;
-	private int replyNo;
 }
