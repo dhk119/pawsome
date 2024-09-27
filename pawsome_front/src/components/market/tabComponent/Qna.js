@@ -88,7 +88,7 @@ const QnaItem = (props) => {
       console.log(result);
       if (result.isConfirmed) {
         axios
-          .delete(`${backServer}/qna/${qna.qnaNo}`)
+          .delete(`${backServer}/product/qna/${qna.qnaNo}`)
           .then((res) => {
             console.log(res);
             if (res.data === 1) {

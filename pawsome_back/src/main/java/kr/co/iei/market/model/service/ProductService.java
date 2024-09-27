@@ -77,6 +77,6 @@ public class ProductService {
 	@Transactional
 	public int deleteQna(int qnaNo) {
 		int result = marketDao.deleteQna(qnaNo);
-		return 0;
+		return result;
 	}
 }
