@@ -32,9 +32,7 @@ const InquiryList = () => {
             </div>
           </div>
         ) : (
-          <div className="admin-top-left">
-            <div className="admin-write"></div>
-          </div>
+          <div className="admin-top-left"></div>
         )}
         <div className="admin-top-mid"></div>
         <div className="admin-search-wrap">
