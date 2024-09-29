@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.iei.market.model.dto.CartDTO;
 import kr.co.iei.market.model.dto.ProductDTO;
 import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
@@ -33,7 +34,7 @@ public interface MarketDao {
 	List selectProductList(int typeCategory, String mainCategory, int start, int end);
 
 	ProductDTO selectOneProduct(int productNo);
-
+/*Q&A*/
 	int insertQna(QnaDTO qna);
 
 	int totalQnaCount(int productNo);
@@ -51,6 +52,8 @@ public interface MarketDao {
 	int updateQnaAnswer(QnaAnswerDTO qnaAnswer);
 
 	int deleteQnaAnswer(int qnaNo);
+/*장바구니*/
+	int insertCart(CartDTO cart);
 
 	
 

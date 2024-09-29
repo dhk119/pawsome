@@ -14,6 +14,9 @@ import Guide from "./tabComponent/Guide";
 import "./tab.css";
 import axios from "axios";
 import QuantityInput from "./QuantityInput";
+import { useRecoilState } from "recoil";
+import { loginEmailState } from "../utils/RecoilData";
+import Swal from "sweetalert2";
 
 const ProductDetail = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -23,6 +26,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState({});
   const [currentTab, setCurrentTab] = useState(0);
   const [productPrice, setProductPrice] = useState(0);
+  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   useEffect(() => {
     axios
       .get(`${backServer}/product/productDetail/${productNo}`)
@@ -63,6 +67,54 @@ const ProductDetail = () => {
   ];
   const selectTapHandler = (index) => {
     setCurrentTab(index);
+  };
+  /* 장바구니 */
+  const cart = () => {
+    const form = new FormData();
+    form.append("productNo", productNo);
+    form.append("productCartCount", quantity);
+    form.append("memberEmail", loginEmail);
+    Swal.fire({
+      title: "장바구니에 담으시겠습니까?",
+      html: `상품명 : ${product.productName}</br>상품수량 : ${quantity}`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#ffa518",
+      confirmButtonText: "예",
+      cancelButtonText: "아니오",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .post(`${backServer}/payment/cart`, form)
+          .then((res) => {
+            console.log(res);
+            if (res.data) {
+              Swal.fire({
+                title: "장바구니 담기 성공",
+                html: "해당 상품을 장바구니에 담았습니다.</br>장바구니로 이동하시겠습니까?",
+                icon: "success",
+                showCancelButton: true,
+                confirmButtonColor: "#ffa518",
+                confirmButtonText: "예",
+                cancelButtonText: "아니오",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate("/market/main/cart");
+                }
+              });
+            } else {
+              Swal.fire({
+                title: "장바구니 담기 실패",
+                text: "나중에 다시 시도해주세요.",
+                icon: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
   };
 
   return (
@@ -134,21 +186,27 @@ const ProductDetail = () => {
                 </table>
               </div>
             </div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                cart();
+              }}
+            >
+              <div className="product-totalprice">
+                <QuantityInput
+                  quantity={quantity}
+                  onClick={handleClickCounter}
+                  stock={stock}
+                />
+                <span>Total | {total.toLocaleString("ko-KR")}원</span>
+              </div>
 
-            <div className="product-totalprice">
-              <QuantityInput
-                quantity={quantity}
-                onClick={handleClickCounter}
-                stock={stock}
-              />
-              <span>Total | {total.toLocaleString("ko-KR")}원</span>
-            </div>
-
-            <div className="product-btn">
-              <Link to="#">장바구니 담기</Link>
-              <Link to="#">바로 구매</Link>
-              <Link to="#">관심상품</Link>
-            </div>
+              <div className="product-btn">
+                <button type="submit">장바구니 담기</button>
+                <button type="button">바로 구매</button>
+                <button type="button">관심상품</button>
+              </div>
+            </form>
           </div>
         </div>
         <div className="detail-menu-wrap">

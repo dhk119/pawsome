@@ -78,7 +78,6 @@ public class ProductController {
 	
 	@PostMapping(value="/qnaAnswer")
 	public  ResponseEntity<Boolean> insertQnaAnswer(@ModelAttribute QnaAnswerDTO qnaAnswer){
-		System.out.println(qnaAnswer);
 		int result = productService.insertQnaAnswer(qnaAnswer);
 		return ResponseEntity.ok(result == 1);
 	}
