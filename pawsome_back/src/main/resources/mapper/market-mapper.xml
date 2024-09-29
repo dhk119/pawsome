@@ -54,6 +54,7 @@
 	<select id="selectOneProduct" resultType="product">
 		select product_no, product_name, type_category, main_category, product_price, product_thumb, product_detail from product where product_no=#{productNo}
 	</select>
+<!-- Q&A -->
 	<insert id="insertQna">
 		insert into qna values(qna_seq.nextval,#{productNo},#{qnaType},#{qnaTitle},#{qnaContent},#{qnaPublic},sysdate,#{qnaWriter})
 	</insert>
@@ -88,4 +89,8 @@
 	<delete id="deleteQnaAnswer">
 		delete from qna_answer where qna_no=#{qnaNo}
 	</delete>
+<!-- 장바구니 -->
+	<insert id="insertCart">
+		insert into cart values(cart_seq.nextval,#{productNo},#{productCartCount},#{memberEmail})
+	</insert>
 </mapper>
