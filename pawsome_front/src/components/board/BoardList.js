@@ -161,7 +161,7 @@ const BoardItem = (props) => {
             )}
           </div>
           <div className="reply-count">
-            <div>{board.replyNo}</div>
+            <div>{board.boardNo}</div>
             <div>댓글</div>
           </div>
         </div>

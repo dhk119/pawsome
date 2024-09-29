@@ -59,6 +59,17 @@ public class BoardService {
 		return board;
 	}
 
+	@Transactional
+	public List<BoardFileDTO> deleteBoard(int boardNo) {
+		List<BoardFileDTO> fileList = boardDao.selectOneBoardFileList(boardNo);
+		int result = boardDao.deleteBoard(boardNo);
+		if(result>0) {
+			return fileList;
+		}else {
+			return null;			
+		}
+	}
+
 
 	
 
