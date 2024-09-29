@@ -290,7 +290,7 @@
 }
 .board-view-wrap {
   min-height: 800px;
-  width: 70%;
+  width: 60%;
   margin: 50px auto;
   border: 2px solid #ffa518;
   border-radius: 15px;
@@ -301,11 +301,11 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  border-bottom: 10px solid var(--gray7);
 }
 .board-view-head {
   display: flex;
   justify-content: space-evenly;
-  gap: 200px;
   margin: 20px auto;
   padding: 15px 30px;
 }
@@ -313,6 +313,15 @@
   background-color: #ffd697;
   padding: 3px 10px;
   border-radius: 15px;
+  margin-right: 450px;
+}
+.board-view-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #ffa518;
+  font-size: 20px;
+  font-weight: bold;
 }
 .view-btn-zone {
   display: flex;
@@ -320,15 +329,14 @@
 }
 .view-btn-zone > a {
   background-color: #ffd697;
-  color: #fff;
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
+  color: black;
 }
 .view-btn-zone > div:last-child > button {
   background-color: #ffd697;
   border: none;
-  color: #fff;
   font-size: 16px;
   padding: 5px 10px;
   border-radius: 5px;
@@ -361,6 +369,7 @@
   display: flex;
   justify-content: center;
   gap: 50px;
+  margin: 40px auto;
 }
 .boardView-btn > button {
   padding: 10px 15px;
@@ -373,6 +382,43 @@
   background-color: #ffa518;
   color: var(--gray8);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+.other-board-content {
+  display: flex;
+  flex-direction: column;
+  margin: 30px auto;
+}
+.other-board-content > div > span {
+  font-size: 20px;
+  margin-left: 10px;
+}
+.other-contents {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  border: 2px solid var(--gray7);
+  padding: 10px 10px;
+  border-radius: 15px;
+  width: 220px;
+}
+.other-board-content > div {
+  margin-bottom: 15px;
+}
+.reply-wrap {
+  border-top: 10px solid var(--gray7);
+}
+.reply-top-wrap {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 20px auto;
+  gap: 1000px;
+}
+.reply-top-wrap > div:first-child {
+  display: flex;
+  gap: 5px;
+}
+.reply-input-wrap > form {
+  display: flex;
 }
 /*산책 지도*/
 .distance-box {
