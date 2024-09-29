@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.market.model.dto.ProductDTO;
+import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
 import kr.co.iei.util.PageInfo;
 
@@ -44,6 +45,12 @@ public interface MarketDao {
 	int updateQna(QnaDTO qna);
 
 	int deleteQna(int qnaNo);
+
+	int insertQnaAnswer(QnaAnswerDTO qnaAnswer);
+
+	int updateQnaAnswer(QnaAnswerDTO qnaAnswer);
+
+	int deleteQnaAnswer(int qnaNo);
 
 	
 

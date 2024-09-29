@@ -35,7 +35,7 @@ const Qna = () => {
     <div className="qna-wrap">
       {/* if 걸어서 관리자면 문의 답변, 일반회원이면 문의작성 뜨게 */}
       <div>
-        <Link to="writeQna" className="qna-wrtie-btn">
+        <Link to="writeQna" className="qna-wrtie-btn main">
           문의작성
         </Link>
       </div>
@@ -44,8 +44,9 @@ const Qna = () => {
           <thead>
             <tr>
               <th style={{ width: "5%" }}>NO</th>
-              <th style={{ width: "10%" }}>카테고리</th>
-              <th style={{ width: "35%" }}>제목</th>
+              <th style={{ width: "7%" }}>공개여부</th>
+              <th style={{ width: "8%" }}>카테고리</th>
+              <th style={{ width: "30%" }}>제목</th>
               <th style={{ width: "15%" }}>작성자</th>
               <th style={{ width: "15%" }}>작성일</th>
               <th style={{ width: "10%" }}>답변</th>
@@ -112,6 +113,42 @@ const QnaItem = (props) => {
       }
     });
   };
+  const deleteQnaAnswer = () => {
+    Swal.fire({
+      title: "정말 삭제하시겠습니까?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#ffa518",
+      confirmButtonText: "예",
+      cancelButtonText: "아니오",
+    }).then((result) => {
+      console.log(result);
+      if (result.isConfirmed) {
+        axios
+          .delete(`${backServer}/product/qnaAnswer/${qna.qnaNo}`)
+          .then((res) => {
+            console.log(res);
+            if (res.data === 1) {
+              Swal.fire({
+                title: "삭제 성공",
+                text: "해당 문의 답변이 삭제되었습니다.",
+                icon: "success",
+              });
+              navigate(`/market/main/productDetail/${productNo}/qna`);
+            } else {
+              Swal.fire({
+                title: "삭제 실패",
+                text: "나중에 다시 시도해주세요",
+                icon: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  };
   return (
     <>
       <tr
@@ -119,7 +156,7 @@ const QnaItem = (props) => {
         onClick={() => {
           {
             qna.qnaPublic == 1
-              ? qna.qnaWriter === memberNickname
+              ? qna.qnaWriter === memberNickname || memberNickname === "관리자"
                 ? setToggle(!toggle)
                 : setToggle(toggle)
               : setToggle(!toggle);
@@ -127,6 +164,7 @@ const QnaItem = (props) => {
         }}
       >
         <td>{qna.qnaNo}</td>
+        <td>{qna.qnaPublic == 0 ? "공개" : "비공개"}</td>
         <td>
           {qna.qnaType == 1
             ? "전체"
@@ -146,7 +184,10 @@ const QnaItem = (props) => {
       {qna.qnaContent != null ? (
         toggle ? (
           <tr>
-            <td colSpan={5}>
+            <td></td>
+            <td></td>
+            <td>본문</td>
+            <td colSpan={3} className="content-box">
               {qna.qnaContent && (
                 <div
                   dangerouslySetInnerHTML={{
@@ -156,7 +197,7 @@ const QnaItem = (props) => {
               )}
             </td>
             {qna.qnaWriter === memberNickname ? (
-              <td>
+              <td className="btn-wrap">
                 <button
                   type="button"
                   className="qna-wrtie-btn"
@@ -176,6 +217,24 @@ const QnaItem = (props) => {
                   삭제
                 </button>
               </td>
+            ) : memberNickname === "관리자" ? (
+              qna.qnaAnswerContent === null ? (
+                <td className="btn-wrap">
+                  <button
+                    type="button"
+                    className="qna-wrtie-btn"
+                    onClick={() => {
+                      navigate(
+                        `/market/main/productDetail/${productNo}/qna/writeQnaAnswer/${qna.qnaNo}`
+                      );
+                    }}
+                  >
+                    답변작성
+                  </button>
+                </td>
+              ) : (
+                ""
+              )
             ) : (
               ""
             )}
@@ -189,7 +248,43 @@ const QnaItem = (props) => {
       {qna.qnaAnswerContent != null ? (
         toggle ? (
           <tr>
-            <td colSpan={6}>{qna.qnaAnswerContent}</td>
+            <td></td>
+            <td></td>
+            <td>답변</td>
+            <td colSpan={3} className="content-answer-box">
+              {qna.qnaAnswerContent && (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(String(qna.qnaAnswerContent)),
+                  }}
+                />
+              )}
+              <div>{qna.qnaAnswerRegDate}</div>
+            </td>
+            {memberNickname === "관리자" ? (
+              <td className="btn-wrap">
+                <button
+                  type="button"
+                  className="qna-wrtie-btn"
+                  onClick={() => {
+                    navigate(
+                      `/market/main/productDetail/${productNo}/qna/updateQnaAnswer/${qna.qnaNo}`
+                    );
+                  }}
+                >
+                  수정
+                </button>
+                <button
+                  type="button"
+                  className="qna-wrtie-btn"
+                  onClick={deleteQnaAnswer}
+                >
+                  삭제
+                </button>
+              </td>
+            ) : (
+              ""
+            )}
           </tr>
         ) : (
           ""

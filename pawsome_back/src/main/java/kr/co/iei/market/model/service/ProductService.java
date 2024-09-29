@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import kr.co.iei.market.model.dao.MarketDao;
 import kr.co.iei.market.model.dto.ProductDTO;
+import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.util.PageUtil;
@@ -79,4 +80,24 @@ public class ProductService {
 		int result = marketDao.deleteQna(qnaNo);
 		return result;
 	}
+
+	@Transactional
+	public int insertQnaAnswer(QnaAnswerDTO qnaAnswer) {
+		int result = marketDao.insertQnaAnswer(qnaAnswer);
+		return result;
+	}
+
+	@Transactional
+	public int updateQnaAnswer(QnaAnswerDTO qnaAnswer) {
+		int result = marketDao.updateQnaAnswer(qnaAnswer);
+		return result;
+	}
+
+	@Transactional
+	public int deleteQnaAnswer(int qnaNo) {
+		int result = marketDao.deleteQnaAnswer(qnaNo);
+		return result;
+	}
+	
+	
 }

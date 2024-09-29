@@ -63,18 +63,29 @@
 	<select id="selectQnaList" resultType="qna">
 		select * from
 			(select rownum as rnum, q.* from
-				(select qna_no,qna_type,qna_title,qna_content,qna_public,to_char(qna_reg_date,'YYYY-MM-DD HH:MM:SS') as qna_reg_date,qna_writer
-				,qna_answer_content,to_char(qna_answer_reg_date,'YYYY-MM-DD HH:MM:SS') as qna_answer_reg_date from qna left join qna_answer using(qna_no) 
+				(select qna_no,qna_type,qna_title,qna_content,qna_public,to_char(qna_reg_date,'YYYY-MM-DD hh24:mm:ss') as qna_reg_date,qna_writer
+				,qna_answer_content,to_char(qna_answer_reg_date,'YYYY-MM-DD hh24:mm:ss') as qna_answer_reg_date from qna left join qna_answer using(qna_no) 
 				where product_no=#{productNo} order by qna_no desc) q )
 		where rnum between #{start} and #{end}
 	</select>
 	<select id="selectQna" resultType="qna">
-		select qna_type,qna_title,qna_content,qna_public from qna where qna_no=#{qnaNo}
+		select qna_type,qna_title,qna_content,qna_public
+		,qna_answer_content,to_char(qna_answer_reg_date,'YYYY-MM-DD hh24:mm:ss') as qna_answer_reg_date from qna left join qna_answer using(qna_no)
+		where qna_no=#{qnaNo}
 	</select>
 	<update id="updateQna">
 		update qna set qna_type=#{qnaType},qna_title=#{qnaTitle},qna_content=#{qnaContent},qna_public=#{qnaPublic} where qna_no=#{qnaNo}
 	</update>
 	<delete id="deleteQna">
 		delete from qna where qna_no=#{qnaNo}
+	</delete>
+	<insert id="insertQnaAnswer">
+		insert into qna_answer values(qna_answer_seq.nextval, #{qnaNo}, #{qnaAnswerContent}, sysdate, #{qnaAnswerWriter})
+	</insert>
+	<update id="updateQnaAnswer">
+		update qna_answer set qna_answer_content=#{qnaAnswerContent} where qna_no=#{qnaNo}
+	</update>
+	<delete id="deleteQnaAnswer">
+		delete from qna_answer where qna_no=#{qnaNo}
 	</delete>
 </mapper>

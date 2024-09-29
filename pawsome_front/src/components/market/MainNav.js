@@ -4,6 +4,8 @@ import ProductDetail from "./ProductDetail";
 import { useState } from "react";
 import WriteQna from "./writeComponent/WriteQna";
 import UpdateQna from "./writeComponent/UpdateQna";
+import WriteQnaAnswer from "./writeComponent/WriteQnaAnswer";
+import UpdateQnaAnswer from "./writeComponent/UpdateQnaAnswer";
 
 const MainNav = () => {
   const [typeCategory, setTypeCategory] = useState(0);
@@ -102,6 +104,14 @@ const MainNav = () => {
         <Route
           path="productDetail/:productNo/qna/updateQna/:qnaNo"
           element={<UpdateQna />}
+        />
+        <Route
+          path="productDetail/:productNo/qna/writeQnaAnswer/:qnaNo"
+          element={<WriteQnaAnswer />}
+        />
+        <Route
+          path="productDetail/:productNo/qna/updateQnaAnswer/:qnaNo"
+          element={<UpdateQnaAnswer />}
         />
       </Routes>
     </section>

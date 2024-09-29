@@ -32,12 +32,12 @@
 .qna-wrap {
   width: 100%;
 }
-.qna-wrap .qna-wrtie-btn {
+.qna-wrap .main {
   float: right;
 }
 .qna-wrap .qna-wrtie-btn {
   border: 2px solid #ffa518;
-  width: 60px;
+  width: 80px;
   background-color: #fff;
   border-radius: 10px;
   line-height: 20px;
@@ -72,6 +72,12 @@ td {
 }
 .list-tbl td {
   text-align: center;
+}
+.list-tbl .content-box {
+  border: 1px solid #ffd697;
+}
+.list-tbl .content-answer-box {
+  background-color: var(--gray7);
 }
 
 /*guide*/
