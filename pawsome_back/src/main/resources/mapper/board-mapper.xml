@@ -74,4 +74,10 @@
 	<update id="updateBoardCount">
 		update board set read_count = read_count+1 where board_no = #{boardNo}
 	</update>
+	<select id="selectOneBoardFileList" resultType="boardFile">
+		select * from board_file where board_no=#{boardNo}
+	</select>
+	<delete id="deleteBoard">
+		delete from board where board_no=#{boardNo}
+	</delete>
 </mapper>

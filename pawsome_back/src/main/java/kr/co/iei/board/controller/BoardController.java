@@ -1,5 +1,6 @@
 package kr.co.iei.board.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -72,6 +74,21 @@ public class BoardController {
 	 public ResponseEntity<BoardDTO> selectOneBoard(@PathVariable int boardNo){
 		 BoardDTO board = boardService.selectOneBoard(boardNo);
 		 return ResponseEntity.ok(board);
+	 }
+	 
+	 @DeleteMapping(value="/{boardNo}")
+	 public ResponseEntity<Integer> deleteBoard(@PathVariable int boardNo){
+		 List<BoardFileDTO> delFileList = boardService.deleteBoard(boardNo);
+		 if(delFileList != null) {
+			 String savepath = root+"/board/";
+			 for(BoardFileDTO boardFile : delFileList) {
+				 File delFile = new File(savepath+boardFile.getFilepath());
+				 delFile.delete();
+			 }
+			 return ResponseEntity.ok(1);
+		 }else {
+			 return ResponseEntity.ok(0);
+		 }
 	 }
 	 
 }

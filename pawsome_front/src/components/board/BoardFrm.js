@@ -14,6 +14,13 @@ const BoardFrm = (props) => {
   const setBoardThumb = props.setBoardThumb;
   const boardFile = props.boardFile;
   const setBoardFile = props.setBoardFile;
+  //수정용
+  const thumbnail = props.thumbnail;
+  const setThumbnail = props.setThumbnail;
+  const fileList = props.fileList;
+  const setFileList = props.setFileList;
+  const delBoardFileNo = props.delBoardFileNo;
+  const setDelBoardFileNo = props.setDelBoardFileNo;
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
   const changeTag = (e) => {
@@ -23,7 +30,6 @@ const BoardFrm = (props) => {
   //첨부파일 화면에 띄울 state
   const [showBoardFile, setShowBoardFile] = useState([]);
   //첨부파일 추가시 동작할 함수
-  const [countImg, setCountImg] = useState(0);
   const addBoardFile = (e) => {
     const files = e.currentTarget.files; //배열처럼 보이지만 배열이 아니기 때문에 직접for문써서 넣어주기
     const fileArr = new Array(); //글작성 시 전송할 파일 배열
@@ -38,7 +44,6 @@ const BoardFrm = (props) => {
       };
     }
     setBoardFile([...boardFile, ...fileArr]);
-    setCountImg(showBoardFile.length);
   };
   console.log(showBoardFile);
   return (
@@ -159,6 +164,28 @@ const BoardFrm = (props) => {
               onChange={addBoardFile}
               multiple
             />
+            {fileList
+              ? fileList.map((boardFile, i) => {
+                  const deleteFile = () => {
+                    const newFileList = fileList.filter((item) => {
+                      return item !== boardFile;
+                    });
+                    setFileList(newFileList);
+                    setDelBoardFileNo([
+                      ...delBoardFileNo,
+                      boardFile.boardfileNo,
+                    ]);
+                  };
+                  return (
+                    <div className="preview-img" key={"oldFile-" + i}>
+                      <img className="fileimg" src={boardFile.fileimg} />
+                      <span className="del-file-icon" onClick={deleteFile}>
+                        <AiIcons.AiOutlineCloseCircle />
+                      </span>
+                    </div>
+                  );
+                })
+              : ""}
             {showBoardFile.map((fileimg, i) => {
               const deleteFile = () => {
                 boardFile.splice(i, 1);

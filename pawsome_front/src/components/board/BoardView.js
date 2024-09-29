@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import BoardNav from "./BoardNav";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { memberNicknameState } from "../utils/RecoilData";
 import axios from "axios";
@@ -16,15 +16,17 @@ import { IoIosSend } from "react-icons/io";
 import { config } from "../utils/Properties";
 import { useTranslation } from "react-i18next";
 import { RiWechatLine } from "react-icons/ri";
+import Swal from "sweetalert2";
 
 const BoardView = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const boardNo = params.boardNo;
   const [board, setBoard] = useState({});
+  const [replyList, setReplyList] = useState([]);
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
-
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get(`${backServer}/board/boardNo/${boardNo}`)
@@ -119,6 +121,25 @@ const BoardView = () => {
       document.body.removeChild(script);
     };
   }, []);
+
+  const deleteBoard = () => {
+    axios
+      .delete(`${backServer}/board/${board.boardNo}`)
+      .then((res) => {
+        console.log(res);
+        if (res.data === 1) {
+          Swal.fire({
+            title: "게시글이 삭제 되었습니다.",
+            icon: "success",
+          }).then((res) => {
+            navigate("/board/list");
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <section className="section board-view-wrap">
       <div className="board-view-content">
@@ -138,9 +159,11 @@ const BoardView = () => {
           </div>
           {memberNickname === board.memberNickname ? (
             <div className="view-btn-zone">
-              <Link to="#">수정</Link>
+              <Link to={`/board/update/${board.boardNo}`}>수정</Link>
               <div>
-                <button type="button">삭제</button>
+                <button type="button" onClick={deleteBoard}>
+                  삭제
+                </button>
               </div>
             </div>
           ) : (
@@ -290,13 +313,11 @@ const BoardView = () => {
         </div>
       </div>
       <div className="reply-list-wrap">
-        <div>글글글</div>
-        <div>글글글</div>
-        <div>글글글</div>
-        <div>글글글</div>
-        <div>글글글</div>
-        <div>글글글</div>
-        <div>글글글</div>
+        <ul className="posting-wrap">
+          {replyList.map((reply, i) => {
+            return <ReplyItem key={"reply-" + i} reply={reply} />;
+          })}
+        </ul>
       </div>
       <div className="reply-input-wrap">
         <form
@@ -351,4 +372,24 @@ const BoardView = () => {
   );
 };
 
+const ReplyItem = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const reply = props.reply;
+  return (
+    <li>
+      <div>
+        <img
+          src={
+            reply.replyImage
+              ? `${backServer}/board/${reply.replyImage}`
+              : "/image/paw.png"
+          }
+        />
+      </div>
+      <div>
+        <div>{reply.reply}</div>
+      </div>
+    </li>
+  );
+};
 export default BoardView;
