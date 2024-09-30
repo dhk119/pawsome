@@ -364,7 +364,7 @@ button {
   border-radius: 10px;
 }
 #inquiry-search {
-  width: 70%;
+  width: 60%;
   height: 40px;
   box-sizing: border-box;
   overflow: hidden;
@@ -377,7 +377,7 @@ button {
   width: 27.5px;
 }
 #type {
-  width: 100%;
+  width: 50%;
   height: 100%;
   background-color: var(--point1);
   border: 2px solid var(--point1);
@@ -385,5 +385,18 @@ button {
   border-radius: 15px;
 }
 .inquiry-keyword {
-  width: 30%;
+  width: 40%;
+}
+#option {
+  width: 50%;
+  height: 100%;
+  background-color: var(--point1);
+  border: 2px solid var(--point1);
+  color: #fff;
+  border-radius: 15px;
+}
+.admin-select-color {
+  width: 100%;
+  height: 80%;
+  border: 0;
 }

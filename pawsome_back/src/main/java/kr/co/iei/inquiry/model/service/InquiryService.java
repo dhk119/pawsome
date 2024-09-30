@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.iei.inquiry.model.dao.InquiryDao;
 import kr.co.iei.inquiry.model.dto.Inquiry;
 import kr.co.iei.inquiry.model.dto.InquiryComment;
+import kr.co.iei.inquiry.model.dto.SearchFrm;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.util.PageUtil;
 
@@ -70,12 +71,12 @@ public class InquiryService {
 		return result;
 	}
 
-	public Map searchInquiryList(int reqPage, String type, String keyword) {
+	public Map searchInquiryList(int reqPage,String keyword,String type,int option) {
 		int numPerPage=10;
 		int pageNaviSize=5;
-		int totalCount=inquiryDao.totalCountSearch(type,keyword);
+		int totalCount=inquiryDao.searchTotalCount(reqPage,keyword,type,option);
 		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-		List list=inquiryDao.searchInquiryList(pi,type,keyword);
+		List list=inquiryDao.searchInquiryList(pi.getStart(), pi.getEnd(),reqPage,keyword,type,option);
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("list",list);
 		map.put("pi",pi);

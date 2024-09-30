@@ -94,7 +94,7 @@ const ProductRegist = () => {
     }
   };
   return (
-    <>
+    <section>
       <div className="admin-title">제품 등록</div>
       <form
         className="product-regist-frm"
@@ -126,7 +126,7 @@ const ProductRegist = () => {
           </button>
         </div>
       </form>
-    </>
+    </section>
   );
 };
 export default ProductRegist;

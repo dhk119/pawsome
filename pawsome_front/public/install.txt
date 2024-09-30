@@ -60,3 +60,6 @@ npm install react@latest react-dom@latest --force
 문정원 2024-09-30 11:00 (캘린더)
 npm install react-calendar
 npm install moment
+
+이승환 2024-09-30 15:43
+npm install recharts--force 

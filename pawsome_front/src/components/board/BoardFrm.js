@@ -5,7 +5,6 @@ import Map from "../board/Map";
 import WalkMap from "./WalkMap";
 
 const BoardFrm = (props) => {
-  const backServer = process.env.REACT_APP_BACK_SERVER;
   const boardTag = props.boardTag;
   const setBoardTag = props.setBoardTag;
   const boardTitle = props.boardTitle;
@@ -15,8 +14,6 @@ const BoardFrm = (props) => {
   const boardFile = props.boardFile;
   const setBoardFile = props.setBoardFile;
   //수정용
-  const thumbnail = props.thumbnail;
-  const setThumbnail = props.setThumbnail;
   const fileList = props.fileList;
   const setFileList = props.setFileList;
   const delBoardFileNo = props.delBoardFileNo;
@@ -173,7 +170,7 @@ const BoardFrm = (props) => {
                     setFileList(newFileList);
                     setDelBoardFileNo([
                       ...delBoardFileNo,
-                      boardFile.boardfileNo,
+                      boardFile.boardFileNo,
                     ]);
                   };
                   return (

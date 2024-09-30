@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.board.model.dto.BoardDTO;
 import kr.co.iei.board.model.dto.BoardFileDTO;
+import kr.co.iei.board.model.dto.ReplyDTO;
 import kr.co.iei.board.model.service.BoardService;
 import kr.co.iei.util.FileUtils;
 
@@ -72,6 +73,7 @@ public class BoardController {
 	 
 	 @GetMapping(value="/boardNo/{boardNo}")
 	 public ResponseEntity<BoardDTO> selectOneBoard(@PathVariable int boardNo){
+		 List<ReplyDTO> replyList = new ArrayList<ReplyDTO>();
 		 BoardDTO board = boardService.selectOneBoard(boardNo);
 		 return ResponseEntity.ok(board);
 	 }
@@ -90,5 +92,32 @@ public class BoardController {
 			 return ResponseEntity.ok(0);
 		 }
 	 }
+	 @PatchMapping
+	 public ResponseEntity<Boolean> updateBoard(@ModelAttribute BoardDTO board, @ModelAttribute MultipartFile[] boardFile){
+		 List<BoardFileDTO> boardFileList = new ArrayList<BoardFileDTO>();
+		 if(boardFile != null) { 
+			 String savepath = root + "/board/";
+			 for(MultipartFile file : boardFile) {
+				 BoardFileDTO fileDTO = new BoardFileDTO();
+				 String filename = file.getOriginalFilename();
+				 String filepath = fileUtil.upload(savepath, file);
+				 fileDTO.setFilename(filename);
+				 fileDTO.setFilepath(filepath);
+				 fileDTO.setBoardNo(board.getBoardNo());
+				 boardFileList.add(fileDTO); 
+			}
+		 }
+		 List<BoardFileDTO> delFileList = boardService.updateBoard(board,boardFileList);
+			if(delFileList != null) {
+				String savepath = root+"/board/";
+				for(BoardFileDTO deleteFile : delFileList) {
+					File delFile = new File(savepath+deleteFile.getFilepath());
+				}
+				return ResponseEntity.ok(true);
+			}else {
+				return ResponseEntity.ok(false);
+			}
+	 }
+	 
 	 
 }

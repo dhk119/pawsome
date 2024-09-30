@@ -25,7 +25,6 @@ const BoardWrite = () => {
   };
 
   const writeBoard = () => {
-    console.log(memberNickname);
     if (boardTitle !== "" && boardContent !== "") {
       const form = new FormData();
       form.append("boardTitle", boardTitle);
