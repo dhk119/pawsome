@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Alias("searchFrm")
 public class SearchFrm {
 	private int reqPage;
-	private String type;
 	private String keyword;
+	private String type;
 	private int option;
 }
