@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.inquiry.model.dto.Inquiry;
 import kr.co.iei.inquiry.model.dto.InquiryComment;
+import kr.co.iei.inquiry.model.dto.SearchFrm;
 import kr.co.iei.util.PageInfo;
 
 @Mapper
@@ -29,8 +30,8 @@ public interface InquiryDao {
 
 	int deleteInquiryComment(int inquiryCommentNo);
 
-	int totalCountSearch(String type, String keyword);
+	int searchTotalCount(int reqPage, String keyword, String type, int option);
 
-	List searchInquiryList(PageInfo pi, String type, String keyword);
+	List searchInquiryList(int start, int end, int reqPage, String keyword, String type, int option);
 	
 }

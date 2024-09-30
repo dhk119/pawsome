@@ -15,11 +15,19 @@ const InquiryList = () => {
   const [type, setType] = useState("all");
   const [keyword, setKeyword] = useState("");
   const [search, setSearch] = useState(false);
+  const [option, setOption] = useState(0);
+  const [searchFrm, setSerachFrm] = useState({
+    reqPage: 1,
+    type: "all",
+    keyword: "",
+    option: 0,
+  });
   useEffect(() => {
     const form = new FormData();
-    form.append("reqPage", reqPage);
+    form.append("reqPage", searchFrm.reqPage);
     form.append("type", type);
     form.append("keyword", keyword);
+    form.append("option", option);
     {
       !search
         ? axios
@@ -40,12 +48,23 @@ const InquiryList = () => {
   }, [reqPage, search]);
   const changeKeyword = (e) => {
     setKeyword(e.target.value);
+    setSerachFrm({ ...searchFrm, keyword: e.target.value });
   };
   const changeType = (e) => {
     setType(e.target.value);
+    setSerachFrm({ ...searchFrm, type: e.target.value });
   };
   const searchInquiry = () => {
-    setSearch(true);
+    setSerachFrm({ ...searchFrm, reqPage: 1 });
+    setSearch(false);
+    if (keyword === "" && type === "all" && option === 0) {
+    } else {
+      setSearch(true);
+    }
+  };
+  const changeOption = (e) => {
+    setOption(Number(e.target.value));
+    setSerachFrm({ ...searchFrm, option: Number(e.target.value) });
   };
   return (
     <section className="section inquiry-list">
@@ -63,6 +82,13 @@ const InquiryList = () => {
         <div className="admin-top-mid"></div>
         <div className="admin-search-wrap">
           <div className="inquiry-keyword">
+            <label htmlFor="option"></label>
+            <select id="option" value={option} onChange={changeOption}>
+              <option value={0}>전체</option>
+              <option value={1}>계정관련</option>
+              <option value={2}>게시판관련</option>
+              <option value={3}>기타</option>
+            </select>
             <label htmlFor="type"></label>
             <select id="type" value={type} onChange={changeType}>
               <option value={"all"}>전체</option>
