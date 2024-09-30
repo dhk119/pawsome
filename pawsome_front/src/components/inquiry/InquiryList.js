@@ -24,7 +24,10 @@ const InquiryList = () => {
   });
   useEffect(() => {
     const form = new FormData();
-    form.append("searchFrm", searchFrm);
+    form.append("reqPage", reqPage);
+    form.append("type", type);
+    form.append("keyword", keyword);
+    form.append("option", option);
     {
       !search
         ? axios

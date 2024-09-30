@@ -143,6 +143,7 @@ const ProductList = () => {
                       onChange={handleChange}
                       defaultChecked
                       color="primary"
+                      id="admin-product-list-switch"
                     />
                   </ThemeProvider>
                 </td>
