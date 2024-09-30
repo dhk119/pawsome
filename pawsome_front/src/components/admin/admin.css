@@ -169,7 +169,7 @@ tbody > tr:last-child td:last-child {
   margin-bottom: 20px;
   background-color: var(--point1);
   text-align: center;
-  border-radius: 10px;
+  border-radius: 20px;
   box-sizing: border-box;
   border: none;
   color: #fff;
