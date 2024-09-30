@@ -106,6 +106,7 @@ tbody > tr:last-child td:last-child {
   margin-bottom: 0;
   display: flex;
   gap: 10px;
+  overflow: hidden;
 }
 .admin-input-item > input {
   flex: 1;
@@ -422,6 +423,13 @@ button {
   font-family: ns-r;
   font-weight: bold;
 }
+#admin-product-quill > div {
+  width: 100%;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+#admin-product-quill {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
 #admin-product-list-switch {
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
 }
@@ -430,4 +438,10 @@ button {
 }
 .admin-link-gap {
   margin-top: 20px;
+}
+.admin-product-quill-editor {
+  width: 100%;
+  margin-bottom: 40px;
+  margin-top: 0;
+  box-sizing: border-box;
 }

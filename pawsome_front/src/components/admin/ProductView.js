@@ -149,7 +149,7 @@ const ProductView = () => {
           productThumb={productThumb}
           setProductThumb={setProductThumb}
           productDetail={productDetail}
-          setProductDetail={inputDetail}
+          setProductDetail={setProductDetail}
           productShow={productShow}
           setProductShow={inputShow}
           memberEmail={memberEmail}
