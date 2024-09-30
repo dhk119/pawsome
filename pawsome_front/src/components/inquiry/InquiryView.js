@@ -10,7 +10,7 @@ const InquiryView = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const inquiryNo = params.inquiryNo;
-  const [inquiry, setInquiry] = useState({});
+  const [inquiry, setInquiry] = useState({ inquiryCommentList: [] });
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const isLogin = useRecoilValue(isLoginState);
   const [inquiryComment, setInquiryComment] = useState({
@@ -171,7 +171,7 @@ const InquiryView = () => {
           ) : (
             ""
           )}
-          {inquiry.inquiryCommentList ? (
+          {inquiry.inquiryCommentList.length !== 0 ? (
             <ul>
               {inquiry.inquiryCommentList.map((comment, i) => {
                 commentContentList.push(comment.inquiryCommentContent);

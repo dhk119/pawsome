@@ -65,8 +65,6 @@ public class InquiryController {
 	}
 	@PostMapping(value = "/insertComment")
 	public ResponseEntity<Integer> insertInquiryComment(@RequestBody InquiryComment inquiryComment){
-		System.out.println(inquiryComment.getInquiryNo());
-		System.out.println(inquiryComment.getMemberEmail());
 		int result=inquiryService.insertInquiryComment(inquiryComment);
 		return ResponseEntity.ok(result);
 	}
@@ -79,5 +77,10 @@ public class InquiryController {
 	public ResponseEntity<Integer> deleteInquiryComment(@PathVariable int inquiryCommentNo){
 		int result=inquiryService.deleteInquiryComment(inquiryCommentNo);
 		return ResponseEntity.ok(result); 
+	}
+	@GetMapping(value = "/search")
+	public ResponseEntity<Map> searchInquiry(@ModelAttribute int reqPage,@ModelAttribute String type ,@ModelAttribute String keyword){
+		Map map=inquiryService.searchInquiryList(reqPage, type, keyword);
+		return ResponseEntity.ok(map);
 	}
 }

@@ -69,4 +69,16 @@ public class InquiryService {
 		int result=inquiryDao.deleteInquiryComment(inquiryCommentNo);
 		return result;
 	}
+
+	public Map searchInquiryList(int reqPage, String type, String keyword) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=inquiryDao.totalCountSearch(type,keyword);
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=inquiryDao.searchInquiryList(pi,type,keyword);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
 }
