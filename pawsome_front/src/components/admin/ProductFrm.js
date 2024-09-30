@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import QuillEditor from "../utils/QuillEditor";
 
 const ProductFrm = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -190,19 +191,15 @@ const ProductFrm = (props) => {
         </div>
         <div className="admin-product-wrap">
           <div>
-            <label htmlFor="productDetail" className="admin-product-label">
-              제품 상세정보
-            </label>
+            <div className="admin-product-label">제품 상세정보</div>
           </div>
           <div>
-            <div className="admin-input-item">
-              <input
-                type="text"
-                id="productDetail"
-                name="productDetail"
-                value={productDetail}
-                onChange={setProductDetail}
-              ></input>
+            <div className="admin-product-quill-editor">
+              <QuillEditor
+                content={productDetail}
+                setContent={setProductDetail}
+                id="admin-product-quill"
+              ></QuillEditor>
             </div>
           </div>
         </div>
