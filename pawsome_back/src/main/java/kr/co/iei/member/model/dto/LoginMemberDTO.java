@@ -13,4 +13,5 @@ public class LoginMemberDTO {
 	private String memberEmail;
 	private int memberLevel;
 	private String memberNickname;
+	private String loginType;
 }

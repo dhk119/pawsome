@@ -18,7 +18,7 @@ const PetInsert = () => {
     petBreed: "",
     petGender: "0",
     neutering: "0",
-    petWeight: "",
+    petWeight: "0",
     petProfile: null,
   });
 
@@ -33,7 +33,7 @@ const PetInsert = () => {
     form.append("neutering", pet.neutering);
     form.append("petWeight", pet.petWeight);
     if (pet.petProfile !== null) {
-      form.append("petProfile", pet.petProfile);
+      form.append("petProfile1", pet.petProfile);
     }
 
     // FormData 디버깅 출력
