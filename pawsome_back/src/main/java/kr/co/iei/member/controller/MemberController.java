@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -249,6 +250,19 @@ public class MemberController {
 				"</div>";
 		
 		emailSender.sendMail(emailTitle, memberEmail, emailContent);	
+		return ResponseEntity.ok(result);
+	}
+	
+	@PatchMapping
+	public ResponseEntity<Integer> updateMember(@RequestBody MemberDTO member, @ModelAttribute MultipartFile memberProfile1) {
+		System.out.println(member);
+		System.out.println(memberProfile1);
+		if(memberProfile1 != null) {
+			String savepath = root + "/member/profile/";
+			String filepath = fileUtil.upload(savepath, memberProfile1);
+			member.setMemberProfile(filepath);
+		}
+		int result = memberService.updateMember(member);
 		return ResponseEntity.ok(result);
 	}
 	

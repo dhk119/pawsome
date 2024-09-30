@@ -106,4 +106,9 @@ public class MemberService {
 		return result;
 	}
 
+	public int updateMember(MemberDTO member) {
+		int result = memberDao.updateMember(member);
+		return result;
+	}
+
 }

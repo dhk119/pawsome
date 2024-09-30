@@ -25,4 +25,5 @@ public class MemberDTO {
 	private String enrollDate;
 	private String loginType;
 	private List<PetDTO> petList;
+	private String memberPhone;
 }
