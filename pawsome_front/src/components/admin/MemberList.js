@@ -37,7 +37,7 @@ const MemberList = () => {
             <th>전화번호</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="admin-member-list-body">
           {memberList.map((member, i) => {
             const handleChange = (e) => {
               const memberLevel = e.target.value;
@@ -61,9 +61,18 @@ const MemberList = () => {
                 <td>{member.memberAddr2}</td>
                 <td>{member.memberAddr3}</td>
                 <td>
-                  <Select value={member.memberLevel} onChange={handleChange}>
-                    <MenuItem value={1}>관리자</MenuItem>
-                    <MenuItem value={2}>일반회원</MenuItem>
+                  <Select
+                    value={member.memberLevel}
+                    onChange={handleChange}
+                    className="admin-select-color"
+                    id="admin-member-select"
+                  >
+                    <MenuItem value={1} id="admin-member-menu1">
+                      관리자
+                    </MenuItem>
+                    <MenuItem value={2} id="admin-member-menu2">
+                      일반회원
+                    </MenuItem>
                   </Select>
                 </td>
                 <td>

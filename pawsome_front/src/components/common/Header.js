@@ -102,7 +102,7 @@ const HeaderLink = () => {
               <li>
                 {isLogin ? (
                   <>
-                    <Link to="/mypage">
+                    <Link to="/mypage/profile">
                       <IoPersonCircleOutline />
                       {memberNickname}
                     </Link>

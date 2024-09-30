@@ -16,6 +16,7 @@ const BoardList = () => {
   const [reqPage, setReqPage] = useState(1);
   const [boardTag, setBoardTag] = useState(0);
   const [pi, setPi] = useState({});
+  const [reply, setReply] = useState(0);
   useEffect(() => {
     axios
       .get(`${backServer}/board/list/${boardTag}/${reqPage}`)
@@ -82,7 +83,7 @@ const BoardList = () => {
             <ul className="posting-wrap">
               {boardList
                 ? boardList.map((board, i) => {
-                    return <BoardItem board={board} />;
+                    return <BoardItem board={board} reply={reply} />;
                   })
                 : ""}
             </ul>
@@ -110,6 +111,7 @@ const BoardList = () => {
 const BoardItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const board = props.board;
+  const reply = props.reply;
   const navigate = useNavigate();
   return (
     <li
@@ -155,13 +157,13 @@ const BoardItem = (props) => {
         <div className="end">
           <div className="posting-img">
             {board.boardThumb ? (
-              <img src={`${backServer}/board/${board.boardThumb}`}></img>
+              <img src={`${backServer}/board/thumb/${board.boardThumb}`}></img>
             ) : (
               ""
             )}
           </div>
           <div className="reply-count">
-            <div>{board.boardNo}</div>
+            <div>{reply}</div>
             <div>댓글</div>
           </div>
         </div>

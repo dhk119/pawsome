@@ -53,4 +53,15 @@
 	<select id="selectOneEmail" resultType="String">
 		select login_type from member where member_email=#{memberEmail} and member_name=#{memberName}
 	</select>
+	<update id="changePassword">
+		update member set member_pw = #{memberPw} where member_email = #{memberEmail}
+	</update>
+	<update id="updateMember">
+  		update 
+  			member 
+  		set 
+  			member_nickname=#{memberNickname}, member_name=#{memberName}, member_addr1=#{memberAddr1}, member_addr2=#{memberAddr2}, member_addr3=#{memberAddr3}, member_profile=#{memberProfile}
+  		where
+  			member_email=#{memberEmail}
+  	</update>
 </mapper>

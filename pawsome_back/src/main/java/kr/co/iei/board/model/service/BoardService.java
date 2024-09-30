@@ -1,5 +1,6 @@
 package kr.co.iei.board.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class BoardService {
 	private PageUtil pageUtil;
 
 	public Map selectBoardList(int reqPage, int tag) {
-		int numPerPage = 10;
+		int numPerPage = 5;
 		int pageNaviSize = 5;
 		int totalCount = boardDao.totalCount(tag);
 		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
@@ -40,14 +41,22 @@ public class BoardService {
 	
 	  @Transactional
 	  public int insertBoard(BoardDTO board, List<BoardFileDTO> boardFileList) { 
-		  board.setBoardThumb(boardFileList.get(0).getFilepath());
+		  if(!boardFileList.isEmpty()) {
+			  board.setBoardThumb(boardFileList.get(0).getFilepath());
+		  }
 		 int result = boardDao.insertBoard(board);
 		 int boardNo = boardDao.selectBoardNo();
 		 
 		 for(BoardFileDTO boardFile : boardFileList) {
 		 boardFile.setBoardNo(boardNo);
 		 result += boardDao.insertBoardFile(boardFile); } 
-		 return result; 
+		 System.out.println(result);
+		 if(result == 0) {
+			 return 0;
+		 }else {
+			 
+			 return result; 
+		 }
 		 }
 
 
@@ -68,6 +77,29 @@ public class BoardService {
 		}else {
 			return null;			
 		}
+	}
+
+	@Transactional
+	public List<BoardFileDTO> updateBoard(BoardDTO board, List<BoardFileDTO> boardFileList) {
+		int result = boardDao.updateBoard(board);
+		if(result>0) {
+			List<BoardFileDTO> delFileList = new ArrayList<BoardFileDTO>();
+			if(board.getDelBoardFileNo() != null) {
+				delFileList = boardDao.selectBoardFile(board.getDelBoardFileNo());
+				result += boardDao.deleteBoardFile(board.getDelBoardFileNo());
+			}
+			for(BoardFileDTO boardFile : boardFileList) {
+				result += boardDao.insertBoardFile(boardFile);
+			}
+		
+			int updateTotal = board.getDelBoardFileNo() == null
+								? 1 + boardFileList.size()
+								: 1 + boardFileList.size() + board.getDelBoardFileNo().length;
+			if(result == updateTotal) {
+				return delFileList;
+			}
+		}
+		return null;
 	}
 
 
