@@ -39,5 +39,9 @@ public interface BoardDao {
 
 	int deleteBoardFile(int[] delBoardFileNo);
 
+	int updateBoardLike(BoardDTO board);
+
+
+
 
 }

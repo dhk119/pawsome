@@ -118,6 +118,10 @@ public class BoardController {
 				return ResponseEntity.ok(false);
 			}
 	 }
-	 
+	 @PatchMapping(value="{boardNo}")
+	 public ResponseEntity<Boolean> isLike(@ModelAttribute BoardDTO board){
+		 int result = boardService.isLike(board);
+		 return ResponseEntity.ok(true);
+	 }
 	 
 }

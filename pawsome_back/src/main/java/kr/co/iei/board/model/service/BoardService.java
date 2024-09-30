@@ -102,6 +102,22 @@ public class BoardService {
 		return null;
 	}
 
+	@Transactional
+	public int isLike(BoardDTO board) {
+		int result = 0;
+		if(board.getBoardLike() == 0) {
+			result = boardDao.updateBoardLike(board);
+		}/*else if(board.getBoardLike() ==1) {
+			result = boardDao.deleteBoardLike(board);
+		}
+		if(result > 0) {
+			int likeCount = boardDao.selectBoardLike(board);
+			return likeCount;
+		}else {*/
+			return -1;			
+		
+	}
+
 
 	
 

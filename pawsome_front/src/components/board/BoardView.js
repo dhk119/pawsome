@@ -29,6 +29,7 @@ const BoardView = () => {
   const [reqPage, setReqPage] = useState(1);
   const [boardTag, setBoardTag] = useState(0);
   const [pi, setPi] = useState({});
+  const [boardLike, setBoardLike] = useState(0);
 
   useEffect(() => {
     axios
@@ -54,6 +55,7 @@ const BoardView = () => {
       .then((res) => {
         console.log(res);
         setBoard(res.data);
+        setBoardLike(res.data.boardLike);
       })
       .catch((err) => {
         console.log(err);
@@ -81,6 +83,18 @@ const BoardView = () => {
             navigate("/board/list");
           });
         }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const isLike = () => {
+    setBoardLike(boardLike + 1);
+    axios
+      .patch(`${backServer}/board/${board.boardNo}`)
+      .then((res) => {
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -147,7 +161,7 @@ const BoardView = () => {
             </div>
             <div className="board-view-data">
               <AiIcons.AiOutlineHeart />
-              {board.boardLike}
+              {boardLike}
             </div>
           </div>
         </div>
@@ -195,7 +209,7 @@ const BoardView = () => {
               )}
             </div>
             <div className="boardView-btn">
-              <button>
+              <button onClick={isLike}>
                 <AiIcons.AiFillHeart />
                 좋아요
               </button>
