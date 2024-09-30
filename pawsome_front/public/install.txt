@@ -45,9 +45,6 @@ npm install @mui/material @emotion/react @emotion/styled --force
 김대헌 2024-09-25 12:00
 npm i swiper --force
 
-이재호 2024-09-26 16:58
-npm install react-kakao-maps-sdk --force
-
 김대헌 2024-09-26 10:47 (공유하기 용)
 npm install react-i18next --force 
 
@@ -63,3 +60,7 @@ npm install moment
 
 이승환 2024-09-30 15:43
 npm install recharts--force 
+
+이재호 2024-09-26 16:58
+npm install react-kakao-maps-sdk --force
+
