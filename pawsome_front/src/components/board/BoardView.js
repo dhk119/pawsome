@@ -21,12 +21,35 @@ import Swal from "sweetalert2";
 const BoardView = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
-  const boardNo = params.boardNo;
+  const [boardNo, setBoardNo] = useState(params.boardNo);
   const [board, setBoard] = useState({});
+  const [boardList, setBoardList] = useState([]);
   const [replyList, setReplyList] = useState([]);
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
   const navigate = useNavigate();
+  const [reqPage, setReqPage] = useState(1);
+  const [boardTag, setBoardTag] = useState(0);
+  const [pi, setPi] = useState({});
+
+  useEffect(() => {
+    axios
+      .get(`${backServer}/board/list/${boardTag}/${reqPage}`)
+      .then((res) => {
+        console.log(res);
+        if (reqPage != 1) {
+          const array = boardList.concat(res.data.list);
+          setBoardList(array);
+        } else {
+          setBoardList(res.data.list);
+        }
+        setPi(res.data.pi);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [reqPage, boardTag]);
+
   useEffect(() => {
     axios
       .get(`${backServer}/board/boardNo/${boardNo}`)
@@ -37,7 +60,7 @@ const BoardView = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [boardNo]);
 
   //공유하기
   const { t } = useTranslation();
@@ -183,7 +206,7 @@ const BoardView = () => {
                   border: "1px solid #ffa518",
                   padding: "5px 5px",
                 }}
-                src={`${backServer}/board/${board.memberProfile}`}
+                src={`${backServer}/board/thumb/${board.memberProfile}`}
               />
             </div>
             <div className="b-v-m">
@@ -223,7 +246,7 @@ const BoardView = () => {
                           <SwiperSlide>
                             <img
                               key={("img-", i)}
-                              src={`${backServer}/board/${image.filepath}`}
+                              src={`${backServer}/board/thumb/${image.filepath}`}
                             />
                           </SwiperSlide>
                         );
@@ -267,39 +290,59 @@ const BoardView = () => {
             <Link to="/board/list">다른 게시글</Link>도 이어보세요
           </span>
         </div>
-        <div className="other-contents">
-          <div style={{ display: "flex", alignSelf: "center" }}>
-            <img
-              style={{ width: "200px", height: "200px" }}
-              src={`${backServer}/board/${board.boardThumb}`}
-            />
-          </div>
-          <div className="other-content-view">
-            <div
-              style={{
-                backgroundColor: "#ffd697",
-                borderRadius: "5px",
-                padding: "3px 3px",
-                width: "90px",
-                textAlign: "center",
-              }}
-            >
-              {board.boardTag === 1
-                ? "#댕댕이"
-                : board.boardTag === 2
-                ? "#냥냥이"
-                : board.boardTag === 3
-                ? "#일상"
-                : board.boardTag === 4
-                ? "#정보공유"
-                : board.boardTag === 5
-                ? "오산완"
-                : "#전체"}
-            </div>
-            <div>{board.boardTitle}</div>
-            <div>{board.regDate}</div>
-          </div>
-        </div>
+        <ul className="other-contents">
+          {boardList
+            ? boardList.map((board, i) => {
+                return (
+                  <li
+                    onClick={() => {
+                      setBoardNo(board.boardNo);
+                      navigate(`/board/view/${board.boardNo}`);
+                    }}
+                  >
+                    <div style={{ display: "flex", alignSelf: "center" }}>
+                      {board.boardThumb ? (
+                        <img
+                          style={{ width: "200px", height: "200px" }}
+                          src={`${backServer}/board/thumb/${board.boardThumb}`}
+                        />
+                      ) : (
+                        <img
+                          style={{ width: "200px", height: "200px" }}
+                          src="/image/noimage.png"
+                        />
+                      )}
+                    </div>
+                    <div className="other-content-view">
+                      <div
+                        style={{
+                          backgroundColor: "#ffd697",
+                          borderRadius: "5px",
+                          padding: "3px 3px",
+                          width: "90px",
+                          textAlign: "center",
+                        }}
+                      >
+                        {board.boardTag === 1
+                          ? "#댕댕이"
+                          : board.boardTag === 2
+                          ? "#냥냥이"
+                          : board.boardTag === 3
+                          ? "#일상"
+                          : board.boardTag === 4
+                          ? "#정보공유"
+                          : board.boardTag === 5
+                          ? "오산완"
+                          : "#전체"}
+                      </div>
+                      <div>{board.boardTitle}</div>
+                      <div>{board.regDate}</div>
+                    </div>
+                  </li>
+                );
+              })
+            : ""}
+        </ul>
       </div>
       <div className="reply-wrap">
         <div className="reply-top-wrap">
@@ -329,7 +372,7 @@ const BoardView = () => {
           <div>
             <input
               style={{
-                width: "1000px",
+                width: "1050px",
                 border: "none",
                 borderBottom: "1px solid #d6d6d6",
                 paddingBottom: "3px",
