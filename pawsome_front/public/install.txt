@@ -54,10 +54,13 @@ npm install --save-dev @babel/plugin-proposal-private-property-in-object --force
 김대헌 2024-09-26 11:00 (모든게 같은 버전인지 체크위해)
 npm install react@latest react-dom@latest --force
 
-
-이재호 2024-09-26 16:58
-npm install react-kakao-maps-sdk --force
+문정원 2024-09-30 11:00 (캘린더)
+npm install react-calendar
+npm install moment
 
 이승환 2024-09-30 15:43
 npm install recharts--force 
+
+이재호 2024-09-26 16:58
+npm install react-kakao-maps-sdk --force
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 import "./member.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const ForgotPw = () => {
@@ -13,6 +13,30 @@ const ForgotPw = () => {
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [authCode, setAuthCode] = useState(""); //인증코드 저장
   const [insertCode, setInsertCode] = useState("");
+  const [timer, setTimer] = useState(180); // 3분 타이머
+
+  useEffect(() => {
+    let countdown;
+    if (showCodeInput && timer > 0) {
+      countdown = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(countdown);
+  }, [showCodeInput, timer]);
+
+  useEffect(() => {
+    if (timer === 0) {
+      Swal.fire({
+        text: "인증 시간이 초과되었습니다.",
+        icon: "error",
+      });
+      setShowCodeInput(false);
+      setAuthCode(""); // 인증코드 초기화
+      setInsertCode(""); // 인증코드 입력란 초기화
+      setTimer(180); // 타이머 초기화
+    }
+  }, [timer]);
 
   const sendMailCode = () => {
     console.log(member);
@@ -42,6 +66,36 @@ const ForgotPw = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const rePassword = () => {
+    if (authCode === insertCode) {
+      // 인증번호가 일치하는 경우
+      axios
+        .post(`${backServer}/member/changePassword`, member)
+        .then((res) => {
+          Swal.fire({
+            text: "새 비밀번호가 이메일로 전송되었습니다.",
+            icon: "success",
+          });
+          setTimeout(() => {
+            window.location.href = "/login"; // 로그인 페이지로 이동
+          }, 2000);
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire({
+            text: "비밀번호 변경에 실패했습니다.",
+            icon: "error",
+          });
+        });
+    } else {
+      // 인증번호가 일치하지 않는 경우
+      Swal.fire({
+        text: "인증번호가 일치하지 않습니다.",
+        icon: "error",
+      });
+    }
   };
 
   const ForgotInputChange = (e) => {
@@ -90,7 +144,13 @@ const ForgotPw = () => {
                   value={insertCode}
                   onChange={(e) => setInsertCode(e.target.value)}
                 />
-                <button type="button">인증하기</button>
+                <div>
+                  남은 시간: {Math.floor(timer / 60)}:
+                  {(timer % 60).toString().padStart(2, "0")}
+                </div>
+                <button type="button" onClick={rePassword}>
+                  인증하기
+                </button>
               </>
             )}
           </form>

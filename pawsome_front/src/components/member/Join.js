@@ -846,6 +846,9 @@ const Join = () => {
 
           <p>2024년 9월 20일 개인정보처리방침</p>
         </div>
+        <div className="modal-btn">
+          <button onClick={closeModal2}>닫기</button>
+        </div>
       </ReactModal>
       <ReactModal
         isOpen={isModalOpen}

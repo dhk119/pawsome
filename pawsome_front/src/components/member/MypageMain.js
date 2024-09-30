@@ -8,6 +8,8 @@ import {
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link, Route, Routes } from "react-router-dom";
 import MypageProfile from "./MypageProfile";
+import MypageCalendar from "./MypageCalendar";
+import UpdateMember from "./UpdateMember";
 
 const MypageMain = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
@@ -31,7 +33,7 @@ const MypageMain = () => {
               <Link to="/mypage/profile">프로필</Link>
             </li>
             <li>
-              <Link to="#">일정</Link>
+              <Link to="/mypage/calendar">일정</Link>
             </li>
             <li>
               <Link to="#">주문조회</Link>
@@ -42,6 +44,8 @@ const MypageMain = () => {
       <div className="mypage-wrap">
         <Routes>
           <Route path="/profile" element={<MypageProfile />} />
+          <Route path="/calendar" element={<MypageCalendar />} />
+          <Route path="/updateMember" element={<UpdateMember />} />
         </Routes>
       </div>
     </div>

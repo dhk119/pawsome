@@ -99,4 +99,16 @@ public class MemberService {
 		return loginType;
 	}
 
+	@Transactional
+	public int changePassword(String memberEmail, String memberPw) {
+		String encPw = encoder.encode(memberPw);
+		int result = memberDao.changePassword(memberEmail, encPw);
+		return result;
+	}
+
+	public int updateMember(MemberDTO member) {
+		int result = memberDao.updateMember(member);
+		return result;
+	}
+
 }

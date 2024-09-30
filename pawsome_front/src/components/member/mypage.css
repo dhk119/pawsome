@@ -302,3 +302,27 @@
   margin: 0 auto;
   text-align: center;
 }
+
+/* 회원 수정 페이지 */
+.member-image {
+  width: 150px;
+  height: 150px;
+  border: 1px solid var(--gray1);
+  border-radius: 50%;
+}
+.member-page {
+  width: 800px;
+  margin: 0 auto;
+}
+.member-page h2 {
+  margin-bottom: 20px;
+}
+
+/* 캘린더 디자인 */
+.calendar-wrap > * {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  font-family: ns-r;
+  list-style-type: none;
+}
