@@ -302,3 +302,12 @@
   margin: 0 auto;
   text-align: center;
 }
+
+/* 캘린더 디자인 */
+.calendar-wrap > * {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  font-family: ns-r;
+  list-style-type: none;
+}

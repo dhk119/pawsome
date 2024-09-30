@@ -7,6 +7,7 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { SlArrowRight } from "react-icons/sl";
+import { Link } from "react-router-dom";
 
 const MypageProfile = () => {
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
@@ -49,6 +50,7 @@ const MypageProfile = () => {
         </div>
         <div className="profile-btn-wrap">
           <button>회원정보 수정</button>
+          <Link to="/mypage/updateMember">회원정보 수정</Link>
         </div>
       </div>
       <div className="pet-wrap">

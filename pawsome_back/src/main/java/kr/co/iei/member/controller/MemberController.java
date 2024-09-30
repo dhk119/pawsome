@@ -155,9 +155,7 @@ public class MemberController {
 	
 	@PostMapping(value = "/sendMailCode")
 	public ResponseEntity<String> sendMailCode(@RequestBody MemberDTO member) {
-		System.out.println(member);
 		String emailTitle = "pawsome 인증메일 입니다.";
-		
 		String loginType = memberService.selectOneEmail(member);
 		
 		if(loginType == null) {
@@ -206,6 +204,52 @@ public class MemberController {
 			return ResponseEntity.ok(ranCode);
 		} 
 		return ResponseEntity.ok(null);
+	}
+	
+	@PostMapping(value = "/changePassword")
+	public ResponseEntity<Integer> changePassword(@RequestBody MemberDTO member) {
+		
+		Random r = new Random();
+		String ranCode = "";
+		for(int i=0; i<12; i++) {
+			int ranNum = r.nextInt(3); //0:숫자,1:대문자,2:소문자
+			if(ranNum == 0) {
+				int randomCode = r.nextInt(10);
+				ranCode += randomCode;
+			} else if(ranNum == 1) {
+				char randomCode = (char)(r.nextInt(26)+65);
+				ranCode += randomCode;
+			} else {
+				char randomCode = (char)(r.nextInt(26)+97);
+				ranCode += randomCode;
+			}
+		}
+		System.out.println("생성된 랜덤 코드: "+ranCode);
+		
+		String memberEmail = member.getMemberEmail();
+		
+		int result = memberService.changePassword(memberEmail, ranCode);
+		String emailTitle = "pawsome 임시 비밀번호 입니다.";
+		String emailContent = "<div !important; width: 540px; height: 600px; border-top: 4px solid #ffa518; margin: 100px auto; padding: 30px 0; box-sizing: border-box;\">\r\n" + 
+				"	<h1 style=\"margin: 0; padding: 0 5px; font-size: 28px; font-weight: 400;\">\r\n" + 
+				"		<span style=\"font-size: 15px; margin: 0 0 10px 3px;\">PAWSOME</span><br />\r\n" + 
+				"		<span style=\"color: #ffa518;\">인증 코드</span> 안내입니다.\r\n" + 
+				"	</h1>\r\n" + 
+				"	<p style=\"font-size: 16px; line-height: 26px; margin-top: 50px; padding: 0 5px;\">\r\n" + 
+				"		안녕하세요.<br />\r\n" + 
+				"		임시 비밀번호가 생성되었습니다.<br />\r\n" + 
+				"		임시 비밀번호로 <b style=\"color: #ffa518;\">'로그인'</b>해주시고, 비밀번호를 즉각 변경해주세요.<br />\r\n" + 
+				"		감사합니다.\r\n" + 
+				"	</p>\r\n" + 
+				"\r\n" + 
+				"	<p style=\"font-size: 16px; margin: 40px 5px 20px; line-height: 28px;\">\r\n" + 
+				"		임시 비밀번호: <br />\r\n" + 
+				"		<span style=\"font-size: 24px;\">"+ranCode+"</span>\r\n" + 
+				"	</p>\r\n" +  
+				"</div>";
+		
+		emailSender.sendMail(emailTitle, memberEmail, emailContent);	
+		return ResponseEntity.ok(result);
 	}
 	
 }

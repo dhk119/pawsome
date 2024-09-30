@@ -34,5 +34,7 @@ public interface MemberDao {
 
 	String selectOneEmail(MemberDTO member);
 
+	int changePassword(String memberEmail, String memberPw);
+
 
 }
