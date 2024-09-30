@@ -445,3 +445,6 @@ button {
   margin-top: 0;
   box-sizing: border-box;
 }
+.admin-product-quill-editor > * {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
