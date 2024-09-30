@@ -4,6 +4,7 @@ import ProductList from "./ProductList";
 import "./admin.css";
 import MemberList from "./MemberList";
 import ProductView from "./ProductView";
+import Admin from "./Admin";
 const AdminMain = () => {
   return (
     <>
@@ -14,8 +15,9 @@ const AdminMain = () => {
             path="productView/:productNo"
             element={<ProductView />}
           ></Route>
-          <Route path="productList" element={<ProductList />}></Route>
+          <Route path="main" element={<Admin />}></Route>
           <Route path="memberList" element={<MemberList />}></Route>
+          <Route path="productList" element={<ProductList />}></Route>
         </Routes>
       </section>
     </>

@@ -81,6 +81,7 @@ public class InquiryController {
 	}
 	@GetMapping(value = "/search")
 	public ResponseEntity<Map> searchInquiry(@ModelAttribute SearchFrm searchFrm){
+		System.out.println(searchFrm);
 		Map map=inquiryService.searchInquiryList(searchFrm.getReqPage(), searchFrm.getKeyword(), searchFrm.getType(), searchFrm.getOption());
 		return ResponseEntity.ok(map);
 	}

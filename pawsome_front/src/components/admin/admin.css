@@ -19,6 +19,7 @@ body {
   text-align: center;
   font-weight: bold;
   height: 40px;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
 }
 .admin-tbl > thead > tr:first-child th:first-child {
   border-top-left-radius: 6px;
@@ -383,6 +384,7 @@ button {
   border: 2px solid var(--point1);
   color: #fff;
   border-radius: 15px;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
 }
 .inquiry-keyword {
   width: 40%;
@@ -390,6 +392,7 @@ button {
 #option {
   width: 50%;
   height: 100%;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
   background-color: var(--point1);
   border: 2px solid var(--point1);
   color: #fff;
@@ -399,4 +402,32 @@ button {
   width: 100%;
   height: 80%;
   border: 0;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+#admin-member-list-body * {
+  cursor: auto;
+}
+#admin-member-select {
+  font-weight: bold;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+  font-family: ns-r;
+}
+#admin-member-menu1 {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+  font-family: ns-r;
+  font-weight: bold;
+}
+#admin-member-menu2 {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+  font-family: ns-r;
+  font-weight: bold;
+}
+#admin-product-list-switch {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+.admin-top-margin {
+  margin-top: 100px;
+}
+.admin-link-gap {
+  margin-top: 20px;
 }
