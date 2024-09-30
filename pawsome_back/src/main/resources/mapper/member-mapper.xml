@@ -60,7 +60,13 @@
   		update 
   			member 
   		set 
-  			member_nickname=#{memberNickname}, member_name=#{memberName}, member_addr1=#{memberAddr1}, member_addr2=#{memberAddr2}, member_addr3=#{memberAddr3}, member_profile=#{memberProfile}
+  			member_nickname=#{memberNickname}, 
+  			member_name=#{memberName}, 
+  			member_addr1=#{memberAddr1}, 
+  			member_addr2=#{memberAddr2}, 
+  			member_addr3=#{memberAddr3}, 
+  			member_profile=#{memberProfile},
+  			member_phone=#{memberPhone}
   		where
   			member_email=#{memberEmail}
   	</update>

@@ -21,7 +21,6 @@ const UpdateMember = () => {
     memberAddr3: "", // 상세주소
     memberPhone: "", // 전화번호
     memberProfile: null, // 프로필 사진
-    loginType: "", // 로그인 타입
   });
 
   const changeMember = (e) => {
@@ -31,6 +30,7 @@ const UpdateMember = () => {
 
   const memberImgRef = useRef(null);
   const [memberImgPreview, setMemberImgPreview] = useState("member_img.png");
+  const [initialProfile, setInitialProfile] = useState(null);
 
   // 회원 정보 불러오기
   useEffect(() => {
@@ -39,6 +39,7 @@ const UpdateMember = () => {
       .then((res) => {
         setMember(res.data);
         setMemberImgPreview(res.data.memberProfile || "member_img.png");
+        setInitialProfile(res.data.memberProfile); // 초기 프로필 이미지를 저장
       })
       .catch((err) => {
         console.log(err);
@@ -59,48 +60,51 @@ const UpdateMember = () => {
   }, []);
 
   // 회원 정보 수정 요청
-  const update = () => {
-    const formData = new FormData();
-    formData.append("memberEmail", member.memberEmail);
-    formData.append("memberName", member.memberName);
-    formData.append("memberNickname", member.memberNickname);
-    formData.append("memberAddr1", member.memberAddr1);
-    formData.append("memberAddr2", member.memberAddr2);
-    formData.append("memberAddr3", member.memberAddr3);
-    formData.append("memberPhone", member.memberPhone);
+const update = (e) => {
+  e.preventDefault();
+  
+  const form = new FormData();
+  form.append("memberEmail", member.memberEmail);
+  form.append("memberName", member.memberName);
+  form.append("memberNickname", member.memberNickname);
+  form.append("memberAddr1", member.memberAddr1);
+  form.append("memberAddr2", member.memberAddr2);
+  form.append("memberAddr3", member.memberAddr3);
+  form.append("memberPhone", member.memberPhone);
 
-    // 프로필 사진 전송
-    if (member.memberProfile !== null) {
-      formData.append("memberProfile1", member.memberProfile);
-    }
+  // 프로필 사진 전송 (변경된 경우에만)
+  if (member.memberProfile !== null && member.memberProfile !== initialProfile) {
+    form.append("memberProfile1", member.memberProfile);
+  }
 
-    if (
-      member.memberNickname &&
-      member.memberName &&
-      member.memberAddr1 &&
-      member.memberAddr2
-    ) {
-      axios
-        .patch(`${backServer}/member`, formData, {
-          headers: {
-            contentType: "multipart/form-data",
-            processData: false,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          navigate("/mypage/profile");
-        })
-        .catch((err) => {
-          console.log(err);
+  // FormData 디버깅 출력
+  console.log("=== FormData 내용 ===");
+  for (let pair of form.entries()) {
+    console.log(`${pair[0]}: ${pair[1]}`);
+  }
+
+  axios
+    .patch(`${backServer}/member`, form, {
+      headers: {
+        contentType: "multipart/form-data",
+        processData: false,
+      },
+    })
+    .then((res) => {
+      if (res.data) {
+        navigate("/mypage/profile");
+      } else {
+        Swal.fire({
+          title: "에러가 발생했습니다.",
+          text: "다시 시도해주세요.",
+          icon: "error",
         });
-    } else {
-      Swal.fire({
-        text: "필수 항목을 모두 입력해주세요.",
-        icon: "warning",
-      });
-    }
-  };
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
   // 사진 미리보기 설정
   const handleFileChange = (e) => {
@@ -153,13 +157,7 @@ const UpdateMember = () => {
       <div className="member-page">
         <div className="form">
           <h2>회원 정보 수정</h2>
-          <form
-            className="join-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              update();
-            }}
-          >
+          <form className="member-form" onSubmit={update}>
             <div className="image-upload">
               <img
                 alt="회원 이미지 미리보기"
@@ -181,7 +179,7 @@ const UpdateMember = () => {
                   style={{ display: "none" }}
                 />
               </label>
-              <button type="button" onClick={resetProfileImage}>
+              <button type="button" className="resetProfileImage" onClick={resetProfileImage}>
                 기본 이미지로 변경
               </button>
             </div>
@@ -195,7 +193,7 @@ const UpdateMember = () => {
               disabled
             />
 
-            <button>비밀번호 변경</button>
+            <button className="changePw">비밀번호 변경</button>
 
             <input
               type="text"
@@ -259,7 +257,7 @@ const UpdateMember = () => {
               placeholder="상세주소"
             />
 
-            <button type="submit">회원 정보 수정</button>
+            <button type="submit" className="submit">회원 정보 수정</button>
           </form>
         </div>
       </div>

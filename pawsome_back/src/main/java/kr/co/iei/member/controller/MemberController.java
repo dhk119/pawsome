@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -254,16 +255,26 @@ public class MemberController {
 	}
 	
 	@PatchMapping
-	public ResponseEntity<Integer> updateMember(@RequestBody MemberDTO member, @ModelAttribute MultipartFile memberProfile1) {
-		System.out.println(member);
-		System.out.println(memberProfile1);
-		if(memberProfile1 != null) {
-			String savepath = root + "/member/profile/";
-			String filepath = fileUtil.upload(savepath, memberProfile1);
-			member.setMemberProfile(filepath);
-		}
-		int result = memberService.updateMember(member);
-		return ResponseEntity.ok(result);
+	public ResponseEntity<Integer> updateMember(
+	        @ModelAttribute MemberDTO member, @ModelAttribute MultipartFile memberProfile1, @RequestHeader("Authorization") String token) {
+
+	    System.out.println(member);
+	    System.out.println(memberProfile1);
+
+	    // 프로필 사진이 비어있지 않으면 업로드 처리
+	    if (memberProfile1 != null && !memberProfile1.isEmpty()) {
+	        String savepath = root + "/member/profile/";
+	        String filepath = fileUtil.upload(savepath, memberProfile1);
+	        member.setMemberProfile(filepath);  // 새 파일 경로로 설정
+	    } else {
+	        // 프로필 사진을 수정하지 않으므로 기존 프로필을 유지하도록 설정
+	        MemberDTO existingMember = memberService.selectOneMember(token);
+	        member.setMemberProfile(existingMember.getMemberProfile());
+	    }
+	    
+	    int result = memberService.updateMember(member);
+	    return ResponseEntity.ok(result);
 	}
+
 	
 }

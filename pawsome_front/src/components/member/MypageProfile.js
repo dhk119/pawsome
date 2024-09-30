@@ -49,7 +49,6 @@ const MypageProfile = () => {
           <div>{member.memberAddr3}</div>
         </div>
         <div className="profile-btn-wrap">
-          <button>회원정보 수정</button>
           <Link to="/mypage/updateMember">회원정보 수정</Link>
         </div>
       </div>
@@ -75,7 +74,7 @@ const MypageProfile = () => {
           <div className="pet-body">등록된 반려동물이 없습니다.</div>
         )}
         <div className="pet-btn-wrap">
-          <button>반려동물 편집</button>
+          <Link to="/petinsert">반려동물 편집</Link>
         </div>
       </div>
     </>

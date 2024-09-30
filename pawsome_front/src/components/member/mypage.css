@@ -83,10 +83,10 @@
 .profile-btn-wrap,
 .pet-btn-wrap {
   text-align: right;
+  margin-top: 15px;
 }
-.profile-wrap button,
-.pet-wrap button {
-  margin-top: 10px;
+.profile-btn-wrap > *,
+.pet-btn-wrap > * {
   background-color: var(--point1);
   border: none;
   color: #fff;
@@ -96,6 +96,7 @@
   font-size: 18px;
   cursor: pointer;
   border-radius: 10px;
+  padding: 5px;
 }
 
 .member-addr {
@@ -147,6 +148,8 @@
   font-size: 18px;
   font-family: ns-b;
 }
+
+
 
 /* 반려동물 등록 */
 .pet-input-body {
@@ -326,3 +329,4 @@
   font-family: ns-r;
   list-style-type: none;
 }
+
