@@ -22,6 +22,5 @@ public class QnaDTO {
 	private String qnaRegDate;		//작성일
 	private String qnaWriter;		//작성자
 	private String qnaAnswerContent;		//답글 컨텐츠
-	private List<QnaFileDTO> fileList;	//Q&A사진 리스트
 	private String qnaAnswerRegDate;		//답글 작성일
 }
