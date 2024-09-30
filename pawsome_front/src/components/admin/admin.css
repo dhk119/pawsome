@@ -448,3 +448,6 @@ button {
 .admin-product-quill-editor > * {
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
 }
+.admin-product-quill-editor * {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
