@@ -126,7 +126,7 @@ const ProductView = () => {
     });
   };
   return (
-    <>
+    <section>
       <div className="admin-title">제품 상세</div>
       <form
         className="product-regist-frm"
@@ -168,7 +168,7 @@ const ProductView = () => {
           </button>
         </div>
       </form>
-    </>
+    </section>
   );
 };
 export default ProductView;

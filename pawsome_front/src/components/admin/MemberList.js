@@ -61,7 +61,11 @@ const MemberList = () => {
                 <td>{member.memberAddr2}</td>
                 <td>{member.memberAddr3}</td>
                 <td>
-                  <Select value={member.memberLevel} onChange={handleChange}>
+                  <Select
+                    value={member.memberLevel}
+                    onChange={handleChange}
+                    className="admin-select-color"
+                  >
                     <MenuItem value={1}>관리자</MenuItem>
                     <MenuItem value={2}>일반회원</MenuItem>
                   </Select>
