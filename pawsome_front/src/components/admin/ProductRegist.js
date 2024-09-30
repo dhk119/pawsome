@@ -122,7 +122,7 @@ const ProductRegist = () => {
         ></ProductFrm>
         <div className="admin-button-zone">
           <button type="submit" className="admin-write-submit">
-            등록하기
+            제품 등록
           </button>
         </div>
       </form>
