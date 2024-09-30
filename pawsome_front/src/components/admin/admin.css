@@ -305,6 +305,7 @@ button {
   padding-right: 20px;
   padding-top: 8px;
   padding-bottom: 8px;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
 }
 .admin-product-wrap > * {
   display: flex;
