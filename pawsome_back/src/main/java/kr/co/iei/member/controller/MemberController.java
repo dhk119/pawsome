@@ -125,6 +125,7 @@ public class MemberController {
 	        result.put("memberNickname", loginMember.getMemberNickname());
 	        result.put("accessToken", loginMember.getAccessToken());
 	        result.put("refreshToken", loginMember.getRefreshToken());
+	        result.put("loginType", loginMember.getLoginType());
 	    } else {
 	        result.put("isMember", false);
 	        result.put("naverUserInfo", response);
@@ -140,12 +141,12 @@ public class MemberController {
 	}
 	
 	@PostMapping(value = "/insertPet")
-	public ResponseEntity<Integer> insertPet(@ModelAttribute PetDTO pet, @ModelAttribute MultipartFile petProfile) {
+	public ResponseEntity<Integer> insertPet(@ModelAttribute PetDTO pet, @ModelAttribute MultipartFile petProfile1) {
 		System.out.println(pet);
-		System.out.println(petProfile);
-		if(petProfile != null) {
-			String savepath = root+"/member/pet/";
-			String filepath = fileUtil.upload(savepath, petProfile);
+		System.out.println(petProfile1);
+		if(petProfile1 != null) {
+			String savepath = root + "/member/pet/";
+			String filepath = fileUtil.upload(savepath, petProfile1);
 			pet.setPetProfile(filepath);
 		}
 		int result = memberService.insertPet(pet);

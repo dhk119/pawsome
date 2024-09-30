@@ -16,7 +16,13 @@ const PetFrm = ({ pet, setPet }) => {
   const petImgRef = useRef(null);
   const [petImgPreview, setPetImgPreview] = useState(null);
 
-  //사진 미리보기
+  // 강아지 및 고양이 품종 목록
+  const breeds = {
+    dog: ["진돗개", "허스키", "웰시코기", "리트리버", "비숑 프리제"],
+    cat: ["러시안 블루", "샴", "페르시안", "메인쿤", "스코티시 폴드"],
+  };
+
+  // 사진 미리보기
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -118,11 +124,18 @@ const PetFrm = ({ pet, setPet }) => {
           value={pet.petBreed}
           onChange={handleInputChange}
         >
-          <option value="진돗개">진돗개</option>
-          <option value="허스키">허스키</option>
-          <option value="웰시코기">웰시코기</option>
-          <option value="리트리버">리트리버</option>
-          <option value="비숑 프리제">비숑 프리제</option>
+          {pet.petClasses === "1" &&
+            breeds.dog.map((breed) => (
+              <option key={breed} value={breed}>
+                {breed}
+              </option>
+            ))}
+          {pet.petClasses === "2" &&
+            breeds.cat.map((breed) => (
+              <option key={breed} value={breed}>
+                {breed}
+              </option>
+            ))}
         </select>
       </div>
 
