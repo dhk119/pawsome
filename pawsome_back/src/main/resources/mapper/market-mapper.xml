@@ -90,7 +90,18 @@
 		delete from qna_answer where qna_no=#{qnaNo}
 	</delete>
 <!-- 장바구니 -->
+	<select id="searchCart" resultType="int">
+		select * from cart where member_email=#{memberEmail} and product_no=#{productNo}
+	</select>
 	<insert id="insertCart">
 		insert into cart values(cart_seq.nextval,#{productNo},#{productCartCount},#{memberEmail})
 	</insert>
+	<select id="selectCartList" resultType="cart">
+		select cart_no,product_no,product_cart_count,product_name,product_price,product_thumb from
+			(select * from cart where member_email=#{memberEmail})c
+		left join product using(product_no) order by 1
+	</select>
+	<update id="updateProductCount">
+		update cart set product_cart_count=product_cart_count + #{productCartCount} where member_email=#{memberEmail} and product_no=#{productNo}
+	</update>
 </mapper>

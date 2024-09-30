@@ -103,6 +103,7 @@
 .productList-filter > .filter > a:hover {
   color: #ffa518;
   font-family: ns-b;
+  cursor: pointer;
 }
 .productList-filter > .filter > .now {
   color: #ffa518;
@@ -124,6 +125,7 @@
 }
 .product-wrap:hover {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 .product-wrap > .product-thumb {
   width: 200px;
@@ -242,6 +244,7 @@ td {
 .product-btn > a:hover {
   background-color: #ffa518;
   color: #fff;
+  cursor: pointer;
 }
 
 .detail-menu-wrap {
@@ -258,6 +261,7 @@ td {
 }
 .tab:hover {
   background-color: #ffd697;
+  cursor: pointer;
 }
 .detail-menu-wrap .active-tab {
   background-color: #ffd697;
@@ -279,10 +283,86 @@ td {
 }
 
 /*cart*/
-.cart-wrap {
-  width: 70%;
+.cartMain-wrap {
+  display: flex;
+  justify-content: space-evenly;
+}
+.cartMain-wrap > .cart-pay-wrap {
+  width: 35%;
+  height: 200px;
+  border: 3px solid var(--gray6);
+  background-color: var(--gray7);
+  border-radius: 10px;
+}
+.cartMain-wrap > .cart-wrap {
+  width: 60%;
   border: 3px solid #ffa518;
   border-radius: 10px;
-  margin: 0 auto;
   margin-bottom: 40px;
+}
+.cart-wrap > .product-cart-wrap {
+  width: 95%;
+  margin: 15px auto;
+  border: 1px solid var(--gray7);
+}
+.cart-wrap > .cart-btn-wrap {
+  border-bottom: 3px solid #ffa518;
+}
+.cart-wrap > .cart-btn-wrap > button {
+  margin: 10px;
+  border: 2px solid #ffa518;
+  background-color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: ns-b;
+  color: #ffa518;
+  padding: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+.cart-wrap > .cart-btn-wrap > button:hover {
+  background-color: #ffa518;
+  color: #fff;
+  cursor: pointer;
+}
+.cart-wrap > .product-cart-wrap > .product-detail {
+  display: flex;
+}
+.product-cart-wrap .product-chk-btn {
+  margin: auto 5px;
+}
+.product-cart-wrap .product-thumb {
+  width: 160px;
+  height: 160px;
+}
+.product-cart-wrap .product-thumb > img {
+  width: 150px;
+  margin: 5px;
+}
+.product-cart-info {
+  margin-left: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.product-cart-info > * {
+  margin: auto 0;
+}
+.product-cart-info > .product-name {
+  font-size: 20px;
+  font-family: ns-b;
+}
+.product-cart-info > .product-count {
+  width: 330px;
+  display: flex;
+  justify-content: space-between;
+}
+.product-totalprice {
+  margin: 10px;
+  text-align: right;
+  font-size: 18px;
+}
+.product-cart-info > .product-count > .delete > svg {
+  color: #ffa518;
+  font-size: 25px;
 }

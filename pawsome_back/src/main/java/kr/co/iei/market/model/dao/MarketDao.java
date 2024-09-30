@@ -53,7 +53,14 @@ public interface MarketDao {
 
 	int deleteQnaAnswer(int qnaNo);
 /*장바구니*/
+	int searchCart(int productNo, String memberEmail);
+	
 	int insertCart(CartDTO cart);
+
+	List selectCartList(String memberEmail);
+
+	int updateProductCount(int productNo, int productCartCount, String memberEmail);
+
 
 	
 

@@ -15,4 +15,7 @@ public class CartDTO {
 	private int productNo;			//상품 번호
 	private int productCartCount;	//구매수량
 	private String memberEmail;		//구매자
+	private String productName;
+	private int productPrice;
+	private String productThumb;
 }

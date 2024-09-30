@@ -51,6 +51,7 @@
 .qna-wrap .qna-wrtie-btn:hover {
   background-color: #ffa518;
   color: #fff;
+  cursor: pointer;
 }
 .list-tbl-wrap > .list-tbl {
   border: 1px solid #ffd697;
@@ -62,6 +63,7 @@
 }
 .list-tbl-wrap > .list-tbl .main-tr:hover {
   background-color: #fff0d9;
+  cursor: pointer;
 }
 .list-tbl th {
   background-color: #ffd697;

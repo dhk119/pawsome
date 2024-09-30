@@ -120,6 +120,7 @@
 .submit-btn:hover {
   background-color: #ffa518;
   color: #fff;
+  cursor: pointer;
 }
 
 .qna-wrap > .list-tbl-wrap > .list-tbl .btn-wrap {
