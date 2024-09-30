@@ -76,14 +76,14 @@ export const SidebarData = [
     ],
   },
   {
-    title: "시설",
+    title: "서비스",
     path: "#",
     icons: <AiIcons.AiOutlineGlobal />,
     cName: "nav-text",
     sub: [
       {
         title: "전체",
-        path: "#",
+        path: "/service/PetService",
       },
       {
         title: "반려동물 시설",
