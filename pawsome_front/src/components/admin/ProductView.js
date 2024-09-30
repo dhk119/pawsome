@@ -63,7 +63,7 @@ const ProductView = () => {
       productPrice !== 0 &&
       productPrice !== "" &&
       (thumb !== "" || (productThumb !== null && productThumb !== "")) &&
-      productDetail !== "" &&
+      productDetail !== "<p><br></p>" &&
       productShow !== ""
     ) {
       const form = new FormData();

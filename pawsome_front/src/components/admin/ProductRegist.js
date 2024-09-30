@@ -61,7 +61,7 @@ const ProductRegist = () => {
       productPrice !== 0 &&
       productPrice !== "" &&
       thumb !== "" &&
-      productDetail !== "" &&
+      productDetail !== "<p><br></p>" &&
       productShow !== ""
     ) {
       const form = new FormData();
