@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.iei.market.model.dto.ProductDTO;
+import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
 import kr.co.iei.market.model.service.ProductService;
 import kr.co.iei.util.FileUtils;
@@ -43,7 +45,7 @@ public class ProductController {
 		return ResponseEntity.ok(product);
 	}
 	
-	@PostMapping
+	@PostMapping(value="/qna")
 	public ResponseEntity<Boolean> insertQna(@ModelAttribute QnaDTO qna){
 		int result = productService.insertQna(qna);
 		return ResponseEntity.ok(result == 1);
@@ -61,11 +63,34 @@ public class ProductController {
 		return ResponseEntity.ok(qna);
 	}
 	
-	@PatchMapping
+	@PatchMapping(value="/qna")
 	public ResponseEntity<Boolean> updateQna(@ModelAttribute QnaDTO qna){
 		int result = productService.updateQna(qna);
-		System.out.println(qna);
-		System.out.println(result);
 		return ResponseEntity.ok(result == 1);
+	}
+	
+	@DeleteMapping(value="/qna/{qnaNo}")
+	public ResponseEntity<Integer> deleteQna(@PathVariable int qnaNo){
+		System.out.println(qnaNo);
+		int result = productService.deleteQna(qnaNo);
+		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping(value="/qnaAnswer")
+	public  ResponseEntity<Boolean> insertQnaAnswer(@ModelAttribute QnaAnswerDTO qnaAnswer){
+		int result = productService.insertQnaAnswer(qnaAnswer);
+		return ResponseEntity.ok(result == 1);
+	}
+	
+	@PatchMapping(value="/qnaAnswer")
+	public ResponseEntity<Boolean> updateQnaQnaAnswer(@ModelAttribute QnaAnswerDTO qnaAnswer){
+		int result = productService.updateQnaAnswer(qnaAnswer);
+		return ResponseEntity.ok(result == 1);
+	}
+	
+	@DeleteMapping(value="/qnaAnswer/{qnaNo}")
+	public ResponseEntity<Integer> deleteQnaAnswer(@PathVariable int qnaNo){
+		int result = productService.deleteQnaAnswer(qnaNo);
+		return ResponseEntity.ok(result);
 	}
 }

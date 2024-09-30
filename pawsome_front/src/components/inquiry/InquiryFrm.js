@@ -34,42 +34,166 @@ const InquiryFrm = (props) => {
                 <th>
                   <div>타입</div>
                 </th>
-                <td className="admin-radio-td">
-                  <label htmlFor="account">계정 관련</label>
-                  <div className="input-item">
-                    <input
-                      type="radio"
-                      id="account"
-                      name="inquiryType"
-                      value={1}
-                      onChange={setInquiryType}
-                    ></input>
-                  </div>
-                </td>
-                <td className="admin-radio-td">
-                  <label htmlFor="account">게시판 관련</label>
-                  <div className="input-item">
-                    <input
-                      type="radio"
-                      id="board"
-                      name="inquiryType"
-                      value={2}
-                      onChange={setInquiryType}
-                    ></input>
-                  </div>
-                </td>
-                <td className="admin-radio-td">
-                  <label htmlFor="else">기타</label>
-                  <div className="input-item">
-                    <input
-                      type="radio"
-                      id="else"
-                      name="inquiryType"
-                      value={3}
-                      onChange={setInquiryType}
-                    ></input>
-                  </div>
-                </td>
+                {inquiryType !== 1 && inquiryType !== 2 ? (
+                  <>
+                    <td className="admin-radio-td">
+                      <label htmlFor="account">계정 관련</label>
+                      <div className="input-item">
+                        <input
+                          type="radio"
+                          id="account"
+                          name="inquiryType"
+                          value={1}
+                          onChange={setInquiryType}
+                        ></input>
+                      </div>
+                    </td>
+                    <td className="admin-radio-td">
+                      <label htmlFor="account">게시판 관련</label>
+                      <div className="input-item">
+                        <input
+                          type="radio"
+                          id="board"
+                          name="inquiryType"
+                          value={2}
+                          onChange={setInquiryType}
+                        ></input>
+                      </div>
+                    </td>
+                    <td className="admin-radio-td">
+                      <label htmlFor="else">기타</label>
+                      <div className="input-item">
+                        <input
+                          type="radio"
+                          id="else"
+                          name="inquiryType"
+                          value={3}
+                          onChange={setInquiryType}
+                        ></input>
+                      </div>
+                    </td>
+                  </>
+                ) : inquiryType === 1 ? (
+                  <>
+                    <td className="admin-radio-td">
+                      <label htmlFor="account">계정 관련</label>
+                      <div className="input-item">
+                        <input
+                          type="radio"
+                          id="account"
+                          name="inquiryType"
+                          value={1}
+                          onChange={setInquiryType}
+                          checked
+                        ></input>
+                      </div>
+                    </td>
+                    <td className="admin-radio-td">
+                      <label htmlFor="account">게시판 관련</label>
+                      <div className="input-item">
+                        <input
+                          type="radio"
+                          id="board"
+                          name="inquiryType"
+                          value={2}
+                          onChange={setInquiryType}
+                        ></input>
+                      </div>
+                    </td>
+                    <td className="admin-radio-td">
+                      <label htmlFor="else">기타</label>
+                      <div className="input-item">
+                        <input
+                          type="radio"
+                          id="else"
+                          name="inquiryType"
+                          value={3}
+                          onChange={setInquiryType}
+                        ></input>
+                      </div>
+                    </td>
+                  </>
+                ) : inquiryType === 2 ? (
+                  <>
+                    <td className="admin-radio-td">
+                      <label htmlFor="account">계정 관련</label>
+                      <div className="input-item">
+                        <input
+                          type="radio"
+                          id="account"
+                          name="inquiryType"
+                          value={1}
+                          onChange={setInquiryType}
+                        ></input>
+                      </div>
+                    </td>
+                    <td className="admin-radio-td">
+                      <label htmlFor="account">게시판 관련</label>
+                      <div className="input-item">
+                        <input
+                          type="radio"
+                          id="board"
+                          name="inquiryType"
+                          value={2}
+                          onChange={setInquiryType}
+                          checked
+                        ></input>
+                      </div>
+                    </td>
+                    <td className="admin-radio-td">
+                      <label htmlFor="else">기타</label>
+                      <div className="input-item">
+                        <input
+                          type="radio"
+                          id="else"
+                          name="inquiryType"
+                          value={3}
+                          onChange={setInquiryType}
+                        ></input>
+                      </div>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td className="admin-radio-td">
+                      <label htmlFor="account">계정 관련</label>
+                      <div className="input-item">
+                        <input
+                          type="radio"
+                          id="account"
+                          name="inquiryType"
+                          value={1}
+                          onChange={setInquiryType}
+                        ></input>
+                      </div>
+                    </td>
+                    <td className="admin-radio-td">
+                      <label htmlFor="account">게시판 관련</label>
+                      <div className="input-item">
+                        <input
+                          type="radio"
+                          id="board"
+                          name="inquiryType"
+                          value={2}
+                          onChange={setInquiryType}
+                        ></input>
+                      </div>
+                    </td>
+                    <td className="admin-radio-td">
+                      <label htmlFor="else">기타</label>
+                      <div className="input-item">
+                        <input
+                          type="radio"
+                          id="else"
+                          name="inquiryType"
+                          value={3}
+                          onChange={setInquiryType}
+                          checked
+                        ></input>
+                      </div>
+                    </td>
+                  </>
+                )}
               </tr>
             </tbody>
           </table>

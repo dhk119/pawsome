@@ -12,15 +12,41 @@ const InquiryList = () => {
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
   const isLogin = useRecoilValue(isLoginState);
+  const [type, setType] = useState("all");
+  const [keyword, setKeyword] = useState("");
+  const [search, setSearch] = useState(false);
   useEffect(() => {
-    axios
-      .get(`${backServer}/inquiry/list/${reqPage}`)
-      .then((res) => {
-        setInquiryList(res.data.list);
-        setPi(res.data.pi);
-      })
-      .catch(() => {});
-  }, [reqPage]);
+    const form = new FormData();
+    form.append("reqPage", reqPage);
+    form.append("type", type);
+    form.append("keyword", keyword);
+    {
+      !search
+        ? axios
+            .get(`${backServer}/inquiry/list/${reqPage}`)
+            .then((res) => {
+              setInquiryList(res.data.list);
+              setPi(res.data.pi);
+            })
+            .catch(() => {})
+        : axios
+            .get(`${backServer}/inquiry/search`, form)
+            .then((res) => {
+              setInquiryList(res.data.list);
+              setPi(res.data.pi);
+            })
+            .catch(() => {});
+    }
+  }, [reqPage, search]);
+  const changeKeyword = (e) => {
+    setKeyword(e.target.value);
+  };
+  const changeType = (e) => {
+    setType(e.target.value);
+  };
+  const searchInquiry = () => {
+    setSearch(true);
+  };
   return (
     <section className="section inquiry-list">
       <div className="admin-title">문의사항</div>
@@ -32,14 +58,35 @@ const InquiryList = () => {
             </div>
           </div>
         ) : (
-          <div className="admin-top-left">
-            <div className="admin-write"></div>
-          </div>
+          <div className="admin-top-left"></div>
         )}
         <div className="admin-top-mid"></div>
         <div className="admin-search-wrap">
-          <div className="admin-write-right">
-            <button>검색</button>
+          <div className="inquiry-keyword">
+            <label htmlFor="type"></label>
+            <select id="type" value={type} onChange={changeType}>
+              <option value={"all"}>전체</option>
+              <option value={"title"}>제목</option>
+              <option value={"writer"}>작성자</option>
+              <option value={"titleContent"}>제목 및 내용</option>
+              <option value={"content"}>내용</option>
+            </select>
+          </div>
+          <div className="search-input-wrap" id="inquiry-search">
+            <button
+              type="button"
+              className="search-btn"
+              onClick={searchInquiry}
+            >
+              <img src="/image/paw.png" className="search-icon" />
+            </button>
+            <input
+              type="text"
+              className="search-input"
+              placeholder="검색어를 입력하세요"
+              value={keyword}
+              onChange={changeKeyword}
+            ></input>
           </div>
         </div>
       </div>

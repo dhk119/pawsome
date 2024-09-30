@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import BoardNav from "./BoardNav";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { memberNicknameState } from "../utils/RecoilData";
 import axios from "axios";
@@ -15,14 +15,18 @@ import { TbEye } from "react-icons/tb";
 import { IoIosSend } from "react-icons/io";
 import { config } from "../utils/Properties";
 import { useTranslation } from "react-i18next";
+import { RiWechatLine } from "react-icons/ri";
+import Swal from "sweetalert2";
 
 const BoardView = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const boardNo = params.boardNo;
   const [board, setBoard] = useState({});
+  const [replyList, setReplyList] = useState([]);
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get(`${backServer}/board/boardNo/${boardNo}`)
@@ -34,7 +38,6 @@ const BoardView = () => {
         console.log(err);
       });
   }, []);
-  console.log(board);
 
   //공유하기
   const { t } = useTranslation();
@@ -118,6 +121,25 @@ const BoardView = () => {
       document.body.removeChild(script);
     };
   }, []);
+
+  const deleteBoard = () => {
+    axios
+      .delete(`${backServer}/board/${board.boardNo}`)
+      .then((res) => {
+        console.log(res);
+        if (res.data === 1) {
+          Swal.fire({
+            title: "게시글이 삭제 되었습니다.",
+            icon: "success",
+          }).then((res) => {
+            navigate("/board/list");
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <section className="section board-view-wrap">
       <div className="board-view-content">
@@ -135,17 +157,22 @@ const BoardView = () => {
               ? "오산완"
               : "#전체"}
           </div>
-          <div>{board.boardTitle}</div>
           {memberNickname === board.memberNickname ? (
             <div className="view-btn-zone">
-              <Link to="#">수정</Link>
+              <Link to={`/board/update/${board.boardNo}`}>수정</Link>
               <div>
-                <button type="button">삭제</button>
+                <button type="button" onClick={deleteBoard}>
+                  삭제
+                </button>
               </div>
             </div>
           ) : (
             ""
           )}
+        </div>
+        <div className="board-view-title">
+          <label htmlFor="boardTitle">제목 :</label>
+          <div id="boardTitle">{board.boardTitle}</div>
         </div>
         <div className="board-view-memberinfo">
           <div className="board-view-memberinfo1">
@@ -235,15 +262,134 @@ const BoardView = () => {
         </div>
       </div>
       <div className="other-board-content">
-        <span>다른 게시글도 이어보세요</span>
         <div>
-          <img src={`${backServer}/board/${board.boardThumb}`} />
-          {board.boardTag},{board.boardTitle},{board.regDate}
+          <span>
+            <Link to="/board/list">다른 게시글</Link>도 이어보세요
+          </span>
+        </div>
+        <div className="other-contents">
+          <div style={{ display: "flex", alignSelf: "center" }}>
+            <img
+              style={{ width: "200px", height: "200px" }}
+              src={`${backServer}/board/${board.boardThumb}`}
+            />
+          </div>
+          <div className="other-content-view">
+            <div
+              style={{
+                backgroundColor: "#ffd697",
+                borderRadius: "5px",
+                padding: "3px 3px",
+                width: "90px",
+                textAlign: "center",
+              }}
+            >
+              {board.boardTag === 1
+                ? "#댕댕이"
+                : board.boardTag === 2
+                ? "#냥냥이"
+                : board.boardTag === 3
+                ? "#일상"
+                : board.boardTag === 4
+                ? "#정보공유"
+                : board.boardTag === 5
+                ? "오산완"
+                : "#전체"}
+            </div>
+            <div>{board.boardTitle}</div>
+            <div>{board.regDate}</div>
+          </div>
         </div>
       </div>
-      <div className="reply-wrap"></div>
+      <div className="reply-wrap">
+        <div className="reply-top-wrap">
+          <div>
+            <span>
+              <RiWechatLine />
+            </span>
+            <span>댓글</span>
+          </div>
+          <div>등록순</div>
+        </div>
+      </div>
+      <div className="reply-list-wrap">
+        <ul className="posting-wrap">
+          {replyList.map((reply, i) => {
+            return <ReplyItem key={"reply-" + i} reply={reply} />;
+          })}
+        </ul>
+      </div>
+      <div className="reply-input-wrap">
+        <form
+          className="reply-write-frm"
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <div>
+            <input
+              style={{
+                width: "1000px",
+                border: "none",
+                borderBottom: "1px solid #d6d6d6",
+                paddingBottom: "3px",
+              }}
+              placeholder="댓글을 남겨주세요"
+            />
+          </div>
+          <div>
+            <label htmlFor="boardFile">
+              <img
+                src="/image/img-box.png"
+                alt="Upload"
+                style={{ margin: "0 10px" }}
+              />
+            </label>
+            <input
+              className="img-file"
+              type="file"
+              id="boardFile"
+              multiple
+              style={{ display: "none" }}
+            />
+          </div>
+          <div>
+            <button
+              type="submit"
+              style={{
+                border: "none",
+                backgroundColor: "#ffd697",
+                padding: "5px 10px",
+                borderRadius: "10px",
+              }}
+            >
+              등록
+            </button>
+          </div>
+        </form>
+      </div>
     </section>
   );
 };
 
+const ReplyItem = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const reply = props.reply;
+  return (
+    <li>
+      <div>
+        <img
+          src={
+            reply.replyImage
+              ? `${backServer}/board/${reply.replyImage}`
+              : "/image/paw.png"
+          }
+        />
+      </div>
+      <div>
+        <div>{reply.reply}</div>
+      </div>
+    </li>
+  );
+};
 export default BoardView;

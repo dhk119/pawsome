@@ -213,11 +213,11 @@ td {
 .amount-tbl th {
   width: 30%;
 }
-.productDetail > .product-info > .product-totalprice {
+.productDetail > .product-info > form > .product-totalprice {
   padding: 10px 0;
   font-size: 20px;
 }
-.productDetail > .product-info > .product-btn {
+.productDetail > .product-info > form > .product-btn {
   margin-top: 30px;
 }
 .product-btn {
@@ -225,7 +225,7 @@ td {
   display: flex;
   justify-content: space-around;
 }
-.product-btn > a {
+.product-btn > button {
   border: 2px solid #ffa518;
   width: 30%;
   background-color: #fff;
@@ -276,4 +276,13 @@ td {
   font-size: 20px;
   display: flex;
   justify-content: space-between;
+}
+
+/*cart*/
+.cart-wrap {
+  width: 70%;
+  border: 3px solid #ffa518;
+  border-radius: 10px;
+  margin: 0 auto;
+  margin-bottom: 40px;
 }

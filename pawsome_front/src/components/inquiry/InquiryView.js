@@ -10,7 +10,7 @@ const InquiryView = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const inquiryNo = params.inquiryNo;
-  const [inquiry, setInquiry] = useState({});
+  const [inquiry, setInquiry] = useState({ inquiryCommentList: [] });
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const isLogin = useRecoilValue(isLoginState);
   const [inquiryComment, setInquiryComment] = useState({
@@ -18,11 +18,7 @@ const InquiryView = () => {
     inquiryCommentContent: "",
     memberEmail: loginEmail,
   });
-  const [inquiryCommentContentList, setInquiryCommentContentList] = useState(
-    []
-  );
   const [commentContentList, setCommentContentList] = useState([]);
-  const [inquiryCommentList, setInquiryCommentList] = useState([]);
   const navigate = useNavigate();
   const changeInquiryCommentContent = (e) => {
     setInquiryComment({
@@ -31,16 +27,14 @@ const InquiryView = () => {
     });
   };
   const [buttonShowList, setButtonShowList] = useState([]);
-  const [changeCommentList, setChangeCommentList] = useState([]);
+  const [changeComment, setChangeComment] = useState(true);
   useEffect(() => {
+    setButtonShowList([]);
+    setCommentContentList([]);
     axios
       .get(`${backServer}/inquiry/inquiryNo/${inquiryNo}`)
       .then((res) => {
         setInquiry(res.data);
-        setInquiryCommentList(res.data.inquiryCommentList);
-        setButtonShowList([]);
-        setInquiryCommentContentList([]);
-        setCommentContentList([]);
         for (
           let index = 0;
           index < res.data.inquiryCommentList.length;
@@ -51,7 +45,7 @@ const InquiryView = () => {
         setButtonShowList([...buttonShowList]);
       })
       .catch((err) => {});
-  }, [changeCommentList]);
+  }, [changeComment]);
   const deleteInquiry = () => {
     Swal.fire({
       text: "문의글을 삭제하시겠습니까?",
@@ -82,8 +76,10 @@ const InquiryView = () => {
       axios
         .post(`${backServer}/inquiry/insertComment`, inquiryComment)
         .then((res) => {
-          setInquiryCommentList([...inquiryCommentList, inquiryComment]);
-          setChangeCommentList([...changeCommentList, inquiryComment]);
+          setInquiryComment({ ...inquiryComment, inquiryCommentContent: "" });
+          changeComment === true
+            ? setChangeComment(false)
+            : setChangeComment(true);
         });
     } else {
       Swal.fire({
@@ -175,15 +171,22 @@ const InquiryView = () => {
           ) : (
             ""
           )}
-          {inquiryCommentList.length !== 0 ? (
+          {inquiry.inquiryCommentList.length !== 0 ? (
             <ul>
               {inquiry.inquiryCommentList.map((comment, i) => {
                 commentContentList.push(comment.inquiryCommentContent);
-                inquiryCommentContentList.push(comment.inquiryCommentContent);
-                console.log(inquiryCommentContentList);
-                const deleteInquiryComment = () => {};
+                const deleteInquiryComment = () => {
+                  axios
+                    .delete(
+                      `${backServer}/inquiry/inquiryComment/${comment.inquiryCommentNo}`
+                    )
+                    .then((res) => {
+                      changeComment === true
+                        ? setChangeComment(false)
+                        : setChangeComment(true);
+                    });
+                };
                 const updateInquiryComment = () => {
-                  setInquiryCommentContentList([]);
                   document.querySelectorAll(".inquiry-comment-text")[
                     i
                   ].readOnly = false;
@@ -196,20 +199,27 @@ const InquiryView = () => {
                   document.querySelectorAll(".inquiry-comment-text")[
                     i
                   ].readOnly = true;
-                  setInquiryCommentContentList([...commentContentList]);
+                  console.log(commentContentList[i]);
+                  comment.inquiryCommentContent = commentContentList[i];
+                  setInquiry({ ...inquiry });
+                  changeComment === true
+                    ? setChangeComment(false)
+                    : setChangeComment(true);
                 };
                 const finalUpdateInquiryComment = () => {
-                  setInquiryCommentContentList([]);
-                  if (inquiryCommentContentList[i]) {
+                  if (comment.inquiryCommentContent) {
                     const form = new FormData();
                     form.append("inquiryCommentNo", comment.inquiryCommentNo);
                     form.append(
                       "inquiryCommentContent",
-                      inquiryCommentContentList[i]
+                      comment.inquiryCommentContent
                     );
                     axios
                       .patch(`${backServer}/inquiry/comment`, form)
                       .then((res) => {
+                        changeComment === true
+                          ? setChangeComment(false)
+                          : setChangeComment(true);
                         buttonShowList[i] = true;
                         setButtonShowList([...buttonShowList]);
                         document.querySelectorAll(".inquiry-comment-text")[
@@ -227,8 +237,8 @@ const InquiryView = () => {
                   }
                 };
                 const changeInquiryCommentContent = (e) => {
-                  inquiryCommentContentList[i] = e.target.value;
-                  setInquiryCommentContentList([...inquiryCommentContentList]);
+                  comment.inquiryCommentContent = e.target.value;
+                  setInquiry({ ...inquiry });
                 };
                 return (
                   <li key={"inquiryComment" + i} className="inquiry-comments">
@@ -247,9 +257,8 @@ const InquiryView = () => {
                             className="inquiry-comment-text"
                             readOnly
                             onChange={changeInquiryCommentContent}
-                          >
-                            {inquiryCommentContentList[i]}
-                          </textarea>
+                            value={comment.inquiryCommentContent}
+                          ></textarea>
                         </div>
                         {isLogin &&
                         loginEmail == comment.memberEmail &&

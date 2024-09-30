@@ -5,6 +5,7 @@ import BoardView from "./BoardView";
 import BoardWrite from "./BoardWrite";
 import Map from "./Map";
 import WalkMap from "./WalkMap";
+import BoardUpdate from "./BoardUpdate";
 
 const BoardMain = () => {
   return (
@@ -15,6 +16,7 @@ const BoardMain = () => {
       <Route path="view/:boardNo" element={<BoardView />} />
       <Route path="map" element={<Map />} />
       <Route path="walkMap" element={<WalkMap />} />
+      <Route path="update/:boardNo" element={<BoardUpdate />} />
     </Routes>
   );
 };

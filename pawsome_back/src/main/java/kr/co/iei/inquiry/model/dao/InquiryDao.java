@@ -26,5 +26,11 @@ public interface InquiryDao {
 	int insertInquiryComment(InquiryComment inquiryComment);
 
 	int updateInquiryComment(InquiryComment inquiryComment);
+
+	int deleteInquiryComment(int inquiryCommentNo);
+
+	int totalCountSearch(String type, String keyword);
+
+	List searchInquiryList(PageInfo pi, String type, String keyword);
 	
 }

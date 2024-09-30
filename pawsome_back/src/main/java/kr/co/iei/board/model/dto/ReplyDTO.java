@@ -1,7 +1,5 @@
 package kr.co.iei.board.model.dto;
 
-import java.util.List;
-
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
@@ -11,17 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias(value = "board")
-public class BoardDTO {
+@Alias(value="Reply")
+public class ReplyDTO {
+	private int replyNo;
 	private int boardNo;
-	private int boardTag;
-	private String boardTitle;
-	private String boardContent;
-	private String boardThumb;
-	private int readCount;
-	private String regDate;
+	private int replyNoRef;
+	private String reply;
+	private String replyRegDate;
+	private String replyImage;
 	private String memberNickname;
-	private int boardLike;
 	private String memberProfile;
-	private List<BoardFileDTO> fileList;
+
 }

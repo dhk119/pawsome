@@ -14,7 +14,7 @@
 		select * from inquiry where inquiry_no=#{inquiryNo}
 	</select>
 	<select id="selectInquiryCommentList" resultType="inquiryComment">
-		select inquiry_comment_no, INQUIRY_COMMENT_CONTENT,INQUIRY_COMMENT_REG_DATE,MEMBER_EMAIL from inquiry_comment where inquiry_no=#{inquiryNo}
+		select inquiry_comment_no, INQUIRY_COMMENT_CONTENT,INQUIRY_COMMENT_REG_DATE,MEMBER_EMAIL from inquiry_comment where inquiry_no=#{inquiryNo} order by inquiry_comment_reg_date
 	</select>
 	<resultMap type="inquiry" id="getInquiry">
 		<result column="INQUIRY_NO" property="inquiryNo"/>
@@ -37,4 +37,7 @@
 	<update id="updateInquiryComment">
 		update inquiry_comment set inquiry_comment_content=#{inquiryCommentContent} where inquiry_comment_no=#{inquiryCommentNo}
 	</update>
+	<delete id="deleteInquiryComment">
+		delete from inquiry_comment where inquiry_comment_no=#{inquiryCommentNo}
+	</delete>
 </mapper>
