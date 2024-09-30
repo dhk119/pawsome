@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.inquiry.model.dto.Inquiry;
 import kr.co.iei.inquiry.model.dto.InquiryComment;
+import kr.co.iei.inquiry.model.dto.SearchFrm;
 import kr.co.iei.inquiry.model.service.InquiryService;
 import kr.co.iei.util.FileUtils;
 
@@ -79,8 +80,8 @@ public class InquiryController {
 		return ResponseEntity.ok(result); 
 	}
 	@GetMapping(value = "/search")
-	public ResponseEntity<Map> searchInquiry(@ModelAttribute int reqPage,@ModelAttribute String type ,@ModelAttribute String keyword){
-		Map map=inquiryService.searchInquiryList(reqPage, type, keyword);
+	public ResponseEntity<Map> searchInquiry(@ModelAttribute SearchFrm searchFrm){
+		Map map=inquiryService.searchInquiryList(searchFrm.getReqPage(), searchFrm.getKeyword(), searchFrm.getType(), searchFrm.getOption());
 		return ResponseEntity.ok(map);
 	}
 }
