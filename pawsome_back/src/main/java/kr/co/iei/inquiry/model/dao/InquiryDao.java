@@ -28,5 +28,9 @@ public interface InquiryDao {
 	int updateInquiryComment(InquiryComment inquiryComment);
 
 	int deleteInquiryComment(int inquiryCommentNo);
+
+	int totalCountSearch(String type, String keyword);
+
+	List searchInquiryList(PageInfo pi, String type, String keyword);
 	
 }
