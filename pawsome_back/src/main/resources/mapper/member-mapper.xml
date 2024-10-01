@@ -74,6 +74,6 @@
   		select count(*) from pet
   	</select>
   	<select id="selectPetListMagnum" resultType="pet">
-  		select * from (select rownum as rnum, b.* from(SELECT * from pet order by 1 desc)b) where rnum BETWEEN #{start} and #{end}
+  		select * from (select rownum as rnum, b.* from(SELECT pet_no,pet_name,pet_classes,pet_breed,to_char(pet_birth,'yyyy-mm-dd') as pet_birth,pet_gender,neutering,pet_profile,pet_weight,member_email from pet order by pet_birth desc)b) where rnum BETWEEN #{start} and #{end}
   	</select>
 </mapper>
