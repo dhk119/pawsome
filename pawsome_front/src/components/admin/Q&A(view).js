@@ -25,16 +25,13 @@ const QnaView = () => {
     });
   }, [changeQna]);
   const insertQnaAnswer = () => {
-    if (qnaAnswerCon !== "<p><br><p>" && qnaAnswerCon !== "") {
-      console.log(qnaAnswerCon);
-      setQnaAns({
-        ...qnaAns,
-        qnaNo: qnaNo,
-        qnaAnswerContent: qnaAnswerCon,
-        qnaAnswerWriter: memberNickname,
-      });
+    if (qnaAnswerCon !== "<p><br></p>" && qnaAnswerCon !== "") {
+      const form = new FormData();
+      form.append("qnaNo", qnaNo);
+      form.append("qnaAnswerContent", qnaAnswerCon);
+      form.append("qnaAnswerWriter", memberNickname);
       axios
-        .post(`${backServer}/admin/qna/insertAns/`, qnaAns)
+        .post(`${backServer}/admin/qna`, form)
         .then((res) => {
           setQnaAnswerCon("");
           changeQna === true ? setChangeQna(false) : setChangeQna(true);
@@ -52,24 +49,25 @@ const QnaView = () => {
     }
   };
   const deleteQnaAnswer = () => {
-    axios.delete(`${backServer}/qna/qnaAns/${qna.qnaAnswerNo}`).then((res) => {
+    axios.delete(`${backServer}/admin/qna/${qna.qnaAnswerNo}`).then((res) => {
       changeQna === true ? setChangeQna(false) : setChangeQna(true);
     });
   };
   const updateQnaAnswer = () => {
-    if (qna.qnaAnswerContent !== "<p><br><p>") {
+    if (content !== "<p><br></p>" && content !== "") {
+      console.log(content);
       const form = new FormData();
-      form.append("qnaAnswerNo", qna.qnaAnsNo);
-      form.append("qnaAnswerContent", qna.qnaAnswerContent);
+      form.append("qnaNo", qnaNo);
+      form.append("qnaAnswerContent", content);
       axios
-        .patch(`${backServer}/inquiry/comment`, form)
+        .patch(`${backServer}/admin/qna`, form)
         .then((res) => {
           changeQna === true ? setChangeQna(false) : setChangeQna(true);
         })
         .catch((err) => {});
     } else {
       Swal.fire({
-        text: "댓글 내용을 입력하세요",
+        text: "답변 내용을 입력하세요",
         icon: "info",
         iconColor: "var(--main1)",
         confirmButtonColor: "var(--point1)",
@@ -85,15 +83,29 @@ const QnaView = () => {
             <table className="admin-frm">
               <tbody>
                 <tr>
-                  <th colSpan={4} id="inquiry-title">
+                  <th colSpan={8} id="inquiry-title">
                     {qna.qnaTitle}
                   </th>
                 </tr>
                 <tr>
-                  <th style={{ width: "20%" }}>작성자</th>
-                  <td style={{ width: "30%" }}>{qna.qnaWriter}</td>
-                  <th style={{ width: "20%" }}>작성일</th>
+                  <th style={{ width: "10%" }}>작성자</th>
+                  <td style={{ width: "10%" }}>{qna.qnaWriter}</td>
+                  <th style={{ width: "10%" }}>작성일</th>
                   <td style={{ width: "30%" }}>{qna.qnaRegDate}</td>
+                  <th style={{ width: "10%" }}>타입</th>
+                  {qna.qnaType === 1 ? (
+                    <td style={{ width: "10%" }}>전체</td>
+                  ) : qna.qnaType === 2 ? (
+                    <td style={{ width: "10%" }}>상품</td>
+                  ) : qna.qnaType === 3 ? (
+                    <td style={{ width: "10%" }}>배송</td>
+                  ) : qna.qnaType === 4 ? (
+                    <td style={{ width: "10%" }}>결제</td>
+                  ) : (
+                    <td style={{ width: "10%" }}>기타</td>
+                  )}
+                  <th style={{ width: "10%" }}>제품번호</th>
+                  <td style={{ width: "10%" }}>{qna.productNo}</td>
                 </tr>
               </tbody>
             </table>
@@ -109,26 +121,6 @@ const QnaView = () => {
         <div className="inquiry-comment">
           <div className="inquiry-comment-content-wrap">
             <div className="inquiry-sub-title">답변</div>
-            <div>
-              <div className="inquiry-comment-left" id="admin-qna-input-nick">
-                <p>{memberNickname}</p>
-              </div>
-              <div className="admin-qna-quill">
-                <QuillEditor
-                  setContent={setQnaAnswerCon}
-                  content={qnaAnswerCon}
-                ></QuillEditor>
-              </div>
-              <div className="admin-qna-button">
-                <button
-                  type="button"
-                  className="admin-write-submit"
-                  onClick={insertQnaAnswer}
-                >
-                  등록
-                </button>
-              </div>
-            </div>
             {qna.qnaAnswerWriter ? (
               <ul>
                 <li className="inquiry-comments">
@@ -175,8 +167,28 @@ const QnaView = () => {
                 </li>
               </ul>
             ) : (
-              <div className="inquiry-noComment" id="qna-noAns">
-                등록된 답변이 없습니다.
+              <div>
+                <div className="inquiry-comment-left" id="admin-qna-input-nick">
+                  <p>{memberNickname}</p>
+                </div>
+                <div className="admin-qna-quill">
+                  <QuillEditor
+                    setContent={setQnaAnswerCon}
+                    content={qnaAnswerCon}
+                  ></QuillEditor>
+                </div>
+                <div className="admin-qna-button">
+                  <button
+                    type="button"
+                    className="admin-write-submit"
+                    onClick={insertQnaAnswer}
+                  >
+                    등록
+                  </button>
+                </div>
+                <div className="inquiry-noComment" id="qna-noAns">
+                  등록된 답변이 없습니다.
+                </div>
               </div>
             )}
           </div>

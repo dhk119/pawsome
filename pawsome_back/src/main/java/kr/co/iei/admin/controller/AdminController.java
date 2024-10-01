@@ -97,9 +97,15 @@ public class AdminController {
 		QnaDTO qna=adminService.selectOneQna(qnaNo);
 		return ResponseEntity.ok(qna);
 	}
-	@PostMapping(value = "/qna/insertAns")
-	public ResponseEntity<Integer> insertQnaAnswer(@RequestBody QnaAnswerDTO qnaAns){
+	@PostMapping(value = "/qna")
+	public ResponseEntity<Integer> insertQnaAnswer(@ModelAttribute QnaAnswerDTO qnaAns){
 		int result=adminService.insertQnaAnswer(qnaAns);
+		return ResponseEntity.ok(result);
+	}
+	@PatchMapping(value = "/qna")
+	public ResponseEntity<Integer> updateQnaAnswer(@ModelAttribute QnaAnswerDTO qnaAns){
+		System.out.println(qnaAns);
+		int result=adminService.updateQnaAnswer(qnaAns);
 		return ResponseEntity.ok(result);
 	}
 }
