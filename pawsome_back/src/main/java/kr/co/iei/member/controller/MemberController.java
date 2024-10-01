@@ -274,11 +274,16 @@ public class MemberController {
 	}
 	
 	@PostMapping(value = "changePw")
-	public ResponseEntity<Integer> changePw(@RequestHeader("Authorization") String token, 
-	                                        @RequestParam("memberPw") String memberPw,
-	                                        @RequestParam("newMemberPw") String newMemberPw) {
+	public ResponseEntity<Integer> changePw(
+	    @RequestHeader("Authorization") String token, 
+	    @RequestBody Map<String, String> requestBody) {
+
+	    String memberPw = requestBody.get("memberPw");
+	    String newMemberPw = requestBody.get("newMemberPw");
+
 	    MemberDTO member = memberService.selectOneMember(token);
 	    System.out.println(member);
+
 	    int check = memberService.checkPw(member.getMemberEmail(), memberPw);
 	    if (check == 1) {
 	        int result = memberService.changePassword(member.getMemberEmail(), newMemberPw);
@@ -287,6 +292,7 @@ public class MemberController {
 	        return ResponseEntity.ok(2);
 	    }
 	}
+
 	
 	@GetMapping(value = "selectSchedule")
 	public ResponseEntity<List> selectCalendar(@RequestHeader("Authorization") String token) {
