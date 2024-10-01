@@ -70,4 +70,10 @@
   		where
   			member_email=#{memberEmail}
   	</update>
+  	<select id="totalPetCountMagnum" resultType="int">
+  		select count(*) from pet
+  	</select>
+  	<select id="selectPetListMagnum" resultType="pet">
+  		select * from (select rownum as rnum, b.* from(SELECT * from pet order by 1 desc)b) where rnum BETWEEN #{start} and #{end}
+  	</select>
 </mapper>

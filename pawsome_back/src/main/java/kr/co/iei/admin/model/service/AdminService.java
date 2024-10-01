@@ -74,5 +74,16 @@ public class AdminService {
 		int result=memberDao.updateMemberLevelMagnum(member);
 		return result;
 	}
+	public Map selectPetList(int reqPage) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=memberDao.totalPetCountMagnum();
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=memberDao.selectPetListMagnum(pi);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
 	
 }

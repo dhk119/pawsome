@@ -5,6 +5,7 @@ import "./admin.css";
 import MemberList from "./MemberList";
 import ProductView from "./ProductView";
 import Admin from "./Admin";
+import PetList from "./PetList";
 const AdminMain = () => {
   return (
     <>
@@ -18,6 +19,7 @@ const AdminMain = () => {
           <Route path="main" element={<Admin />}></Route>
           <Route path="memberList" element={<MemberList />}></Route>
           <Route path="productList" element={<ProductList />}></Route>
+          <Route path="petList" element={<PetList />}></Route>
         </Routes>
       </section>
     </>

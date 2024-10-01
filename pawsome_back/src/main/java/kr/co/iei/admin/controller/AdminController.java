@@ -80,4 +80,9 @@ public class AdminController {
 		int result=adminService.updateMemberLevel(member);
 		return ResponseEntity.ok(result);
 	}
+	@GetMapping(value = "/petList/{reqPage}")
+	public ResponseEntity<Map> petList(@PathVariable int reqPage){
+		Map map=adminService.selectPetList(reqPage);
+		return ResponseEntity.ok(map);
+	}
 }

@@ -37,4 +37,8 @@ public interface MemberDao {
 	int changePassword(String memberEmail, String memberPw);
 
 	int updateMember(MemberDTO member);
+
+	int totalPetCountMagnum();
+
+	List selectPetListMagnum(PageInfo pi);
 }
