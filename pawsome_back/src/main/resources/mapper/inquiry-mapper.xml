@@ -41,86 +41,86 @@
 		delete from inquiry_comment where inquiry_comment_no=#{inquiryCommentNo}
 	</delete>
 	<select id="searchTotalCount" resultType="int">
-		select count(*) from inquiry
+		select count(*) from inquiry where
 		<choose>
 			<when test="option==0">
 				<choose>
 					<when test="type.equals('all')">
-						where inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%' or member_email like '%'||#{keyword}||'%'
+						inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%' or member_email like '%'||#{keyword}||'%'
 					</when>
 					<when test="type.equals('title')">
-						where inquiry_title like '%'||#{keyword}||'%'
+						inquiry_title like '%'||#{keyword}||'%'
 					</when>
 					<when test="type.equals('writer')">
-						where member_email like '%'||#{keyword}||'%'
+						member_email like '%'||#{keyword}||'%'
 					</when>
 					<when test="type.equals('titleContent')">
-						where inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%'
+						inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%'
 					</when>
 					<when test="type.equals('content')">
-						where inquiry_content like '%'||#{keyword}||'%'
+						inquiry_content like '%'||#{keyword}||'%'
 					</when>
 				</choose>
 			</when>
 			<otherwise>
 				<choose>
 					<when test="type.equals('all')">
-						where (inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%' or member_email like '%'||#{keyword}||'%')and inquiry_type=#{option}
+						(inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%' or member_email like '%'||#{keyword}||'%')and inquiry_type=#{option}
 					</when>
 					<when test="type.equals('title')">
-						where inquiry_title like '%'||#{keyword}||'%' and inquiry_type=#{option}
+						inquiry_title like '%'||#{keyword}||'%' and inquiry_type=#{option}
 					</when>
 					<when test="type.equals('writer')">
-						where member_email like '%'||#{keyword}||'%' and inquiry_type=#{option}
+						member_email like '%'||#{keyword}||'%' and inquiry_type=#{option}
 					</when>
 					<when test="type.equals('titleContent')">
-						where (inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%'}) and inquiry_type=#{option}
+						(inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%'}) and inquiry_type=#{option}
 					</when>
 					<when test="type.equals('content')">
-						where inquiry_content like '%'||#{keyword}||'%' and inquiry_type=#{option}
+						inquiry_content like '%'||#{keyword}||'%' and inquiry_type=#{option}
 					</when>
 				</choose>
 			</otherwise>
 		</choose>
 	</select>
 	<select id="searchInquiryList" resultType="inquiry">
-		select * from (select rownum as rnum, b.* from(SELECT inquiry_no,inquiry_title,to_char(inquiry_reg_date)as inquiry_reg_date,inquiry_type, member_email from inquiry 
+		select * from (select rownum as rnum, b.* from(SELECT inquiry_no,inquiry_title,to_char(inquiry_reg_date)as inquiry_reg_date,inquiry_type, member_email from inquiry where
 		<choose>
 			<when test="option==0">
 				<choose>
 					<when test="type.equals('all')">
-						where inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%' or member_email like '%'||#{keyword}||'%'
+						inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%' or member_email like '%'||#{keyword}||'%'
 					</when>
 					<when test="type.equals('title')">
-						where inquiry_title like '%'||#{keyword}||'%'
+						inquiry_title like '%'||#{keyword}||'%'
 					</when>
 					<when test="type.equals('writer')">
-						where member_email like '%'||#{keyword}||'%'
+						member_email like '%'||#{keyword}||'%'
 					</when>
 					<when test="type.equals('titleContent')">
-						where inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%'
+						inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%'
 					</when>
 					<when test="type.equals('content')">
-						where inquiry_content like '%'||#{keyword}||'%'
+						inquiry_content like '%'||#{keyword}||'%'
 					</when>
 				</choose>
 			</when>
 			<otherwise>
 				<choose>
 					<when test="type.equals('all')">
-						where (inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%' or member_email like '%'||#{keyword}||'%')and inquiry_type=#{option}
+						(inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%' or member_email like '%'||#{keyword}||'%')and inquiry_type=#{option}
 					</when>
 					<when test="type.equals('title')">
-						where inquiry_title like '%'||#{keyword}||'%' and inquiry_type=#{option}
+						inquiry_title like '%'||#{keyword}||'%' and inquiry_type=#{option}
 					</when>
 					<when test="type.equals('writer')">
-						where member_email like '%'||#{keyword}||'%' and inquiry_type=#{option}
+						member_email like '%'||#{keyword}||'%' and inquiry_type=#{option}
 					</when>
 					<when test="type.equals('titleContent')">
-						where (inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%') and inquiry_type=#{option}
+						(inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%') and inquiry_type=#{option}
 					</when>
 					<when test="type.equals('content')">
-						where inquiry_content like '%'||#{keyword}||'%' and inquiry_type=#{option}
+						inquiry_content like '%'||#{keyword}||'%' and inquiry_type=#{option}
 					</when>
 				</choose>
 			</otherwise>

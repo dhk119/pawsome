@@ -23,6 +23,11 @@ const Admin = () => {
             </Link>
           </div>
           <div className="admin-link-gap">
+            <Link className="admin-product-label" to="/admin/qnaList">
+              qna 리스트
+            </Link>
+          </div>
+          <div className="admin-link-gap">
             <Link className="admin-product-label" to="/admin/boardList">
               신고 게시판 리스트
             </Link>

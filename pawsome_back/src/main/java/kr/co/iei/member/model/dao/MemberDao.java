@@ -42,4 +42,7 @@ public interface MemberDao {
 
 	ArrayList<ScheduleDTO> selectSchedule(String memberEmail);
 
+	int totalPetCountMagnum();
+
+	List selectPetListMagnum(PageInfo pi);
 }

@@ -14,7 +14,7 @@ const InquiryList = () => {
   const isLogin = useRecoilValue(isLoginState);
   const [type, setType] = useState("all");
   const [keyword, setKeyword] = useState("");
-  const [search, setSearch] = useState(false);
+  const [search, setSearch] = useState(0);
   const [option, setOption] = useState(0);
   const [searchFrm, setSerachFrm] = useState({
     reqPage: 1,
@@ -23,13 +23,8 @@ const InquiryList = () => {
     option: 0,
   });
   useEffect(() => {
-    const form = new FormData();
-    form.append("reqPage", reqPage);
-    form.append("type", type);
-    form.append("keyword", keyword);
-    form.append("option", option);
     {
-      !search
+      search === 0
         ? axios
             .get(`${backServer}/inquiry/list/${reqPage}`)
             .then((res) => {
@@ -38,7 +33,9 @@ const InquiryList = () => {
             })
             .catch(() => {})
         : axios
-            .get(`${backServer}/inquiry/search`, form)
+            .get(
+              `${backServer}/inquiry/search/${reqPage}/${type}/${keyword}/${option}`
+            )
             .then((res) => {
               setInquiryList(res.data.list);
               setPi(res.data.pi);
@@ -56,10 +53,10 @@ const InquiryList = () => {
   };
   const searchInquiry = () => {
     setSerachFrm({ ...searchFrm, reqPage: 1 });
-    setSearch(false);
+    setSearch(0);
     if (keyword === "" && type === "all" && option === 0) {
     } else {
-      setSearch(true);
+      setSearch(search + 1);
     }
   };
   const changeOption = (e) => {

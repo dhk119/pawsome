@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.market.model.dao.MarketDao;
 import kr.co.iei.market.model.dto.ProductDTO;
+import kr.co.iei.market.model.dto.QnaAnswerDTO;
+import kr.co.iei.market.model.dto.QnaDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.util.PageInfo;
@@ -74,5 +76,35 @@ public class AdminService {
 		int result=memberDao.updateMemberLevelMagnum(member);
 		return result;
 	}
-	
+	public Map selectPetList(int reqPage) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=memberDao.totalPetCountMagnum();
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=memberDao.selectPetListMagnum(pi);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
+	public Map selectQnaList(int reqPage, boolean answer) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=marketDao.totalQnaCountMagnum(answer);
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=marketDao.selectQnaListMagnum(pi.getStart(), pi.getEnd(), answer);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
+	public QnaDTO selectOneQna(int qnaNo) {
+		QnaDTO qna=marketDao.selectOneQnaMagnum(qnaNo);
+		return qna;
+	}
+	@Transactional
+	public int insertQnaAnswer(QnaAnswerDTO qnaAnswer) {
+		int result=marketDao.insertQnaAnswer(qnaAnswer);
+		return result;
+	}
 }

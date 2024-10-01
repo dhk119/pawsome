@@ -30,8 +30,8 @@ public interface InquiryDao {
 
 	int deleteInquiryComment(int inquiryCommentNo);
 
-	int searchTotalCount(int reqPage, String keyword, String type, int option);
+	int searchTotalCount(int reqPage, String type, String keyword, int option);
 
-	List searchInquiryList(int start, int end, int reqPage, String keyword, String type, int option);
+	List searchInquiryList(int start, int end, int reqPage , String type, String keyword, int option);
 	
 }

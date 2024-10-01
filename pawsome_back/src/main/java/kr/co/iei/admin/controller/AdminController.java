@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.admin.model.service.AdminService;
 import kr.co.iei.market.model.dto.ProductDTO;
+import kr.co.iei.market.model.dto.QnaAnswerDTO;
+import kr.co.iei.market.model.dto.QnaDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.util.FileUtils;
 
@@ -78,6 +80,26 @@ public class AdminController {
 	@PatchMapping(value = "/member")
 	public ResponseEntity<Integer> updateMemberLevel(@RequestBody MemberDTO member){
 		int result=adminService.updateMemberLevel(member);
+		return ResponseEntity.ok(result);
+	}
+	@GetMapping(value = "/petList/{reqPage}")
+	public ResponseEntity<Map> petList(@PathVariable int reqPage){
+		Map map=adminService.selectPetList(reqPage);
+		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/qnaList/{reqPage}/{answer}")
+	public ResponseEntity<Map> qnaList(@PathVariable int reqPage, @PathVariable boolean answer){
+		Map map=adminService.selectQnaList(reqPage,answer);
+		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/qna/{qnaNo}")
+	public ResponseEntity<QnaDTO> selectOneQna(@PathVariable int qnaNo){
+		QnaDTO qna=adminService.selectOneQna(qnaNo);
+		return ResponseEntity.ok(qna);
+	}
+	@PostMapping(value = "/qna/insertAns")
+	public ResponseEntity<Integer> insertQnaAnswer(@RequestBody QnaAnswerDTO qnaAns){
+		int result=adminService.insertQnaAnswer(qnaAns);
 		return ResponseEntity.ok(result);
 	}
 }

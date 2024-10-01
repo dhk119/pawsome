@@ -213,7 +213,7 @@ tbody > tr:last-child td:last-child {
   margin-right: 10px;
   background-color: var(--main1);
   text-align: center;
-  border-radius: 10px;
+  border-radius: 20px;
   box-sizing: border-box;
   border: none;
   color: #fff;
@@ -451,4 +451,42 @@ button {
 }
 .admin-product-quill-editor * {
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+#admin-qna-button {
+  width: 200%;
+  height: 100%;
+  border-radius: 20px;
+  background-color: var(--main1);
+  color: #fff;
+  font-weight: bold;
+}
+#admin-qna-button-wrap {
+  height: 100%;
+}
+#admin-qna-button-outside {
+  height: 40px;
+}
+#admin-qna-input-nick {
+  margin-bottom: 8px;
+}
+.admin-qna-quill {
+  height: 250px;
+}
+.admin-qna-button {
+  margin-bottom: 50px;
+}
+#qna-noAns {
+  margin-top: 100px;
+}
+#admin-qna-bottom {
+  display: block;
+}
+#admin-margin-top {
+  margin-top: 50px;
+}
+.admin-qna-flex {
+  display: flex;
+}
+.admin-qna-text {
+  color: var(--gray2);
 }
