@@ -52,13 +52,63 @@
   margin: 30px auto;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
 }
-.map-container {
-  width: 1500px;
-  border-radius: 10px;
-  padding: 50px;
-  margin: 30px auto;
-  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
+/* Map.css */
+#map {
+  margin: 0 auto;
+  width: 1300px;
+  height: 700px;
 }
+
+#menu_wrap {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  color: black;
+  text-align: left;
+  margin: 0 auto;
+  margin-top: 20px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 10px;
+  z-index: 100;
+  width: 400px;
+  height: 450px;
+}
+
+#keyword {
+  width: 80%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 3px solid #ffa518;
+}
+
+#searchButton {
+  margin-left: 5px;
+  margin-bottom: 10px;
+  width: 10%;
+  height: 30px;
+  background: #ffa518;
+  border: none;
+  font-weight: bold;
+  color: white;
+}
+
+#placesList {
+  border: 2px solid #ffa518;
+  margin: 0 auto;
+  list-style-type: none;
+  max-height: 350px;
+  overflow-y: auto;
+  padding: 0;
+  border-radius: 5px;
+}
+
+#pagination {
+  text-align: center;
+  margin-top: 10px;
+}
+
 /*MBTI*/
 .mbti-container {
   display: flex;
