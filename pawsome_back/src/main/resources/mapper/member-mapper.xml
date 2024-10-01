@@ -70,4 +70,10 @@
   		where
   			member_email=#{memberEmail}
   	</update>
+  	
+
+  	<select id="selectSchedule" resultType="schedule">
+  		select * from schedule where member_email=#{memberEmail}
+  	</select>
+
 </mapper>

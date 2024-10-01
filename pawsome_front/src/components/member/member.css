@@ -26,12 +26,26 @@
   box-sizing: border-box;
   font-size: 14px;
 }
-.join-page .form button,.changePw,.member-page .submit {
+.join-page .form button,
+.member-page .submit,
+.login-page .submit {
   background-color: var(--point1);
   width: 100%;
   border: 0;
   margin-top: 15px;
   padding: 15px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.changePw {
+  display: block;
+  background-color: var(--point1);
+  width: 100%;
+  border: 0;
+  margin-top: 15px;
+  padding: 15px 0px;
   color: #fff;
   font-size: 14px;
   cursor: pointer;
@@ -47,7 +61,10 @@
   border: none;
 }
 
-.join-page .form button:hover,.changePw:hover, .member-page .submit:hover {
+.join-page .form button:hover,
+.changePw:hover,
+.member-page .submit:hover,
+.login-page .submit:hover {
   background-color: var(--main1);
 }
 
@@ -87,7 +104,7 @@
   background-color: var(--main1);
 }
 
-.member-page .addr>input:first-child {
+.member-page .addr > input:first-child {
   width: 100%;
 }
 

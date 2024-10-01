@@ -1,5 +1,6 @@
 package kr.co.iei.member.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.PetDTO;
+import kr.co.iei.member.model.dto.ScheduleDTO;
 import kr.co.iei.util.JwtUtils;
 
 @Service
@@ -109,6 +111,21 @@ public class MemberService {
 	public int updateMember(MemberDTO member) {
 		int result = memberDao.updateMember(member);
 		return result;
+	}
+
+	public int checkPw(String memberEmail, String memberPw) {
+		MemberDTO m = memberDao.selectOneMember(memberEmail);
+		if(m!=null && encoder.matches(memberPw, m.getMemberPw())) {
+			return 1;
+		}
+		return 0;
+	}
+
+	public List selectSchedule(String memberEmail) {
+		List scheduleList = new ArrayList<ScheduleDTO>();
+		scheduleList = memberDao.selectSchedule(memberEmail);
+		System.out.println(scheduleList);
+		return scheduleList;
 	}
 
 }

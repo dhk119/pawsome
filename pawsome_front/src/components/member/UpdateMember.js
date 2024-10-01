@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -21,6 +21,7 @@ const UpdateMember = () => {
     memberAddr3: "", // 상세주소
     memberPhone: "", // 전화번호
     memberProfile: null, // 프로필 사진
+    loginType: "",
   });
 
   const changeMember = (e) => {
@@ -60,51 +61,56 @@ const UpdateMember = () => {
   }, []);
 
   // 회원 정보 수정 요청
-const update = (e) => {
-  e.preventDefault();
-  
-  const form = new FormData();
-  form.append("memberEmail", member.memberEmail);
-  form.append("memberName", member.memberName);
-  form.append("memberNickname", member.memberNickname);
-  form.append("memberAddr1", member.memberAddr1);
-  form.append("memberAddr2", member.memberAddr2);
-  form.append("memberAddr3", member.memberAddr3);
-  form.append("memberPhone", member.memberPhone);
+  const update = (e) => {
+    e.preventDefault();
 
-  // 프로필 사진 전송 (변경된 경우에만)
-  if (member.memberProfile !== null && member.memberProfile !== initialProfile) {
-    form.append("memberProfile1", member.memberProfile);
-  }
+    const form = new FormData();
+    form.append("memberEmail", member.memberEmail);
+    form.append("memberName", member.memberName);
+    form.append("memberNickname", member.memberNickname);
+    form.append("memberAddr1", member.memberAddr1);
+    form.append("memberAddr2", member.memberAddr2);
+    form.append("memberAddr3", member.memberAddr3);
+    if (member.memberPhone !== null) {
+      form.append("memberPhone", member.memberPhone);
+    }
 
-  // FormData 디버깅 출력
-  console.log("=== FormData 내용 ===");
-  for (let pair of form.entries()) {
-    console.log(`${pair[0]}: ${pair[1]}`);
-  }
+    // 프로필 사진 전송 (변경된 경우에만)
+    if (
+      member.memberProfile !== null &&
+      member.memberProfile !== initialProfile
+    ) {
+      form.append("memberProfile1", member.memberProfile);
+    }
 
-  axios
-    .patch(`${backServer}/member`, form, {
-      headers: {
-        contentType: "multipart/form-data",
-        processData: false,
-      },
-    })
-    .then((res) => {
-      if (res.data) {
-        navigate("/mypage/profile");
-      } else {
-        Swal.fire({
-          title: "에러가 발생했습니다.",
-          text: "다시 시도해주세요.",
-          icon: "error",
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+    // FormData 디버깅 출력
+    console.log("=== FormData 내용 ===");
+    for (let pair of form.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+
+    axios
+      .patch(`${backServer}/member`, form, {
+        headers: {
+          contentType: "multipart/form-data",
+          processData: false,
+        },
+      })
+      .then((res) => {
+        if (res.data) {
+          navigate("/mypage/profile");
+        } else {
+          Swal.fire({
+            title: "에러가 발생했습니다.",
+            text: "다시 시도해주세요.",
+            icon: "error",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   // 사진 미리보기 설정
   const handleFileChange = (e) => {
@@ -179,7 +185,11 @@ const update = (e) => {
                   style={{ display: "none" }}
                 />
               </label>
-              <button type="button" className="resetProfileImage" onClick={resetProfileImage}>
+              <button
+                type="button"
+                className="resetProfileImage"
+                onClick={resetProfileImage}
+              >
                 기본 이미지로 변경
               </button>
             </div>
@@ -193,7 +203,15 @@ const update = (e) => {
               disabled
             />
 
-            <button className="changePw">비밀번호 변경</button>
+            {member.loginType == "site" ? (
+              <>
+                <Link to="/mypage/change-pw" className="changePw">
+                  비밀번호 변경
+                </Link>
+              </>
+            ) : (
+              <></>
+            )}
 
             <input
               type="text"
@@ -257,7 +275,9 @@ const update = (e) => {
               placeholder="상세주소"
             />
 
-            <button type="submit" className="submit">회원 정보 수정</button>
+            <button type="submit" className="submit">
+              회원 정보 수정
+            </button>
           </form>
         </div>
       </div>

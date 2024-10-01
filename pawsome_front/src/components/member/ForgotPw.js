@@ -130,7 +130,7 @@ const ForgotPw = () => {
               value={member.memberName}
               onChange={ForgotInputChange}
             />
-            <button type="button" onClick={sendMailCode}>
+            <button className="submit" type="button" onClick={sendMailCode}>
               인증번호 전송
             </button>
 
@@ -148,7 +148,7 @@ const ForgotPw = () => {
                   남은 시간: {Math.floor(timer / 60)}:
                   {(timer % 60).toString().padStart(2, "0")}
                 </div>
-                <button type="button" onClick={rePassword}>
+                <button className="submit" type="button" onClick={rePassword}>
                   인증하기
                 </button>
               </>

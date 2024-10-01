@@ -35,13 +35,6 @@ const PetInsert = () => {
     if (pet.petProfile !== null) {
       form.append("petProfile1", pet.petProfile);
     }
-
-    // FormData 디버깅 출력
-    console.log("=== FormData 내용 ===");
-    for (let pair of form.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
-
     axios
       .post(`${backServer}/member/insertPet`, form, {
         headers: {

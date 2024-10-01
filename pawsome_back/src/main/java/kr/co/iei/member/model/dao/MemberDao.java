@@ -1,5 +1,6 @@
 package kr.co.iei.member.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -8,6 +9,7 @@ import kr.co.iei.member.model.dto.MemberDTO;
 
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.member.model.dto.PetDTO;
+import kr.co.iei.member.model.dto.ScheduleDTO;
 
 
 @Mapper
@@ -37,4 +39,7 @@ public interface MemberDao {
 	int changePassword(String memberEmail, String memberPw);
 
 	int updateMember(MemberDTO member);
+
+	ArrayList<ScheduleDTO> selectSchedule(String memberEmail);
+
 }

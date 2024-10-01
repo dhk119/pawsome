@@ -92,7 +92,9 @@ const Login = () => {
               onChange={changeMember}
               placeholder="비밀번호"
             />
-            <button type="submit">로그인</button>
+            <button className="submit" type="submit">
+              로그인
+            </button>
             <p className="message">
               계정이 없으신가요?
               <Link to="/join" className="join">
@@ -100,9 +102,8 @@ const Login = () => {
               </Link>
             </p>
             <p className="message">
-              비밀번호를 잊으셨나요?
               <Link to="/forgotPw" className="join">
-                비밀번호 찾기
+                비밀번호를 잊으셨나요?
               </Link>
             </p>
           </form>

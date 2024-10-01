@@ -1,6 +1,8 @@
 package kr.co.iei.member.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -28,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.PetDTO;
+import kr.co.iei.member.model.dto.ScheduleDTO;
 import kr.co.iei.member.model.service.MemberService;
 import kr.co.iei.util.EmailSender;
 import kr.co.iei.util.FileUtils;
@@ -144,8 +147,6 @@ public class MemberController {
 	
 	@PostMapping(value = "/insertPet")
 	public ResponseEntity<Integer> insertPet(@ModelAttribute PetDTO pet, @ModelAttribute MultipartFile petProfile1) {
-		System.out.println(pet);
-		System.out.println(petProfile1);
 		if(petProfile1 != null) {
 			String savepath = root + "/member/pet/";
 			String filepath = fileUtil.upload(savepath, petProfile1);
@@ -257,10 +258,6 @@ public class MemberController {
 	@PatchMapping
 	public ResponseEntity<Integer> updateMember(
 	        @ModelAttribute MemberDTO member, @ModelAttribute MultipartFile memberProfile1, @RequestHeader("Authorization") String token) {
-
-	    System.out.println(member);
-	    System.out.println(memberProfile1);
-
 	    // 프로필 사진이 비어있지 않으면 업로드 처리
 	    if (memberProfile1 != null && !memberProfile1.isEmpty()) {
 	        String savepath = root + "/member/profile/";
@@ -275,6 +272,28 @@ public class MemberController {
 	    int result = memberService.updateMember(member);
 	    return ResponseEntity.ok(result);
 	}
+	
+	@PostMapping(value = "changePw")
+	public ResponseEntity<Integer> changePw(@RequestHeader("Authorization") String token, 
+	                                        @RequestParam("memberPw") String memberPw,
+	                                        @RequestParam("newMemberPw") String newMemberPw) {
+	    MemberDTO member = memberService.selectOneMember(token);
+	    System.out.println(member);
+	    int check = memberService.checkPw(member.getMemberEmail(), memberPw);
+	    if (check == 1) {
+	        int result = memberService.changePassword(member.getMemberEmail(), newMemberPw);
+	        return ResponseEntity.ok(result);
+	    } else {
+	        return ResponseEntity.ok(2);
+	    }
+	}
+	
+	@GetMapping(value = "selectSchedule")
+	public ResponseEntity<List> selectCalendar(@RequestHeader("Authorization") String token) {
+	    MemberDTO member = memberService.selectOneMember(token);
+	    List scheduleList = memberService.selectSchedule(member.getMemberEmail());
 
+	    return ResponseEntity.ok(scheduleList);
+	}
 	
 }

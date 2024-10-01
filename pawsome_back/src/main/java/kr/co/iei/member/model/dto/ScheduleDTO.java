@@ -14,7 +14,7 @@ public class ScheduleDTO {
 	private int dayNo;
 	private String dayTitle;
 	private String dayStart;
-	private String dayEnd;
+	private String dayEnd; //null이면, start기준  1일치 일정
 	private String dayContent;
 	private String memberEmail;
 }
