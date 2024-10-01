@@ -115,7 +115,7 @@
 	</delete>
 <!-- 장바구니 -->
 	<select id="searchCart" resultType="int">
-		select * from cart where member_email=#{memberEmail} and product_no=#{productNo}
+		select count(*) from cart where member_email=#{memberEmail} and product_no=#{productNo}
 	</select>
 	<insert id="insertCart">
 		insert into cart values(cart_seq.nextval,#{productNo},#{productCartCount},#{memberEmail})
@@ -128,4 +128,7 @@
 	<update id="updateProductCount">
 		update cart set product_cart_count=product_cart_count + #{productCartCount} where member_email=#{memberEmail} and product_no=#{productNo}
 	</update>
+	<delete id="deleteCart">
+		delete from cart where cart_no=#{cartNo}
+	</delete>
 </mapper>

@@ -81,6 +81,15 @@ td {
 .list-tbl .content-answer-box {
   background-color: var(--gray7);
 }
+/*page-navi*/
+.list-tbl-wrap > ul {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.list-tbl-wrap > ul > .num {
+  margin: 0 10px;
+}
 
 /*guide*/
 .guide-wrap > .content-wrap {
