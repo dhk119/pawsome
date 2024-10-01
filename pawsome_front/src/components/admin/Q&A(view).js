@@ -26,15 +26,12 @@ const QnaView = () => {
   }, [changeQna]);
   const insertQnaAnswer = () => {
     if (qnaAnswerCon !== "<p><br><p>" && qnaAnswerCon !== "") {
-      console.log(qnaAnswerCon);
-      setQnaAns({
-        ...qnaAns,
-        qnaNo: qnaNo,
-        qnaAnswerContent: qnaAnswerCon,
-        qnaAnswerWriter: memberNickname,
-      });
+      const form = new FormData();
+      form.append("qnaNo", qnaNo);
+      form.append("qnaAnswerContent", qnaAnswerCon);
+      form.append("qnaAnswerWriter", memberNickname);
       axios
-        .post(`${backServer}/admin/qna/insertAns/`, qnaAns)
+        .post(`${backServer}/admin/qna/insertAns`, form)
         .then((res) => {
           setQnaAnswerCon("");
           changeQna === true ? setChangeQna(false) : setChangeQna(true);
