@@ -23,7 +23,7 @@ const Cart = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [loginEmail, cartList]);
+  }, [loginEmail, state]);
 
   //선택상품 총금액
   const [total, setTotal] = useState(0);
@@ -40,7 +40,6 @@ const Cart = () => {
   };
 
   //선택상품 삭제
-
   const deleteChecked = () => {
     /*
     잘 이해가 안 돼서 일단 다른 방향으로 처리
@@ -63,6 +62,7 @@ const Cart = () => {
           console.log(err);
         });
     });
+    setState(!state);
   };
 
   return (
