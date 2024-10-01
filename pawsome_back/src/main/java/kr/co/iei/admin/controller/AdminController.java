@@ -85,4 +85,15 @@ public class AdminController {
 		Map map=adminService.selectPetList(reqPage);
 		return ResponseEntity.ok(map);
 	}
+	/*@GetMapping(value = "/noAnsQnaList/{reqPage}")
+	public ResponseEntity<Map> noAnsQnaList(@PathVariable int reqPage){
+		boolean answer=false;
+		Map map=adminService.selectQnaList(reqPage,answer);
+		return ResponseEntity.ok(map);
+	}*/
+	@GetMapping(value = "/qnaList/{reqPage}/{answer}")
+	public ResponseEntity<Map> qnaList(@PathVariable int reqPage, @PathVariable boolean answer){
+		Map map=adminService.selectQnaList(reqPage,answer);
+		return ResponseEntity.ok(map);
+	}
 }

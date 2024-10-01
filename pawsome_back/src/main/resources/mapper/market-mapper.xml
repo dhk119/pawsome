@@ -23,7 +23,29 @@
 	<delete id="deleteProduct">
 		delete from product where product_no=#{productNo}
 	</delete>
-	
+	<select id="totalQnaCountMagnum" resultType="int">
+		select count(*) from qna
+		<choose>
+			<when test="answer==true">
+			where qna_no in (select qna_answer.qna_no from qna_answer)
+			</when>
+			<otherwise>
+			where qna_no not in (select qna_answer.qna_no from qna_answer)
+			</otherwise>
+		</choose>
+	</select>
+	<select id="selectQnaListMagnum" resultType="qna">
+		select * from (select rownum as rnum, b.* from(SELECT qna_no, product_no, qna_type, qna_title, qna_public, qna_reg_date, qna_writer from qna
+		<choose>
+			<when test="answer==true">
+				where qna_no in (select qna_answer.qna_no from qna_answer)
+			</when>
+			<otherwise>
+				where qna_no not in (select qna_answer.qna_no from qna_answer)
+			</otherwise>
+		</choose>
+		order by product_no desc)b) where rnum BETWEEN #{start} and #{end}
+	</select>
 	
 	
 	

@@ -27,6 +27,10 @@ public interface MarketDao {
 	
 	int deleteProduct(int productNo);
 	
+	int totalQnaCountMagnum(boolean answer);
+
+	List selectQnaListMagnum(int start, int end, boolean answer);
+	
 	
 	/*원희*/
 	int totalCount(int typeCategory, String mainCategory);
