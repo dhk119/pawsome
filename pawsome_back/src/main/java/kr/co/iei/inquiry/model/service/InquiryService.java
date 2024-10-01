@@ -71,12 +71,12 @@ public class InquiryService {
 		return result;
 	}
 
-	public Map searchInquiryList(int reqPage,String keyword,String type,int option) {
+	public Map searchInquiryList(int reqPage,String type,String keyword,int option) {
 		int numPerPage=10;
 		int pageNaviSize=5;
-		int totalCount=inquiryDao.searchTotalCount(reqPage,keyword,type,option);
+		int totalCount=inquiryDao.searchTotalCount(reqPage,type,keyword,option);
 		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-		List list=inquiryDao.searchInquiryList(pi.getStart(), pi.getEnd(),reqPage,keyword,type,option);
+		List list=inquiryDao.searchInquiryList(pi.getStart(), pi.getEnd(),reqPage, type, keyword, option);
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("list",list);
 		map.put("pi",pi);

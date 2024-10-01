@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import PageNavi from "../utils/PageNavi";
+import { useNavigate } from "react-router-dom";
 
 const Qna = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const [ansQnaList, setAnsQnaList] = useState([]);
-  const [noAnsQnaList, setNoAnsQnaList] = useState([]);
+  const navigate = useNavigate();
+  const [qnaList, setQnaList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
   const [innerComment, setInnerComment] = useState("댓글 작성 Q&A로 전환");
@@ -14,7 +15,7 @@ const Qna = () => {
     axios
       .get(`${backServer}/admin/qnaList/${reqPage}/${answer}`)
       .then((res) => {
-        setNoAnsQnaList(res.data.list);
+        setQnaList(res.data.list);
         setPi(res.data.pi);
       });
   }, [reqPage, answer]);
@@ -54,16 +55,21 @@ const Qna = () => {
           </tr>
         </thead>
         <tbody id="admin-member-list-body">
-          {noAnsQnaList.map((noAnsQna, i) => {
+          {qnaList.map((qna, i) => {
             return (
-              <tr key={"pet" + i}>
-                <td>{noAnsQna.qnaNo}</td>
-                <td>{noAnsQna.productNo}</td>
-                <td>{noAnsQna.qnaType}</td>
-                <td>{noAnsQna.qnaTitle}</td>
-                <td>{noAnsQna.qnaPublic}</td>
-                <td>{noAnsQna.qnaRegDate}</td>
-                <td>{noAnsQna.qnaWriter}</td>
+              <tr
+                key={"pet" + i}
+                onClick={() => {
+                  navigate(`/admin/qna/${qna.qnaNo}`);
+                }}
+              >
+                <td>{qna.qnaNo}</td>
+                <td>{qna.productNo}</td>
+                <td>{qna.qnaType}</td>
+                <td>{qna.qnaTitle}</td>
+                {qna.qnaPublic === 0 ? <td>{"공개"}</td> : <td>{"비공개"}</td>}
+                <td>{qna.qnaRegDate}</td>
+                <td>{qna.qnaWriter}</td>
               </tr>
             );
           })}

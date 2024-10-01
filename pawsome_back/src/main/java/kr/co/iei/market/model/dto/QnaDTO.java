@@ -23,4 +23,5 @@ public class QnaDTO {
 	private String qnaWriter;		//작성자
 	private String qnaAnswerContent;		//답글 컨텐츠
 	private String qnaAnswerRegDate;		//답글 작성일
+	private String qnaAnswerWriter;			//답글 작성자(관리자 고정)
 }

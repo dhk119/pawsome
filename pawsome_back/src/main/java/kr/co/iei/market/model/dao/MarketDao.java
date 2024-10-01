@@ -31,6 +31,8 @@ public interface MarketDao {
 
 	List selectQnaListMagnum(int start, int end, boolean answer);
 	
+	QnaDTO selectOneQnaMagnum(int qnaNo);
+
 	
 	/*원희*/
 	int totalCount(int typeCategory, String mainCategory);
@@ -64,6 +66,8 @@ public interface MarketDao {
 	List selectCartList(String memberEmail);
 
 	int updateProductCount(int productNo, int productCartCount, String memberEmail);
+
+
 
 
 	

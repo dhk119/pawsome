@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.market.model.dao.MarketDao;
 import kr.co.iei.market.model.dto.ProductDTO;
+import kr.co.iei.market.model.dto.QnaAnswerDTO;
+import kr.co.iei.market.model.dto.QnaDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.util.PageInfo;
@@ -95,5 +97,14 @@ public class AdminService {
 		map.put("list",list);
 		map.put("pi",pi);
 		return map;
+	}
+	public QnaDTO selectOneQna(int qnaNo) {
+		QnaDTO qna=marketDao.selectOneQnaMagnum(qnaNo);
+		return qna;
+	}
+	@Transactional
+	public int insertQnaAnswer(QnaAnswerDTO qnaAnswer) {
+		int result=marketDao.insertQnaAnswer(qnaAnswer);
+		return result;
 	}
 }
