@@ -5,7 +5,6 @@ import "./service.css";
 const PetService = () => {
   return (
     <div className="service-container">
-      <img src="/image/service/ServiceHeader.png" style={{ width: "1200px" }} />
       <nav className="nav-box">
         <ul>
           <li className="nav-btn">
@@ -22,6 +21,7 @@ const PetService = () => {
           </li>
         </ul>
       </nav>
+      <img src="/image/service/ServiceHeader.png" style={{ width: "1200px" }} />
     </div>
   );
 };

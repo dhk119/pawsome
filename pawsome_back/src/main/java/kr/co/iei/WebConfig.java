@@ -18,6 +18,7 @@ public class WebConfig implements WebMvcConfigurer{
 	public BCryptPasswordEncoder bCrypt() {
 		return new BCryptPasswordEncoder();
 	}
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/editor/**").addResourceLocations("file:///"+root+"/editor/");
@@ -26,4 +27,7 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addResourceHandler("/member/pet/**").addResourceLocations("file:///"+root+"/member/pet/");
 		registry.addResourceHandler("/board/thumb/**").addResourceLocations("file:///"+root+"/board/");
 	}
-}
+
+
+	}
+

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const HealthTest = () => {
   const [result, setResults] = useState([
-    { name: "dog", count: 0 }, // 반려견
-    { name: "cat", count: 0 }, // 반려묘
+    { name: "dog", count: 0 },
+    { name: "cat", count: 0 },
   ]);
   const [selectedPet, setSelectedPet] = useState(null);
   const [formData, setFormData] = useState({
@@ -14,24 +14,56 @@ const HealthTest = () => {
     weight: "",
   });
   const [isTestStarted, setIsTestStarted] = useState(false);
+  const [selectedSkinIssues, setSelectedSkinIssues] = useState([
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [skinScore, setSkinScore] = useState(100);
+  const [isDentalTestStarted, setIsDentalTestStarted] = useState(false);
+  const [selectedDentalIssues, setSelectedDentalIssues] = useState([
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [dentalScore, setDentalScore] = useState(100);
+  const [isBoneTestStarted, setIsBoneTestStarted] = useState(false);
+  const [selectedBoneIssues, setSelectedBoneIssues] = useState([
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [boneScore, setBoneScore] = useState(100);
 
   const questions = [
-    {
-      question: "이름을 입력해 주세요.",
-      input: "text",
-    },
-    {
-      question: "생년월일을 선택해 주세요.",
-      input: "date",
-    },
-    {
-      question: "성별을 선택해 주세요.",
-      input: "gender",
-    },
-    {
-      question: "체중 상태를 선택해 주세요.",
-      input: "weight",
-    },
+    { question: "이름을 입력해 주세요.", input: "text" },
+    { question: "생년월일을 선택해 주세요.", input: "date" },
+    { question: "성별을 선택해 주세요.", input: "gender" },
+    { question: "체중 상태를 선택해 주세요.", input: "weight" },
+  ];
+
+  const skinQuestionsList = [
+    "피부에 털빠짐이 있어요.",
+    "피부를 자주 가려워하는 편이에요.",
+    "귀 피부가 빨갛고 부어있어요.",
+    "발끝을 수시로 핥거나 깨물어요.",
+  ];
+
+  const dentalQuestionsList = [
+    "양치질을 아파하는것 같아요.",
+    "이빨 색이 누렇게 보여요.",
+    "갈수록 입냄새가 심해져요.",
+    "침을 많이 흘리는 편이에요.",
+  ];
+
+  const boneQuestionsList = [
+    "한쪽다리를 잘 딛지 못해요.",
+    "예전처럼 활발하게 뛰어놀지 못해요.",
+    "걷는 모습이 어딘지 모르게 불편해보여요.",
+    "이유없이 아파하거나 몸을 떠는 경우가 있어요.",
   ];
 
   const petSelection = (type) => {
@@ -63,10 +95,63 @@ const HealthTest = () => {
     return age;
   };
 
-  const age = calculateAge(formData.birthDate); // 생년월일로 나이 계산
+  const age = calculateAge(formData.birthDate);
 
   const testStart = () => {
     setIsTestStarted(true);
+  };
+
+  const skinIssueChange = (index) => {
+    setSelectedSkinIssues((prev) => {
+      const newIssues = [...prev];
+      newIssues[index] = !newIssues[index];
+      const scoreChange = newIssues[index] ? -20 : 20;
+      setSkinScore((prevScore) => prevScore + scoreChange);
+      return newIssues;
+    });
+  };
+
+  const noSkinIssues = () => {
+    setSelectedSkinIssues([false, false, false, false]);
+    setSkinScore(100);
+  };
+
+  const nextToDental = () => {
+    setIsDentalTestStarted(true);
+  };
+
+  const dentalIssueChange = (index) => {
+    setSelectedDentalIssues((prev) => {
+      const newIssues = [...prev];
+      newIssues[index] = !newIssues[index];
+      const scoreChange = newIssues[index] ? -20 : 20;
+      setDentalScore((prevScore) => prevScore + scoreChange);
+      return newIssues;
+    });
+  };
+
+  const noDentalIssues = () => {
+    setSelectedDentalIssues([false, false, false, false]);
+    setDentalScore(100);
+  };
+
+  const nextToBone = () => {
+    setIsBoneTestStarted(true);
+  };
+
+  const boneIssueChange = (index) => {
+    setSelectedBoneIssues((prev) => {
+      const newIssues = [...prev];
+      newIssues[index] = !newIssues[index];
+      const scoreChange = newIssues[index] ? -20 : 20;
+      setBoneScore((prevScore) => prevScore + scoreChange);
+      return newIssues;
+    });
+  };
+
+  const noBoneIssues = () => {
+    setSelectedBoneIssues([false, false, false, false]);
+    setBoneScore(100);
   };
 
   return (
@@ -95,7 +180,7 @@ const HealthTest = () => {
                 </div>
               </div>
             </div>
-          ) : (
+          ) : !isTestStarted ? (
             <div>
               {questions.map((question, index) => (
                 <div key={index}>
@@ -162,6 +247,83 @@ const HealthTest = () => {
                 <p>체중 상태: {formData.weight}</p>
               </div>
               <button onClick={testStart}>테스트 진행하기</button>
+            </div>
+          ) : !isDentalTestStarted ? (
+            <div>
+              <h2>피부 상태 질문</h2>
+              {skinQuestionsList.map((question, index) => (
+                <div key={index}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={selectedSkinIssues[index]}
+                      onChange={() => skinIssueChange(index)}
+                    />
+                    {question}
+                  </label>
+                </div>
+              ))}
+              <div>
+                <button onClick={noSkinIssues}>없어요</button>
+                <button onClick={nextToDental}>다음으로</button>
+              </div>
+              <div>
+                <h3>현재 피부 점수: {skinScore}</h3>
+              </div>
+            </div>
+          ) : !isBoneTestStarted ? (
+            <div>
+              <h2>치아 상태 질문</h2>
+              {dentalQuestionsList.map((question, index) => (
+                <div key={index}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={selectedDentalIssues[index]}
+                      onChange={() => dentalIssueChange(index)}
+                    />
+                    {question}
+                  </label>
+                </div>
+              ))}
+              <div>
+                <button onClick={noDentalIssues}>없어요</button>
+                <button onClick={nextToBone}>다음으로</button>
+              </div>
+              <div>
+                <h3>현재 치아 점수: {dentalScore}</h3>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <h2>뼈 상태 질문</h2>
+              {boneQuestionsList.map((question, index) => (
+                <div key={index}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={selectedBoneIssues[index]}
+                      onChange={() => boneIssueChange(index)}
+                    />
+                    {question}
+                  </label>
+                </div>
+              ))}
+              <div>
+                <button onClick={noBoneIssues}>없어요</button>
+                <button
+                  onClick={() =>
+                    alert(
+                      `최종 피부 점수: ${skinScore}, 최종 치아 점수: ${dentalScore}, 최종 뼈 점수: ${boneScore}`
+                    )
+                  }
+                >
+                  결과 확인
+                </button>
+              </div>
+              <div>
+                <h3>현재 뼈 점수: {boneScore}</h3>
+              </div>
             </div>
           )}
         </div>
