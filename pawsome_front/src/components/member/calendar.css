@@ -61,55 +61,6 @@
   justify-content: center;
 }
 
-/* 날짜 타일 스타일 */
-.react-calendar__tile {
-  height: 100px;
-  width: 100px; /* width 고정 */
-  max-width: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  border-radius: 8px;
-  font-size: 1rem;
-  position: relative; /* 줄을 타일 안에서 위치시키기 위해 position 설정 */
-}
-
-/* 일정 시작일에 아래 줄 추가 */
-.range-start::after {
-  content: "";
-  position: absolute;
-  bottom: 10px; /* 타일 아래에 위치 */
-  left: 0;
-  right: 0;
-  height: 5px; /* 두꺼운 줄의 두께 */
-  background-color: #4caf50; /* 줄의 색상 */
-  border-top-left-radius: 50%;
-}
-
-/* 일정 중간일에 아래 줄 추가 */
-.range-middle::after {
-  content: "";
-  position: absolute;
-  bottom: 10px; /* 타일 아래에 위치 */
-  left: 0;
-  right: 0;
-  height: 5px; /* 두꺼운 줄의 두께 */
-  background-color: #c8e6c9; /* 중간일 줄의 색상 */
-}
-
-/* 일정 종료일에 아래 줄 추가 */
-.range-end::after {
-  content: "";
-  position: absolute;
-  bottom: 10px; /* 타일 아래에 위치 */
-  left: 0;
-  right: 0;
-  height: 5px; /* 두꺼운 줄의 두께 */
-  background-color: #4caf50; /* 종료일 색상 */
-  border-top-right-radius: 50%;
-}
-
 /* 모달 관련 css */
 .calendar-list {
   width: 500px;
