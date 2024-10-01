@@ -55,3 +55,132 @@
 .react-calendar__month-view__weekdays abbr {
   text-decoration: none;
 }
+
+.calendar-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+/* 날짜 타일 스타일 */
+.react-calendar__tile {
+  height: 100px;
+  width: 100px; /* width 고정 */
+  max-width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 1rem;
+  position: relative; /* 줄을 타일 안에서 위치시키기 위해 position 설정 */
+}
+
+/* 일정 시작일에 아래 줄 추가 */
+.range-start::after {
+  content: "";
+  position: absolute;
+  bottom: 10px; /* 타일 아래에 위치 */
+  left: 0;
+  right: 0;
+  height: 5px; /* 두꺼운 줄의 두께 */
+  background-color: #4caf50; /* 줄의 색상 */
+  border-top-left-radius: 50%;
+}
+
+/* 일정 중간일에 아래 줄 추가 */
+.range-middle::after {
+  content: "";
+  position: absolute;
+  bottom: 10px; /* 타일 아래에 위치 */
+  left: 0;
+  right: 0;
+  height: 5px; /* 두꺼운 줄의 두께 */
+  background-color: #c8e6c9; /* 중간일 줄의 색상 */
+}
+
+/* 일정 종료일에 아래 줄 추가 */
+.range-end::after {
+  content: "";
+  position: absolute;
+  bottom: 10px; /* 타일 아래에 위치 */
+  left: 0;
+  right: 0;
+  height: 5px; /* 두꺼운 줄의 두께 */
+  background-color: #4caf50; /* 종료일 색상 */
+  border-top-right-radius: 50%;
+}
+
+/* 모달 관련 css */
+.calendar-list {
+  width: 500px;
+  height: 700px;
+  border-radius: 12px;
+  margin-left: 50px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.calendar-list-title {
+  width: 100%;
+  display: flex;
+  height: 50px;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calendar-list-title > *:last-child {
+  width: 25px;
+  height: 25px;
+}
+
+.calendar-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  margin: auto;
+  position: relative;
+  top: 300px;
+}
+
+.calendar-modal > div {
+  width: 100%;
+  margin-bottom: 15px;
+  padding-right: 20px;
+}
+
+.calendar-modal label {
+  width: 100%;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.calendar-modal input,
+.calendar-modal textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.calendar-modal textarea {
+  resize: none;
+  height: 100px;
+}
+
+.calendar-modal button {
+  padding: 10px 20px;
+  background-color: var(--point1);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

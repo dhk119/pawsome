@@ -291,7 +291,7 @@ public class MemberController {
 	@GetMapping(value = "selectSchedule")
 	public ResponseEntity<List> selectCalendar(@RequestHeader("Authorization") String token) {
 	    MemberDTO member = memberService.selectOneMember(token);
-	    List scheduleList = memberService.selectSchedule(member.getMemberEmail());
+	    List scheduleList = memberService.selectSchedule(member);
 
 	    return ResponseEntity.ok(scheduleList);
 	}
