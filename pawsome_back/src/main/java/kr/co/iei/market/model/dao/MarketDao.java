@@ -61,6 +61,8 @@ public interface MarketDao {
 
 	int updateProductCount(int productNo, int productCartCount, String memberEmail);
 
+	int deleteCart(int cartNo);
+
 
 	
 

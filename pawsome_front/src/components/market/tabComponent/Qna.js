@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import * as DOMPurify from "dompurify";
 import Swal from "sweetalert2";
+import PageNavi from "./../../utils/PageNavi";
 
 const Qna = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -17,6 +18,7 @@ const Qna = () => {
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
   const [totalCount, setTotalCount] = useState();
+  const [qnaDelete, setQnaDelete] = useState(true);
   useEffect(() => {
     axios
       .get(`${backServer}/product/qnaList/${productNo}/${reqPage}`)
@@ -29,7 +31,7 @@ const Qna = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPage]);
+  }, [reqPage, qnaDelete]);
 
   return (
     <div className="qna-wrap">
@@ -60,11 +62,14 @@ const Qna = () => {
                   qna={qna}
                   productNo={productNo}
                   memberNickname={memberNickname}
+                  qnaDelete={qnaDelete}
+                  setQnaDelete={setQnaDelete}
                 />
               );
             })}
           </tbody>
         </table>
+        <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
       </div>
     </div>
   );
@@ -77,6 +82,8 @@ const QnaItem = (props) => {
   const memberNickname = props.memberNickname;
   const navigate = useNavigate();
   const [toggle, setToggle] = useState(false);
+  const qnaDelete = props.qnaDelete;
+  const setQnaDelete = props.setQnaDelete;
   const deleteQna = () => {
     Swal.fire({
       title: "정말 삭제하시겠습니까?",
@@ -98,7 +105,8 @@ const QnaItem = (props) => {
                 text: "해당 문의가 삭제되었습니다.",
                 icon: "success",
               });
-              navigate(`/market/main/productDetail/${productNo}/qna`);
+              setQnaDelete(!qnaDelete);
+              setToggle(!toggle);
             } else {
               Swal.fire({
                 title: "삭제 실패",

@@ -287,13 +287,6 @@ td {
   display: flex;
   justify-content: space-evenly;
 }
-.cartMain-wrap > .cart-pay-wrap {
-  width: 35%;
-  height: 200px;
-  border: 3px solid var(--gray6);
-  background-color: var(--gray7);
-  border-radius: 10px;
-}
 .cartMain-wrap > .cart-wrap {
   width: 60%;
   border: 3px solid #ffa518;
@@ -362,7 +355,57 @@ td {
   text-align: right;
   font-size: 18px;
 }
-.product-cart-info > .product-count > .delete > svg {
+.product-cart-info > .product-count > .cancelBtn > svg {
   color: #ffa518;
   font-size: 25px;
+}
+.cartMain-wrap > .cart-pay-wrap {
+  width: 35%;
+  height: 350px;
+  border: 3px solid var(--gray6);
+  background-color: var(--gray7);
+  border-radius: 10px;
+  font-size: 20px;
+}
+.cart-pay-wrap > .title {
+  padding: 10px 20px;
+  border-bottom: 3px solid var(--gray6);
+  background-color: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.cart-pay-wrap > .content > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+.cart-pay-wrap > .content > .content-price-wrap {
+  padding-top: 20px;
+}
+.cart-pay-wrap > .content > .content-delivery-wrap {
+  padding-bottom: 20px;
+  border-bottom: 3px solid var(--gray6);
+}
+.cart-pay-wrap > .content > .pay-btn {
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
+.cart-pay-wrap > .content > .pay-btn > a {
+  align-self: center;
+  width: 65%;
+  text-decoration: none;
+  text-align: center;
+  background-color: #fff;
+  border: 3px solid #ffa518;
+  border-radius: 10px;
+  margin: 0;
+  line-height: 40px;
+  font-family: ns-b;
+  color: #ffa518;
+  padding: 5px 50px;
+}
+.cart-pay-wrap > .content > .pay-btn > a:hover {
+  background-color: #ffa518;
+  color: #fff;
 }

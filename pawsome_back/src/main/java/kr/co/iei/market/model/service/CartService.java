@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import kr.co.iei.market.model.dao.MarketDao;
 import kr.co.iei.market.model.dto.CartDTO;
 
 @Service
-public class PaymentService {
+public class CartService {
 	@Autowired
 	private MarketDao marketDao;
 
@@ -34,6 +35,12 @@ public class PaymentService {
 	@Transactional
 	public int updateProductCount(int productNo, int productCartCount, String memberEmail) {
 		int result = marketDao.updateProductCount(productNo, productCartCount, memberEmail);
+		return result;
+	}
+
+	@Transactional
+	public int deleteCart(int cartNo) {
+		int result = marketDao.deleteCart(cartNo);
 		return result;
 	}
 

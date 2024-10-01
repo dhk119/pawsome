@@ -32,7 +32,7 @@ const PageNavi = (props) => {
   let pageNo = pi.pageNo;
   for (let index = 0; index < pi.pageNaviSize; index++) {
     arr.push(
-      <li key={"page-" + index}>
+      <li key={"page-" + index} className="num">
         <span
           onClick={(e) => {
             setReqPage(Number(e.target.innerText));
