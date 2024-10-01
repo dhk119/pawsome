@@ -6,7 +6,7 @@ const Admin = () => {
       <div className="admin-title">관리자 페이지</div>
       <div className="admin-product-regist-wrap">
         <div className="admin-top-margin"></div>
-        <div className="admin-product-wrap">
+        <div className="admin-product-wrap" id="admin-mid">
           <div className="admin-link-gap">
             <Link className="admin-product-label" to="/admin/productList">
               제품 리스트

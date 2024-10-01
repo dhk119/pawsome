@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.inquiry.model.dto.Inquiry;
 import kr.co.iei.inquiry.model.dto.InquiryComment;
-import kr.co.iei.inquiry.model.dto.SearchFrm;
 import kr.co.iei.inquiry.model.service.InquiryService;
 import kr.co.iei.util.FileUtils;
 

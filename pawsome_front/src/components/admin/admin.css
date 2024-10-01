@@ -435,7 +435,7 @@ button {
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
 }
 .admin-top-margin {
-  margin-top: 100px;
+  margin-top: 50px;
 }
 .admin-link-gap {
   margin-top: 20px;
@@ -467,6 +467,7 @@ button {
   height: 40px;
 }
 #admin-qna-input-nick {
+  width: 10%;
   margin-bottom: 8px;
 }
 .admin-qna-quill {
@@ -489,4 +490,10 @@ button {
 }
 .admin-qna-text {
   color: var(--gray2);
+}
+#admin-mid {
+  width: 25%;
+  border: 1px solid var(--main1);
+  padding-bottom: 20px;
+  border-radius: 20px;
 }

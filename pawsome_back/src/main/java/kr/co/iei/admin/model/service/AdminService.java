@@ -107,4 +107,9 @@ public class AdminService {
 		int result=marketDao.insertQnaAnswer(qnaAnswer);
 		return result;
 	}
+	@Transactional
+	public int updateQnaAnswer(QnaAnswerDTO qnaAns) {
+		int result=marketDao.updateQnaAnswer(qnaAns);
+		return result;
+	}
 }

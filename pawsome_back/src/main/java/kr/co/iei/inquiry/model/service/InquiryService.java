@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.iei.inquiry.model.dao.InquiryDao;
 import kr.co.iei.inquiry.model.dto.Inquiry;
 import kr.co.iei.inquiry.model.dto.InquiryComment;
-import kr.co.iei.inquiry.model.dto.SearchFrm;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.util.PageUtil;
 
