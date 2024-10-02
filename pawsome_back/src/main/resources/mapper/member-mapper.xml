@@ -50,6 +50,9 @@
 	<insert id="insertPet">
 	  	insert into pet values(pet_seq.nextval, #{petName}, #{petClasses}, #{petBreed}, #{petBirth}, #{petGender}, #{neutering}, #{petProfile}, #{petWeight}, #{memberEmail})
 	</insert>
+	<select id="selectOnePet" resultType="pet">
+		select * from pet where pet_no = #{petNo}
+	</select>
 	<select id="selectOneEmail" resultType="String">
 		select login_type from member where member_email=#{memberEmail} and member_name=#{memberName}
 	</select>
@@ -78,7 +81,21 @@
   	<select id="totalPetCountMagnum" resultType="int">
   		select count(*) from pet
   	</select>
+  	
   	<select id="selectPetListMagnum" resultType="pet">
   		select * from (select rownum as rnum, b.* from(SELECT pet_no,pet_name,pet_classes,pet_breed,to_char(pet_birth,'yyyy-mm-dd') as pet_birth,pet_gender,neutering,pet_profile,pet_weight,member_email from pet order by pet_birth desc)b) where rnum BETWEEN #{start} and #{end}
   	</select>
+  	
+  	<insert id="insertSchedule">
+  		insert into SCHEDULE values(SCHEDULE_SEQ.NEXTVAL,#{dayTitle},#{dayStart},#{dayEnd},#{dayContent},#{memberEmail})
+  	</insert>
+  	
+  	<delete id="deleteSchedule">
+  		delete from SCHEDULE where day_no = #{dayNo}
+  	</delete>
+  	
+  	<update id="updateSchedule">
+  		update SCHEDULE set day_title = #{dayTitle}, day_start = #{dayStart}, day_end =#{dayEnd}, day_content = #{dayContent}
+  		where member_email = #{memberEmail}
+  	</update>
 </mapper>

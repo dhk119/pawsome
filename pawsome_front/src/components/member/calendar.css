@@ -64,7 +64,6 @@
 /* 모달 관련 css */
 .calendar-list {
   width: 500px;
-  height: 700px;
   border-radius: 12px;
   margin-left: 50px;
   background-color: #fff;
@@ -136,8 +135,6 @@
   cursor: pointer;
 }
 
-
-
 /* 스케쥴 리스트 */
 /* 일정 목록 전체 박스 */
 .calendar-list {
@@ -164,15 +161,15 @@
   align-items: center;
   padding: 15px 20px;
   margin-bottom: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: var(--gray5) solid 1px;
   border-radius: 8px;
-  background-color: #f4f4f4;
+  background-color: var(--gray7);
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 /* 일정 항목에 마우스 오버 효과 */
 .schedule-item:hover {
-  background-color: #eaeaea;
+  background-color: var(--gray6);
   transform: translateY(-2px);
 }
 
@@ -192,17 +189,48 @@
   transition: color 0.2s ease;
 }
 
-.calendar-list-title svg:hover {
-  color: #ff7979;
-}
-
 .schedule-item h3 {
   font-size: 1.2rem;
-  color: #333;
+  color: var(--gray1);
   margin: 0;
   flex-grow: 1;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.calendar-insert-btns {
+  margin: 10px auto;
+  text-align: center;
+}
+.calendar-insert-btns > * {
+  margin: 10px;
+}
+.calendar-insert-btns > .close-btn {
+  background-color: var(--gray4);
+}
+
+/* 일정 상세보기 모달 */
+.schedule-wrap {
+  padding: 0px 20px;
+}
+.schedule-wrap h2 {
+  margin-bottom: 10px;
+}
+.schedule-btns-wrap {
+  text-align: center;
+}
+.schedule-btns-wrap > button {
+  margin: 10px;
+}
+.schedule-wrap .close-btn {
+  background-color: var(--gray4);
+}
+.schedule-wrap-content {
+  /* border: 1px solid var(--point1); */
+  background-color: var(--gray7);
+  padding: 20px;
+  min-height: 200px;
+  margin-top: 10px;
 }

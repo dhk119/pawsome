@@ -6,7 +6,7 @@
 }
 
 .side-bar {
-  width: 250px;
+  min-width: 250px;
   background-color: #fff;
   padding: 20px;
 }
@@ -148,8 +148,6 @@
   font-size: 18px;
   font-family: ns-b;
 }
-
-
 
 /* 반려동물 등록 */
 .pet-input-body {
@@ -329,4 +327,3 @@
   font-family: ns-r;
   list-style-type: none;
 }
-

@@ -23,6 +23,7 @@ import MypageMain from "./components/member/MypageMain";
 import PetInsert from "./components/member/PetInsert";
 import ForgotPw from "./components/member/ForgotPw";
 import ScrollToTop from "react-scroll-to-top";
+import PetUpdate from "./components/member/PetUpdate";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -76,6 +77,7 @@ function App() {
           <Route path="/market/*" element={<MarketMain />} />
           <Route path="/mypage/*" element={<MypageMain />} />
           <Route path="/petinsert" element={<PetInsert />} />
+          <Route path="/petUpdate" element={<PetUpdate />} />
           <Route path="/service/*" element={<ServiceMain />} />
           <Route path="/naverjoin" element={<NaverJoin />} />
         </Routes>

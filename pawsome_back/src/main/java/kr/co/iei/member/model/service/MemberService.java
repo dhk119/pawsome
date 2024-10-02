@@ -139,5 +139,28 @@ public class MemberService {
 	    return scheduleList;
 	}
 
+	@Transactional
+	public int insertSchedule(ScheduleDTO schedule) {
+		int result = memberDao.insertSchedule(schedule);
+		return result;
+	}
+
+	@Transactional
+	public int deleteSchedule(int dayNo) {
+		int result = memberDao.deleteSchedule(dayNo);
+		return result;
+	}
+
+	@Transactional
+	public int updateSchedule(ScheduleDTO schedule) {
+		int result = memberDao.updateSchedule(schedule);
+		return result;
+	}
+
+	public PetDTO selectOnePet(int petNo) {
+		PetDTO pet = memberDao.selectOnePet(petNo);
+		return pet;
+	}
+
 
 }

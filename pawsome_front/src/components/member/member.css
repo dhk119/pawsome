@@ -68,6 +68,13 @@
   background-color: var(--main1);
 }
 
+.member-page .del-btn {
+  background-color: rgb(223, 33, 33);
+}
+.member-page .del-btn:hover {
+  background-color: rgb(235, 64, 64);
+}
+
 .form .message {
   margin: 15px 0 0;
   color: var(--gray3);
