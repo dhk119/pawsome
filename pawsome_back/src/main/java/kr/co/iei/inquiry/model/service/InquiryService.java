@@ -81,4 +81,16 @@ public class InquiryService {
 		map.put("pi",pi);
 		return map;
 	}
+
+	public Map searchOptionInquiryList(int reqPage, int option) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=inquiryDao.searchOptionTotalCount(reqPage,option);
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=inquiryDao.searchOptionInquiryList(pi.getStart(), pi.getEnd(),reqPage, option);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
 }

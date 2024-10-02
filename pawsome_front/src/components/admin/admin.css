@@ -241,7 +241,10 @@ tbody > tr:last-child td:last-child {
   color: var(--point1);
   font-family: ns-b;
 }
-button {
+.admin-write-wrap > button {
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+}
+.admin-write-submit {
   cursor: url("/public/image/cursorpaw.png") 16 16, auto;
 }
 .inquiry-noComment {
@@ -338,7 +341,7 @@ button {
   display: flex;
   gap: 20px;
   font-weight: bold;
-  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+  cursor: pointer;
 }
 .pageNavi-frm {
   justify-content: center;

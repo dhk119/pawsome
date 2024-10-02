@@ -17,9 +17,14 @@ const BoardList = () => {
   const [boardTag, setBoardTag] = useState(0);
   const [pi, setPi] = useState({});
   const [reply, setReply] = useState(0);
+  const [type, setType] = useState(1);
+  const changeType = (e) => {
+    setType(e.target.value);
+  };
+  console.log(type);
   useEffect(() => {
     axios
-      .get(`${backServer}/board/list/${boardTag}/${reqPage}`)
+      .get(`${backServer}/board/list/${boardTag}/${reqPage}/${type}`)
       .then((res) => {
         console.log(res);
         if (reqPage != 1) {
@@ -33,7 +38,7 @@ const BoardList = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPage, boardTag]);
+  }, [reqPage, boardTag, type]);
   const changeTag = (e) => {
     setBoardTag(e.target.id);
     setReqPage(1);
@@ -77,13 +82,19 @@ const BoardList = () => {
       <div className="list-board">
         <div className="board-all-wrap">
           <div className="write-wrap">
+            <div className="board-list-options">
+              <select onChange={changeType}>
+                <option value="1">등록순</option>
+                <option value="2">인기순</option>
+              </select>
+            </div>
             {isLogin ? <Link to="/board/write">글쓰기</Link> : ""}
           </div>
           <div className="board-list-wrap">
             <ul className="posting-wrap">
               {boardList
                 ? boardList.map((board, i) => {
-                    return <BoardItem board={board} reply={reply} />;
+                    return <BoardItem board={board} />;
                   })
                 : ""}
             </ul>
@@ -111,7 +122,6 @@ const BoardList = () => {
 const BoardItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const board = props.board;
-  const reply = props.reply;
   const navigate = useNavigate();
   return (
     <li
@@ -163,7 +173,7 @@ const BoardItem = (props) => {
             )}
           </div>
           <div className="reply-count">
-            <div>{reply}</div>
+            <div>{board.replyCount}</div>
             <div>댓글</div>
           </div>
         </div>

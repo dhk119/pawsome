@@ -82,7 +82,7 @@
 				</choose>
 			</otherwise>
 		</choose>
-	</select>
+	</select>	
 	<select id="searchInquiryList" resultType="inquiry">
 		select * from (select rownum as rnum, b.* from(SELECT inquiry_no,inquiry_title,to_char(inquiry_reg_date)as inquiry_reg_date,inquiry_type, member_email from inquiry where
 		<choose>
@@ -127,4 +127,24 @@
 		</choose>
 		order by inquiry_no desc)b) where (rnum BETWEEN #{start} and #{end})
 	</select>
+	<select id="searchOptionTotalCount" resultType="int">
+		<choose>
+			<when test="option==0">
+				select count(*) from inquiry
+			</when>
+			<otherwise>
+				select count(*) from inquiry where inquiry_type=#{option}
+			</otherwise>
+		</choose>	
+	</select>
+	<select id="searchOptionInquiryList" resultType="inquiry">
+		<choose>
+			<when test="option==0">
+				select * from (select rownum as rnum, b.* from(SELECT inquiry_no,inquiry_title,to_char(inquiry_reg_date)as inquiry_reg_date,inquiry_type, member_email from inquiry order by inquiry_no desc)b) where (rnum BETWEEN #{start} and #{end})
+			</when>
+			<otherwise>
+				select * from (select rownum as rnum, b.* from(SELECT inquiry_no,inquiry_title,to_char(inquiry_reg_date)as inquiry_reg_date,inquiry_type, member_email from inquiry where inquiry_type=#{option} order by inquiry_no desc)b) where (rnum BETWEEN #{start} and #{end})
+			</otherwise>
+		</choose>	
+	</select>	
 </mapper>

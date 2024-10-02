@@ -32,5 +32,9 @@ public interface InquiryDao {
 	int searchTotalCount(int reqPage, String type, String keyword, int option);
 
 	List searchInquiryList(int start, int end, int reqPage , String type, String keyword, int option);
+
+	int searchOptionTotalCount(int reqPage, int option);
+
+	List searchOptionInquiryList(int start, int end, int reqPage, int option);
 	
 }

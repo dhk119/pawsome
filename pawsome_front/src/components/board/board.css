@@ -39,6 +39,19 @@
   min-height: 800px;
   padding: 50px 30px;
 }
+.board-list-options {
+  width: 400px;
+  margin-right: 500px;
+}
+.board-list-options > select {
+  border: none;
+  border-radius: 30px;
+  color: var(--point1);
+  border: 2px solid #ffa518;
+  padding: 5px 30px;
+  font-size: 16px;
+}
+
 /*글쓰기 전용 css*/
 .write-wrap {
   display: flex;
@@ -56,6 +69,7 @@
   color: var(--gray8);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
+
 /*자유게시판 리스트*/
 .board-all-wrap {
   width: 100%;
@@ -96,6 +110,7 @@
   background-color: var(--main2);
   text-align: center;
   border-radius: 10px;
+  height: 70px;
 }
 .reply-count > div {
   padding: 0 10px;
@@ -308,12 +323,18 @@
   justify-content: space-evenly;
   margin: 20px auto;
   padding: 15px 30px;
+  position: relative;
 }
 .board-view-head > div:first-child {
   background-color: #ffd697;
-  padding: 3px 10px;
+  padding: 0 10px;
   border-radius: 15px;
   margin-right: 450px;
+  padding-top: 6px;
+  height: 30px;
+  width: 70px;
+  text-align: center;
+  position: absolute;
 }
 .board-view-title {
   display: flex;
@@ -322,23 +343,27 @@
   color: #ffa518;
   font-size: 20px;
   font-weight: bold;
+  margin-top: 30px;
 }
 .view-btn-zone {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  margin-left: 3px;
 }
-.view-btn-zone > a {
+.view-btn-zone > div {
+  margin-bottom: 5px;
+}
+.view-btn-zone > div > a {
   background-color: #ffd697;
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 2px 6px;
   color: black;
+  border-radius: 5px;
 }
 .view-btn-zone > div:last-child > button {
   background-color: #ffd697;
-  border: none;
+  padding: 2px 6px;
   font-size: 16px;
-  padding: 5px 10px;
+  border: none;
   border-radius: 5px;
 }
 .board-view-memberinfo {
@@ -360,7 +385,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  padding-bottom: 8px;
+  padding-bottom: 45px;
 }
 .board-quill {
   margin: 10px auto;
@@ -408,6 +433,9 @@
 .other-board-content > div {
   margin-bottom: 15px;
 }
+.reply-write-frm {
+  margin-top: 20px;
+}
 .reply-wrap {
   border-top: 10px solid var(--gray7);
 }
@@ -415,7 +443,7 @@
   display: flex;
   justify-content: space-evenly;
   margin: 20px auto;
-  gap: 1000px;
+  gap: 950px;
 }
 .reply-top-wrap > div:first-child {
   display: flex;
@@ -423,6 +451,41 @@
 }
 .reply-input-wrap > form {
   display: flex;
+}
+.reply-list-options > select {
+  border: none;
+  border-radius: 30px;
+  color: var(--point1);
+  border: 2px solid #ffa518;
+  padding: 5px 10px;
+}
+.preview-reply {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.list-list2 {
+  border: 1px solid #ffa518;
+  border-radius: 5px;
+  padding: 0px 10px;
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
+}
+.reply-member-wrap {
+  display: flex;
+  padding: 3px 5px;
+}
+.reply-member-wrap > div {
+  margin: 5px 5px;
+}
+.reply-member {
+  display: flex;
+  gap: 5px;
+  padding-top: 9px;
+}
+.reply-content {
+  margin-top: 10px;
 }
 /*산책 지도*/
 .distance-box {

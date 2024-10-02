@@ -9,15 +9,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Alias(value="Reply")
+@Alias(value="reply")
 public class ReplyDTO {
 	private int replyNo;
 	private int boardNo;
 	private int replyNoRef;
-	private String reply;
+	private String replyContent;
 	private String replyRegDate;
-	private String replyImage;
 	private String memberNickname;
 	private String memberProfile;
+	private int replyCount;
+	private int replyLike;
 
 }

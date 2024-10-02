@@ -80,12 +80,11 @@ public class InquiryController {
 	}
 	@GetMapping(value = "/search/{reqPage}/{type}/{keyword}/{option}")
 	public ResponseEntity<Map> searchInquiry(@PathVariable int reqPage, @PathVariable String type, @PathVariable String keyword, @PathVariable int option){
-		System.out.println(reqPage);
-		System.out.println(type);
-		System.out.println(option);
-		System.out.println(keyword);
 		Map map=inquiryService.searchInquiryList(reqPage, type, keyword, option);
-		System.out.println(map.get("list"));
+		return ResponseEntity.ok(map);
+	}@GetMapping(value = "/search/{reqPage}/{option}")
+	public ResponseEntity<Map> searchInquiry(@PathVariable int reqPage, @PathVariable int option){
+		Map map=inquiryService.searchOptionInquiryList(reqPage, option);
 		return ResponseEntity.ok(map);
 	}
 }

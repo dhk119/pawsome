@@ -62,6 +62,12 @@ const InquiryView = () => {
           .delete(`${backServer}/inquiry/${inquiry.inquiryNo}`)
           .then((res) => {
             if (res.data > 0) {
+              Swal.fire({
+                text: "성공적으로 삭제되었습니다.",
+                icon: "success",
+                iconColor: "var(--main1)",
+                confirmButtonColor: "var(--point1)",
+              });
               navigate("/inquiry/list");
             }
           })
