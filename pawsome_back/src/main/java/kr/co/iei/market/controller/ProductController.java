@@ -33,9 +33,9 @@ public class ProductController {
 	@Value("${file.root}")
 	public String root;
 	
-	@GetMapping(value="/productList/{typeCategory}/{mainCategory}/{reqPage}")
-	public ResponseEntity<Map> productList (@PathVariable int typeCategory, @PathVariable String mainCategory, @PathVariable int reqPage) {
-		Map map = productService.selectProductList(typeCategory, mainCategory, reqPage);
+	@GetMapping(value="/productList/{typeCategory}/{mainCategory}/{reqPage}/{filterType}")
+	public ResponseEntity<Map> productList (@PathVariable int typeCategory, @PathVariable String mainCategory, @PathVariable int reqPage, @PathVariable int filterType) {
+		Map map = productService.selectProductList(typeCategory, mainCategory, reqPage, filterType);
 		return ResponseEntity.ok(map);
 	}
 	
@@ -71,7 +71,6 @@ public class ProductController {
 	
 	@DeleteMapping(value="/qna/{qnaNo}")
 	public ResponseEntity<Integer> deleteQna(@PathVariable int qnaNo){
-		System.out.println(qnaNo);
 		int result = productService.deleteQna(qnaNo);
 		return ResponseEntity.ok(result);
 	}

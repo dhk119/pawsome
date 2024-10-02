@@ -23,14 +23,14 @@ public class ProductService {
 	@Autowired
 	private PageUtil pageUtil;
 
-	public Map selectProductList(int typeCategory, String mainCategory, int reqPage) {
+	public Map selectProductList(int typeCategory, String mainCategory, int reqPage, int filterType) {
 		int numPerPage = 15;
 		int pageNaviSize = 5;
 		int totalCount = marketDao.totalCount(typeCategory, mainCategory);
 		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
 		int start = pi.getStart();
 		int end = pi.getEnd();
-		List list = marketDao.selectProductList(typeCategory, mainCategory,start,end);
+		List list = marketDao.selectProductList(typeCategory, mainCategory,start,end,filterType);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("pi", pi);

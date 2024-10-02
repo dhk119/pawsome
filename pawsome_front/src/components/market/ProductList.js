@@ -5,6 +5,10 @@ import { FaRegHeart } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ScrollToTop from "react-scroll-to-top";
+import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const ProductList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -15,11 +19,12 @@ const ProductList = () => {
   const params = useParams();
   const typeCategory = params.typeCategory;
   const mainCategory = params.mainCategory;
+  const [filterType, setFilterType] = useState(1);
 
   useEffect(() => {
     axios
       .get(
-        `${backServer}/product/productList/${typeCategory}/${mainCategory}/${reqPage}`
+        `${backServer}/product/productList/${typeCategory}/${mainCategory}/${reqPage}/${filterType}`
       )
       .then((res) => {
         console.log(res);
@@ -30,7 +35,12 @@ const ProductList = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [typeCategory, mainCategory, reqPage]);
+  }, [typeCategory, mainCategory, reqPage, filterType]);
+
+  const changeFilterType = (e) => {
+    setFilterType(e.target.value);
+  };
+
   return (
     <>
       <div className="best-item"></div>
@@ -89,19 +99,22 @@ const ProductList = () => {
               <BsBox />
             </span>
             <span className="text">
-              총 {totalCount}개의 상품이 검색되었습니다.
+              {"  "}총 {totalCount}개의 상품이 검색되었습니다.
             </span>
           </div>
           <div className="filter">
-            <Link to="#" className="now">
-              인기순
-            </Link>
-            <span>|</span>
-            <Link to="#">최신순</Link>
-            <span>|</span>
-            <Link to="#">낮은 가격순</Link>
-            <span>|</span>
-            <Link to="#">높은 가격순</Link>
+            <FormControl sx={{ m: 1, minWidth: 140 }}>
+              <Select
+                id="select"
+                value={filterType}
+                onChange={changeFilterType}
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem value={1}>최신순</MenuItem>
+                <MenuItem value={2}>낮은 가격순</MenuItem>
+                <MenuItem value={3}>높은 가격순</MenuItem>
+              </Select>
+            </FormControl>
           </div>
         </div>
       </div>
