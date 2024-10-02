@@ -156,15 +156,19 @@ public class BoardService {
 		int result = 0;
 		if(reply.getReplyNo() != 0 ) {
 			result = boardDao.insertReplyLike(reply);
-			System.out.println(result);
 		}
 		if(result >0){
 			int likeCount = boardDao.selectReplyLikeCount(reply);
-			System.out.println("count : "+likeCount);
 			return likeCount;
 		}else {
 			return -1;
 		}
+	}
+
+	@Transactional
+	public int updateReply(ReplyDTO reply) {
+		int result = boardDao.updateReply(reply); 
+		return result;
 	}
 
 

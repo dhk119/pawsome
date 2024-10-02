@@ -114,7 +114,7 @@ const BoardUpdate = () => {
           >
             <div className="writeFrm-btn">
               <div>
-                <Link to="/board/list">취소</Link>
+                <Link to={`/board/view/${boardNo}`}>취소</Link>
               </div>
               <div>
                 <button type="submit" onClick={updateBoard}>

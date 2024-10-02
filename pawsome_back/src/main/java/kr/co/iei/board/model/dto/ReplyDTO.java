@@ -18,7 +18,7 @@ public class ReplyDTO {
 	private String replyRegDate;
 	private String memberNickname;
 	private String memberProfile;
-	private int replyCount;
+	private int reReplyCount;
 	private int replyLike;
 
 }

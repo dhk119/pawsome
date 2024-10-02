@@ -33,7 +33,7 @@
 	        		order by board_no desc)
 	        		</when>
 	        		<when test="type == 2">
-	        		order by read_count desc)
+	        		order by (read_count + board_like) desc)
 	        		</when>        		
         		</choose>
         		 b )
@@ -154,14 +154,10 @@
   		insert into reply values(reply_seq.nextval,#{boardNo},null,#{replyContent},sysdate,#{memberNickname})
   	</insert>
   	<select id="selectOneReply" resultType="reply">
-  		select reply_no,
-  			   board_no,
-  			   reply_no_ref,
-  			   reply_content,
-  			   reply_reg_date,
-  			   member_nickname,
-  			   (select count(*) from reply_like where reply_like.reply_no = reply.reply_no) reply_like 
-  	    from reply
+  		select r.*,
+  			  (select count(reply_no_ref) from reply where reply_no_ref = r.reply_no) as reply_count
+    	from reply r 
+    	where board_no = #{boardNo} and reply_no_ref is null order by 1 desc
   	</select>
   	<delete id="deleteReply">
   		delete from reply
@@ -173,4 +169,9 @@
   	<select id="selectReplyLikeCount" resultType="int">
   		select count(*) from reply_like where reply_no = #{replyNo}
   	</select>
+  	<update id="updateReply">
+  		update reply set 
+  			reply_content= #{replyContent}
+  		where reply_no = #{replyNo}
+  	</update>
 </mapper>

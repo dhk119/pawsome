@@ -58,6 +58,8 @@ public interface BoardDao {
 
 	int selectReplyLikeCount(ReplyDTO reply);
 
+	int updateReply(ReplyDTO reply);
+
 
 
 

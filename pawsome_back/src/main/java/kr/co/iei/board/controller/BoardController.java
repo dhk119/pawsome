@@ -121,7 +121,7 @@ public class BoardController {
 	 @PostMapping(value="{boardNo}")
 	 public ResponseEntity<Boolean> isLike(@ModelAttribute BoardDTO board){
 		 int result = boardService.isLike(board);
-		 return ResponseEntity.ok(true);
+		 return ResponseEntity.ok(result >0);
 	 }
 	 
 	 @GetMapping(value="/replyList/{boardNo}/{reqPage}/{type}")
@@ -153,5 +153,16 @@ public class BoardController {
 		 return ResponseEntity.ok(true);
 	 }
 	 
+	 @PatchMapping(value="/updateReply")
+	 public ResponseEntity<Boolean> updateReply(@ModelAttribute ReplyDTO reply){
+		 int result = boardService.updateReply(reply);
+		 return ResponseEntity.ok(result == 1);
+	 }
+	 
+	 @PatchMapping(value="/reply/reComment")
+	 public ResponseEntity<Boolean> insertReComment(@ModelAttribute ReplyDTO reply){
+		 System.out.println(reply);
+		 return ResponseEntity.ok(true);
+	 }
 	 
 }
