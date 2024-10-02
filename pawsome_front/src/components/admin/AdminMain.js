@@ -8,6 +8,7 @@ import Admin from "./Admin";
 import PetList from "./PetList";
 import Qna from "./Q&A";
 import QnaView from "./Q&A(view)";
+import PetSearch from "./PetSearch";
 const AdminMain = () => {
   return (
     <>
@@ -24,6 +25,7 @@ const AdminMain = () => {
           <Route path="petList" element={<PetList />}></Route>
           <Route path="qnaList" element={<Qna />}></Route>
           <Route path="qna/:qnaNo" element={<QnaView />}></Route>
+          <Route path="petSearch" element={<PetSearch />}></Route>
         </Routes>
       </section>
     </>
