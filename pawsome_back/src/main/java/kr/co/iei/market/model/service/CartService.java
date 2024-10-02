@@ -28,7 +28,6 @@ public class CartService {
 
 	public List selectCartList(String memberEmail) {
 		List list = marketDao.selectCartList(memberEmail);
-		System.out.println(list);
 		return list;
 	}
 

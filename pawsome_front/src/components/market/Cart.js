@@ -46,6 +46,7 @@ const Cart = () => {
     let cartsNo = new Array();
     checkedArr.map((item) => {cartsNo.push(item.cartNo);});
     */
+    /*
     let arr = new Array();
     checkedArr.map((item) => {
       console.log(item);
@@ -63,6 +64,11 @@ const Cart = () => {
         });
     });
     setState(!state);
+    */
+    let str = "";
+    checkedArr.map((item) => {
+      str += item.cartNo + "-";
+    });
   };
 
   return (

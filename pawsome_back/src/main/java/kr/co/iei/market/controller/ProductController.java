@@ -71,7 +71,6 @@ public class ProductController {
 	
 	@DeleteMapping(value="/qna/{qnaNo}")
 	public ResponseEntity<Integer> deleteQna(@PathVariable int qnaNo){
-		System.out.println(qnaNo);
 		int result = productService.deleteQna(qnaNo);
 		return ResponseEntity.ok(result);
 	}
