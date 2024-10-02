@@ -135,3 +135,74 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+
+
+/* 스케쥴 리스트 */
+/* 일정 목록 전체 박스 */
+.calendar-list {
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+/* 일정 목록의 상단 타이틀 */
+.calendar-list-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* 일정 항목 디자인 */
+.schedule-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #f4f4f4;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* 일정 항목에 마우스 오버 효과 */
+.schedule-item:hover {
+  background-color: #eaeaea;
+  transform: translateY(-2px);
+}
+
+/* 일정 제목 스타일 */
+.schedule-item h3 {
+  font-size: 1.2rem;
+  color: var(--gray2);
+  margin: 0;
+  flex-grow: 1;
+  font-weight: 600;
+}
+
+/* 일정 추가 버튼 아이콘 */
+.calendar-list-title svg {
+  cursor: pointer;
+  font-size: 1.6rem;
+  transition: color 0.2s ease;
+}
+
+.calendar-list-title svg:hover {
+  color: #ff7979;
+}
+
+.schedule-item h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0;
+  flex-grow: 1;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

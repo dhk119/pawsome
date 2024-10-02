@@ -53,10 +53,10 @@ const ChangePw = () => {
     }
 
     axios
-      .post(`${backServer}/member/changePw`, {
-        memberPw: memberPw,
-        newMemberPw: newMemberPw,
-      })
+  .post(`${backServer}/member/changePw`, {
+    memberPw: memberPw,
+    newMemberPw: newMemberPw,
+  })
       .then((res) => {
         console.log(res.data);
         switch (res.data) {
