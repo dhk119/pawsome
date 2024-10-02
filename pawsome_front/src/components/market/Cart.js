@@ -3,7 +3,7 @@ import QuantityInput from "./QuantityInput";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { isLoginState, loginEmailState } from "../utils/RecoilData";
-import { Link, useNavigate } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { TiDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
 
@@ -12,7 +12,7 @@ const Cart = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [cartList, setCartList] = useState([]);
   const [checkedArr, setCheckedArr] = useState([]); //선택한 상품 배열
-  const [state, setState] = useState(true);
+  const [state, setState] = useState(true); //선택상품 삭제했을 때 리스트 랜더링
   useEffect(() => {
     axios
       .get(`${backServer}/cart/cartList/${loginEmail}`)
@@ -25,6 +25,8 @@ const Cart = () => {
       });
   }, [loginEmail, state]);
 
+  const [checkCartNo, setCheckCartNo] = useState("");
+  let str = "";
   //선택상품 총금액
   const [total, setTotal] = useState(0);
   // 체크 바뀔 때마다 새로 실행
@@ -37,38 +39,24 @@ const Cart = () => {
       totalPrice += item.productPrice * item.productCartCount;
     });
     setTotal(totalPrice);
+    checkedArr.map((item) => {
+      str += item.cartNo + "-";
+    });
+    str = str.slice(0, -1); //마지막 - 자르기
+    setCheckCartNo(str);
   };
 
   //선택상품 삭제
   const deleteChecked = () => {
-    /*
-    잘 이해가 안 돼서 일단 다른 방향으로 처리
-    let cartsNo = new Array();
-    checkedArr.map((item) => {cartsNo.push(item.cartNo);});
-    */
-    /*
-    let arr = new Array();
-    checkedArr.map((item) => {
-      console.log(item);
-      axios
-        .delete(`${backServer}/cart/deleteCart/${item.cartNo}`)
-        .then((res) => {
-          console.log(res);
-          const arr = cartList.filter((cart) => {
-            return item.cartNo !== cart.cartNo;
-          });
-          setCartList(arr);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
+    axios
+      .delete(`${backServer}/cart/deleteCartList/${checkCartNo}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setState(!state);
-    */
-    let str = "";
-    checkedArr.map((item) => {
-      str += item.cartNo + "-";
-    });
   };
 
   return (
@@ -127,7 +115,7 @@ const Cart = () => {
                 </div>
               </div>
               <div className="pay-btn">
-                <Link to="#">
+                <Link to={`/market/payment/${checkCartNo}`}>
                   총 {checkedArr.length}건 주문하기 (
                   {(total >= 30000
                     ? total

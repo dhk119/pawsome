@@ -42,11 +42,11 @@ const ProductDetail = () => {
   }, []);
   const navigate = useNavigate();
   const changeType = () => {
-    navigate(`/market/main/productList/${product.typeCategory}/all`);
+    navigate(`/market/main/productList/${product.typeCategory}/all/1`);
   };
   const changeMain = () => {
     navigate(
-      `/market/main/productList/${product.typeCategory}/${product.mainCategory}`
+      `/market/main/productList/${product.typeCategory}/${product.mainCategory}/1`
     );
   };
 

@@ -33,9 +33,9 @@ public class ProductController {
 	@Value("${file.root}")
 	public String root;
 	
-	@GetMapping(value="/productList/{typeCategory}/{mainCategory}/{reqPage}")
-	public ResponseEntity<Map> productList (@PathVariable int typeCategory, @PathVariable String mainCategory, @PathVariable int reqPage) {
-		Map map = productService.selectProductList(typeCategory, mainCategory, reqPage);
+	@GetMapping(value="/productList/{typeCategory}/{mainCategory}/{reqPage}/{filterType}")
+	public ResponseEntity<Map> productList (@PathVariable int typeCategory, @PathVariable String mainCategory, @PathVariable int reqPage, @PathVariable int filterType) {
+		Map map = productService.selectProductList(typeCategory, mainCategory, reqPage, filterType);
 		return ResponseEntity.ok(map);
 	}
 	

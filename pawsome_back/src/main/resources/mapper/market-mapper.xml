@@ -72,7 +72,16 @@
 					<if test= "mainCategory!='all'">
 					 	and main_category=#{mainCategory}
 					</if>
-					 order by product_no desc)p)
+					<if test= "filterType==1"> 
+					 	order by product_no desc
+					</if>
+					<if test= "filterType==2"> 
+					 	order by product_price, product_no desc
+					</if>
+					<if test= "filterType==3"> 
+					 	order by product_price desc, product_no desc
+					</if>
+					)p)
 		where rnum between #{start} and #{end}
 	</select>
 	<select id="selectOneProduct" resultType="product">
@@ -131,4 +140,13 @@
 	<delete id="deleteCart">
 		delete from cart where cart_no=#{cartNo}
 	</delete>
+<!-- 결제 -->
+	<select id="selectPayList" resultType="cart">
+		select cart_no,product_no,product_cart_count,product_name,product_price,product_thumb from
+			(select * from cart where cart_no=#{cartNo})c
+		left join product using(product_no)
+	</select>
+	<select id="selectPayer" resultType="member">
+		select member_name, member_addr1, member_addr2, member_addr3 from member where member_email=#{memberEmail}
+	</select>
 </mapper>

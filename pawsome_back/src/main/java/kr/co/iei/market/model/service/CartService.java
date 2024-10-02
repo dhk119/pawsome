@@ -1,6 +1,7 @@
 package kr.co.iei.market.model.service;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,8 +39,17 @@ public class CartService {
 	}
 
 	@Transactional
-	public int deleteCart(int cartNo) {
-		int result = marketDao.deleteCart(cartNo);
+	public boolean deleteCartList(String str) {
+		StringTokenizer sT = new StringTokenizer(str, "-");
+		boolean result=true;
+		while (sT.hasMoreElements()) {
+			int cartNo = Integer.parseInt(sT.nextToken());
+			int intResult = marketDao.deleteCart(cartNo);
+			if(intResult < 1) {
+				result=false;
+				break;
+			}
+		}
 		return result;
 	}
 

@@ -8,6 +8,7 @@ import kr.co.iei.market.model.dto.CartDTO;
 import kr.co.iei.market.model.dto.ProductDTO;
 import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
+import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.util.PageInfo;
 
 @Mapper
@@ -37,7 +38,7 @@ public interface MarketDao {
 	/*원희*/
 	int totalCount(int typeCategory, String mainCategory);
 
-	List selectProductList(int typeCategory, String mainCategory, int start, int end);
+	List selectProductList(int typeCategory, String mainCategory, int start, int end, int filterType);
 
 	ProductDTO selectOneProduct(int productNo);
 /*Q&A*/
@@ -68,6 +69,10 @@ public interface MarketDao {
 	int updateProductCount(int productNo, int productCartCount, String memberEmail);
 
 	int deleteCart(int cartNo);
+/*결제*/
+	CartDTO selectPayList(int cartNo);
+
+	MemberDTO selectPayer(String memberEmail);
 
 
 
