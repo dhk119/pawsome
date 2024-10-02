@@ -49,10 +49,9 @@ const PetSearch = () => {
             <label htmlFor="type"></label>
             <select id="type" value={type} onChange={changeType}>
               <option value={"all"}>전체</option>
-              <option value={"title"}>제목</option>
-              <option value={"writer"}>작성자</option>
-              <option value={"titleContent"}>제목 및 내용</option>
-              <option value={"content"}>내용</option>
+              <option value={"name"}>이름</option>
+              <option value={"breed"}>품종</option>
+              <option value={"memberEmail"}>멤버 이메일</option>
             </select>
           </div>
           <div className="search-input-wrap" id="inquiry-search">
