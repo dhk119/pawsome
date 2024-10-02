@@ -35,10 +35,6 @@ const ProductView = () => {
     setProductPrice(e.target.value);
     setProduct({ ...product, productPrice: e.target.value });
   };
-  const inputDetail = (e) => {
-    setProductDetail(e.target.value);
-    setProduct({ ...product, productDetail: e.target.value });
-  };
   const inputShow = (e) => {
     setProductShow(e.target.value);
     setProduct({ ...product, productShow: e.target.value });
@@ -88,7 +84,12 @@ const ProductView = () => {
           },
         })
         .then((res) => {
-          navigate("/admin/productView/" + productNo);
+          Swal.fire({
+            text: "수정 완료",
+            icon: "success",
+            iconColor: "var(--main1)",
+            confirmButtonColor: "var(--point1)",
+          });
         })
         .catch((err) => {});
     } else {
@@ -116,6 +117,12 @@ const ProductView = () => {
           .delete(`${backServer}/admin/productNo/${productNo}`)
           .then((res) => {
             if (res.data > 0) {
+              Swal.fire({
+                text: "성공적으로 삭제되었습니다.",
+                icon: "success",
+                iconColor: "var(--main1)",
+                confirmButtonColor: "var(--point1)",
+              });
               navigate("/admin/productList");
             } else {
             }
