@@ -39,9 +39,9 @@ public class BoardController {
 	@Value("${file.root}")
 	public String root;
 	
-	@GetMapping("/list/{tag}/{reqPage}")
-	public ResponseEntity<Map> list(@PathVariable int reqPage, @PathVariable int tag){
-		Map map = boardService.selectBoardList(reqPage, tag);
+	@GetMapping("/list/{tag}/{reqPage}/{type}")
+	public ResponseEntity<Map> list(@PathVariable int reqPage, @PathVariable int tag, @PathVariable int type){
+		Map map = boardService.selectBoardList(reqPage, tag, type);
 		return ResponseEntity.ok(map);
 	}
 	
@@ -124,9 +124,9 @@ public class BoardController {
 		 return ResponseEntity.ok(true);
 	 }
 	 
-	 @GetMapping(value="/replyList/{boardNo}/{reqPage}")
-	 public ResponseEntity<Map> replyList(@PathVariable int reqPage, @PathVariable int boardNo){
-		 Map map = boardService.selectReplyList(reqPage, boardNo);
+	 @GetMapping(value="/replyList/{boardNo}/{reqPage}/{type}")
+	 public ResponseEntity<Map> replyList(@PathVariable int reqPage, @PathVariable int boardNo, @PathVariable int type){
+		 Map map = boardService.selectReplyList(reqPage, boardNo, type);
 			return ResponseEntity.ok(map);
 	 }
 	 
@@ -139,17 +139,17 @@ public class BoardController {
 	 @DeleteMapping(value="/reply/{replyNo}")
 	 public ResponseEntity<Integer> deleteReply(@PathVariable int replyNo){
 		 List<ReplyDTO> reply = boardService.deleteReply(replyNo);
-		 System.out.println(reply);
 		 if(reply != null) {
 			 return ResponseEntity.ok(1);
 		 }else {
 			 return ResponseEntity.ok(0);
 		 }
 	 }
-	 @PostMapping(value="/reply/{replyNo}")
-	 public ResponseEntity<Boolean> replyLike(@ModelAttribute ReplyDTO reply){
+	 @PostMapping(value="/reply/like")
+	 public ResponseEntity<Boolean> replyLike(@RequestBody ReplyDTO reply){
+		 System.out.println(reply);
 		 int result = boardService.replyLike(reply);
-		 System.out.println(result);
+		 System.out.println("re : "+result);
 		 return ResponseEntity.ok(true);
 	 }
 	 

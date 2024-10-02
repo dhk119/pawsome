@@ -28,7 +28,15 @@
         		<if test="tag != 0">
         			where board_tag = #{tag}
         		</if>
-        		order by board_no desc) b ) 
+        		<choose>
+	        		<when test="type== 1">
+	        		order by board_no desc)
+	        		</when>
+	        		<when test="type == 2">
+	        		order by read_count desc)
+	        		</when>        		
+        		</choose>
+        		 b )
 		where rnum between #{start} and #{end}
 	</select>
 	<select id="totalCount" resultType="int">
@@ -131,7 +139,15 @@
                      	(select count(*) from reply_like where reply_like.reply_no = reply.reply_no) reply_like
 		from reply 
 		join member using(member_nickname) where board_no=#{boardNo}
-		order by reply_no desc) r)
+		<choose>
+			<when test="type == 1">
+				order by reply_no desc)
+			</when>
+			<when test="type==2">
+				order by reply_like desc)
+			</when>
+		</choose>
+		 r)
 		where rnum between #{start} and #{end}
   	</select>
   	<insert id="insertReply">
@@ -154,7 +170,7 @@
   	<insert id="insertReplyLike">
   		insert into reply_like values(#{replyNo},#{memberNickname})
   	</insert>
-  	<select id="selectReplyLikeCount" resultType="reply">
+  	<select id="selectReplyLikeCount" resultType="int">
   		select count(*) from reply_like where reply_no = #{replyNo}
   	</select>
 </mapper>

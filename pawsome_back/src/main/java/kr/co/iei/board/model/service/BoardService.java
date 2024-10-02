@@ -23,7 +23,7 @@ public class BoardService {
 	@Autowired
 	private PageUtil pageUtil;
 
-	public Map selectBoardList(int reqPage, int tag) {
+	public Map selectBoardList(int reqPage, int tag, int type) {
 		int numPerPage = 5;
 		int pageNaviSize = 5;
 		int totalCount = boardDao.totalCount(tag);
@@ -32,6 +32,7 @@ public class BoardService {
 		m.put("start", pi.getStart());
 		m.put("end", pi.getEnd());
 		m.put("tag", tag);
+		m.put("type", type);
 		List list = boardDao.selectBoardList(m);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
@@ -115,7 +116,7 @@ public class BoardService {
 	}
 
 
-	public Map selectReplyList(int reqPage, int boardNo) {
+	public Map selectReplyList(int reqPage, int boardNo, int type) {
 		int numPerPage = 5;
 		int pageNaviSize = 5;
 		int totalCount = boardDao.totalReplyCount(boardNo);
@@ -124,6 +125,7 @@ public class BoardService {
 		m.put("start", pi.getStart());
 		m.put("end", pi.getEnd());
 		m.put("boardNo", boardNo);
+		m.put("type", type);
 		List list = boardDao.selectReplyList(m);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list.size() == 0 ? null : list);
@@ -152,12 +154,13 @@ public class BoardService {
 	@Transactional
 	public int replyLike(ReplyDTO reply) {
 		int result = 0;
-		if(reply.getReplyNo() == 0 ) {
+		if(reply.getReplyNo() != 0 ) {
 			result = boardDao.insertReplyLike(reply);
+			System.out.println(result);
 		}
 		if(result >0){
 			int likeCount = boardDao.selectReplyLikeCount(reply);
-			System.out.println(likeCount);
+			System.out.println("count : "+likeCount);
 			return likeCount;
 		}else {
 			return -1;

@@ -40,9 +40,13 @@ const BoardView = () => {
   const [changedComment, setChangedComment] = useState(true);
   const viewDelUpdateRef = useRef(null);
   const [hide, setHide] = useState(true);
+  const [type, setType] = useState(1);
+  const changeType = (e) => {
+    setType(e.target.value);
+  };
   useEffect(() => {
     axios
-      .get(`${backServer}/board/replyList/${boardNo}/${reqPage}`)
+      .get(`${backServer}/board/replyList/${boardNo}/${reqPage}/${type}`)
       .then((res) => {
         console.log(res);
         if (reqPage != 1) {
@@ -55,7 +59,7 @@ const BoardView = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPage, boardNo, changedComment]);
+  }, [reqPage, boardNo, changedComment, type]);
   console.log(replyList);
   useEffect(() => {
     axios
@@ -166,7 +170,14 @@ const BoardView = () => {
               : "#전체"}
           </div>
           {memberNickname === board.memberNickname ? (
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                position: "absolute",
+                marginLeft: "500px",
+              }}
+            >
               <div
                 onClick={() => {
                   if (hide) {
@@ -180,9 +191,8 @@ const BoardView = () => {
               >
                 <AiIcons.AiOutlineEllipsis
                   style={{
-                    backgroundColor: "#ffd697",
-                    padding: "10px 20px",
-                    borderRadius: "15px",
+                    padding: "5px 30px",
+                    borderRadius: "5px",
                   }}
                 />
               </div>
@@ -373,9 +383,9 @@ const BoardView = () => {
             <span>댓글</span>
           </div>
           <div className="reply-list-options">
-            <select>
-              <option>등록순</option>
-              <option>인기순</option>
+            <select onChange={changeType}>
+              <option value={1}>등록순</option>
+              <option value={2}>인기순</option>
             </select>
           </div>
         </div>
@@ -391,6 +401,8 @@ const BoardView = () => {
                       reply={reply}
                       setReplyList={setReplyList}
                       replyList={replyList}
+                      changedComment={changedComment}
+                      setChangedComment={setChangedComment}
                     />
                   </Fragment>
                 );
@@ -423,7 +435,7 @@ const BoardView = () => {
             }}
           >
             <div>
-              <textarea
+              <input
                 style={{
                   width: "1000px",
                   marginLeft: "30px",
@@ -466,12 +478,17 @@ const ReplyItem = (props) => {
   const viewDelUpdateRef = useRef(null);
   const [hide, setHide] = useState(true);
   const [replyLike, setReplyLike] = useState(0);
-  const countLike = () => {
+
+  const { changedComment, setChangedComment } = props;
+
+  const isLike = () => {
+    console.log(reply);
     axios
-      .post(`${backServer}/board/reply/${reply.replyNo}`)
+      .post(`${backServer}/board/reply/like`, reply)
       .then((res) => {
         console.log(res);
         setReplyLike(replyLike + 1);
+        setChangedComment(!changedComment);
       })
       .catch((err) => {
         console.log(err);
@@ -544,16 +561,17 @@ const ReplyItem = (props) => {
                 fontSize: "20px",
                 color: "#ffa518",
               }}
-              onClick={countLike}
+              onClick={isLike}
             >
               <AiIcons.AiFillHeart />
             </button>
-            <div>{replyLike}</div>
+            <div>{reply.replyLike}</div>
           </div>
         </div>
       </div>
-      <div>
+      <div style={{ position: "relative", width: "60px" }}>
         <div
+          style={{ position: "absolute", right: "0" }}
           onClick={() => {
             if (hide) {
               viewDelUpdateRef.current.style.display = "block";
@@ -566,7 +584,11 @@ const ReplyItem = (props) => {
         >
           <AiIcons.AiOutlineEllipsis />
         </div>
-        <div style={{ display: "none" }} ref={viewDelUpdateRef}>
+
+        <div
+          style={{ display: "none", marginTop: "20px" }}
+          ref={viewDelUpdateRef}
+        >
           <div>
             <button>수정하기</button>
           </div>
@@ -574,7 +596,7 @@ const ReplyItem = (props) => {
             <button onClick={deleteReply}>삭제하기</button>
           </div>
         </div>
-        <div>
+        <div style={{ position: "absolute", bottom: "0", marginBottom: "5px" }}>
           <button>답글쓰기</button>
         </div>
       </div>

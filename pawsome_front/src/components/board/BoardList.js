@@ -17,10 +17,16 @@ const BoardList = () => {
   const [boardTag, setBoardTag] = useState(0);
   const [pi, setPi] = useState({});
   const [reply, setReply] = useState(0);
+  const [type, setType] = useState(1);
+  const changeType = (e) => {
+    setType(e.target.value);
+  };
+  console.log(type);
   useEffect(() => {
     axios
-      .get(`${backServer}/board/list/${boardTag}/${reqPage}`)
+      .get(`${backServer}/board/list/${boardTag}/${reqPage}/${type}`)
       .then((res) => {
+        console.log(res);
         if (reqPage != 1) {
           const array = boardList.concat(res.data.list);
           setBoardList(array);
@@ -32,7 +38,7 @@ const BoardList = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPage, boardTag]);
+  }, [reqPage, boardTag, type]);
   const changeTag = (e) => {
     setBoardTag(e.target.id);
     setReqPage(1);
@@ -77,9 +83,9 @@ const BoardList = () => {
         <div className="board-all-wrap">
           <div className="write-wrap">
             <div className="board-list-options">
-              <select>
-                <option>등록순</option>
-                <option>인기순</option>
+              <select onChange={changeType}>
+                <option value="1">등록순</option>
+                <option value="2">인기순</option>
               </select>
             </div>
             {isLogin ? <Link to="/board/write">글쓰기</Link> : ""}
