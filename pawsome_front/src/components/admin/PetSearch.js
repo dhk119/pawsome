@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import PageNavi from "../utils/PageNavi";
 import axios from "axios";
-
-const PetList = () => {
+import { useNavigate } from "react-router-dom";
+const PetSearch = () => {
+  const navigate = useNavigate();
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -24,6 +25,7 @@ const PetList = () => {
   };
   const searchPet = () => {
     if (keyword) {
+      navigate("/");
     } else {
     }
   };
@@ -114,4 +116,4 @@ const PetList = () => {
     </section>
   );
 };
-export default PetList;
+export default PetSearch;

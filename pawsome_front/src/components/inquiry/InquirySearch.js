@@ -10,24 +10,32 @@ const InquirySearch = () => {
   const navigate = useNavigate();
   const [inquiryList, setInquiryList] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [reqPage, setReqPage] = useState(1);
+  const [reqPage, setReqPage] = useState(Number(searchParams.get("reqPage")));
   const [pi, setPi] = useState({});
   const isLogin = useRecoilValue(isLoginState);
   const [search, setSearch] = useState(false);
   const [type, setType] = useState(searchParams.get("type"));
   const [keyword, setKeyword] = useState(searchParams.get("keyword"));
-  const [option, setOption] = useState(searchParams.get("option"));
+  const [option, setOption] = useState(Number(searchParams.get("option")));
   useEffect(() => {
-    console.log(keyword);
-    axios
-      .get(
-        `${backServer}/inquiry/search/${reqPage}/${type}/${keyword}/${option}`
-      )
-      .then((res) => {
-        setInquiryList(res.data.list);
-        setPi(res.data.pi);
-      })
-      .catch(() => {});
+    keyword
+      ? axios
+          .get(
+            `${backServer}/inquiry/search/${reqPage}/${type}/${keyword}/${option}`
+          )
+          .then((res) => {
+            setInquiryList(res.data.list);
+            setPi(res.data.pi);
+          })
+          .catch(() => {})
+      : axios
+          .get(`${backServer}/inquiry/search/${reqPage}/${option}`)
+          .then((res) => {
+            console.log(res.data);
+            setInquiryList(res.data.list);
+            setPi(res.data.pi);
+          })
+          .catch(() => {});
   }, [reqPage, search]);
 
   const changeKeyword = (e) => {
@@ -39,11 +47,12 @@ const InquirySearch = () => {
   const searchInquiry = () => {
     if (keyword) {
       navigate(
-        `/inquiry/search?type=${type}&keyword=${keyword}&option=${option}`
+        `/inquiry/search?reqPage=${reqPage}&type=${type}&keyword=${keyword}&option=${option}`
       );
     } else {
-      setSearch(search ? false : true);
+      navigate(`/inquiry/search?reqPage=${reqPage}&option=${option}`);
     }
+    search ? setSearch(false) : setSearch(true);
   };
   const changeOption = (e) => {
     setOption(Number(e.target.value));

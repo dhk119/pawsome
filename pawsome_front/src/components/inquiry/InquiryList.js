@@ -18,25 +18,15 @@ const InquiryList = () => {
   const [option, setOption] = useState(0);
   useEffect(() => {
     {
-      search === 0
-        ? axios
-            .get(`${backServer}/inquiry/list/${reqPage}`)
-            .then((res) => {
-              setInquiryList(res.data.list);
-              setPi(res.data.pi);
-            })
-            .catch(() => {})
-        : axios
-            .get(
-              `${backServer}/inquiry/search/${reqPage}/${type}/${keyword}/${option}`
-            )
-            .then((res) => {
-              setInquiryList(res.data.list);
-              setPi(res.data.pi);
-            })
-            .catch(() => {});
+      axios
+        .get(`${backServer}/inquiry/list/${reqPage}`)
+        .then((res) => {
+          setInquiryList(res.data.list);
+          setPi(res.data.pi);
+        })
+        .catch(() => {});
     }
-  }, [reqPage, search]);
+  }, [reqPage]);
   const changeKeyword = (e) => {
     setKeyword(e.target.value);
   };
@@ -46,10 +36,10 @@ const InquiryList = () => {
   const searchInquiry = () => {
     if (keyword) {
       navigate(
-        `/inquiry/search?type=${type}&keyword=${keyword}&option=${option}`
+        `/inquiry/search?reqPage=${reqPage}&type=${type}&keyword=${keyword}&option=${option}`
       );
     } else {
-      setSearch(search + 1);
+      navigate(`/inquiry/search?reqPage=${reqPage}&option=${option}`);
     }
   };
   const changeOption = (e) => {
