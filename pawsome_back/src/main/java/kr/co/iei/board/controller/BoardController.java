@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,7 +42,6 @@ public class BoardController {
 	@GetMapping("/list/{tag}/{reqPage}")
 	public ResponseEntity<Map> list(@PathVariable int reqPage, @PathVariable int tag){
 		Map map = boardService.selectBoardList(reqPage, tag);
-		System.out.println(map);
 		return ResponseEntity.ok(map);
 	}
 	
@@ -117,6 +117,40 @@ public class BoardController {
 			}else {
 				return ResponseEntity.ok(false);
 			}
+	 }
+	 @PostMapping(value="{boardNo}")
+	 public ResponseEntity<Boolean> isLike(@ModelAttribute BoardDTO board){
+		 int result = boardService.isLike(board);
+		 return ResponseEntity.ok(true);
+	 }
+	 
+	 @GetMapping(value="/replyList/{boardNo}/{reqPage}")
+	 public ResponseEntity<Map> replyList(@PathVariable int reqPage, @PathVariable int boardNo){
+		 Map map = boardService.selectReplyList(reqPage, boardNo);
+			return ResponseEntity.ok(map);
+	 }
+	 
+	 @PostMapping(value="/reply")
+	 public ResponseEntity<Boolean> reply(@ModelAttribute ReplyDTO reply){
+		 int result = boardService.insertReply(reply);
+		 return ResponseEntity.ok(result == 1);
+	 }
+	 
+	 @DeleteMapping(value="/reply/{replyNo}")
+	 public ResponseEntity<Integer> deleteReply(@PathVariable int replyNo){
+		 List<ReplyDTO> reply = boardService.deleteReply(replyNo);
+		 System.out.println(reply);
+		 if(reply != null) {
+			 return ResponseEntity.ok(1);
+		 }else {
+			 return ResponseEntity.ok(0);
+		 }
+	 }
+	 @PostMapping(value="/reply/{replyNo}")
+	 public ResponseEntity<Boolean> replyLike(@ModelAttribute ReplyDTO reply){
+		 int result = boardService.replyLike(reply);
+		 System.out.println(result);
+		 return ResponseEntity.ok(true);
 	 }
 	 
 	 

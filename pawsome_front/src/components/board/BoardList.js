@@ -21,7 +21,6 @@ const BoardList = () => {
     axios
       .get(`${backServer}/board/list/${boardTag}/${reqPage}`)
       .then((res) => {
-        console.log(res);
         if (reqPage != 1) {
           const array = boardList.concat(res.data.list);
           setBoardList(array);
@@ -77,13 +76,19 @@ const BoardList = () => {
       <div className="list-board">
         <div className="board-all-wrap">
           <div className="write-wrap">
+            <div className="board-list-options">
+              <select>
+                <option>등록순</option>
+                <option>인기순</option>
+              </select>
+            </div>
             {isLogin ? <Link to="/board/write">글쓰기</Link> : ""}
           </div>
           <div className="board-list-wrap">
             <ul className="posting-wrap">
               {boardList
                 ? boardList.map((board, i) => {
-                    return <BoardItem board={board} reply={reply} />;
+                    return <BoardItem board={board} />;
                   })
                 : ""}
             </ul>
@@ -111,7 +116,6 @@ const BoardList = () => {
 const BoardItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const board = props.board;
-  const reply = props.reply;
   const navigate = useNavigate();
   return (
     <li
@@ -163,7 +167,7 @@ const BoardItem = (props) => {
             )}
           </div>
           <div className="reply-count">
-            <div>{reply}</div>
+            <div>{board.replyCount}</div>
             <div>댓글</div>
           </div>
         </div>
