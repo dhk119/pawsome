@@ -42,7 +42,6 @@ const BoardFrm = (props) => {
     }
     setBoardFile([...boardFile, ...fileArr]);
   };
-  console.log(showBoardFile);
   return (
     <div className="board-writeFrm">
       <ul>

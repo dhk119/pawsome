@@ -22,8 +22,9 @@
     						else trunc((sysdate - reg_date) / 365) || '년 전'
 						end)as reg_date,
     				    member_nickname,
-    				    (select count(*) from board_like where board_like.board_no = board.board_no) like_count 
-        		from board 
+    				    (select count(*) from board_like where board_like.board_no = board.board_no) board_like,
+    				    (select count(*) from reply where reply.board_no = board.board_no) reply_count
+        		from board
         		<if test="tag != 0">
         			where board_tag = #{tag}
         		</if>
@@ -102,8 +103,58 @@
   			#{boardFileNo}
   		</foreach>
   	</delete>
-  	<update id="updateBoardLike">
-  		update board set
-  			board_like = board_like+1 where board_no=#{boardNo}
-  	</update>
+  	<insert id="insertBoardLike">
+  		insert into board_like values(#{boardNo},#{memberNickname})
+  	</insert>
+  	<select id="totalReplyCount" resultType="int">
+  		select count(*) from reply where board_no=#{boardNo}
+  	</select>
+  	<select id="selectReplyList" resultType="reply">
+  		select * from
+  			(select rownum as rnum, r. * from
+				(select reply_no,
+						reply_content,
+        				board_no,
+        				(case  
+		       			when trunc((sysdate - reply_reg_date)*24*60) <![CDATA[ < ]]> 60 
+		        		then trunc((sysdate - reply_reg_date)*24*60)||'분전' 
+    	        		when trunc((sysdate - reply_reg_date)*24) <![CDATA[ < ]]> 24 
+		        		then trunc((sysdate - reply_reg_date)*24)||'시간전' 
+                		when trunc((sysdate - reply_reg_date)) <![CDATA[ < ]]> 30 
+						then trunc((sysdate - reply_reg_date)) || '일 전' 
+    					when trunc((sysdate - reply_reg_date) / 30) <![CDATA[ < ]]> 12 
+    					then trunc((sysdate - reply_reg_date) / 30) || '개월 전' 
+    					else trunc((sysdate - reply_reg_date) / 365) || '년 전'  
+                		end)as reply_reg_date,
+                     	member_nickname,
+                     	member_profile,
+                     	(select count(*) from reply_like where reply_like.reply_no = reply.reply_no) reply_like
+		from reply 
+		join member using(member_nickname) where board_no=#{boardNo}
+		order by reply_no desc) r)
+		where rnum between #{start} and #{end}
+  	</select>
+  	<insert id="insertReply">
+  		insert into reply values(reply_seq.nextval,#{boardNo},null,#{replyContent},sysdate,#{memberNickname})
+  	</insert>
+  	<select id="selectOneReply" resultType="reply">
+  		select reply_no,
+  			   board_no,
+  			   reply_no_ref,
+  			   reply_content,
+  			   reply_reg_date,
+  			   member_nickname,
+  			   (select count(*) from reply_like where reply_like.reply_no = reply.reply_no) reply_like 
+  	    from reply
+  	</select>
+  	<delete id="deleteReply">
+  		delete from reply
+  		where reply_no = #{replyNo}
+  	</delete>
+  	<insert id="insertReplyLike">
+  		insert into reply_like values(#{replyNo},#{memberNickname})
+  	</insert>
+  	<select id="selectReplyLikeCount" resultType="reply">
+  		select count(*) from reply_like where reply_no = #{replyNo}
+  	</select>
 </mapper>

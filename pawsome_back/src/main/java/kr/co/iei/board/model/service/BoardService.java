@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.iei.board.model.dao.BoardDao;
 import kr.co.iei.board.model.dto.BoardDTO;
 import kr.co.iei.board.model.dto.BoardFileDTO;
+import kr.co.iei.board.model.dto.ReplyDTO;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.util.PageUtil;
 
@@ -106,17 +107,64 @@ public class BoardService {
 	public int isLike(BoardDTO board) {
 		int result = 0;
 		if(board.getBoardLike() == 0) {
-			result = boardDao.updateBoardLike(board);
-		}/*else if(board.getBoardLike() ==1) {
-			result = boardDao.deleteBoardLike(board);
+			result = boardDao.insertBoardLike(board);
+			return result;
+		}else {
+			return -1;
 		}
-		if(result > 0) {
-			int likeCount = boardDao.selectBoardLike(board);
-			return likeCount;
-		}else {*/
-			return -1;			
-		
 	}
+
+
+	public Map selectReplyList(int reqPage, int boardNo) {
+		int numPerPage = 5;
+		int pageNaviSize = 5;
+		int totalCount = boardDao.totalReplyCount(boardNo);
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		Map<String, Object> m = new HashMap<String, Object>();
+		m.put("start", pi.getStart());
+		m.put("end", pi.getEnd());
+		m.put("boardNo", boardNo);
+		List list = boardDao.selectReplyList(m);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list.size() == 0 ? null : list);
+		map.put("pi", pi);
+		return map;
+	}
+
+	@Transactional
+	public int insertReply(ReplyDTO reply) {
+		System.out.println(reply);
+		int result = boardDao.insertReply(reply);
+		return result;
+	}
+
+	@Transactional
+	public List<ReplyDTO> deleteReply(int replyNo) {
+		List<ReplyDTO> reply = boardDao.selectOneReply(replyNo);
+		int result = boardDao.deleteReply(replyNo);
+		if(result>0) {
+			return reply;
+		}else {
+			return null;			
+		}
+	}
+
+	@Transactional
+	public int replyLike(ReplyDTO reply) {
+		int result = 0;
+		if(reply.getReplyNo() == 0 ) {
+			result = boardDao.insertReplyLike(reply);
+		}
+		if(result >0){
+			int likeCount = boardDao.selectReplyLikeCount(reply);
+			System.out.println(likeCount);
+			return likeCount;
+		}else {
+			return -1;
+		}
+	}
+
+
 
 
 	

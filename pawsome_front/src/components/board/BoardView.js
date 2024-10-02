@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import BoardNav from "./BoardNav";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { memberNicknameState } from "../utils/RecoilData";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isLoginState, memberNicknameState } from "../utils/RecoilData";
 import axios from "axios";
 import * as DOMPurify from "dompurify";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -17,12 +17,13 @@ import { RiWechatLine } from "react-icons/ri";
 import Swal from "sweetalert2";
 // import { ShareKakaoLink } from "src/components/utils/ShareKakaoLink";
 const BoardView = () => {
+  const isLogin = useRecoilValue(isLoginState);
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const [boardNo, setBoardNo] = useState(params.boardNo);
   const [board, setBoard] = useState({});
   const [boardList, setBoardList] = useState([]);
-  const [replyList, setReplyList] = useState([]);
+  const [replyList, setReplyList] = useState(null);
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
   const navigate = useNavigate();
@@ -30,12 +31,36 @@ const BoardView = () => {
   const [boardTag, setBoardTag] = useState(0);
   const [pi, setPi] = useState({});
   const [boardLike, setBoardLike] = useState(0);
+  const [replyNo, setReplyNo] = useState(0);
+  const [replyContent, setreplyContent] = useState("");
+  const changeReply = (e) => {
+    setreplyContent(e.target.value);
+  };
 
+  const [changedComment, setChangedComment] = useState(true);
+  const viewDelUpdateRef = useRef(null);
+  const [hide, setHide] = useState(true);
+  useEffect(() => {
+    axios
+      .get(`${backServer}/board/replyList/${boardNo}/${reqPage}`)
+      .then((res) => {
+        console.log(res);
+        if (reqPage != 1) {
+          const arr = replyList.concat(res.data.list);
+          setReplyList(arr);
+        } else {
+          setReplyList(res.data.list);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [reqPage, boardNo, changedComment]);
+  console.log(replyList);
   useEffect(() => {
     axios
       .get(`${backServer}/board/list/${boardTag}/${reqPage}`)
       .then((res) => {
-        console.log(res);
         if (reqPage != 1) {
           const array = boardList.concat(res.data.list);
           setBoardList(array);
@@ -90,15 +115,38 @@ const BoardView = () => {
   };
 
   const isLike = () => {
-    setBoardLike(boardLike + 1);
     axios
-      .patch(`${backServer}/board/${board.boardNo}`)
+      .post(`${backServer}/board/${board.boardNo}`)
       .then((res) => {
         console.log(res);
+        setBoardLike(boardLike + 1);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+  const writeReply = () => {
+    if (replyContent !== "") {
+      console.log("답줘:", replyContent);
+
+      const form = new FormData();
+      form.append("replyContent", replyContent);
+      form.append("boardNo", boardNo);
+      form.append("memberNickname", memberNickname);
+
+      axios
+        .post(`${backServer}/board/reply`, form)
+        .then((res) => {
+          console.log(res);
+          if (res.data) {
+            setChangedComment(!changedComment);
+            setreplyContent("");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
   return (
     <section className="section board-view-wrap">
@@ -118,12 +166,39 @@ const BoardView = () => {
               : "#전체"}
           </div>
           {memberNickname === board.memberNickname ? (
-            <div className="view-btn-zone">
-              <Link to={`/board/update/${board.boardNo}`}>수정</Link>
-              <div>
-                <button type="button" onClick={deleteBoard}>
-                  삭제
-                </button>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                onClick={() => {
+                  if (hide) {
+                    viewDelUpdateRef.current.style.display = "block";
+                    setHide(!hide);
+                  } else {
+                    viewDelUpdateRef.current.style.display = "none";
+                    setHide(!hide);
+                  }
+                }}
+              >
+                <AiIcons.AiOutlineEllipsis
+                  style={{
+                    backgroundColor: "#ffd697",
+                    padding: "10px 20px",
+                    borderRadius: "15px",
+                  }}
+                />
+              </div>
+              <div
+                className="view-btn-zone"
+                style={{ display: "none" }}
+                ref={viewDelUpdateRef}
+              >
+                <div>
+                  <Link to={`/board/update/${board.boardNo}`}>수정하기</Link>
+                </div>
+                <div>
+                  <button type="button" onClick={deleteBoard}>
+                    삭제하기
+                  </button>
+                </div>
               </div>
             </div>
           ) : (
@@ -142,13 +217,18 @@ const BoardView = () => {
                   borderRadius: "45px",
                   border: "1px solid #ffa518",
                   padding: "5px 5px",
+                  width: "40px",
+                  height: "40px",
                 }}
                 src={`${backServer}/board/thumb/${board.memberProfile}`}
               />
             </div>
             <div className="b-v-m">
               <div>{board.memberNickname}</div>
-              <div className="board-view-data">
+              <div
+                className="board-view-data"
+                style={{ paddingBottom: "50px" }}
+              >
                 <AiIcons.AiOutlineHistory />
                 {board.regDate}
               </div>
@@ -213,11 +293,7 @@ const BoardView = () => {
                 <AiIcons.AiFillHeart />
                 좋아요
               </button>
-              <button
-              // onClick={() => {
-              //   ShareKakaoLink(route, title);
-              // }}
-              >
+              <button>
                 <IoIosSend />
                 공유하기
               </button>
@@ -262,6 +338,7 @@ const BoardView = () => {
                           padding: "3px 3px",
                           width: "90px",
                           textAlign: "center",
+                          margin: "10px",
                         }}
                       >
                         {board.boardTag === 1
@@ -276,8 +353,10 @@ const BoardView = () => {
                           ? "오산완"
                           : "#전체"}
                       </div>
-                      <div>{board.boardTitle}</div>
-                      <div>{board.regDate}</div>
+                      <div style={{ marginLeft: "5px" }}>
+                        {board.boardTitle}
+                      </div>
+                      <div style={{ marginLeft: "5px" }}>{board.regDate}</div>
                     </div>
                   </li>
                 );
@@ -293,84 +372,211 @@ const BoardView = () => {
             </span>
             <span>댓글</span>
           </div>
-          <div>등록순</div>
+          <div className="reply-list-options">
+            <select>
+              <option>등록순</option>
+              <option>인기순</option>
+            </select>
+          </div>
         </div>
       </div>
       <div className="reply-list-wrap">
-        <ul className="posting-wrap">
-          {replyList.map((reply, i) => {
-            return <ReplyItem key={"reply-" + i} reply={reply} />;
-          })}
-        </ul>
+        <div className="posting-wrap">
+          <ul>
+            {replyList ? (
+              replyList.map((reply, i) => {
+                return (
+                  <Fragment key={("reply-", i)}>
+                    <ReplyItem
+                      reply={reply}
+                      setReplyList={setReplyList}
+                      replyList={replyList}
+                    />
+                  </Fragment>
+                );
+              })
+            ) : (
+              <div className="preview-reply">
+                <div>
+                  <img src="/image/noreplyimg.png" />
+                </div>
+                <div>
+                  <span style={{ color: "#ccc", fontWeight: "bold" }}>
+                    아직 댓글이 없어요!
+                  </span>
+                </div>
+                <div>
+                  <span style={{ color: "#ccc" }}>첫 댓글을 작성해주세요</span>
+                </div>
+              </div>
+            )}
+          </ul>
+        </div>
       </div>
-      <div className="reply-input-wrap">
-        <form
-          className="reply-write-frm"
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <div>
-            <input
-              style={{
-                width: "1050px",
-                border: "none",
-                borderBottom: "1px solid #d6d6d6",
-                paddingBottom: "3px",
-              }}
-              placeholder="댓글을 남겨주세요"
-            />
-          </div>
-          <div>
-            <label htmlFor="boardFile">
-              <img
-                src="/image/img-box.png"
-                alt="Upload"
-                style={{ margin: "0 10px" }}
+      {isLogin ? (
+        <div className="reply-input-wrap">
+          <form
+            className="reply-write-frm"
+            onSubmit={(e) => {
+              e.preventDefault();
+              writeReply();
+            }}
+          >
+            <div>
+              <textarea
+                style={{
+                  width: "1000px",
+                  marginLeft: "30px",
+                  border: "none",
+                  borderBottom: "1px solid #d6d6d6",
+                  paddingBottom: "3px",
+                }}
+                placeholder="댓글을 남겨주세요"
+                onChange={changeReply}
+                value={replyContent}
               />
-            </label>
-            <input
-              className="img-file"
-              type="file"
-              id="boardFile"
-              multiple
-              style={{ display: "none" }}
-            />
-          </div>
-          <div>
-            <button
-              type="submit"
-              style={{
-                border: "none",
-                backgroundColor: "#ffd697",
-                padding: "5px 10px",
-                borderRadius: "10px",
-              }}
-            >
-              등록
-            </button>
-          </div>
-        </form>
-      </div>
+            </div>
+            <div>
+              <button
+                type="submit"
+                style={{
+                  border: "none",
+                  backgroundColor: "#ffd697",
+                  padding: "5px 20px",
+                  borderRadius: "10px",
+                  marginLeft: "23px",
+                }}
+              >
+                등록
+              </button>
+            </div>
+          </form>
+        </div>
+      ) : (
+        ""
+      )}
     </section>
   );
 };
 const ReplyItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const reply = props.reply;
+  const replyList = props.replyList;
+  const setReplyList = props.setReplyList;
+  const viewDelUpdateRef = useRef(null);
+  const [hide, setHide] = useState(true);
+  const [replyLike, setReplyLike] = useState(0);
+  const countLike = () => {
+    axios
+      .post(`${backServer}/board/reply/${reply.replyNo}`)
+      .then((res) => {
+        console.log(res);
+        setReplyLike(replyLike + 1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteReply = () => {
+    axios
+      .delete(`${backServer}/board/reply/${reply.replyNo}`)
+      .then((res) => {
+        console.log(res);
+        if (res.data === 1) {
+          Swal.fire({
+            title: "댓글이 삭제 되었습니다.",
+            icon: "success",
+          }).then((res) => {
+            replyList.splice(res.data, 1);
+            setReplyList([...replyList]);
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const insertReReply = () => {
+    axios
+      .post(`${backServer}/board/insertReReply/${reply.replyNo}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <li>
-      <div>
-        <img
-          src={
-            reply.replyImage
-              ? `${backServer}/board/${reply.replyImage}`
-              : "/image/paw.png"
-          }
-        />
+    <li className="list-list2">
+      <div className="reply-member-wrap">
+        <div>
+          <img
+            style={{
+              borderRadius: "45px",
+              border: "1px solid #ffa518",
+              padding: "5px 5px",
+              width: "30px",
+              height: "30px",
+            }}
+            src={`${backServer}/board/thumb/${reply.memberProfile}`}
+          />
+        </div>
+        <div>
+          <div className="reply-member">
+            <div>{reply.memberNickname}</div>
+            <div style={{ display: "flex", gap: "5px" }}>
+              <div>
+                <AiIcons.AiOutlineHistory style={{ paddingTop: "5px" }} />
+              </div>
+              <div>{reply.replyRegDate}</div>
+            </div>
+          </div>
+          <div className="reply-content">
+            <div>{reply.replyContent}</div>
+          </div>
+          <div style={{ marginTop: "10px", display: "flex", gap: "5px" }}>
+            <button
+              style={{
+                border: "none",
+                backgroundColor: "transparent",
+                fontSize: "20px",
+                color: "#ffa518",
+              }}
+              onClick={countLike}
+            >
+              <AiIcons.AiFillHeart />
+            </button>
+            <div>{replyLike}</div>
+          </div>
+        </div>
       </div>
       <div>
-        <div>{reply.reply}</div>
+        <div
+          onClick={() => {
+            if (hide) {
+              viewDelUpdateRef.current.style.display = "block";
+              setHide(!hide);
+            } else {
+              viewDelUpdateRef.current.style.display = "none";
+              setHide(!hide);
+            }
+          }}
+        >
+          <AiIcons.AiOutlineEllipsis />
+        </div>
+        <div style={{ display: "none" }} ref={viewDelUpdateRef}>
+          <div>
+            <button>수정하기</button>
+          </div>
+          <div>
+            <button onClick={deleteReply}>삭제하기</button>
+          </div>
+        </div>
+        <div>
+          <button>답글쓰기</button>
+        </div>
       </div>
     </li>
   );
