@@ -1,7 +1,7 @@
 import axios from "axios";
 import DOMPurify from "dompurify";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import QuillEditor from "../utils/QuillEditor";
 import Swal from "sweetalert2";
@@ -10,6 +10,7 @@ import { memberNicknameState } from "../utils/RecoilData";
 const QnaView = () => {
   const params = useParams();
   const qnaNo = params.qnaNo;
+  const navigate = useNavigate();
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [qna, setQna] = useState({});
   const [qnaAnswerCon, setQnaAnswerCon] = useState("");
@@ -36,9 +37,7 @@ const QnaView = () => {
           setQnaAnswerCon("");
           changeQna === true ? setChangeQna(false) : setChangeQna(true);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     } else {
       Swal.fire({
         text: "답변 내용을 입력하세요",
@@ -49,13 +48,33 @@ const QnaView = () => {
     }
   };
   const deleteQnaAnswer = () => {
-    axios.delete(`${backServer}/admin/qna/${qna.qnaAnswerNo}`).then((res) => {
-      changeQna === true ? setChangeQna(false) : setChangeQna(true);
+    Swal.fire({
+      text: "답변을 삭제하시겠습니까?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+      confirmButtonColor: "var(--point1)",
+      cancelButtonColor: "var(--main1)",
+      iconColor: "var(--main2)",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`${backServer}/admin/qna/${qnaNo}`).then((res) => {
+          Swal.fire({
+            text: "성공적으로 삭제되었습니다.",
+            icon: "success",
+            iconColor: "var(--main1)",
+            confirmButtonColor: "var(--point1)",
+          });
+          navigate("/admin/qnaList");
+          changeQna === true ? setChangeQna(false) : setChangeQna(true);
+        });
+      } else if (result.isDismissed) {
+      }
     });
   };
   const updateQnaAnswer = () => {
     if (content !== "<p><br></p>" && content !== "") {
-      console.log(content);
       const form = new FormData();
       form.append("qnaNo", qnaNo);
       form.append("qnaAnswerContent", content);
@@ -63,6 +82,12 @@ const QnaView = () => {
         .patch(`${backServer}/admin/qna`, form)
         .then((res) => {
           changeQna === true ? setChangeQna(false) : setChangeQna(true);
+          Swal.fire({
+            text: "수정 완료",
+            icon: "success",
+            iconColor: "var(--main1)",
+            confirmButtonColor: "var(--point1)",
+          });
         })
         .catch((err) => {});
     } else {

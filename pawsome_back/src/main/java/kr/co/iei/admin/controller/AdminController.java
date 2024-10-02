@@ -104,8 +104,13 @@ public class AdminController {
 	}
 	@PatchMapping(value = "/qna")
 	public ResponseEntity<Integer> updateQnaAnswer(@ModelAttribute QnaAnswerDTO qnaAns){
-		System.out.println(qnaAns);
 		int result=adminService.updateQnaAnswer(qnaAns);
 		return ResponseEntity.ok(result);
+	}
+	@DeleteMapping(value = "qna/{qnaNo}")
+	public ResponseEntity<Integer> deleteQnaAnswer(@PathVariable int qnaNo){
+		System.out.println(qnaNo);
+		int result=adminService.deleteQnaAnswer(qnaNo);
+		return ResponseEntity.ok(result); 
 	}
 }

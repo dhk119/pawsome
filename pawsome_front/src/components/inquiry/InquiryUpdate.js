@@ -45,6 +45,12 @@ const InquiryUpdate = () => {
             .patch(`${backServer}/inquiry`, form)
             .then((res) => {
               if (res.data > 0) {
+                Swal.fire({
+                  text: "수정 완료",
+                  icon: "success",
+                  iconColor: "var(--main1)",
+                  confirmButtonColor: "var(--point1)",
+                });
                 navigate(`/inquiry/view/${inquiryNo}`);
               }
             })

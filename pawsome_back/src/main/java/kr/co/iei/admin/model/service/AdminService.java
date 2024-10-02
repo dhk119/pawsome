@@ -112,4 +112,9 @@ public class AdminService {
 		int result=marketDao.updateQnaAnswer(qnaAns);
 		return result;
 	}
+	@Transactional
+	public int deleteQnaAnswer(int qnaNo) {
+		int result=marketDao.deleteQnaAnswer(qnaNo);
+		return result;
+	}
 }
