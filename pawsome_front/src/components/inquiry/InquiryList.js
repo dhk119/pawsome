@@ -12,16 +12,10 @@ const InquiryList = () => {
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
   const isLogin = useRecoilValue(isLoginState);
+  const [search, setSearch] = useState(0);
   const [type, setType] = useState("all");
   const [keyword, setKeyword] = useState("");
-  const [search, setSearch] = useState(0);
   const [option, setOption] = useState(0);
-  const [searchFrm, setSerachFrm] = useState({
-    reqPage: 1,
-    type: "all",
-    keyword: "",
-    option: 0,
-  });
   useEffect(() => {
     {
       search === 0
@@ -45,14 +39,11 @@ const InquiryList = () => {
   }, [reqPage, search]);
   const changeKeyword = (e) => {
     setKeyword(e.target.value);
-    setSerachFrm({ ...searchFrm, keyword: e.target.value });
   };
   const changeType = (e) => {
     setType(e.target.value);
-    setSerachFrm({ ...searchFrm, type: e.target.value });
   };
   const searchInquiry = () => {
-    setSerachFrm({ ...searchFrm, reqPage: 1 });
     setSearch(0);
     if (keyword === "" && type === "all" && option === 0) {
     } else {
@@ -61,7 +52,6 @@ const InquiryList = () => {
   };
   const changeOption = (e) => {
     setOption(Number(e.target.value));
-    setSerachFrm({ ...searchFrm, option: Number(e.target.value) });
   };
   return (
     <section className="section inquiry-list">

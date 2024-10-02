@@ -341,7 +341,7 @@ tbody > tr:last-child td:last-child {
   display: flex;
   gap: 20px;
   font-weight: bold;
-  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+  cursor: pointer;
 }
 .pageNavi-frm {
   justify-content: center;

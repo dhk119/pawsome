@@ -7,15 +7,69 @@ const PetList = () => {
   const [pi, setPi] = useState({});
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [petList, setPetList] = useState([]);
+  const [type, setType] = useState("all");
+  const [keyword, setKeyword] = useState("");
+  const [search, setSearch] = useState(0);
+  const [option, setOption] = useState(0);
   useEffect(() => {
     axios.get(`${backServer}/admin/petList/${reqPage}`).then((res) => {
       setPetList(res.data.list);
       setPi(res.data.pi);
     });
   }, [reqPage]);
+  const changeKeyword = (e) => {
+    setKeyword(e.target.value);
+  };
+  const changeType = (e) => {
+    setType(e.target.value);
+  };
+  const searchPet = () => {
+    setSearch(0);
+    if (keyword === "" && type === "all" && option === 0) {
+    } else {
+      setSearch(search + 1);
+    }
+  };
+  const changeOption = (e) => {
+    setOption(Number(e.target.value));
+  };
   return (
     <section>
       <div className="admin-title">펫 리스트</div>
+      <div className="admin-write-wrap">
+        <div className="admin-top-left"></div>
+        <div className="admin-top-mid"></div>
+        <div className="admin-search-wrap">
+          <div className="inquiry-keyword">
+            <label htmlFor="option"></label>
+            <select id="option" value={option} onChange={changeOption}>
+              <option value={0}>전체</option>
+              <option value={1}>강아지</option>
+              <option value={2}>고양이</option>
+            </select>
+            <label htmlFor="type"></label>
+            <select id="type" value={type} onChange={changeType}>
+              <option value={"all"}>전체</option>
+              <option value={"title"}>제목</option>
+              <option value={"writer"}>작성자</option>
+              <option value={"titleContent"}>제목 및 내용</option>
+              <option value={"content"}>내용</option>
+            </select>
+          </div>
+          <div className="search-input-wrap" id="inquiry-search">
+            <button type="button" className="search-btn" onClick={searchPet}>
+              <img src="/image/paw.png" className="search-icon" />
+            </button>
+            <input
+              type="text"
+              className="search-input"
+              placeholder="검색어를 입력하세요"
+              value={keyword}
+              onChange={changeKeyword}
+            ></input>
+          </div>
+        </div>
+      </div>
       <table className="admin-tbl">
         <thead>
           <tr>
