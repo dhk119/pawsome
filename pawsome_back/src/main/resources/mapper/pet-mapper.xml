@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.iei.pet.dao.PetDao">
+ 	<select id="selectPetList" resultType="pet">
+ 		select * from pet where member_email=
+ 		(select member_email from member where member.member_email= #{memberEmail})
+ 	</select> 
+</mapper>
