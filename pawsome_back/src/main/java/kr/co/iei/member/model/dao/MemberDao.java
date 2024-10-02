@@ -53,4 +53,6 @@ public interface MemberDao {
 	int updateSchedule(ScheduleDTO schedule);
 
 	PetDTO selectOnePet(int petNo);
+
+	int deleteMember(String memberEmail);
 }

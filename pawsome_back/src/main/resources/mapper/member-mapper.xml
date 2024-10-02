@@ -98,4 +98,8 @@
   		update SCHEDULE set day_title = #{dayTitle}, day_start = #{dayStart}, day_end =#{dayEnd}, day_content = #{dayContent}
   		where member_email = #{memberEmail}
   	</update>
+  	
+  	<delete id="deleteMember">
+  		delete from member where member_email = #{memberEmail}
+  	</delete>
 </mapper>

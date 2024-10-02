@@ -162,5 +162,11 @@ public class MemberService {
 		return pet;
 	}
 
+	@Transactional
+	public int deleteMember(String memberEmail) {
+		int result = memberDao.deleteMember(memberEmail);
+		return result;
+	}
+
 
 }

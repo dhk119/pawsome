@@ -69,6 +69,14 @@ public class MemberController {
 		}
 	}
 	
+	// 회원탈퇴
+	@DeleteMapping(value = "/memberEmail/{memberEmail}")
+	public ResponseEntity<Integer> deleteSchedule(@PathVariable String memberEmail) {
+	    System.out.println(memberEmail);
+	    int result = memberService.deleteMember(memberEmail);
+	    return ResponseEntity.ok(result);
+	}
+	
 	// 로그인
 	@PostMapping(value = "/login")
 	public ResponseEntity<LoginMemberDTO> login(@RequestBody MemberDTO member) {

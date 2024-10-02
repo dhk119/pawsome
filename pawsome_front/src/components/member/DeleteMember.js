@@ -9,9 +9,6 @@ import "./member.css";
 const DeleteMember = () => {
   const [loginEmail] = useRecoilState(loginEmailState); // 로그인 이메일 값 사용
   const [memberPw, setMemberPw] = useState(""); // 현재 비밀번호
-  const [newMemberPw, setNewMemberPw] = useState(""); // 새 비밀번호
-  const [memberPwRe, setMemberPwRe] = useState(""); // 새 비밀번호 확인
-  const pwMessage = useRef(null);
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
 
@@ -19,35 +16,11 @@ const DeleteMember = () => {
     setMemberPw(e.target.value);
   };
 
-  const changePw = (e) => {
-    e.preventDefault();
-
+  const deleteMember = () => {
     axios
-      .post(`${backServer}/member/changePw`, {
-        memberPw: memberPw,
-        newMemberPw: newMemberPw,
-      })
+      .delete(`${backServer}/member/memberEmail/${loginEmail}`)
       .then((res) => {
         console.log(res.data);
-        switch (res.data) {
-          case 1:
-            Swal.fire(
-              "비밀번호 변경 완료",
-              "성공적으로 비밀번호를 변경하셨습니다.",
-              "success"
-            );
-            navigate("/mypage/profile");
-            break;
-          case 2:
-            Swal.fire("오류", "현재 비밀번호와 일치하지 않습니다.", "error");
-            break;
-          default:
-            Swal.fire(
-              "오류",
-              "비밀번호 변경에 실패했습니다. 다시 시도해주세요.",
-              "error"
-            );
-        }
       })
       .catch((err) => {
         console.error(err);
@@ -59,7 +32,7 @@ const DeleteMember = () => {
       <div className="login-page">
         <div className="form">
           <h2>회원 탈퇴</h2>
-          <form className="login-form" onSubmit={changePw}>
+          <form className="login-form" onSubmit={deleteMember}>
             <input
               type="password"
               name="memberPw"

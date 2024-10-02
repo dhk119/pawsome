@@ -51,7 +51,7 @@ const MypageMain = () => {
           <Route path="/updateMember" element={<UpdateMember />} />
           <Route path="/change-pw" element={<ChangePw />} />
           <Route path="/pet-view/:petNo" element={<PetView />} />
-          <Route path="/deleteMember" element={<DeleteMember />} />
+          <Route path="/deleteMember/:memberEmail" element={<DeleteMember />} />
         </Routes>
       </div>
     </div>
