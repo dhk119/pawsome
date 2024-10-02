@@ -278,6 +278,14 @@ const UpdateMember = () => {
             <button type="submit" className="submit">
               회원 정보 수정
             </button>
+            <button
+              className="submit del-btn"
+              onClick={() =>
+                navigate(`/mypage/deleteMember/${member.memberEmail}`)
+              }
+            >
+              회원 탈퇴
+            </button>
           </form>
         </div>
       </div>

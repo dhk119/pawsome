@@ -7,7 +7,7 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { SlArrowRight } from "react-icons/sl";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const MypageProfile = () => {
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
@@ -15,7 +15,7 @@ const MypageProfile = () => {
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
   const backServer = process.env.REACT_APP_BACK_SERVER;
-
+  const navigate = useNavigate();
   const [member, setMember] = useState({});
   const [petList, setPetList] = useState([]);
 
@@ -57,7 +57,11 @@ const MypageProfile = () => {
 
         {petList.length > 0 ? (
           petList.map((pet, index) => (
-            <div className="pet-body" key={index}>
+            <div
+              className="pet-body"
+              key={index}
+              onClick={() => navigate(`/mypage/pet-view/${pet.petNo}`)} // 클릭 시 상세보기 페이지로 이동
+            >
               <div className="pet-img">
                 <img src={`${backServer}/member/pet/${pet.petProfile}`} />
               </div>
@@ -71,10 +75,12 @@ const MypageProfile = () => {
             </div>
           ))
         ) : (
-          <div className="pet-body">등록된 반려동물이 없습니다.</div>
+          <div className="pet-body" onClick={() => navigate("/petinsert")}>
+            등록된 반려동물이 없습니다.
+          </div>
         )}
         <div className="pet-btn-wrap">
-          <Link to="/petinsert">반려동물 편집</Link>
+          <Link to="/petinsert">반려동물 등록</Link>
         </div>
       </div>
     </>

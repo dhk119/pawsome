@@ -45,4 +45,14 @@ public interface MemberDao {
 	int totalPetCountMagnum();
 
 	List selectPetListMagnum(PageInfo pi);
+
+	int insertSchedule(ScheduleDTO schedule);
+
+	int deleteSchedule(int dayNo);
+
+	int updateSchedule(ScheduleDTO schedule);
+
+	PetDTO selectOnePet(int petNo);
+
+	int deleteMember(String memberEmail);
 }

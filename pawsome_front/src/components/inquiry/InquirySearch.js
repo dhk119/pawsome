@@ -1,32 +1,43 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { isLoginState } from "../utils/RecoilData";
 import PageNavi from "../utils/PageNavi";
 
-const InquiryList = () => {
+const InquirySearch = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const [inquiryList, setInquiryList] = useState([]);
-  const [reqPage, setReqPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [reqPage, setReqPage] = useState(Number(searchParams.get("reqPage")));
   const [pi, setPi] = useState({});
   const isLogin = useRecoilValue(isLoginState);
-  const [search, setSearch] = useState(0);
-  const [type, setType] = useState("all");
-  const [keyword, setKeyword] = useState("");
-  const [option, setOption] = useState(0);
+  const [search, setSearch] = useState(false);
+  const [type, setType] = useState(searchParams.get("type"));
+  const [keyword, setKeyword] = useState(searchParams.get("keyword"));
+  const [option, setOption] = useState(Number(searchParams.get("option")));
   useEffect(() => {
-    {
-      axios
-        .get(`${backServer}/inquiry/list/${reqPage}`)
-        .then((res) => {
-          setInquiryList(res.data.list);
-          setPi(res.data.pi);
-        })
-        .catch(() => {});
-    }
-  }, [reqPage]);
+    keyword
+      ? axios
+          .get(
+            `${backServer}/inquiry/search/${reqPage}/${type}/${keyword}/${option}`
+          )
+          .then((res) => {
+            setInquiryList(res.data.list);
+            setPi(res.data.pi);
+          })
+          .catch(() => {})
+      : axios
+          .get(`${backServer}/inquiry/search/${reqPage}/${option}`)
+          .then((res) => {
+            console.log(res.data);
+            setInquiryList(res.data.list);
+            setPi(res.data.pi);
+          })
+          .catch(() => {});
+  }, [reqPage, search]);
+
   const changeKeyword = (e) => {
     setKeyword(e.target.value);
   };
@@ -41,6 +52,7 @@ const InquiryList = () => {
     } else {
       navigate(`/inquiry/search?reqPage=${reqPage}&option=${option}`);
     }
+    search ? setSearch(false) : setSearch(true);
   };
   const changeOption = (e) => {
     setOption(Number(e.target.value));
@@ -140,4 +152,4 @@ const InquiryList = () => {
     </section>
   );
 };
-export default InquiryList;
+export default InquirySearch;

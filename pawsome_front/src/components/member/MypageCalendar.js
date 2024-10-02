@@ -6,8 +6,9 @@ import moment from "moment";
 import axios from "axios";
 import { loginEmailState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
-import { IoAddCircle } from "react-icons/io5";
+import { IoAddCircle, IoCloseSharp } from "react-icons/io5";
 import ReactModal from "react-modal";
+import Swal from "sweetalert2";
 
 const MypageCalendar = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -18,12 +19,14 @@ const MypageCalendar = () => {
   const [selectedSchedule, setSelectedSchedule] = useState(null); // 선택된 개별 일정
   const [isAddModalOpen, setIsAddModalOpen] = useState(false); // 일정 추가 모달 상태
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false); // 일정 상세 모달 상태
+  const [isUpdateMode, setIsUpdateMode] = useState(false); // 수정 모드 상태 추가
 
-  // 일정 추가 모달에서 사용될 상태
   const [newSchedule, setNewSchedule] = useState({
-    title: "",
-    date: value,
-    content: "",
+    dayTitle: "",
+    dayStart: moment().format("YYYY-MM-DD"),
+    dayEnd: "",
+    dayContent: "",
+    memberEmail: loginEmail,
   });
 
   useEffect(() => {
@@ -31,14 +34,13 @@ const MypageCalendar = () => {
       .get(`${backServer}/member/selectSchedule?memberEmail=${loginEmail}`)
       .then((res) => {
         console.log(res);
-        setSchedule(res.data); // 일정 데이터 설정
+        setSchedule(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [loginEmail]);
 
-  // 날짜와 일정을 비교하여 해당 날짜에 일정을 표시하는 함수
   const tileContent = ({ date, view }) => {
     if (view === "month") {
       const formattedDate = moment(date).format("YYYY-MM-DD");
@@ -65,7 +67,7 @@ const MypageCalendar = () => {
   };
 
   const handleDateChange = (date) => {
-    setValue(date); // 선택한 날짜 업데이트
+    setValue(date);
 
     const selectedDate = moment(date).format("YYYY-MM-DD");
     const filteredSchedules = schedule.filter((item) => {
@@ -73,38 +75,142 @@ const MypageCalendar = () => {
       const end = item.dayEnd
         ? moment(item.dayEnd).format("YYYY-MM-DD")
         : start;
-
       return selectedDate >= start && selectedDate <= end;
     });
 
-    setSelectedSchedules(filteredSchedules); // 선택된 날짜의 스케줄 목록 업데이트
+    setSelectedSchedules(filteredSchedules);
   };
 
+  // 수정
+  const handleUpdateSchedule = () => {
+    if (selectedSchedule) {
+      axios
+        .post(`${backServer}/member/updateSchedule`, selectedSchedule)
+        .then((res) => {
+          const updatedSchedule = res.data;
+          const updatedSchedules = schedule.map((item) =>
+            item.dayNo === updatedSchedule.dayNo ? updatedSchedule : item
+          );
+          setSchedule(updatedSchedules);
+          setSelectedSchedules(updatedSchedules);
+          closeDetailModal();
+          Swal.fire({ text: "일정이 수정되었습니다.", icon: "success" });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  //모달 열기/닫기 코드들
   const handleScheduleClick = (scheduleItem) => {
-    setSelectedSchedule(scheduleItem); // 선택된 스케줄 저장
-    setIsDetailModalOpen(true); // 일정 상세 모달 열기
+    setSelectedSchedule(scheduleItem);
+    setIsDetailModalOpen(true);
   };
 
   const closeDetailModal = () => {
-    setIsDetailModalOpen(false); // 상세 모달 닫기
-    setSelectedSchedule(null); // 선택된 스케줄 초기화
+    setIsDetailModalOpen(false);
+    setSelectedSchedule(null);
+    setIsUpdateMode(false);
   };
 
   const openAddModal = () => {
-    setIsAddModalOpen(true); // 일정 추가 모달 열기
+    setIsAddModalOpen(true);
   };
 
   const closeAddModal = () => {
-    setIsAddModalOpen(false); // 일정 추가 모달 닫기
-    setNewSchedule({ title: "", date: value, content: "" }); // 초기화
+    setIsAddModalOpen(false);
+    setNewSchedule({
+      dayTitle: "",
+      dayStart: moment().format("YYYY-MM-DD"),
+      dayEnd: "",
+      dayContent: "",
+    });
+  };
+  ///////////////////////
+
+  useEffect(() => {
+    setNewSchedule((prevSchedule) => ({
+      ...prevSchedule,
+      memberEmail: loginEmail,
+    }));
+  }, [loginEmail]);
+
+  //일정 추가
+  const handleAddSchedule = () => {
+    console.log("새 일정 추가:", newSchedule);
+    axios
+      .post(`${backServer}/member/insertSchedule`, newSchedule)
+      .then((res) => {
+        const addedSchedule = res.data; // 서버에서 반환된 새 일정 정보 (dayNo 포함)
+        console.log("서버에서 반환된 일정:", addedSchedule);
+
+        // 전체 일정 상태 업데이트
+        setSchedule((prevSchedules) => [...prevSchedules, addedSchedule]);
+
+        // 선택된 날짜에 해당하는 일정 업데이트
+        const selectedDate = moment(value).format("YYYY-MM-DD");
+        const start = moment(addedSchedule.dayStart).format("YYYY-MM-DD");
+        const end = addedSchedule.dayEnd
+          ? moment(addedSchedule.dayEnd).format("YYYY-MM-DD")
+          : start;
+
+        if (selectedDate >= start && selectedDate <= end) {
+          setSelectedSchedules((prevSelected) => [
+            ...prevSelected,
+            addedSchedule,
+          ]);
+        }
+
+        // 모달 닫기 및 초기화
+        closeAddModal();
+
+        Swal.fire({
+          text: "일정이 추가되었습니다.",
+          icon: "success",
+        });
+      })
+      .catch((err) => {
+        console.log("일정 추가 중 오류 발생:", err);
+        Swal.fire({
+          text: "일정 추가 중 오류가 발생했습니다.",
+          icon: "error",
+        });
+      });
   };
 
-  const handleAddSchedule = () => {
-    // 여기서 서버에 일정 추가 요청을 보낼 수 있습니다.
-    console.log("새 일정 추가:", newSchedule);
+  //일정 삭제
+  const deleteSchedule = () => {
+    if (selectedSchedule && selectedSchedule.dayNo) {
+      axios
+        .delete(`${backServer}/member/deleteSchedule`, {
+          params: { dayNo: selectedSchedule.dayNo },
+        })
+        .then((res) => {
+          console.log("일정 삭제 완료:", res.data);
 
-    // 모달 닫기
-    closeAddModal();
+          // 전체 일정에서 삭제된 일정 제거
+          const updatedSchedule = schedule.filter(
+            (item) => item.dayNo !== selectedSchedule.dayNo
+          );
+          setSchedule(updatedSchedule);
+
+          // 선택된 날짜의 일정 목록에서도 삭제된 일정 제거
+          const updatedSelectedSchedules = selectedSchedules.filter(
+            (item) => item.dayNo !== selectedSchedule.dayNo
+          );
+          setSelectedSchedules(updatedSelectedSchedules);
+
+          Swal.fire({
+            text: "일정 삭제 완료",
+            icon: "success",
+          });
+          closeDetailModal();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -154,37 +260,54 @@ const MypageCalendar = () => {
         className="calendar-modal"
       >
         <h2>일정 추가</h2>
+        <IoCloseSharp onClick={closeAddModal} />
         <div>
           <label>제목</label>
           <input
             type="text"
-            value={newSchedule.title}
+            value={newSchedule.dayTitle}
             onChange={(e) =>
-              setNewSchedule({ ...newSchedule, title: e.target.value })
+              setNewSchedule({ ...newSchedule, dayTitle: e.target.value })
             }
           />
         </div>
         <div>
-          <label>날짜</label>
+          <label>시작일</label>
           <input
             type="date"
-            value={moment(newSchedule.date).format("YYYY-MM-DD")}
+            value={newSchedule.dayStart}
             onChange={(e) =>
-              setNewSchedule({ ...newSchedule, date: new Date(e.target.value) })
+              setNewSchedule({ ...newSchedule, dayStart: e.target.value })
+            }
+          />
+        </div>
+        <div>
+          <label>종료일</label>
+          <input
+            type="date"
+            value={newSchedule.dayEnd}
+            onChange={(e) =>
+              setNewSchedule({ ...newSchedule, dayEnd: e.target.value })
             }
           />
         </div>
         <div>
           <label>내용</label>
           <textarea
-            value={newSchedule.content}
+            value={newSchedule.dayContent}
             onChange={(e) =>
-              setNewSchedule({ ...newSchedule, content: e.target.value })
+              setNewSchedule({ ...newSchedule, dayContent: e.target.value })
             }
           ></textarea>
         </div>
-        <button onClick={handleAddSchedule}>일정 추가</button>
-        <button onClick={closeAddModal}>닫기</button>
+        <div className="calendar-insert-btns">
+          <button className="insert-btn" onClick={handleAddSchedule}>
+            추가
+          </button>
+          <button className="close-btn" onClick={closeAddModal}>
+            닫기
+          </button>
+        </div>
       </ReactModal>
 
       {/* 일정 상세 모달 */}
@@ -196,14 +319,77 @@ const MypageCalendar = () => {
         className="calendar-modal"
       >
         {selectedSchedule ? (
-          <div>
-            <h2>{selectedSchedule.dayTitle}</h2>
-            <p>시작일: {selectedSchedule.dayStart}</p>
-            {selectedSchedule.dayEnd && (
-              <p>종료일: {selectedSchedule.dayEnd}</p>
+          <div className="schedule-wrap">
+            {/* 일정 수정 모드 전환 */}
+            {isUpdateMode ? (
+              <>
+                <label>제목</label>
+                <input
+                  type="text"
+                  value={selectedSchedule.dayTitle}
+                  onChange={(e) =>
+                    setSelectedSchedule({
+                      ...selectedSchedule,
+                      dayTitle: e.target.value,
+                    })
+                  }
+                />
+                <label>시작일</label>
+                <input
+                  type="date"
+                  value={selectedSchedule.dayStart}
+                  onChange={(e) =>
+                    setSelectedSchedule({
+                      ...selectedSchedule,
+                      dayStart: e.target.value,
+                    })
+                  }
+                />
+                <label>종료일</label>
+                <input
+                  type="date"
+                  value={selectedSchedule.dayEnd}
+                  onChange={(e) =>
+                    setSelectedSchedule({
+                      ...selectedSchedule,
+                      dayEnd: e.target.value,
+                    })
+                  }
+                />
+                <label>내용</label>
+                <textarea
+                  value={selectedSchedule.dayContent}
+                  onChange={(e) =>
+                    setSelectedSchedule({
+                      ...selectedSchedule,
+                      dayContent: e.target.value,
+                    })
+                  }
+                />
+                <div>
+                  <button onClick={handleUpdateSchedule}>저장</button>
+                  <button onClick={() => setIsUpdateMode(false)}>취소</button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2>{selectedSchedule.dayTitle}</h2>
+                <IoCloseSharp onClick={closeDetailModal} />
+                <p>시작일: {selectedSchedule.dayStart}</p>
+                {selectedSchedule.dayEnd && (
+                  <p>종료일: {selectedSchedule.dayEnd}</p>
+                )}
+                <p className="schedule-wrap-content">
+                  {selectedSchedule.dayContent}
+                </p>
+                <div className="schedule-btns-wrap">
+                  <button onClick={() => setIsUpdateMode(true)}>수정</button>
+                  <button className="close-btn" onClick={deleteSchedule}>
+                    삭제
+                  </button>
+                </div>
+              </>
             )}
-            <p>내용: {selectedSchedule.dayContent}</p>
-            <button onClick={closeDetailModal}>닫기</button>
           </div>
         ) : (
           <div>

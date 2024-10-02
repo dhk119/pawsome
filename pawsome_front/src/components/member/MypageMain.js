@@ -11,6 +11,8 @@ import MypageProfile from "./MypageProfile";
 import MypageCalendar from "./MypageCalendar";
 import UpdateMember from "./UpdateMember";
 import ChangePw from "./ChangePw";
+import PetView from "./PetView";
+import DeleteMember from "./DeleteMember";
 
 const MypageMain = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
@@ -48,6 +50,8 @@ const MypageMain = () => {
           <Route path="/calendar" element={<MypageCalendar />} />
           <Route path="/updateMember" element={<UpdateMember />} />
           <Route path="/change-pw" element={<ChangePw />} />
+          <Route path="/pet-view/:petNo" element={<PetView />} />
+          <Route path="/deleteMember/:memberEmail" element={<DeleteMember />} />
         </Routes>
       </div>
     </div>

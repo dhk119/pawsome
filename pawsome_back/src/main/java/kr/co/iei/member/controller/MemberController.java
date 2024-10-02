@@ -1,6 +1,5 @@
 package kr.co.iei.member.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.iei.board.model.dto.BoardDTO;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.PetDTO;
@@ -51,11 +51,13 @@ public class MemberController {
 	@Autowired
 	private EmailSender emailSender;
 	
+	// 네이버 API 코드 받아오기
 	private final String CLIENT_ID = "mDIMmlDCzICGJPSiZ68R"; // 네이버 클라이언트 ID
     private final String CLIENT_SECRET = "bmqkAwlkYr"; // 네이버 클라이언트 Secret
     private final String TOKEN_URL = "https://nid.naver.com/oauth2.0/token";
     private final String USER_INFO_URL = "https://openapi.naver.com/v1/nid/me";
 	
+    // 회원가입
 	@PostMapping
 	public ResponseEntity<Integer> join(@RequestBody MemberDTO member) {
 		System.out.println(member);
@@ -67,6 +69,15 @@ public class MemberController {
 		}
 	}
 	
+	// 회원탈퇴
+	@DeleteMapping(value = "/memberEmail/{memberEmail}")
+	public ResponseEntity<Integer> deleteSchedule(@PathVariable String memberEmail) {
+	    System.out.println(memberEmail);
+	    int result = memberService.deleteMember(memberEmail);
+	    return ResponseEntity.ok(result);
+	}
+	
+	// 로그인
 	@PostMapping(value = "/login")
 	public ResponseEntity<LoginMemberDTO> login(@RequestBody MemberDTO member) {
 		LoginMemberDTO loginMember = memberService.login(member);
@@ -87,18 +98,21 @@ public class MemberController {
 		}
 	}
 	
+	// 이메일 중복 체크
 	@GetMapping(value = "/memberEmail/{memberEmail}/check-email")
 	public ResponseEntity<Integer> checkEmail(@PathVariable String memberEmail) {
 		int result = memberService.checkEmail(memberEmail);
 		return ResponseEntity.ok(result);
 	}
 	
+	// 닉네임 중복 체크
 	@GetMapping(value = "/memberNickname/{memberNickname}/check-nickname")
 	public ResponseEntity<Integer> checkNickname(@PathVariable String memberNickname) {
 		int result = memberService.checkNickname(memberNickname);
 		return ResponseEntity.ok(result);
 	}
 	
+	// 네이버 로그인
 	@GetMapping("/naver-login")
 	public ResponseEntity<Map<String, Object>> naverLogin(@RequestParam String code, @RequestParam String state) {
 	    // 네이버 API로 토큰 요청
@@ -139,12 +153,14 @@ public class MemberController {
 	    return ResponseEntity.ok(result);
 	}
 	
+	// 마이페이지 프로필 조회
 	@PostMapping(value = "/profile")
 	public ResponseEntity<MemberDTO> selectOneMember(@RequestHeader("Authorization") String token) {
 		MemberDTO member = memberService.selectOneMember(token);
 		return ResponseEntity.ok(member);
 	}
 	
+	// 반려동물 정보 삽입
 	@PostMapping(value = "/insertPet")
 	public ResponseEntity<Integer> insertPet(@ModelAttribute PetDTO pet, @ModelAttribute MultipartFile petProfile1) {
 		if(petProfile1 != null) {
@@ -156,6 +172,20 @@ public class MemberController {
 		return ResponseEntity.ok(result);
 	}
 	
+	//반려동물 정보 조회
+	@GetMapping(value = "/petNo/{petNo}")
+	public ResponseEntity<PetDTO> selectOnePet(@PathVariable int petNo){
+		PetDTO pet = memberService.selectOnePet(petNo);
+		System.out.println(petNo);
+		System.out.println(pet);
+		return ResponseEntity.ok(pet);
+	}
+	
+	//반려동물 정보 수정
+	
+	//반려동물 정보 삭제
+	
+	// 인증 메일 받기
 	@PostMapping(value = "/sendMailCode")
 	public ResponseEntity<String> sendMailCode(@RequestBody MemberDTO member) {
 		String emailTitle = "pawsome 인증메일 입니다.";
@@ -209,6 +239,7 @@ public class MemberController {
 		return ResponseEntity.ok(null);
 	}
 	
+	// 비밀번호 잊어버렸을 때 이메일 전송 후 변경
 	@PostMapping(value = "/changePassword")
 	public ResponseEntity<Integer> changePassword(@RequestBody MemberDTO member) {
 		
@@ -255,6 +286,7 @@ public class MemberController {
 		return ResponseEntity.ok(result);
 	}
 	
+	// 회원 정보 업데이트
 	@PatchMapping
 	public ResponseEntity<Integer> updateMember(
 	        @ModelAttribute MemberDTO member, @ModelAttribute MultipartFile memberProfile1, @RequestHeader("Authorization") String token) {
@@ -273,7 +305,8 @@ public class MemberController {
 	    return ResponseEntity.ok(result);
 	}
 	
-	@PostMapping(value = "changePw")
+	// 비밀번호 변경
+	@PostMapping(value = "/changePw")
 	public ResponseEntity<Integer> changePw(
 	    @RequestHeader("Authorization") String token, 
 	    @RequestBody Map<String, String> requestBody) {
@@ -294,12 +327,35 @@ public class MemberController {
 	}
 
 	
-	@GetMapping(value = "selectSchedule")
+	// 일정 조회
+	@GetMapping(value = "/selectSchedule")
 	public ResponseEntity<List> selectCalendar(@RequestHeader("Authorization") String token) {
 	    MemberDTO member = memberService.selectOneMember(token);
 	    List scheduleList = memberService.selectSchedule(member);
-
 	    return ResponseEntity.ok(scheduleList);
 	}
 	
+	// 일정 추가
+	@PostMapping(value = "/insertSchedule")
+	public ResponseEntity<Integer> insertSchedule(@RequestBody ScheduleDTO schedule) {
+		System.out.println(schedule);
+		int result = memberService.insertSchedule(schedule);
+		return ResponseEntity.ok(result);
+	}
+	
+	// 일정 삭제
+	@DeleteMapping(value = "/deleteSchedule")
+	public ResponseEntity<Integer> deleteSchedule(@RequestParam int dayNo) {
+	    System.out.println(dayNo);
+	    int result = memberService.deleteSchedule(dayNo);
+	    return ResponseEntity.ok(result);
+	}
+	
+	// 일정 수정
+	@PostMapping(value = "/updateSchedule")
+	public ResponseEntity<Integer> updateSchedule(@RequestBody ScheduleDTO schedule) {
+		System.out.println("수정 스케쥴 : " + schedule);
+		int result = memberService.updateSchedule(schedule);
+		return ResponseEntity.ok(result);
+	}
 }
