@@ -180,8 +180,7 @@ public class MemberController {
 		System.out.println(pet);
 		return ResponseEntity.ok(pet);
 	}
-	
-	//반려동물 정보 수정
+
 	
 	//반려동물 정보 삭제
 	
@@ -304,6 +303,37 @@ public class MemberController {
 	    int result = memberService.updateMember(member);
 	    return ResponseEntity.ok(result);
 	}
+	
+	
+	//반려동물 정보 수정
+	@PostMapping(value = "/updatePet/{petNo}")
+	public ResponseEntity<Integer> updatePet(
+	    @PathVariable int petNo, 
+	    @ModelAttribute PetDTO pet, 
+	    @ModelAttribute MultipartFile petProfile1) {
+
+	    // 프로필 사진이 비어있지 않으면 업로드 처리
+	    if (petProfile1 != null && !petProfile1.isEmpty()) {
+	        String savepath = root + "/member/pet/profile/";
+	        String filepath = fileUtil.upload(savepath, petProfile1);
+	        pet.setPetProfile(filepath);  // 새 파일 경로로 설정
+	    } else {
+	        // 프로필 사진을 수정하지 않으므로 기존 프로필을 유지하도록 설정
+	        PetDTO existingPet = memberService.selectOnePet(petNo);  // 기존 반려동물 정보 조회
+	        pet.setPetProfile(existingPet.getPetProfile());  // 기존 파일 경로 유지
+	    }
+
+	    int result = memberService.updatePet(pet);
+	    return ResponseEntity.ok(result);
+	}
+	
+	//반려동물 정보 삭제
+	@DeleteMapping(value = "/deletePet/{petNo}")
+	public ResponseEntity<Integer> deletePet(@PathVariable int petNo) {
+		int result = memberService.deletePet(petNo);
+		return ResponseEntity.ok(result);
+	}
+
 	
 	// 비밀번호 변경
 	@PostMapping(value = "/changePw")

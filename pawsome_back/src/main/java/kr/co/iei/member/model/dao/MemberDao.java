@@ -55,4 +55,8 @@ public interface MemberDao {
 	PetDTO selectOnePet(int petNo);
 
 	int deleteMember(String memberEmail);
+
+	int updatePet(PetDTO pet);
+
+	int deletePet(int petNo);
 }

@@ -77,7 +77,7 @@ function App() {
           <Route path="/market/*" element={<MarketMain />} />
           <Route path="/mypage/*" element={<MypageMain />} />
           <Route path="/petinsert" element={<PetInsert />} />
-          <Route path="/petUpdate" element={<PetUpdate />} />
+          <Route path="/petUpdate/:petNo" element={<PetUpdate />} />
           <Route path="/service/*" element={<ServiceMain />} />
           <Route path="/naverjoin" element={<NaverJoin />} />
         </Routes>

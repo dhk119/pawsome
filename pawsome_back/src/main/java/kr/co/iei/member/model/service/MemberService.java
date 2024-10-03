@@ -168,5 +168,17 @@ public class MemberService {
 		return result;
 	}
 
+	@Transactional
+	public int updatePet(PetDTO pet) {
+		int result = memberDao.updatePet(pet);
+		return result;
+	}
+
+	@Transactional
+	public int deletePet(int petNo) {
+		int result = memberDao.deletePet(petNo);
+		return result;
+	}
+
 
 }

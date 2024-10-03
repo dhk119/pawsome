@@ -1,6 +1,6 @@
 import { TbDog } from "react-icons/tb";
 import { LuCat } from "react-icons/lu";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const PetFrm = ({ pet, setPet }) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -22,7 +22,24 @@ const PetFrm = ({ pet, setPet }) => {
     cat: ["러시안 블루", "샴", "페르시안", "메인쿤", "스코티시 폴드"],
   };
 
-  // 사진 미리보기
+  // 사진 미리보기 및 초기 이미지 설정
+  useEffect(() => {
+    if (pet.petProfile && typeof pet.petProfile === "string") {
+      // 기존에 저장된 파일인 경우
+      setPetImgPreview(`${backServer}/member/pet/${pet.petProfile}`);
+    } else if (pet.petProfile instanceof File) {
+      // 새로 업로드한 파일인 경우
+      const reader = new FileReader();
+      reader.readAsDataURL(pet.petProfile);
+      reader.onloadend = () => {
+        setPetImgPreview(reader.result);
+      };
+    } else {
+      setPetImgPreview("/images/default-pet.png");
+    }
+  }, [pet.petProfile, backServer]);
+
+  // 사진 미리보기 처리
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -37,7 +54,7 @@ const PetFrm = ({ pet, setPet }) => {
         setPetImgPreview(reader.result);
       };
     } else {
-      setPetImgPreview("pet_img.png");
+      setPetImgPreview("/images/default-pet.png");
     }
   };
 
@@ -46,7 +63,7 @@ const PetFrm = ({ pet, setPet }) => {
       <div className="image-upload">
         <img
           alt="반려동물 이미지 미리보기"
-          src={petImgPreview || `${backServer}/member/pet/pet_img.png`}
+          src={petImgPreview}
           className="pet-image"
           onClick={() => {
             petImgRef.current.click();
@@ -70,7 +87,7 @@ const PetFrm = ({ pet, setPet }) => {
           type="text"
           id="petName"
           name="petName"
-          value={pet.petName}
+          value={pet.petName || ""}
           onChange={handleInputChange}
         />
       </div>
@@ -81,7 +98,7 @@ const PetFrm = ({ pet, setPet }) => {
           type="date"
           name="petBirth"
           id="petBirth"
-          value={pet.petBirth}
+          value={pet.petBirth ? pet.petBirth.split(" ")[0] : ""}
           onChange={handleInputChange}
         />
       </div>
@@ -95,7 +112,7 @@ const PetFrm = ({ pet, setPet }) => {
               id="dog"
               name="petClasses"
               value="1"
-              checked={pet.petClasses === "1"}
+              checked={String(pet.petClasses) === "1"} // 문자열 비교로 변경
               onChange={handleInputChange}
               className="breed-input"
             />
@@ -108,7 +125,7 @@ const PetFrm = ({ pet, setPet }) => {
               id="cat"
               name="petClasses"
               value="2"
-              checked={pet.petClasses === "2"}
+              checked={String(pet.petClasses) === "2"} // 문자열 비교로 변경
               onChange={handleInputChange}
               className="breed-input"
             />
@@ -121,16 +138,17 @@ const PetFrm = ({ pet, setPet }) => {
         <label>품종</label>
         <select
           name="petBreed"
-          value={pet.petBreed}
+          value={pet.petBreed || ""}
           onChange={handleInputChange}
         >
-          {pet.petClasses === "1" &&
+          {/* 종에 따라 품종 리스트 보여줌 */}
+          {String(pet.petClasses) === "1" &&
             breeds.dog.map((breed) => (
               <option key={breed} value={breed}>
                 {breed}
               </option>
             ))}
-          {pet.petClasses === "2" &&
+          {String(pet.petClasses) === "2" &&
             breeds.cat.map((breed) => (
               <option key={breed} value={breed}>
                 {breed}
@@ -140,13 +158,13 @@ const PetFrm = ({ pet, setPet }) => {
       </div>
 
       <div className="pet-gender-wrap">
-        <div className="pet-title">성별</div>
+        <div>성별</div>
         <input
           type="radio"
           name="petGender"
           id="m"
           value="1"
-          checked={pet.petGender === "1"}
+          checked={String(pet.petGender).trim() === "1"} // 공백 제거
           onChange={handleInputChange}
         />
         <label htmlFor="m">남</label>
@@ -155,20 +173,20 @@ const PetFrm = ({ pet, setPet }) => {
           name="petGender"
           id="f"
           value="2"
-          checked={pet.petGender === "2"}
+          checked={String(pet.petGender).trim() === "2"} // 공백 제거
           onChange={handleInputChange}
         />
         <label htmlFor="f">여</label>
       </div>
 
       <div className="pet-neutering">
-        <div className="pet-title">중성화 여부</div>
+        <div>중성화 여부</div>
         <input
           type="radio"
           name="neutering"
           id="yes"
           value="1"
-          checked={pet.neutering === "1"}
+          checked={String(pet.neutering) === "1"} // 문자열 비교로 변경
           onChange={handleInputChange}
         />
         <label htmlFor="yes">YES</label>
@@ -177,7 +195,7 @@ const PetFrm = ({ pet, setPet }) => {
           name="neutering"
           id="no"
           value="2"
-          checked={pet.neutering === "2"}
+          checked={String(pet.neutering) === "2"} // 문자열 비교로 변경
           onChange={handleInputChange}
         />
         <label htmlFor="no">NO</label>
@@ -189,7 +207,7 @@ const PetFrm = ({ pet, setPet }) => {
           type="text"
           id="petWeight"
           name="petWeight"
-          value={pet.petWeight}
+          value={pet.petWeight || ""}
           onChange={handleInputChange}
         />
       </div>
