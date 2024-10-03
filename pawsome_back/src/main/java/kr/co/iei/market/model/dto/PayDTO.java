@@ -20,4 +20,5 @@ public class PayDTO {
 	private String payName;			//받는 사람
 	private int payState;			//1-결제완료, 2-결제취소
 	private String memberEmail;		//실결제자
+	private String payProductNo;		//결제상품 목록 받아올 문자열
 }

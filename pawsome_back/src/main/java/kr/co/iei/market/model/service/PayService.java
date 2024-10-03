@@ -6,9 +6,11 @@ import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.market.model.dao.MarketDao;
 import kr.co.iei.market.model.dto.CartDTO;
+import kr.co.iei.market.model.dto.PayDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 
 @Service
@@ -31,6 +33,27 @@ public class PayService {
 	public MemberDTO selectPayer(String memberEmail) {
 		MemberDTO payer = marketDao.selectPayer(memberEmail);
 		return payer;
+	}
+
+	@Transactional
+	public boolean insertPayment(PayDTO pay) {
+		StringTokenizer sT = new StringTokenizer(pay.getPayProductNo(), "-");
+		boolean result = false;
+		while (sT.hasMoreElements()) {
+			int payProductNo = Integer.parseInt(sT.nextToken());
+			int reResult = marketDao.insertPayment(pay, payProductNo);
+			if(reResult == 1) {
+				result = true;
+				int delResult = marketDao.payDeleteCart(payProductNo,pay.getMemberEmail());
+				if(delResult < 1) {
+					result = false;
+					break;
+				}
+			}else {
+				break;
+			}
+		}
+		return result;
 	}
 	
 }
