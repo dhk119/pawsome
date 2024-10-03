@@ -9,6 +9,10 @@ import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Autoplay, Pagination } from 'swiper/modules';
 
 const ProductList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -43,7 +47,16 @@ const ProductList = () => {
 
   return (
     <>
-      <div className="best-item"></div>
+      <div className="best-item">
+      <>
+      <Swiper pagination={true} modules={[Pagination,Autoplay]} autoplay={{ delay: 4000 }} className="mySwiper">
+        <SwiperSlide><img src="/image/swiper1.png"/></SwiperSlide>
+        <SwiperSlide><img src="/image/swiper2.jpg"/></SwiperSlide>
+        <SwiperSlide><img src="/image/swiper3.jpg"/></SwiperSlide>
+        <SwiperSlide><img src="/image/swiper4.jpg"/></SwiperSlide>
+      </Swiper>
+    </>
+      </div>
       <div className="page-title">
         {mainCategory === "feed"
           ? "사료"

@@ -19,6 +19,7 @@ const Payment = () => {
     payName: "",
   });
   const [cartList, setCartList] = useState([]);
+  const [payProductNo,setPayProductNo] = useState("");
   const params = useParams();
   const checkCartNo = params.str;
   const [totalPrice, setTotalPrice] = useState(0); //총금액
@@ -48,6 +49,7 @@ const Payment = () => {
         console.log(err);
       });
   }, []);
+  //주소
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -59,8 +61,32 @@ const Payment = () => {
       document.body.removeChild(script);
     };
   }, []);
+  //결제
+  useEffect(() => {
+    // 외부 스크립트 로드 함수
+    const loadScript = (src, callback) => {
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = src;
+      script.onload = callback;
+      document.head.appendChild(script);
+    };
+    // 스크립트 로드 후 실행
+    loadScript("https://code.jquery.com/jquery-1.12.4.min.js", () => {
+      loadScript("https://cdn.iamport.kr/js/iamport.payment-1.2.0.js", () => {
+        const IMP = window.IMP;
+        // 가맹점 식별코드
+        IMP.init("imp08702631");
+      });
+    });
+    // 컴포넌트가 언마운트될 때 스크립트를 제거하기 위한 정리 함수
+    return () => {
+      const scripts = document.querySelectorAll('script[src^="https://"]');
+      scripts.forEach((script) => script.remove());
+    };
+  }, []);
 
-  //배송지 변경
+  //전화번호 변경
   const phoneNum = (e) => {
     let input = e.target.value;
     input = input.replace(/[^0-9]/g, "");
@@ -77,7 +103,15 @@ const Payment = () => {
       ...prevPayer,
       payPhone: input,
     }));
+
+    let str = "";
+    cartList.map((item)=>{
+      str += item.productNo+"-";
+    });
+    str = str.slice(0, -1); //마지막 - 자르기
+    setPayProductNo(str);
   };
+  console.log(payProductNo);
   const changeName = (e) => {
     let input = e.target.value;
     setPayer((prevPayer) => ({
@@ -85,11 +119,13 @@ const Payment = () => {
       payName: input,
     }));
   };
+  
+  //베송지변경
   const changeAddress = () => {
     new window.daum.Postcode({
       oncomplete: function (data) {
         let addr =
-          data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
+        data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
         setPayer((prevPayer) => ({
           ...prevPayer,
           payAddr1: data.zonecode,
@@ -107,7 +143,6 @@ const Payment = () => {
       payAddr3: input,
     }));
   };
-  console.log(payer);
 
   //배송지 관리
   const [isAddrBtnDisabled, setIsAddrBtnDisabled] = useState(false);
@@ -136,6 +171,51 @@ const Payment = () => {
       }));
     }
   };
+
+  //결제
+  const pay = () => {
+    const date = new Date();
+    const dateString = date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate()+""+date.getHours()+""+date.getMinutes()+""+date.getSeconds()+""+date.getMilliseconds();
+    window.IMP.request_pay({
+      pg: "html5_inicis.INIpayTest",
+      pay_method: "card",
+      merchant_uid: dateString,
+      name: `${cartList[0].productName} 외 ${cartList.length-1}건`,
+      amount: 100, //테스트 끝나면 totalPrice로 수정
+      buyer_email: loginEmail,
+      buyer_name: payer.payName,
+      buyer_tel: payer.payPhone,
+      buyer_addr: payer.payAddr2,
+      buyer_postcode: payer.payAddr1
+    }, rsp => {
+      if (rsp.success) {
+        // 결제 성공 시 로직
+        console.log(rsp);
+        // 결제 성공 시 저장할 데이터
+        const form = new FormData();
+        form.append("memberEmail", loginEmail);
+        form.append("payUid", rsp.merchant_uid);
+        form.append("totalPrice", totalPrice);
+        form.append("payDate", date);
+        form.append("payName", payer.payName);
+        form.append("payAddr1",payer.payAddr1);
+        form.append("payAddr2",payer.payAddr2);
+        form.append("payAddr3",payer.payAddr3);
+        form.append("payProductNo",payProductNo);
+        axios.post(`${backServer}/pay/payment`, form)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.error(err);
+        })
+      } else {
+        // 결제 실패 시 로직
+        console.log(rsp.error_msg);
+        // 추가로 실행할 로직을 여기에 작성
+      }
+    });
+  }
 
   return (
     <div className="payment-page-wrap">
@@ -288,9 +368,11 @@ const Payment = () => {
             </div>
           </div>
         </div>
+        <div className="pay-btn"><button onClick={pay}>결제하기</button></div>
       </div>
       <div className="pay-type-wrap margin">
         <div className="title">결제 동의</div>
+        <div className="content">결제에 동의하시나요? </div>
       </div>
     </div>
   );

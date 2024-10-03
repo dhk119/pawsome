@@ -61,9 +61,11 @@
 }
 
 .best-item {
-  height: 250px;
   width: 100%;
-  background-color: #ffd697;
+  align-items: center;
+}
+.best-item img{
+  width: 90%;
 }
 
 .productList-title {
@@ -501,4 +503,22 @@ td {
 .payment-total {
   font-family: ns-b;
   font-size: 20px;
+}
+.pay-btn > button{
+  border: 3px solid #ffa518;
+  width: 30%;
+  background-color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  margin: 0 20px;
+  line-height: 40px;
+  font-family: ns-b;
+  color: #ffa518;
+  padding: 5px 20px;
+  cursor: pointer;
+  text-align: center;
+}
+.pay-btn > button:hover{
+  background-color: #ffa518;
+  color: #fff;
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.market.model.dto.CartDTO;
+import kr.co.iei.market.model.dto.PayDTO;
 import kr.co.iei.market.model.dto.ProductDTO;
 import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
@@ -73,6 +74,10 @@ public interface MarketDao {
 	CartDTO selectPayList(int cartNo);
 
 	MemberDTO selectPayer(String memberEmail);
+
+	int insertPayment(PayDTO pay, int payProductNo);
+
+	int payDeleteCart(int payProductNo, String memberEmail);
 
 
 
