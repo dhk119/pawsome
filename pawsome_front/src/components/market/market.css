@@ -61,9 +61,11 @@
 }
 
 .best-item {
-  height: 250px;
   width: 100%;
-  background-color: #ffd697;
+  align-items: center;
+}
+.best-item img{
+  width: 90%;
 }
 
 .productList-title {
