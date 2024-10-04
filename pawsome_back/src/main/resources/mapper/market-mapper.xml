@@ -153,7 +153,7 @@
 		insert into pay values(#{payUid},#{totalPrice},sysdate,#{payAddr1},#{payAddr2},#{payAddr3},#{payName},1,#{memberEmail})
 	</insert>
 	<insert id="insertBuyList">
-		insert into buy_list values(buy_list_seq.nextval, #{cart.productNo}, #{pay.payUid}, #{cart.productCartCount}, #{pay.memberEmail})
+		insert into buy_list values(buy_list_seq.nextval, #{cart.productNo}, #{pay.payUid}, #{cart.productCartCount}, #{pay.memberEmail}, 1)
 	</insert>
 	<delete id="payDeleteCart">
 		delete from cart where cart_no=#{payCartNo}
