@@ -40,20 +40,25 @@ const PetUpdate = () => {
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
   }, [backServer, petNo]);
 
   // 반려동물 정보 수정
   const updatePet = () => {
+    const formattedBirth = pet.petBirth.includes(" ")
+      ? pet.petBirth.split(" ")[0]
+      : pet.petBirth;
+
     const form = new FormData();
     form.append("memberEmail", memberEmail);
     form.append("petName", pet.petName);
-    form.append("petBirth", pet.petBirth);
+    form.append("petBirth", formattedBirth);
     form.append("petClasses", pet.petClasses);
     form.append("petBreed", pet.petBreed);
     form.append("petGender", pet.petGender);
     form.append("neutering", pet.neutering);
     form.append("petWeight", pet.petWeight);
+
     if (pet.petProfile !== null) {
       form.append("petProfile1", pet.petProfile); // 프로필 이미지
     }
