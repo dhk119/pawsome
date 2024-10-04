@@ -332,12 +332,27 @@ a {
 .api-wrap {
   display: flex;
   justify-content: center;
-  gap: 200px;
+  flex-direction: column;
+  position: relative;
 }
 .weather-wrap {
-  width: 500px;
-  height: 500px;
   margin: 50px;
+  z-index: 1; /* 콘텐츠를 앞쪽에 표시 */
+}
+.weather-title {
+  display: flex;
+  flex-direction: column;
+}
+.weather-title > span {
+  margin-left: 60px;
+  margin-bottom: 5px;
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--point1);
+}
+.weather-title > span:last-child {
+  font-size: 16px;
+  font-weight: 200;
 }
 .video-wrap {
   width: 500px;
@@ -351,11 +366,42 @@ a {
 }
 .market-preview-wrap {
   display: flex;
-  align-items: center;
   justify-content: center;
+  flex-direction: column;
+}
+.market-main-title {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  margin-left: 60px;
+}
+.market-main-title > span {
+  margin-left: 60px;
+  margin-bottom: 5px;
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--point1);
+}
+.market-all-btn {
+  margin-left: 1350px;
+  width: 100px;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 2px solid #ffa518;
+  color: #ffa518;
+  font-weight: 900;
+  font-size: 16px;
+}
+.market-all-btn:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  background-color: #ffa518;
+  color: #fff;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
 }
 .Swiper {
-  width: 1300px;
+  position: absolute;
+  width: 1700px;
   height: 500px;
 }
 .swiper-slide {
@@ -374,4 +420,23 @@ a {
   width: 80%;
   height: 80%;
   object-fit: cover;
+}
+.board-all-for-main {
+  margin: 30px auto;
+  width: 91%;
+}
+.board-all-title {
+  display: flex;
+  flex-direction: column;
+}
+.board-all-title > span {
+  margin-left: 60px;
+  margin-bottom: 5px;
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--point1);
+}
+.board-all-title > span:last-child {
+  font-size: 16px;
+  font-weight: 200;
 }

@@ -71,10 +71,10 @@ public class BoardController {
 		 return ResponseEntity.ok(result == 1+boardFileList.size());
 		 }
 	 
-	 @GetMapping(value="/boardNo/{boardNo}")
-	 public ResponseEntity<BoardDTO> selectOneBoard(@PathVariable int boardNo){
+	 @GetMapping(value="/boardNo/{boardNo}/{memberNickname}")
+	 public ResponseEntity<BoardDTO> selectOneBoard(@PathVariable int boardNo,@PathVariable String memberNickname){
 		 List<ReplyDTO> replyList = new ArrayList<ReplyDTO>();
-		 BoardDTO board = boardService.selectOneBoard(boardNo);
+		 BoardDTO board = boardService.selectOneBoard(boardNo, memberNickname);
 		 return ResponseEntity.ok(board);
 	 }
 	 
@@ -118,15 +118,15 @@ public class BoardController {
 				return ResponseEntity.ok(false);
 			}
 	 }
-	 @PostMapping(value="{boardNo}")
+	 @PostMapping(value="/like")
 	 public ResponseEntity<Boolean> isLike(@ModelAttribute BoardDTO board){
 		 int result = boardService.isLike(board);
 		 return ResponseEntity.ok(result >0);
 	 }
 	 
-	 @GetMapping(value="/replyList/{boardNo}/{reqPage}/{type}")
-	 public ResponseEntity<Map> replyList(@PathVariable int reqPage, @PathVariable int boardNo, @PathVariable int type){
-		 Map map = boardService.selectReplyList(reqPage, boardNo, type);
+	 @GetMapping(value="/replyList/{boardNo}/{reqPage}/{type}/{memberNickname}")
+	 public ResponseEntity<Map> replyList(@PathVariable int reqPage, @PathVariable int boardNo, @PathVariable int type,@PathVariable String memberNickname){
+		 Map map = boardService.selectReplyList(reqPage, boardNo, type, memberNickname);
 			return ResponseEntity.ok(map);
 	 }
 	 

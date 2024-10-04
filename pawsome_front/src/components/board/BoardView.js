@@ -38,7 +38,6 @@ const BoardView = () => {
   const changeReply = (e) => {
     setreplyContent(e.target.value);
   };
-
   const [changedComment, setChangedComment] = useState(true);
   const viewDelUpdateRef = useRef(null);
   const [replyNoState, setReplyNoState] = useState(0);
@@ -51,7 +50,9 @@ const BoardView = () => {
   };
   useEffect(() => {
     axios
-      .get(`${backServer}/board/replyList/${boardNo}/${reqPage}/${type}`)
+      .get(
+        `${backServer}/board/replyList/${boardNo}/${reqPage}/${type}/${memberNickname}`
+      )
       .then((res) => {
         console.log(res);
         if (reqPage != 1) {
@@ -64,7 +65,7 @@ const BoardView = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPage, boardNo, changedComment, type]);
+  }, [reqPage, boardNo, changedComment, type, memberNickname]);
   console.log(replyList);
   useEffect(() => {
     axios
@@ -85,7 +86,7 @@ const BoardView = () => {
 
   useEffect(() => {
     axios
-      .get(`${backServer}/board/boardNo/${boardNo}`)
+      .get(`${backServer}/board/boardNo/${boardNo}/${memberNickname}`)
       .then((res) => {
         console.log(res);
         setBoard(res.data);
@@ -94,7 +95,7 @@ const BoardView = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [boardNo]);
+  }, [boardNo, memberNickname]);
 
   //공유하기
   useEffect(() => {
@@ -124,15 +125,34 @@ const BoardView = () => {
   };
 
   const isLike = () => {
-    axios
-      .post(`${backServer}/board/${board.boardNo}`)
-      .then((res) => {
-        console.log(res);
-        setBoardLike(boardLike + 1);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (board.isLike === 0) {
+      axios
+        .post(`${backServer}/board/like`, {
+          boardNo: board.boardNo,
+          memberNickname: memberNickname,
+        })
+        .then((res) => {
+          console.log(res);
+          setBoardLike(boardLike + 1);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .delete(`${backServer}/board/like`, {
+          boardNo: board.boardNo,
+          memberNickname: memberNickname,
+        })
+        .then((res) => {
+          if (res.data > 0) {
+            setBoardLike(boardLike - 1);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
   const writeReply = () => {
     if (replyContent !== "") {
@@ -524,22 +544,28 @@ const ReplyItem = (props) => {
   const editRef = useRef(null);
   const originalRef = useRef(null);
   const [editType, setEditType] = useState(false);
+  const [memberNickname, setMemberNickname] =
+    useRecoilState(memberNicknameState);
 
   const { commentRef, setWriteType, writeType, replyNoState, setReplyNoState } =
     props;
 
   const isLike = () => {
-    console.log(reply);
-    axios
-      .post(`${backServer}/board/reply/like`, reply)
-      .then((res) => {
-        console.log(res);
-        setReplyLike(replyLike + 1);
-        setChangedComment(!changedComment);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (memberNickname !== "") {
+      axios
+        .post(`${backServer}/board/reply/like`, {
+          replyNo: reply.replyNo,
+          memberNickname: memberNickname,
+        })
+        .then((res) => {
+          console.log(res);
+          setReplyLike(replyLike + 1);
+          setChangedComment(!changedComment);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const deleteReply = () => {

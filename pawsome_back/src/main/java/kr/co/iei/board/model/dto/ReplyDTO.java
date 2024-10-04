@@ -20,5 +20,6 @@ public class ReplyDTO {
 	private String memberProfile;
 	private int reReplyCount;
 	private int replyLike;
+	private int isLike;
 
 }

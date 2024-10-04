@@ -76,9 +76,23 @@ const Main = () => {
         </div>
       </div>
       <div className="api-wrap">
+        <div className="weather-title" style={{ marginLeft: "50px" }}>
+          <span>
+            <span
+              className="material-icons"
+              style={{ color: "#ffa518", marginRight: "15px" }}
+            >
+              pets
+            </span>
+            날씨
+          </span>
+          <span>#산책 전에 날씨를 확인해 보세요</span>
+        </div>
         <div className="weather-wrap">
           <Weather />
         </div>
+      </div>
+      <div className="api-wrap">
         <div className="video-wrap">동영상 api 자리</div>
       </div>
       <div className="market-preview-wrap">
@@ -91,80 +105,92 @@ const Main = () => {
               pets
             </span>
             마켓
+            <Link
+              className="market-all-btn"
+              to="/market/main/productList/0/all"
+            >
+              전체보기
+            </Link>
           </span>
-          <Link to="/market/main/productList/0/all">전체보기</Link>
-          <div className="main-swiper">
-            <>
-              <Swiper
-                slidesPerView={4}
-                className="Swiper"
-                pagination={{
-                  type: "fraction",
-                }}
-                navigation={true}
-                modules={[Pagination, Navigation]}
-              >
-                <SwiperSlide>
-                  <img
-                    src="/image/nursecat.png"
-                    onClick={() => {
-                      navigate(
-                        `/market/main/productDetail/${product.productNo}/detail`
-                      );
-                    }}
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/image/nursecat.png" />-
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/image/nursecat.png" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/image/nursecat.png" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/image/nursecat.png" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/image/nursecat.png" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/image/nursecat.png" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/image/nursecat.png" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/image/nursecat.png" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/image/nursecat.png" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/image/nursecat.png" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/image/nursecat.png" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/image/nursecat.png" />
-                </SwiperSlide>
-              </Swiper>
-            </>
-          </div>
+          <span style={{ fontSize: "16px", fontWeight: "200" }}>
+            #산책 전에 날씨를 확인해 보세요
+          </span>
+        </div>
+        <div className="main-swiper">
+          <>
+            <Swiper
+              slidesPerView={5}
+              className="Swiper"
+              pagination={{
+                type: "fraction",
+              }}
+              navigation={true}
+              modules={[Pagination, Navigation]}
+            >
+              <SwiperSlide>
+                <img
+                  src="/image/nursecat.png"
+                  onClick={() => {
+                    navigate(
+                      `/market/main/productDetail/${product.productNo}/detail`
+                    );
+                  }}
+                />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/image/nursecat.png" />-
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/image/nursecat.png" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/image/nursecat.png" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/image/nursecat.png" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/image/nursecat.png" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/image/nursecat.png" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/image/nursecat.png" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/image/nursecat.png" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/image/nursecat.png" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/image/nursecat.png" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/image/nursecat.png" />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src="/image/nursecat.png" />
+              </SwiperSlide>
+            </Swiper>
+          </>
         </div>
       </div>
-      <div>
-        <div>
-          <span
-            className="material-icons"
-            style={{ color: "#ffa518", marginRight: "15px" }}
-          >
-            pets
+      <div className="board-all-for-main">
+        <div className="board-all-title">
+          <span>
+            <span
+              className="material-icons"
+              style={{ color: "#ffa518", marginRight: "15px" }}
+            >
+              pets
+            </span>
+            와글와글 커뮤니티
           </span>
-          <span>와글와글 커뮤니티</span>
+          <span>#커뮤니티를 둘러보세요</span>
         </div>
+
         <BoardList />
       </div>
       <div className="up-btn">
