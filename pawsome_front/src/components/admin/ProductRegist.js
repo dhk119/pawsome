@@ -45,16 +45,19 @@ const ProductRegist = () => {
     setProductPrice(e.target.value);
     setProduct({ ...product, productPrice: e.target.value });
   };
-  const inputDetail = (e) => {
-    setProductDetail(e.target.value);
-    setProduct({ ...product, productDetail: e.target.value });
-  };
   const inputShow = (e) => {
     setProductShow(e.target.value);
     setProduct({ ...product, productShow: e.target.value });
   };
   const registProduct = () => {
-    if (
+    if (!Number(productPrice)) {
+      Swal.fire({
+        text: "가격에는 숫자만 입력 가능합니다.",
+        icon: "info",
+        iconColor: "var(--main1)",
+        confirmButtonColor: "var(--point1)",
+      });
+    } else if (
       productName !== "" &&
       typeCategory !== "" &&
       mainCategory !== "" &&
@@ -115,7 +118,7 @@ const ProductRegist = () => {
           thumb={thumb}
           setThumb={setThumb}
           productDetail={productDetail}
-          setProductDetail={inputDetail}
+          setProductDetail={setProductDetail}
           productShow={productShow}
           setProductShow={inputShow}
           memberEmail={memberEmail}
