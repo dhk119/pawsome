@@ -117,4 +117,26 @@ public class AdminService {
 		int result=marketDao.deleteQnaAnswer(qnaNo);
 		return result;
 	}
+	public Map searchProductList(int reqPage, String type, String keyword, String option) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=marketDao.searchTotalCountMagnum(type, keyword, option);
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=marketDao.searchProductListMagnum(pi.getStart(), pi.getEnd(), type, keyword, option);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
+	public Map searchProductList(int reqPage, String option) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=marketDao.searchTotalCountOption(option);
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=marketDao.searchProductListOption(pi.getStart(), pi.getEnd(), option);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
 }
