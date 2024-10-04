@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginState, loginEmailState } from "../utils/RecoilData";
 import axios from "axios";
+import { Bar, BarChart, CartesianGrid, Legend, XAxis, YAxis } from "recharts";
+import { Tooltip } from "@mui/material";
 
 const HealthTest = () => {
   const [result, setResults] = useState([
@@ -79,6 +81,16 @@ const HealthTest = () => {
   const isLogin = useRecoilValue(isLoginState); // 로그인 여부
   const [memberEmail, setMemberEmail] = useRecoilState(loginEmailState);
   const [isFinalScoreVisible, setIsFinalScoreVisible] = useState(false);
+  const [expandedResult, setExpandedResult] = useState(null);
+  const [expandedResults, setExpandedResults] = useState({});
+  const [data, setData] = useState([
+    { pv: 81, skin: skinScore },
+    { pv: 85, dental: dentalScore },
+    { pv: 73, bone: boneScore },
+    { pv: 70, eye: eyeScore },
+    { pv: 60, heart: heartScore },
+    { pv: 90, immunity: immunityScore },
+  ]);
 
   useEffect(() => {
     axios
@@ -302,6 +314,14 @@ const HealthTest = () => {
       heart: heartScore,
       immunity: immunityScore,
     });
+    data[0].skin = skinScore;
+    data[1].dental = dentalScore;
+    data[2].bone = boneScore;
+    data[3].eye = eyeScore;
+    data[4].heart = heartScore;
+    data[5].immunity = immunityScore;
+    setData([...data]);
+    console.log(data);
   };
   const getHealthStatus = (score) => {
     if (score <= 20) return "매우 위험 단계!";
@@ -322,29 +342,54 @@ const HealthTest = () => {
       건강: "피부 상태가 아주 건강합니다!!",
     },
     dental: {
-      low: "치아 상태가 좋지 않습니다. 치료가 필요할 수 있습니다.",
-      medium: "치아 상태가 보통입니다. 정기적인 검진이 필요합니다.",
-      high: "치아 상태가 양호합니다. 잘 관리하고 있습니다.",
+      "매우 위험 단계!":
+        "피부 상태가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
+      "위험 단계!":
+        "피부 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
+      "주의 단계!":
+        "피부 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
+      양호: "피부 상태가 양호합니다. 계속 관리하세요.",
+      건강: "피부 상태가 아주 건강합니다!!",
     },
     bone: {
-      low: "뼈 건강이 좋지 않습니다. 수의사와 상담하세요.",
-      medium: "뼈 건강이 보통입니다. 주의가 필요합니다.",
-      high: "뼈 건강이 양호합니다. 잘 관리하고 있습니다.",
+      "매우 위험 단계!":
+        "피부 상태가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
+      "위험 단계!":
+        "피부 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
+      "주의 단계!":
+        "피부 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
+      양호: "피부 상태가 양호합니다. 계속 관리하세요.",
+      건강: "피부 상태가 아주 건강합니다!!",
     },
     eye: {
-      low: "눈 건강이 좋지 않습니다. 치료가 필요할 수 있습니다.",
-      medium: "눈 건강이 보통입니다. 정기적인 검진이 필요합니다.",
-      high: "눈 건강이 양호합니다. 잘 관리하고 있습니다.",
+      "매우 위험 단계!":
+        "피부 상태가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
+      "위험 단계!":
+        "피부 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
+      "주의 단계!":
+        "피부 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
+      양호: "피부 상태가 양호합니다. 계속 관리하세요.",
+      건강: "피부 상태가 아주 건강합니다!!",
     },
     heart: {
-      low: "심장 건강이 좋지 않습니다. 즉시 상담하세요.",
-      medium: "심장 건강이 보통입니다. 주의가 필요합니다.",
-      high: "심장 건강이 양호합니다. 잘 관리하고 있습니다.",
+      "매우 위험 단계!":
+        "피부 상태가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
+      "위험 단계!":
+        "피부 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
+      "주의 단계!":
+        "피부 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
+      양호: "피부 상태가 양호합니다. 계속 관리하세요.",
+      건강: "피부 상태가 아주 건강합니다!!",
     },
     immunity: {
-      low: "면역력이 좋지 않습니다. 수의사와 상담하세요.",
-      medium: "면역력이 보통입니다. 주의가 필요합니다.",
-      high: "면역력이 양호합니다. 잘 관리하고 있습니다.",
+      "매우 위험 단계!":
+        "피부 상태가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
+      "위험 단계!":
+        "피부 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
+      "주의 단계!":
+        "피부 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
+      양호: "피부 상태가 양호합니다. 계속 관리하세요.",
+      건강: "피부 상태가 아주 건강합니다!!",
     },
   };
   const getHealthStatusColor = (status) => {
@@ -362,6 +407,15 @@ const HealthTest = () => {
       default:
         return "#fff"; // 기본 색상
     }
+  };
+  const toggleResultDetail = (key) => {
+    setExpandedResult(expandedResult === key ? null : key);
+  };
+  const toggleResultDescription = (key) => {
+    setExpandedResults((prev) => ({
+      ...prev,
+      [key]: !prev[key], // 해당 항목의 상태를 반전
+    }));
   };
 
   return (
@@ -509,6 +563,9 @@ const HealthTest = () => {
                   다음으로
                 </button>
               </div>
+              <div>
+                <h3>현재 피부 점수: {skinScore}</h3>
+              </div>
             </div>
           ) : !isBoneTestStarted ? (
             <div>
@@ -636,10 +693,25 @@ const HealthTest = () => {
               </div>
             </div>
           ) : (
-            <div>
-              <h1>테스트 결과</h1>
-              <div className="result-box">
-                {Object.keys(finalScores).map((key) => (
+            <div className="result-box">
+              <BarChart width={1000} height={250} data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="pv" fill="#8884D8" />
+                <Bar dataKey={"skin"} fill="#82CA9D" />
+                <Bar dataKey={"dental"} fill="#82CA9D" />
+                <Bar dataKey={"bone"} fill="#82CA9D" />
+                <Bar dataKey={"eye"} fill="#82CA9D" />
+                <Bar dataKey={"heart"} fill="#82CA9D" />
+                <Bar dataKey={"immunity"} fill="#82CA9D" />
+              </BarChart>
+              {Object.keys(finalScores).map((key, i) => {
+                console.log(Object.keys(finalScores));
+                console.log(finalScores[key]);
+                return (
                   <div
                     key={key}
                     className="result-item"
@@ -648,6 +720,7 @@ const HealthTest = () => {
                         getHealthStatus(finalScores[key])
                       ),
                     }}
+                    onClick={() => toggleResultDescription(key)} // 클릭 시 상태 토글
                   >
                     {key === "skin"
                       ? "피부 상태"
@@ -662,9 +735,16 @@ const HealthTest = () => {
                       : "면역력 점수"}
                     : {finalScores[key]}점 <br />
                     {getHealthStatus(finalScores[key])}
+                    {expandedResults[key] && ( // 상태가 true일 때만 설명 표시
+                      <div className="detail-description">
+                        {healthDescriptions[key][
+                          getHealthStatus(finalScores[key])
+                        ] || "상세 정보가 없습니다."}
+                      </div>
+                    )}
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </div>
           )}
         </div>

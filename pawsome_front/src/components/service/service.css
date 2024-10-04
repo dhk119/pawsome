@@ -75,6 +75,10 @@
   z-index: 100;
   width: 400px;
   height: 450px;
+  cursor: pointer;
+}
+#menu_wrap > button :hover {
+  cursor: pointer;
 }
 
 #keyword {
@@ -94,8 +98,11 @@
   border: none;
   font-weight: bold;
   color: white;
+  cursor: pointer;
 }
-
+#searchButton :hover {
+  cursor: pointer;
+}
 #placesList {
   border: 2px solid #ffa518;
   margin: 0 auto;
@@ -307,7 +314,7 @@
 
 .result-item {
   color: #fff;
-  width: 40%;
+  width: 45%;
   font-weight: bold;
   border-radius: 20px;
   padding: 15px;
@@ -321,4 +328,9 @@
   background-color: #5799ff;
   color: white;
   cursor: pointer;
+}
+.detail-description {
+  margin-top: 10px;
+  font-size: smaller;
+  color: #fff;
 }
