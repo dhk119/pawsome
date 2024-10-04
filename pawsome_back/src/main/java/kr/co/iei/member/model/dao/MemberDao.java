@@ -62,4 +62,12 @@ public interface MemberDao {
 	int deletePet(int petNo);
 
 	List selectBuyList(String memberEmail);
+
+	int searchTotalCountMemberMagnum(String type, String keyword, String option);
+
+	List searchMemberListMagnum(int start, int end, String type, String keyword, String option);
+
+	int searchTotalCountMemberOption(String option);
+
+	List searchMemberListOption(int start, int end, String option);
 }

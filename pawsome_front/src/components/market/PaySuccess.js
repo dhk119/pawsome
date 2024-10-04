@@ -1,0 +1,12 @@
+const PaySuccess = () => {
+  return (
+    <div className="payment-page-wrap">
+      <img src="/image/pay_success.jpg" />
+      <div>
+        <h1>결제 완료</h1>
+      </div>
+    </div>
+  );
+};
+
+export default PaySuccess;

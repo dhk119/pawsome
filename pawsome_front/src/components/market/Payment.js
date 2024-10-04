@@ -2,12 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { loginEmailState } from "../utils/RecoilData";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { length } from "./../../../node_modules/stylis/src/Tokenizer";
 import { charat, replace } from "./../../../node_modules/stylis/src/Utility";
+import Swal from "sweetalert2";
 
 const Payment = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [memberData, setMemberData] = useState({});
   const [payer, setPayer] = useState({
@@ -27,7 +29,6 @@ const Payment = () => {
     axios
       .get(`${backServer}/pay/payer/${loginEmail}`)
       .then((res) => {
-        console.log(res);
         setMemberData(res.data);
       })
       .catch((err) => {
@@ -37,7 +38,6 @@ const Payment = () => {
     axios
       .get(`${backServer}/pay/payList/${checkCartNo}`)
       .then((res) => {
-        console.log(res);
         setCartList(res.data);
         const result = res.data.map((cart) => {
           paymentTotal += cart.productCartCount * cart.productPrice;
@@ -212,6 +212,12 @@ const Payment = () => {
             .post(`${backServer}/pay/payment`, form)
             .then((res) => {
               console.log(res);
+              Swal.fire({
+                title: "결제 성공",
+                text: "결제를 성공했습니다.",
+                icon: "success",
+              });
+              navigate("/market/payment/success");
             })
             .catch((err) => {
               console.error(err);

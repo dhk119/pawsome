@@ -13,13 +13,32 @@ const ProductList = () => {
   const [productList, setProductList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
-  const isLogin = useRecoilValue(isLoginState);
+  const [type, setType] = useState("all");
+  const [keyword, setKeyword] = useState("");
+  const [option, setOption] = useState("A");
+  const [search, setSearch] = useState(0);
   useEffect(() => {
-    axios.get(`${backServer}/admin/productList/${reqPage}`).then((res) => {
-      setProductList(res.data.list);
-      setPi(res.data.pi);
-    });
-  }, [reqPage]);
+    search === 0
+      ? axios.get(`${backServer}/admin/productList/${reqPage}`).then((res) => {
+          setProductList(res.data.list);
+          setPi(res.data.pi);
+        })
+      : keyword
+      ? axios
+          .get(
+            `${backServer}/admin/searchProduct/${reqPage}/${type}/${keyword}/${option}`
+          )
+          .then((res) => {
+            setProductList(res.data.list);
+            setPi(res.data.pi);
+          })
+      : axios
+          .get(`${backServer}/admin/searchProduct/${reqPage}/${option}`)
+          .then((res) => {
+            setProductList(res.data.list);
+            setPi(res.data.pi);
+          });
+  }, [reqPage, search]);
   const changeShow = (i, productShow) => {
     productList[i].productShow = productShow;
     setProductList([...productList]);
@@ -31,19 +50,67 @@ const ProductList = () => {
       },
     },
   });
+  const changeKeyword = (e) => {
+    setKeyword(e.target.value);
+  };
+  const changeType = (e) => {
+    setType(e.target.value);
+  };
+  const searchProduct = () => {
+    if (!keyword && option === "A") {
+      setSearch(0);
+    } else {
+      setSearch(search + 1);
+    }
+  };
+  const changeOption = (e) => {
+    setOption(e.target.value);
+  };
   return (
     <section>
       <div className="admin-title">제품 리스트</div>
       <div className="admin-write-wrap">
-        {isLogin ? (
+        <div className="admin-top-left">
           <div className="admin-write">
             <Link to="/admin/productRegist" id="link-product-regist">
               제품등록
             </Link>
           </div>
-        ) : (
-          ""
-        )}
+        </div>
+        <div className="admin-top-mid"></div>
+        <div className="admin-search-wrap">
+          <div className="inquiry-keyword">
+            <label htmlFor="option"></label>
+            <select id="option" value={option} onChange={changeOption}>
+              <option value={"A"}>전체</option>
+              <option value={"Y"}>등록</option>
+              <option value={"N"}>미등록</option>
+            </select>
+            <label htmlFor="type"></label>
+            <select id="type" value={type} onChange={changeType}>
+              <option value={"all"}>전체</option>
+              <option value={"name"}>제품명</option>
+              <option value={"category"}>카테고리</option>
+              <option value={"price"}>가격</option>
+            </select>
+          </div>
+          <div className="search-input-wrap" id="inquiry-search">
+            <button
+              type="button"
+              className="search-btn"
+              onClick={searchProduct}
+            >
+              <img src="/image/paw.png" className="search-icon" />
+            </button>
+            <input
+              type="text"
+              className="search-input"
+              placeholder="검색어를 입력하세요"
+              value={keyword}
+              onChange={changeKeyword}
+            ></input>
+          </div>
+        </div>
       </div>
       <table className="admin-tbl">
         <thead>
