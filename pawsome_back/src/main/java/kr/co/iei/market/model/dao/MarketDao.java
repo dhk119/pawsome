@@ -34,7 +34,14 @@ public interface MarketDao {
 	List selectQnaListMagnum(int start, int end, boolean answer);
 	
 	QnaDTO selectOneQnaMagnum(int qnaNo);
+	
+	int searchTotalCountMagnum(String type, String keyword, String option);
 
+	List searchProductListMagnum(int start, int end, String type, String keyword, String option);
+
+	int searchTotalCountOption(String option);
+
+	List searchProductListOption(int start, int end, String option);
 	
 	/*원희*/
 	int totalCount(int typeCategory, String mainCategory);
@@ -82,7 +89,6 @@ public interface MarketDao {
 	int payDeleteCart(int payCartNo);
 
 	CartDTO selectPayCartList(int payCartNo);
-
 
 
 

@@ -113,4 +113,14 @@ public class AdminController {
 		int result=adminService.deleteQnaAnswer(qnaNo);
 		return ResponseEntity.ok(result); 
 	}
+	@GetMapping(value = "/productSearch/{reqPage}/{type}/{keyword}/{option}")
+	public ResponseEntity<Map> productSearch(@PathVariable int reqPage, @PathVariable String type, @PathVariable String keyword, @PathVariable String option){
+		Map map=adminService.searchProductList(reqPage, type, keyword, option);
+		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/productSearch/{reqPage}/{option}")
+	public ResponseEntity<Map> productSearch(@PathVariable int reqPage, @PathVariable String option){
+		Map map=adminService.searchProductList(reqPage, option);
+		return ResponseEntity.ok(map);
+	}
 }
