@@ -34,7 +34,7 @@ const Admin = () => {
           </div>
           <div className="admin-link-gap">
             <Link className="admin-product-label" to="/admin/petChart">
-              판매 차트
+              펫 차트
             </Link>
           </div>
         </div>
