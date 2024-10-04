@@ -60,6 +60,39 @@ const UpdateMember = () => {
     };
   }, []);
 
+  //이름 유효성 검사
+  const nameMessage = useRef(null);
+  const checkName = () => {
+    nameMessage.current.classList.remove("valid");
+    nameMessage.current.classList.remove("invalid");
+
+    const nameReg = /^[가-힣]{2,10}$/; // 한글 2-10자
+    if (nameReg.test(member.memberName)) {
+      nameMessage.current.innerText = "이름이 유효합니다.";
+      nameMessage.current.classList.add("valid");
+    } else {
+      nameMessage.current.innerText = "이름을 확인해주세요.(한글 2-10글자)";
+      nameMessage.current.classList.add("invalid");
+    }
+  };
+
+  //전화번호 유효성 검사
+  const phoneMessage = useRef(null);
+  const checkPhone = () => {
+    phoneMessage.current.classList.remove("valid");
+    phoneMessage.current.classList.remove("invalid");
+
+    const phoneReg = /^\d{11}$/; // 숫자 11자리
+    if (phoneReg.test(member.memberPhone)) {
+      phoneMessage.current.innerText = "전화번호가 올바르게 입력되었습니다.";
+      phoneMessage.current.classList.add("valid");
+    } else {
+      phoneMessage.current.innerText =
+        "전화번호를 확인해주세요.(-제외, 숫자 11자)";
+      phoneMessage.current.classList.add("invalid");
+    }
+  };
+
   // 회원 정보 수정 요청
   const update = (e) => {
     e.preventDefault();
@@ -83,33 +116,40 @@ const UpdateMember = () => {
       form.append("memberProfile1", member.memberProfile);
     }
 
-    // FormData 디버깅 출력
-    console.log("=== FormData 내용 ===");
-    for (let pair of form.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
-
-    axios
-      .patch(`${backServer}/member`, form, {
-        headers: {
-          contentType: "multipart/form-data",
-          processData: false,
-        },
-      })
-      .then((res) => {
-        if (res.data) {
-          navigate("/mypage/profile");
-        } else {
-          Swal.fire({
-            title: "에러가 발생했습니다.",
-            text: "다시 시도해주세요.",
-            icon: "error",
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    if (
+      /^[가-힣]{2,10}$/.test(member.memberName) && // 이름이 유효한지
+      member.memberAddr1 && // 우편번호가 입력되었는지
+      member.memberAddr2 && // 주소가 입력되었는지
+      member.memberAddr3 // 상세주소가 입력되었는지
+    ) {
+      axios
+        .patch(`${backServer}/member`, form, {
+          headers: {
+            contentType: "multipart/form-data",
+            processData: false,
+          },
+        })
+        .then((res) => {
+          if (res.data) {
+            navigate("/mypage/profile");
+          } else {
+            Swal.fire({
+              title: "에러가 발생했습니다.",
+              text: "다시 시도해주세요.",
+              icon: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      Swal.fire({
+        text: "입력 값을 확인하세요.",
+        icon: "info",
+        confirmButtonColor: "var(--main1)",
       });
+    }
   };
 
   // 사진 미리보기 설정
@@ -220,6 +260,7 @@ const UpdateMember = () => {
               value={member.memberNickname || ""}
               onChange={changeMember}
               placeholder="닉네임"
+              disabled
             />
 
             <input
@@ -229,7 +270,9 @@ const UpdateMember = () => {
               value={member.memberName || ""}
               onChange={changeMember}
               placeholder="이름"
+              onBlur={checkName}
             />
+            <p className="input-msg" ref={nameMessage}></p>
 
             <input
               type="text"
@@ -238,7 +281,9 @@ const UpdateMember = () => {
               value={member.memberPhone || ""}
               onChange={changeMember}
               placeholder="전화번호(-제외, 선택사항)"
+              onBlur={checkPhone}
             />
+            <p className="input-msg" ref={phoneMessage}></p>
 
             <div className="addr">
               <input

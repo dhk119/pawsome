@@ -1,52 +1,54 @@
 .pet-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 800px;
-    margin: 0 auto;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .pet-title {
-    text-align: center;
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .pet-profile {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .pet-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 2px solid #ddd;
-  }
-  
-  .pet-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-  }
-  
-  .pet-table th,
-  .pet-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-  }
-  
-  .pet-table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-    width: 150px;
-  }
-  
-  .pet-table td {
-    background-color: #fff;
-  }
-  
-  
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pet-title {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.pet-profile {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.pet-container > .pet-title {
+  color: var(--point1);
+}
+
+.pet-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+}
+
+.pet-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.pet-table th,
+.pet-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.pet-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  width: 150px;
+}
+
+.pet-table td {
+  background-color: #fff;
+}
