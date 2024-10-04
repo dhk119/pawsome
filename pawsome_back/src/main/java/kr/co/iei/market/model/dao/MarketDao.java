@@ -90,6 +90,10 @@ public interface MarketDao {
 
 	CartDTO selectPayCartList(int payCartNo);
 
+	List selectBuyList(String loginEmail, int start, int end);
+
+	int payTotalCount(String loginEmail);
+
 
 
 

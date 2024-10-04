@@ -1,6 +1,6 @@
 const PaySuccess = () => {
   return (
-    <div className="payment-page-wrap">
+    <div className="payment-page-wrap" style={{ backgroundColor: "none" }}>
       <img src="/image/pay_success.jpg" />
       <div>
         <h1>결제 완료</h1>

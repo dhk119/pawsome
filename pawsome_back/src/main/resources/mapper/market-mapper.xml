@@ -241,4 +241,17 @@
 	<select id="selectPayCartList" resultType="cart">
 		select product_no, product_cart_count from cart where cart_no=#{payCartNo}
 	</select>
+	<select id="selectBuyList" resultType="buyList">
+		select * from
+			(select rownum as rnum, t.* from
+				(select b.buy_no, b.pay_uid, b.product_no, b.buy_count, b.member_email, b.buy_state, p.product_thumb, p.product_name, p.product_price from
+					(select * from buy_list where member_email=#{loginEmail})b 
+					left join product p on b.product_no = p.product_no order by 1 desc
+				)t
+			)
+		where rnum between #{start} and #{end}
+	</select>
+	<select id="payTotalCount" resultType="int">
+		select count(*) from buy_list where member_email=#{loginEmail}
+	</select>
 </mapper>

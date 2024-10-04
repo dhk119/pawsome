@@ -1,7 +1,9 @@
 package kr.co.iei.market.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +14,15 @@ import kr.co.iei.market.model.dao.MarketDao;
 import kr.co.iei.market.model.dto.CartDTO;
 import kr.co.iei.market.model.dto.PayDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.util.PageInfo;
+import kr.co.iei.util.PageUtil;
 
 @Service
 public class PayService {
 	@Autowired
 	private MarketDao marketDao;
+	@Autowired
+	private PageUtil pageUtil;
 
 	public List selectPayList(String checkCartNo) {
 		StringTokenizer sT = new StringTokenizer(checkCartNo, "-");
@@ -60,6 +66,21 @@ public class PayService {
 		}
 	}
 	return result;
+	}
+
+	public Map selectBuyList(String loginEmail, int reqPage) {
+		int numPerPage = 10;
+		int pageNaviSize = 5;
+		int totalCount = marketDao.payTotalCount(loginEmail);
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		int start = pi.getStart();
+		int end = pi.getEnd();
+		List list = marketDao.selectBuyList(loginEmail, start, end);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("pi", pi);
+		map.put("totalCount", totalCount);
+		return map;
 	}
 	
 }

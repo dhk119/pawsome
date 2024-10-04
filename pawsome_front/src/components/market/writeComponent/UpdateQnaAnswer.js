@@ -16,7 +16,7 @@ const UpdateQnaAnswer = () => {
   const qnaNo = params.qnaNo;
   const [product, setProduct] = useState({});
   const [qna, setQna] = useState({});
-  const [qnaAnswerContent, setQnaAnswerContent] = useState("");
+  const [qnaAnswerContent, setQnaAnswerContent] = useState({});
 
   useEffect(() => {
     axios

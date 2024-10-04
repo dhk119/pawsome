@@ -39,10 +39,14 @@ public class PayController {
 	
 	@PostMapping(value="/payment")
 	public ResponseEntity<Boolean> insertPayment (@ModelAttribute PayDTO pay){
-		System.out.println("결제값 : "+pay);
 		boolean result = payService.insertPayment(pay);
-		System.out.println(result);
 		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping(value="/buyList/{loginEmail}/{reqPage}")
+	public ResponseEntity<Map> buyList (@PathVariable String loginEmail, @PathVariable int reqPage){
+		Map map = payService.selectBuyList(loginEmail, reqPage);
+		return ResponseEntity.ok(map);
 	}
 	
 }

@@ -386,10 +386,6 @@ const Payment = () => {
           <button onClick={pay}>결제하기</button>
         </div>
       </div>
-      <div className="pay-type-wrap margin">
-        <div className="title">결제 동의</div>
-        <div className="content">결제에 동의하시나요? </div>
-      </div>
     </div>
   );
 };
