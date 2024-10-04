@@ -104,17 +104,6 @@ public class BoardService {
 		return null;
 	}
 
-	@Transactional
-	public int isLike(BoardDTO board) {
-		int result = 0;
-		if(board.getBoardLike() == 0) {
-			result = boardDao.insertBoardLike(board);
-			return result;
-		}else {
-			return -1;
-		}
-	}
-
 
 	public Map selectReplyList(int reqPage, int boardNo, int type, String memberNickname) {
 		int numPerPage = 5;
@@ -153,17 +142,9 @@ public class BoardService {
 	}
 
 	@Transactional
-	public int replyLike(ReplyDTO reply) {
-		int result = 0;
-		if(reply.getReplyNo() != 0 ) {
-			result = boardDao.insertReplyLike(reply);
-		}
-		if(result >0){
-			int likeCount = boardDao.selectReplyLikeCount(reply);
-			return likeCount;
-		}else {
-			return -1;
-		}
+	public int insertReplyLike(ReplyDTO reply) {
+		int result = boardDao.insertReplyLike(reply);
+		return result;
 	}
 
 	@Transactional
@@ -171,6 +152,36 @@ public class BoardService {
 		int result = boardDao.updateReply(reply); 
 		return result;
 	}
+
+	
+	@Transactional
+	public int insertBoardLike(BoardDTO board) {
+		int result = boardDao.insertBoardLike(board);
+		return result;
+	}
+
+	@Transactional
+	public int deleteBoardLike(int boardNo, String memberNickname) {
+		BoardDTO board = new BoardDTO();
+		board.setBoardNo(boardNo);
+		board.setMemberNickname(memberNickname);
+		
+		return boardDao.deleteBoardLike(board);
+	}
+
+	@Transactional
+	public int deleteReplyLike(int replyNo, String memberNickname) {
+		ReplyDTO reply = new ReplyDTO();
+		reply.setReplyNo(replyNo);
+		reply.setMemberNickname(memberNickname);
+		return boardDao.deleteReplyLike(reply);
+	}
+
+
+
+
+
+
 
 
 

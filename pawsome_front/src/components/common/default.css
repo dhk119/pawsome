@@ -275,18 +275,21 @@ a {
   box-sizing: border-box;
 }
 .commercial-image > img {
-  width: 100%;
+  margin-left: 130px;
+  width: 85%;
   height: 700px;
   object-fit: cover;
   object-position: 50% 40%;
+  border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .commercial-text {
-  padding: 200px 100px;
+  padding: 180px 100px;
   font-size: 50px;
   font-weight: 900;
   position: absolute;
   color: var(--gray8);
+  margin-left: 50px;
 }
 .commercial-text > p {
   font-size: 18px;
@@ -299,6 +302,7 @@ a {
 .map-title {
   display: flex;
   flex-direction: column;
+  margin: 30px;
 }
 .map-title > span {
   margin-left: 60px;
@@ -336,6 +340,10 @@ a {
   position: relative;
 }
 .weather-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin: 50px;
   z-index: 1; /* 콘텐츠를 앞쪽에 표시 */
 }
@@ -361,9 +369,6 @@ a {
   background-color: var(--main1);
 }
 
-.content {
-  min-height: 600px;
-}
 .market-preview-wrap {
   display: flex;
   justify-content: center;

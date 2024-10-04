@@ -60,6 +60,12 @@ public interface BoardDao {
 
 	int updateReply(ReplyDTO reply);
 
+	int isLike(int boardNo, String memberNickname);
+
+	int deleteBoardLike(BoardDTO board);
+
+	int deleteReplyLike(ReplyDTO reply);
+
 
 
 

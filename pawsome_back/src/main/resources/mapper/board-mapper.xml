@@ -71,7 +71,7 @@
     			else trunc((sysdate - reg_date) / 365) || '년 전'
 			end)as reg_date,
 			(select count(*) from board_like where board_no=#{boardNo}) as board_like,
-			(select count(*) from board_like where board_no=#{boardNo} and member_nickname=#{memberNickname}) as is_like
+			(select count(*) from board_like where board_no=#{boardNo} and member_nickname=#{memberNickname}) as is_like,
 			member_nickname,
 			member_profile
 		from board
@@ -112,9 +112,15 @@
   			#{boardFileNo}
   		</foreach>
   	</delete>
+  	<select id="isLike" resultType="int">
+  		select count(*) from board_like where board_no =#{boardNo} and member_nickname = #{memberNickname}
+  	</select>
   	<insert id="insertBoardLike">
   		insert into board_like values(#{boardNo},#{memberNickname})
   	</insert>
+  	<delete id="deleteBoardLike">
+  		delete from board_like where board_no=#{boardNo} and member_nickname=#{memberNickname}
+  	</delete>
   	<select id="totalReplyCount" resultType="int">
   		select count(*) from reply where board_no=#{boardNo}
   	</select>
@@ -137,7 +143,7 @@
                 		end)as reply_reg_date,
                      	member_nickname,
                      	member_profile,
-                     	(select count(*) from reply_like where reply_like.reply_no = reply.reply_no) reply_like
+                     	(select count(*) from reply_like where reply_like.reply_no = reply.reply_no) reply_like,
                      	(select count(*) from reply_like where reply_no=reply.reply_no and member_nickname=#{memberNickname}) as is_like
 		from reply 
 		join member using(member_nickname) where board_no=#{boardNo}
@@ -157,7 +163,7 @@
   	</insert>
   	<select id="selectOneReply" resultType="reply">
   		select r.*,
-  			  (select count(reply_no_ref) from reply where reply_no_ref = r.reply_no) as reply_count
+  			  (select count(reply_no_ref) from reply where reply_no_ref = r.reply_no) as reply_count,
   			  (select count(*) from reply_like where reply_no=r.reply_no and member_nickname=#{memberNickname}) as is_like
     	from reply r
     	where board_no = #{boardNo} and reply_no_ref is null order by 1 desc
@@ -169,6 +175,9 @@
   	<insert id="insertReplyLike">
   		insert into reply_like values(#{replyNo},#{memberNickname})
   	</insert>
+  	<delete id="deleteReplyLike">
+  		delete from reply_like where reply_no=#{replyNo} and member_nickname =#{memberNickname}
+  	</delete>
   	<select id="selectReplyLikeCount" resultType="int">
   		select count(*) from reply_like where reply_no = #{replyNo}
   	</select>
