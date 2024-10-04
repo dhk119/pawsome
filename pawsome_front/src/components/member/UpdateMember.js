@@ -131,6 +131,12 @@ const UpdateMember = () => {
         })
         .then((res) => {
           if (res.data) {
+            Swal.fire({
+              title: "회원 정보 수정 완료.",
+              text: "회원 정보가 수정되었습니다.",
+              icon: "success",
+              confirmButtonColor: "var(--main1)",
+            });
             navigate("/mypage/profile");
           } else {
             Swal.fire({

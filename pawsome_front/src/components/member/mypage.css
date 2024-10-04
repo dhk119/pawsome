@@ -142,13 +142,19 @@
   background-color: var(--gray7);
 }
 
-.pet-img {
+.pet-body > .pet-img {
   float: left;
   width: 100px;
+  height: 100px;
 }
-.pet-img > img {
+.pet-body > .pet-img > img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
   overflow: hidden;
   width: 100px;
+  border: 2px solid var(--gray7);
+  background-color: var(--gray7);
 }
 
 .pet-info {
