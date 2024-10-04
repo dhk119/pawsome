@@ -19,7 +19,6 @@ const Payment = () => {
     payName: "",
   });
   const [cartList, setCartList] = useState([]);
-  const [payProductNo,setPayProductNo] = useState("");
   const params = useParams();
   const checkCartNo = params.str;
   const [totalPrice, setTotalPrice] = useState(0); //총금액
@@ -103,15 +102,7 @@ const Payment = () => {
       ...prevPayer,
       payPhone: input,
     }));
-
-    let str = "";
-    cartList.map((item)=>{
-      str += item.productNo+"-";
-    });
-    str = str.slice(0, -1); //마지막 - 자르기
-    setPayProductNo(str);
   };
-  console.log(payProductNo);
   const changeName = (e) => {
     let input = e.target.value;
     setPayer((prevPayer) => ({
@@ -119,13 +110,13 @@ const Payment = () => {
       payName: input,
     }));
   };
-  
+
   //베송지변경
   const changeAddress = () => {
     new window.daum.Postcode({
       oncomplete: function (data) {
         let addr =
-        data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
+          data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
         setPayer((prevPayer) => ({
           ...prevPayer,
           payAddr1: data.zonecode,
@@ -175,47 +166,64 @@ const Payment = () => {
   //결제
   const pay = () => {
     const date = new Date();
-    const dateString = date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate()+""+date.getHours()+""+date.getMinutes()+""+date.getSeconds()+""+date.getMilliseconds();
-    window.IMP.request_pay({
-      pg: "html5_inicis.INIpayTest",
-      pay_method: "card",
-      merchant_uid: dateString,
-      name: `${cartList[0].productName} 외 ${cartList.length-1}건`,
-      amount: 100, //테스트 끝나면 totalPrice로 수정
-      buyer_email: loginEmail,
-      buyer_name: payer.payName,
-      buyer_tel: payer.payPhone,
-      buyer_addr: payer.payAddr2,
-      buyer_postcode: payer.payAddr1
-    }, rsp => {
-      if (rsp.success) {
-        // 결제 성공 시 로직
-        console.log(rsp);
-        // 결제 성공 시 저장할 데이터
-        const form = new FormData();
-        form.append("memberEmail", loginEmail);
-        form.append("payUid", rsp.merchant_uid);
-        form.append("totalPrice", totalPrice);
-        form.append("payDate", date);
-        form.append("payName", payer.payName);
-        form.append("payAddr1",payer.payAddr1);
-        form.append("payAddr2",payer.payAddr2);
-        form.append("payAddr3",payer.payAddr3);
-        form.append("payProductNo",payProductNo);
-        axios.post(`${backServer}/pay/payment`, form)
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.error(err);
-        })
-      } else {
-        // 결제 실패 시 로직
-        console.log(rsp.error_msg);
-        // 추가로 실행할 로직을 여기에 작성
+    const dateString =
+      date.getFullYear() +
+      "" +
+      (date.getMonth() + 1) +
+      "" +
+      date.getDate() +
+      "" +
+      date.getHours() +
+      "" +
+      date.getMinutes() +
+      "" +
+      date.getSeconds() +
+      "" +
+      date.getMilliseconds();
+    window.IMP.request_pay(
+      {
+        pg: "html5_inicis.INIpayTest",
+        pay_method: "card",
+        merchant_uid: dateString,
+        name: `${cartList[0].productName} 외 ${cartList.length - 1}건`,
+        amount: 100, //테스트 끝나면 totalPrice로 수정
+        buyer_email: loginEmail,
+        buyer_name: payer.payName,
+        buyer_tel: payer.payPhone,
+        buyer_addr: payer.payAddr2,
+        buyer_postcode: payer.payAddr1,
+      },
+      (rsp) => {
+        if (rsp.success) {
+          // 결제 성공 시 로직
+          console.log(rsp);
+          // 결제 성공 시 저장할 데이터
+          const form = new FormData();
+          form.append("memberEmail", loginEmail);
+          form.append("payUid", rsp.merchant_uid);
+          form.append("totalPrice", totalPrice);
+          form.append("payDate", date);
+          form.append("payName", payer.payName);
+          form.append("payAddr1", payer.payAddr1);
+          form.append("payAddr2", payer.payAddr2);
+          form.append("payAddr3", payer.payAddr3);
+          form.append("payCartNo", checkCartNo);
+          axios
+            .post(`${backServer}/pay/payment`, form)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        } else {
+          // 결제 실패 시 로직
+          console.log(rsp.error_msg);
+          // 추가로 실행할 로직을 여기에 작성
+        }
       }
-    });
-  }
+    );
+  };
 
   return (
     <div className="payment-page-wrap">
@@ -368,7 +376,9 @@ const Payment = () => {
             </div>
           </div>
         </div>
-        <div className="pay-btn"><button onClick={pay}>결제하기</button></div>
+        <div className="pay-btn">
+          <button onClick={pay}>결제하기</button>
+        </div>
       </div>
       <div className="pay-type-wrap margin">
         <div className="title">결제 동의</div>

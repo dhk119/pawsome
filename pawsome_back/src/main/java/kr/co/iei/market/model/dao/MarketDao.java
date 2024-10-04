@@ -75,9 +75,14 @@ public interface MarketDao {
 
 	MemberDTO selectPayer(String memberEmail);
 
-	int insertPayment(PayDTO pay, int payProductNo);
+	int insertPayment(PayDTO pay);
+		
+	int insertBuyList(PayDTO pay, CartDTO cart);
 
-	int payDeleteCart(int payProductNo, String memberEmail);
+	int payDeleteCart(int payCartNo);
+
+	CartDTO selectPayCartList(int payCartNo);
+
 
 
 
