@@ -9,6 +9,7 @@ const HealthTest = () => {
     { name: "dog", count: 0 },
     { name: "cat", count: 0 },
   ]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // 현재 질문 인덱스
   const [selectedPet, setSelectedPet] = useState(null);
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [formData, setFormData] = useState({
@@ -17,6 +18,7 @@ const HealthTest = () => {
     gender: "",
     weight: "",
   });
+
   //피부
   const [selectedSkinIssues, setSelectedSkinIssues] = useState([
     false,
@@ -258,6 +260,17 @@ const HealthTest = () => {
     "콧물을 흘리는 경우가 있어요.",
     "눈곱이 많이 끼는 편이에요.",
   ];
+
+  const previousQuestion = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
+  const [finalScores, setFinalScores] = useState(null); // 초기값을 null로 설정
+
+  const handleResultSubmit = async () => {
+    // 결과 제출 로직
+  };
   const startWithPet = () => {
     if (sessionPets.length > 0) {
       const pet = sessionPets[0]; // 첫 번째 반려동물 가져오기
@@ -280,6 +293,18 @@ const HealthTest = () => {
   const startWithoutPet = () => {
     setIsStartWithoutPet(true);
   };
+  const resultSubmit = async () => {};
+
+  const showFinalResults = () => {
+    setFinalScores({
+      skin: skinScore,
+      dental: dentalScore,
+      bone: boneScore,
+      eye: eyeScore,
+      heart: heartScore,
+      immunity: immunityScore,
+    });
+  };
   return (
     <div className="container">
       <Link to="/service/petService" style={{ color: "#ffa518" }}>
@@ -294,7 +319,7 @@ const HealthTest = () => {
         <div className="feedtest">
           {!selectedPet ? (
             <div>
-              {isLogin ? ( //isLogin으로 받아오면 값이 바뀌지않아서 밑에 반려견/반려묘 화면으로 넘어갈 수 없음
+              {isLogin ? (
                 <>
                   <p>등록된 반려동물이 있습니다. 진행하시겠어요?</p>
                   <button onClick={startWithPet}>
@@ -317,7 +342,6 @@ const HealthTest = () => {
                       <span>반려묘</span>
                     </div>
                   </div>
-                  <div></div>
                 </>
               ) : (
                 <div>
@@ -404,8 +428,8 @@ const HealthTest = () => {
             </div>
           ) : !isDentalTestStarted ? (
             <div>
-              <h2>피부 상태 질문</h2>
-              <div className="test-box">
+              <h1>피부 상태 질문</h1>
+              <div className="test-box2">
                 {skinQuestionsList.map((question, index) => (
                   <div
                     key={index}
@@ -432,22 +456,27 @@ const HealthTest = () => {
             </div>
           ) : !isBoneTestStarted ? (
             <div>
-              <h2>치아 상태 질문</h2>
-              {dentalQuestionsList.map((question, index) => (
-                <div key={index}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={selectedDentalIssues[index]}
-                      onChange={() => dentalIssueChange(index)}
-                    />
+              <h1>치아 상태 질문</h1>
+              <div className="test-box2">
+                {dentalQuestionsList.map((question, index) => (
+                  <div
+                    key={index}
+                    className={`question-item ${
+                      selectedDentalIssues[index] ? "selected" : ""
+                    }`}
+                    onClick={() => dentalIssueChange(index)}
+                  >
                     {question}
-                  </label>
-                </div>
-              ))}
+                  </div>
+                ))}
+              </div>
               <div>
-                <button onClick={noDentalIssues}>없어요</button>
-                <button onClick={nextToBone}>다음으로</button>
+                <button onClick={noDentalIssues} className="petTest-btn">
+                  없어요
+                </button>
+                <button onClick={nextToBone} className="petTest-btn">
+                  다음으로
+                </button>
               </div>
               <div>
                 <h3>현재 치아 점수: {dentalScore}</h3>
@@ -455,22 +484,27 @@ const HealthTest = () => {
             </div>
           ) : !isEyeTestStarted ? (
             <div>
-              <h2>뼈 상태 질문</h2>
-              {boneQuestionsList.map((question, index) => (
-                <div key={index}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={selectedBoneIssues[index]}
-                      onChange={() => boneIssueChange(index)}
-                    />
+              <h1>뼈 상태 질문</h1>
+              <div className="test-box2">
+                {boneQuestionsList.map((question, index) => (
+                  <div
+                    key={index}
+                    className={`question-item ${
+                      selectedBoneIssues[index] ? "selected" : ""
+                    }`}
+                    onClick={() => boneIssueChange(index)}
+                  >
                     {question}
-                  </label>
-                </div>
-              ))}
+                  </div>
+                ))}
+              </div>
               <div>
-                <button onClick={noBoneIssues}>없어요</button>
-                <button onClick={nextToEye}>다음으로</button>
+                <button onClick={noBoneIssues} className="petTest-btn">
+                  없어요
+                </button>
+                <button onClick={nextToEye} className="petTest-btn">
+                  다음으로
+                </button>
               </div>
               <div>
                 <h3>현재 뼈 점수: {boneScore}</h3>
@@ -478,22 +512,27 @@ const HealthTest = () => {
             </div>
           ) : !isHeartTestStarted ? (
             <div>
-              <h2>눈 상태 질문</h2>
-              {eyeQuestionsList.map((question, index) => (
-                <div key={index}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={selectedEyeIssues[index]}
-                      onChange={() => EyeIssueChange(index)}
-                    />
+              <h1>눈 상태 질문</h1>
+              <div className="test-box2">
+                {eyeQuestionsList.map((question, index) => (
+                  <div
+                    key={index}
+                    className={`question-item ${
+                      selectedEyeIssues[index] ? "selected" : ""
+                    }`}
+                    onClick={() => EyeIssueChange(index)}
+                  >
                     {question}
-                  </label>
-                </div>
-              ))}
+                  </div>
+                ))}
+              </div>
               <div>
-                <button onClick={noEyeIssues}>없어요</button>
-                <button onClick={nextToHeart}>다음으로</button>
+                <button onClick={noEyeIssues} className="petTest-btn">
+                  없어요
+                </button>
+                <button onClick={nextToHeart} className="petTest-btn">
+                  다음으로
+                </button>
               </div>
               <div>
                 <h3>현재 눈 점수: {eyeScore}</h3>
@@ -501,22 +540,27 @@ const HealthTest = () => {
             </div>
           ) : !isImmunityTestStarted ? (
             <div>
-              <h2>심장 상태 질문</h2>
-              {heartQuestionsList.map((question, index) => (
-                <div key={index}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={selectedHeartIssues[index]}
-                      onChange={() => HeartIssueChange(index)}
-                    />
+              <h1>심장 상태 질문</h1>
+              <div className="test-box2">
+                {heartQuestionsList.map((question, index) => (
+                  <div
+                    key={index}
+                    className={`question-item ${
+                      selectedHeartIssues[index] ? "selected" : ""
+                    }`}
+                    onClick={() => HeartIssueChange(index)}
+                  >
                     {question}
-                  </label>
-                </div>
-              ))}
+                  </div>
+                ))}
+              </div>
               <div>
-                <button onClick={noHeartIssues}>없어요</button>
-                <button onClick={nextToImmunity}>다음으로</button>
+                <button onClick={noHeartIssues} className="petTest-btn">
+                  없어요
+                </button>
+                <button onClick={nextToImmunity} className="petTest-btn">
+                  다음으로
+                </button>
               </div>
               <div>
                 <h3>현재 심장 점수: {heartScore}</h3>
@@ -524,35 +568,45 @@ const HealthTest = () => {
             </div>
           ) : (
             <div>
-              <h2>면역력 / 호흡기 상태 질문</h2>
-              {immunityQuestionsList.map((question, index) => (
-                <div key={index}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={selectedImmunityIssues[index]}
-                      onChange={() => ImmunityIssueChange(index)}
-                    />
+              <h1>면역력 / 호흡기 상태 질문</h1>
+              <div className="test-box2">
+                {immunityQuestionsList.map((question, index) => (
+                  <div
+                    key={index}
+                    className={`question-item ${
+                      selectedImmunityIssues[index] ? "selected" : ""
+                    }`}
+                    onClick={() => ImmunityIssueChange(index)}
+                  >
                     {question}
-                  </label>
-                </div>
-              ))}
+                  </div>
+                ))}
+              </div>
               <div>
-                <button onClick={noImmunityIssues}>없어요</button>
-                <button
-                  onClick={() =>
-                    alert(
-                      `최종 피부 점수 : ${skinScore}, 최종 치아 점수 : ${dentalScore}, 최종 뼈 점수 : ${boneScore}, 최종 눈 점수 : ${eyeScore}
-                      ,최종 심장 점수 : ${heartScore},최종 면역력/호흡기 점수 : ${immunityScore} `
-                    )
-                  }
-                >
+                <button onClick={noImmunityIssues} className="petTest-btn">
+                  없어요
+                </button>
+                <button onClick={showFinalResults} className="petTest-btn">
                   결과 확인
                 </button>
               </div>
               <div>
                 <h3>현재 면역력 / 호흡기 점수: {immunityScore}</h3>
               </div>
+            </div>
+          )}
+
+          {finalScores && (
+            <div>
+              <h2>최종 점수</h2>
+              <ul>
+                <li>피부 점수: {finalScores.skin}</li>
+                <li>치아 점수: {finalScores.dental}</li>
+                <li>뼈 점수: {finalScores.bone}</li>
+                <li>눈 점수: {finalScores.eye}</li>
+                <li>심장 점수: {finalScores.heart}</li>
+                <li>면역력 점수: {finalScores.immunity}</li>
+              </ul>
             </div>
           )}
         </div>
