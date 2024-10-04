@@ -366,9 +366,14 @@ const MypageCalendar = () => {
                     })
                   }
                 />
-                <div>
+                <div className="schedule-wrap-btns">
                   <button onClick={handleUpdateSchedule}>저장</button>
-                  <button onClick={() => setIsUpdateMode(false)}>취소</button>
+                  <button
+                    className="close-btn"
+                    onClick={() => setIsUpdateMode(false)}
+                  >
+                    취소
+                  </button>
                 </div>
               </>
             ) : (

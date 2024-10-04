@@ -235,4 +235,14 @@
   margin-top: 10px;
 }
 
-
+/* 수정 frm 디자인 */
+.schedule-wrap {
+  padding: 0px;
+}
+.schedule-wrap-btns {
+  margin: 5px auto 0px;
+  text-align: center;
+}
+.schedule-wrap-btns > .close-btn {
+  margin-left: 20px;
+}

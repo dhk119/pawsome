@@ -311,10 +311,12 @@ public class MemberController {
 	    @PathVariable int petNo, 
 	    @ModelAttribute PetDTO pet, 
 	    @ModelAttribute MultipartFile petProfile1) {
+		
+		System.out.println(pet);
 
 	    // 프로필 사진이 비어있지 않으면 업로드 처리
 	    if (petProfile1 != null && !petProfile1.isEmpty()) {
-	        String savepath = root + "/member/pet/profile/";
+	        String savepath = root + "/member/pet/";
 	        String filepath = fileUtil.upload(savepath, petProfile1);
 	        pet.setPetProfile(filepath);  // 새 파일 경로로 설정
 	    } else {
