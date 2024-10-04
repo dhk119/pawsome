@@ -27,4 +27,5 @@ public class BoardDTO {
 	private int replyCount;
 	private int[] delBoardFileNo;
 	private List<ReplyDTO> replyList;
+	private int isLike;
 }
