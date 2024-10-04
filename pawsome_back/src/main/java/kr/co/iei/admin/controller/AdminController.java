@@ -1,5 +1,6 @@
 package kr.co.iei.admin.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,5 +153,10 @@ public class AdminController {
 	public ResponseEntity<Map> searchQna(@PathVariable int reqPage,@PathVariable boolean answer, @PathVariable int option){
 		Map map=adminService.searchQnaList(reqPage, answer, option);
 		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/petPercentClass")
+	public ResponseEntity<List> petPercentClass(){
+		List<Integer> list=adminService.petPercentClass();
+		return ResponseEntity.ok(list);
 	}
 }

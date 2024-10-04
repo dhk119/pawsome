@@ -520,3 +520,37 @@ tbody > tr:last-child td:last-child {
 .admin-top-left-qna {
   width: 20%;
 }
+.admin-flex {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.admin-flex-left {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.admin-chart-label-one {
+  border-radius: 5px;
+  width: 250px;
+  background-color: var(--main1);
+}
+.admin-chart-label-two {
+  border-radius: 5px;
+  width: 250px;
+  background-color: var(--point2);
+}
+.admin-pet-chart-bottom {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+tspan {
+  font-weight: bold;
+  font-size: large;
+}
+.admin-pet-chart-top {
+  margin-top: 100px;
+}
+.admin-chart-label-three {
+  width: 500px;
+}

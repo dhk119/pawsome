@@ -76,4 +76,8 @@ public interface MemberDao {
 	int searchTotalCountPetOption(int option);
 
 	List searchPetListOption(int start, int end, int option);
+
+	List petPercentClass();
+	
+	List petPercentClasses();
 }
