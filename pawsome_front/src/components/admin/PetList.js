@@ -10,12 +10,29 @@ const PetList = () => {
   const [type, setType] = useState("all");
   const [keyword, setKeyword] = useState("");
   const [option, setOption] = useState(0);
+  const [search, setSearch] = useState(0);
   useEffect(() => {
-    axios.get(`${backServer}/admin/petList/${reqPage}`).then((res) => {
-      setPetList(res.data.list);
-      setPi(res.data.pi);
-    });
-  }, [reqPage]);
+    search === 0
+      ? axios.get(`${backServer}/admin/petList/${reqPage}`).then((res) => {
+          setPetList(res.data.list);
+          setPi(res.data.pi);
+        })
+      : keyword
+      ? axios
+          .get(
+            `${backServer}/admin/searchPet/${reqPage}/${type}/${keyword}/${option}`
+          )
+          .then((res) => {
+            setPetList(res.data.list);
+            setPi(res.data.pi);
+          })
+      : axios
+          .get(`${backServer}/admin/searchPet/${reqPage}/${option}`)
+          .then((res) => {
+            setPetList(res.data.list);
+            setPi(res.data.pi);
+          });
+  }, [reqPage, search]);
   const changeKeyword = (e) => {
     setKeyword(e.target.value);
   };
@@ -23,8 +40,11 @@ const PetList = () => {
     setType(e.target.value);
   };
   const searchPet = () => {
-    if (keyword) {
+    if (!keyword && option === 0) {
+      setSearch(0);
     } else {
+      setSearch(search + 1);
+      setReqPage(1);
     }
   };
   const changeOption = (e) => {

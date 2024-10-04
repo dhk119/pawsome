@@ -44,7 +44,7 @@
 				where qna_no not in (select qna_answer.qna_no from qna_answer)
 			</otherwise>
 		</choose>
-		order by product_no desc)b) where rnum BETWEEN #{start} and #{end}
+		order by qna_no desc)b) where rnum BETWEEN #{start} and #{end}
 	</select>
 	<select id="selectOneQnaMagnum" resultType="qna">
 		select product_no, qna_type, qna_title, qna_content, qna_reg_date, qna_writer, qna_answer_content, qna_answer_reg_date, qna_answer_writer from qna left join qna_answer using(qna_no) where qna_no=#{qnaNo}
@@ -130,7 +130,212 @@
 	<select id="searchProductListOption" resultType="product">
 		select * from (select rownum as rnum, b.* from(SELECT * from product where product_show=#{option} order by product_no desc)b) where rnum BETWEEN #{start} and #{end}
 	</select>
-	
+	<select id="searchTotalCountQnaMagnum" resultType="int">
+		select count(*) from qna join product using(product_no) where
+		<choose>
+			<when test="answer==true">
+				<choose>
+					<when test="option==0">
+						<choose>
+							<when test="type.equals('all')">
+								(PRODUCT_NO like '%'||#{keyword}||'%' or product_name like '%'||#{keyword}||'%' or qna_title like '%'||#{keyword}||'%' or qna.QNA_WRITER like '%'||#{keyword}||'%')
+							</when>
+							<when test="type.equals('productNo')">
+								PRODUCT_NO like '%'||#{keyword}||'%'
+							</when>
+							<when test="type.equals('productName')">
+								product_name like '%'||#{keyword}||'%'
+							</when>
+							<when test="type.equals('title')">
+								qna_title like '%'||#{keyword}||'%'
+							</when>
+							<when test="type.equals('memberEmail')">
+								qna.QNA_WRITER like '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</when>
+					<otherwise>
+						<choose>
+							<when test="type.equals('all')">
+								(PRODUCT_NO like '%'||#{keyword}||'%' or product_name like '%'||#{keyword}||'%' or qna_title like '%'||#{keyword}||'%' or qna.QNA_WRITER like '%'||#{keyword}||'%')
+							</when>
+							<when test="type.equals('productNo')">
+								PRODUCT_NO like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+							<when test="type.equals('productName')">
+								product_name like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+							<when test="type.equals('title')">
+								qna_title like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+							<when test="type.equals('memberEmail')">
+								qna.QNA_WRITER like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+						</choose>
+					</otherwise>
+				</choose>
+				and qna_no in (select qna_answer.qna_no from qna_answer)
+			</when>
+			<otherwise>
+				<choose>
+					<when test="option==0">
+						<choose>
+							<when test="type.equals('all')">
+								(PRODUCT_NO like '%'||#{keyword}||'%' or product_name like '%'||#{keyword}||'%' or qna_title like '%'||#{keyword}||'%' or qna.QNA_WRITER like '%'||#{keyword}||'%')
+							</when>
+							<when test="type.equals('productNo')">
+								PRODUCT_NO like '%'||#{keyword}||'%'
+							</when>
+							<when test="type.equals('productName')">
+								product_name like '%'||#{keyword}||'%'
+							</when>
+							<when test="type.equals('title')">
+								qna_title like '%'||#{keyword}||'%'
+							</when>
+							<when test="type.equals('memberEmail')">
+								qna.QNA_WRITER like '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</when>
+					<otherwise>
+						<choose>
+							<when test="type.equals('all')">
+								(PRODUCT_NO like '%'||#{keyword}||'%' or product_name like '%'||#{keyword}||'%' or qna_title like '%'||#{keyword}||'%' or qna.QNA_WRITER like '%'||#{keyword}||'%')
+							</when>
+							<when test="type.equals('productNo')">
+								PRODUCT_NO like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+							<when test="type.equals('productName')">
+								product_name like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+							<when test="type.equals('title')">
+								qna_title like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+							<when test="type.equals('memberEmail')">
+								qna.QNA_WRITER like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+						</choose>
+					</otherwise>
+				</choose>
+				and qna_no not in (select qna_answer.qna_no from qna_answer)
+			</otherwise>
+		</choose>
+	</select>
+	<select id="searchQnaListMagnum" resultType="qna">
+		select * from (select rownum as rnum, b.* from(SELECT qna_no, product_no, qna_type, qna_title, qna_public, qna_reg_date, qna_writer, product.product_name from qna join product using(product_no) where
+		<choose>
+			<when test="answer==true">
+				<choose>
+					<when test="option==0">
+						<choose>
+							<when test="type.equals('all')">
+								(PRODUCT_NO like '%'||#{keyword}||'%' or product_name like '%'||#{keyword}||'%' or qna_title like '%'||#{keyword}||'%' or qna.QNA_WRITER like '%'||#{keyword}||'%')
+							</when>
+							<when test="type.equals('productNo')">
+								PRODUCT_NO like '%'||#{keyword}||'%'
+							</when>
+							<when test="type.equals('productName')">
+								product_name like '%'||#{keyword}||'%'
+							</when>
+							<when test="type.equals('title')">
+								qna_title like '%'||#{keyword}||'%'
+							</when>
+							<when test="type.equals('memberEmail')">
+								qna.QNA_WRITER like '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</when>
+					<otherwise>
+						<choose>
+							<when test="type.equals('all')">
+								(PRODUCT_NO like '%'||#{keyword}||'%' or product_name like '%'||#{keyword}||'%' or qna_title like '%'||#{keyword}||'%' or qna.member_email like '%'||#{keyword}||'%')
+							</when>
+							<when test="type.equals('productNo')">
+								PRODUCT_NO like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+							<when test="type.equals('productName')">
+								product_name like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+							<when test="type.equals('title')">
+								qna_title like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+							<when test="type.equals('memberEmail')">
+								qna.member_email like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+						</choose>
+					</otherwise>
+				</choose>
+				and qna_no in (select qna_answer.qna_no from qna_answer)
+			</when>
+			<otherwise>
+				<choose>
+					<when test="option==0">
+						<choose>
+							<when test="type.equals('all')">
+								(PRODUCT_NO like '%'||#{keyword}||'%' or product_name like '%'||#{keyword}||'%' or qna_title like '%'||#{keyword}||'%' or qna.QNA_WRITER like '%'||#{keyword}||'%')
+							</when>
+							<when test="type.equals('productNo')">
+								PRODUCT_NO like '%'||#{keyword}||'%'
+							</when>
+							<when test="type.equals('productName')">
+								product_name like '%'||#{keyword}||'%'
+							</when>
+							<when test="type.equals('title')">
+								qna_title like '%'||#{keyword}||'%'
+							</when>
+							<when test="type.equals('memberEmail')">
+								qna.QNA_WRITER like '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</when>
+					<otherwise>
+						<choose>
+							<when test="type.equals('all')">
+								(PRODUCT_NO like '%'||#{keyword}||'%' or product_name like '%'||#{keyword}||'%' or qna_title like '%'||#{keyword}||'%' or qna.QNA_WRITER like '%'||#{keyword}||'%')
+							</when>
+							<when test="type.equals('productNo')">
+								PRODUCT_NO like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+							<when test="type.equals('productName')">
+								product.product_name like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+							<when test="type.equals('title')">
+								qna_title like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+							<when test="type.equals('memberEmail')">
+								qna.QNA_WRITER like '%'||#{keyword}||'%' and QNA_TYPE=#{option}
+							</when>
+						</choose>
+					</otherwise>
+				</choose>
+				and qna_no not in (select qna_answer.qna_no from qna_answer)
+			</otherwise>
+		</choose>
+		order by qna_no desc)b) where rnum BETWEEN #{start} and #{end}
+	</select>
+	<select id="searchTotalCountQnaOption" resultType="int">
+		select count(*) from qna where qna_type=#{option}
+		<choose>
+			<when test="answer==true">
+				and qna_no in (select qna_answer.qna_no from qna_answer)
+			</when>
+			<otherwise>
+				and qna_no not in (select qna_answer.qna_no from qna_answer)
+			</otherwise>
+		</choose>
+	</select>
+	<select id="searchQnaListOption" resultType="qna">
+		select * from (select rownum as rnum, b.* from(SELECT qna_no, product_no, qna_type, qna_title, qna_public, qna_reg_date, qna_writer, product.product_name from qna join product using(product_no) where qna_type=#{option}
+		<choose>
+			<when test="answer==true">
+				and qna_no in (select qna_answer.qna_no from qna_answer)
+			</when>
+			<otherwise>
+				and qna_no not in (select qna_answer.qna_no from qna_answer)
+			</otherwise>
+		</choose>
+		order by qna_no desc)b) where rnum BETWEEN #{start} and #{end}
+	</select>
 	<!-- 원희 -->
 	<select id="totalCount" resultType="int">
 		select count(*) from product where product_show='Y'

@@ -1,7 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { isLoginState } from "../utils/RecoilData";
 import { Link, useNavigate } from "react-router-dom";
 import PageNavi from "../utils/PageNavi";
 import { Switch } from "@mui/material";
@@ -61,6 +59,7 @@ const ProductList = () => {
       setSearch(0);
     } else {
       setSearch(search + 1);
+      setReqPage(1);
     }
   };
   const changeOption = (e) => {
