@@ -139,4 +139,26 @@ public class AdminService {
 		map.put("pi",pi);
 		return map;
 	}
+	public Map searchMemberList(int reqPage, String type, String keyword, String option) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=memberDao.searchTotalCountMemberMagnum(type, keyword, option);
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=memberDao.searchMemberListMagnum(pi.getStart(), pi.getEnd(), type, keyword, option);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
+	public Map searchMemberList(int reqPage, String option) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=memberDao.searchTotalCountMemberOption(option);
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=memberDao.searchMemberListOption(pi.getStart(), pi.getEnd(), option);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
 }
