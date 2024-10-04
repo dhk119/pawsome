@@ -10,7 +10,7 @@ const InquirySearch = () => {
   const navigate = useNavigate();
   const [inquiryList, setInquiryList] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [reqPage, setReqPage] = useState(Number(searchParams.get("reqPage")));
+  const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
   const isLogin = useRecoilValue(isLoginState);
   const [search, setSearch] = useState(false);

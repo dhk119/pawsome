@@ -42,7 +42,7 @@
 		select count(*) from member
 	</select>
 	<select id="selectMemberListMagnum" resultType="member">
-		select * from (select rownum as rnum, b.* from(SELECT MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_NAME,MEMBER_ADDR1,MEMBER_ADDR2,MEMBER_ADDR3,MEMBER_LEVEL,MEMBER_PROFILE,ENROLL_DATE,LOGIN_TYPE,MEMBER_PHONE from member order by 1 desc)b) where rnum BETWEEN #{start} and #{end}
+		select * from (select rownum as rnum, b.* from(SELECT MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_NAME,MEMBER_ADDR1,MEMBER_ADDR2,MEMBER_ADDR3,MEMBER_LEVEL,MEMBER_PROFILE,ENROLL_DATE,LOGIN_TYPE,MEMBER_PHONE from member order by ENROLL_DATE desc)b) where rnum BETWEEN #{start} and #{end}
 	</select>
 	<update id="updateMemberLevelMagnum">
 		update member set member_level=#{memberLevel} where member_email=#{memberEmail}
@@ -168,13 +168,94 @@
 				</choose>
 			</otherwise>
 		</choose>
-		order by 1 desc)b) where rnum BETWEEN #{start} and #{end}
+		order by ENROLL_DATE desc)b) where rnum BETWEEN #{start} and #{end}
 	</select>
 	<select id="searchTotalCountMemberOption" resultType="int">
 		select count(*) from member where member_level=#{option}
 	</select>
 	<select id="searchMemberListOption" resultType="member">
-		select * from (select rownum as rnum, b.* from(SELECT MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_NAME,MEMBER_ADDR1,MEMBER_ADDR2,MEMBER_ADDR3,MEMBER_LEVEL,MEMBER_PROFILE,ENROLL_DATE,LOGIN_TYPE,MEMBER_PHONE from member where member_level=#{option} order by 1 desc)b) where rnum BETWEEN #{start} and #{end}
+		select * from (select rownum as rnum, b.* from(SELECT MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_NAME,MEMBER_ADDR1,MEMBER_ADDR2,MEMBER_ADDR3,MEMBER_LEVEL,MEMBER_PROFILE,ENROLL_DATE,LOGIN_TYPE,MEMBER_PHONE from member where member_level=#{option} order by ENROLL_DATE desc)b) where rnum BETWEEN #{start} and #{end}
+	</select>
+	<select id="searchTotalCountPetMagnum" resultType="int">
+		select count(*) from pet where
+		<choose>
+			<when test="option==0"> 
+				<choose>
+					<when test="type.equals('all')">
+						PET_NAME like '%'||#{keyword}||'%' or PET_BREED like '%'||#{keyword}||'%' or MEMBER_EMAIL like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('name')">
+						PET_NAME like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('breed')">
+						PET_breed like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('memberEmail')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				<choose>
+					<when test="type.equals('all')">
+						(PET_NAME like '%'||#{keyword}||'%' or PET_BREED like '%'||#{keyword}||'%' or MEMBER_EMAIL like '%'||#{keyword}||'%') and PET_CLASSES=#{option}
+					</when>
+					<when test="type.equals('name')">
+						PET_NAME like '%'||#{keyword}||'%' and PET_CLASSES=#{option}
+					</when>
+					<when test="type.equals('breed')">
+						PET_breed like '%'||#{keyword}||'%' and PET_CLASSES=#{option}
+					</when>
+					<when test="type.equals('memberEmail')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%' and PET_CLASSES=#{option}
+					</when>	
+				</choose>
+			</otherwise>
+		</choose>
+	</select>
+	<select id="searchPetListMagnum" resultType="pet">
+		select * from (select rownum as rnum, b.* from(SELECT pet_no,pet_name,pet_classes,pet_breed,to_char(pet_birth,'yyyy-mm-dd') as pet_birth,pet_gender,neutering,pet_profile,pet_weight,member_email from pet where
+		<choose>
+			<when test="option==0"> 
+				<choose>
+					<when test="type.equals('all')">
+						PET_NAME like '%'||#{keyword}||'%' or PET_BREED like '%'||#{keyword}||'%' or MEMBER_EMAIL like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('name')">
+						PET_NAME like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('breed')">
+						PET_breed like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('memberEmail')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				<choose>
+					<when test="type.equals('all')">
+						(PET_NAME like '%'||#{keyword}||'%' or PET_BREED like '%'||#{keyword}||'%' or MEMBER_EMAIL like '%'||#{keyword}||'%') and PET_CLASSES=#{option}
+					</when>
+					<when test="type.equals('name')">
+						PET_NAME like '%'||#{keyword}||'%' and PET_CLASSES=#{option}
+					</when>
+					<when test="type.equals('breed')">
+						PET_breed like '%'||#{keyword}||'%' and PET_CLASSES=#{option}
+					</when>
+					<when test="type.equals('memberEmail')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%' and PET_CLASSES=#{option}
+					</when>	
+				</choose>
+			</otherwise>
+		</choose>
+		order by pet_birth desc)b) where rnum BETWEEN #{start} and #{end}
+	</select>
+	<select id="searchTotalCountPetOption" resultType="int">
+		select count(*) from pet where PET_CLASSES=#{option}
+	</select>
+	<select id="searchPetListOption" resultType="pet">
+		select * from (select rownum as rnum, b.* from(SELECT pet_no,pet_name,pet_classes,pet_breed,to_char(pet_birth,'yyyy-mm-dd') as pet_birth,pet_gender,neutering,pet_profile,pet_weight,member_email from pet where PET_CLASSES=#{option} order by 1 desc)b) where rnum BETWEEN #{start} and #{end}
 		</select>
 	<insert id="insertPet">
 	  	insert into pet values(pet_seq.nextval, #{petName}, #{petClasses}, #{petBreed}, #{petBirth}, #{petGender}, #{neutering}, #{petProfile}, #{petWeight}, #{memberEmail})

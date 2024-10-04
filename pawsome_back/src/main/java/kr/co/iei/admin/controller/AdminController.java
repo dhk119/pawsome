@@ -133,4 +133,14 @@ public class AdminController {
 		Map map=adminService.searchMemberList(reqPage, option);
 		return ResponseEntity.ok(map);
 	}
+	@GetMapping(value = "/searchPet/{reqPage}/{type}/{keyword}/{option}")
+	public ResponseEntity<Map> searchPet(@PathVariable int reqPage, @PathVariable String type, @PathVariable String keyword, @PathVariable int option){
+		Map map=adminService.searchPetList(reqPage, type, keyword, option);
+		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/searchPet/{reqPage}/{option}")
+	public ResponseEntity<Map> searchPet(@PathVariable int reqPage, @PathVariable int option){
+		Map map=adminService.searchPetList(reqPage, option);
+		return ResponseEntity.ok(map);
+	}
 }
