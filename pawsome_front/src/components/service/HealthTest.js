@@ -84,12 +84,12 @@ const HealthTest = () => {
   const [expandedResult, setExpandedResult] = useState(null);
   const [expandedResults, setExpandedResults] = useState({});
   const [data, setData] = useState([
-    { pv: 81, skin: skinScore },
-    { pv: 85, dental: dentalScore },
-    { pv: 73, bone: boneScore },
-    { pv: 70, eye: eyeScore },
-    { pv: 60, heart: heartScore },
-    { pv: 90, immunity: immunityScore },
+    { "회원 평균": 81, 피부: skinScore },
+    { "회원 평균": 85, 치아: dentalScore },
+    { "회원 평균": 73, 뼈: boneScore },
+    { "회원 평균": 70, 눈: eyeScore },
+    { "회원 평균": 60, 심장: heartScore },
+    { "회원 평균": 90, 면역력: immunityScore },
   ]);
 
   useEffect(() => {
@@ -321,7 +321,6 @@ const HealthTest = () => {
     data[4].heart = heartScore;
     data[5].immunity = immunityScore;
     setData([...data]);
-    console.log(data);
   };
   const getHealthStatus = (score) => {
     if (score <= 20) return "매우 위험 단계!";
@@ -563,9 +562,6 @@ const HealthTest = () => {
                   다음으로
                 </button>
               </div>
-              <div>
-                <h3>현재 피부 점수: {skinScore}</h3>
-              </div>
             </div>
           ) : !isBoneTestStarted ? (
             <div>
@@ -694,23 +690,21 @@ const HealthTest = () => {
             </div>
           ) : (
             <div className="result-box">
-              <BarChart width={1000} height={250} data={data}>
+              <BarChart width={1000} height={300} data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="pv" fill="#8884D8" />
-                <Bar dataKey={"skin"} fill="#82CA9D" />
-                <Bar dataKey={"dental"} fill="#82CA9D" />
-                <Bar dataKey={"bone"} fill="#82CA9D" />
-                <Bar dataKey={"eye"} fill="#82CA9D" />
-                <Bar dataKey={"heart"} fill="#82CA9D" />
-                <Bar dataKey={"immunity"} fill="#82CA9D" />
+                <Bar dataKey="회원 평균" fill="#8884D8" />
+                <Bar dataKey={"피부"} fill="#82CA9D" />
+                <Bar dataKey={"치아"} fill="#82CA9D" />
+                <Bar dataKey={"뼈"} fill="#82CA9D" />
+                <Bar dataKey={"눈"} fill="#82CA9D" />
+                <Bar dataKey={"심장"} fill="#82CA9D" />
+                <Bar dataKey={"면역력"} fill="#82CA9D" />
               </BarChart>
               {Object.keys(finalScores).map((key, i) => {
-                console.log(Object.keys(finalScores));
-                console.log(finalScores[key]);
                 return (
                   <div
                     key={key}
