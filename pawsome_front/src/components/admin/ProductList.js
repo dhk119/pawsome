@@ -26,14 +26,14 @@ const ProductList = () => {
       : keyword
       ? axios
           .get(
-            `${backServer}/admin/productSearch/${reqPage}/${type}/${keyword}/${option}`
+            `${backServer}/admin/searchProduct/${reqPage}/${type}/${keyword}/${option}`
           )
           .then((res) => {
             setProductList(res.data.list);
             setPi(res.data.pi);
           })
       : axios
-          .get(`${backServer}/admin/productSearch/${reqPage}/${option}`)
+          .get(`${backServer}/admin/searchProduct/${reqPage}/${option}`)
           .then((res) => {
             setProductList(res.data.list);
             setPi(res.data.pi);
