@@ -41,9 +41,11 @@
   color: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 .nav-box > ul > li:hover > a {
   color: #fff;
+  transition: background-color 0.3s;
 }
 .service-container {
   width: 1200px;
@@ -139,6 +141,7 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   padding: 5px 10px;
+  transition: background-color 0.3s;
 }
 .start-btn > span {
   padding: 30px;
@@ -164,6 +167,7 @@
   color: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 /*RecordList, HealthTest*/
 .container {
@@ -224,6 +228,7 @@
   border: 3px solid #5799ff;
   border-radius: 20px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 .petInfo-container {
   justify-content: center;
@@ -254,37 +259,65 @@
   background-color: #5799ff;
   color: white;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .question-item.selected {
-  background-color: #5799ff; /* 선택된 항목 배경색 */
-  color: white; /* 선택된 항목 글자색 */
+  background-color: #5799ff;
+  color: white;
 }
 .question-item :hover {
   background-color: #5799ff;
   color: white;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .test-box2 {
   display: flex;
-  flex-direction: column; /* 세로 정렬 */
+  flex-direction: column;
   margin-top: 50px;
   justify-content: center;
   align-items: center;
-  gap: 20px; /* 항목 간 간격 조정 */
+  gap: 20px;
 }
 
 .test-box2 > div {
   width: 400px;
   font-weight: bold;
-  border: 3px solid #5799ff;
+  border: 3px solid;
   border-radius: 20px;
-  padding: 15px; /* 패딩 추가 */
-  text-align: center; /* 텍스트 중앙 정렬 */
-  font-size: larger; /* 글씨 크기 키움 */
+  padding: 15px;
+  text-align: center;
+  font-size: larger;
 }
 .test-box2 > div:hover {
+  background-color: #5799ff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.result-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.result-item {
+  color: #fff;
+  width: 40%;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 15px;
+  text-align: center;
+  font-size: larger;
+  transition: background-color 0.3s;
+  margin: 10px;
+}
+
+.result-item:hover {
   background-color: #5799ff;
   color: white;
   cursor: pointer;

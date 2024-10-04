@@ -78,7 +78,7 @@ const HealthTest = () => {
   const [sessionPets, setSessionPets] = useState([]); // 세션에 등록된 반려동물 목록
   const isLogin = useRecoilValue(isLoginState); // 로그인 여부
   const [memberEmail, setMemberEmail] = useRecoilState(loginEmailState);
-  const navigate = useNavigate();
+  const [isFinalScoreVisible, setIsFinalScoreVisible] = useState(false);
 
   useEffect(() => {
     axios
@@ -268,9 +268,6 @@ const HealthTest = () => {
   };
   const [finalScores, setFinalScores] = useState(null); // 초기값을 null로 설정
 
-  const handleResultSubmit = async () => {
-    // 결과 제출 로직
-  };
   const startWithPet = () => {
     if (sessionPets.length > 0) {
       const pet = sessionPets[0]; // 첫 번째 반려동물 가져오기
@@ -296,6 +293,7 @@ const HealthTest = () => {
   const resultSubmit = async () => {};
 
   const showFinalResults = () => {
+    setIsFinalScoreVisible(true);
     setFinalScores({
       skin: skinScore,
       dental: dentalScore,
@@ -305,6 +303,67 @@ const HealthTest = () => {
       immunity: immunityScore,
     });
   };
+  const getHealthStatus = (score) => {
+    if (score <= 20) return "매우 위험 단계!";
+    if (score <= 40) return "위험 단계!";
+    if (score <= 60) return "주의 단계!";
+    if (score <= 80) return "양호";
+    return "건강";
+  };
+  const healthDescriptions = {
+    skin: {
+      "매우 위험 단계!":
+        "피부 상태가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
+      "위험 단계!":
+        "피부 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
+      "주의 단계!":
+        "피부 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
+      양호: "피부 상태가 양호합니다. 계속 관리하세요.",
+      건강: "피부 상태가 아주 건강합니다!!",
+    },
+    dental: {
+      low: "치아 상태가 좋지 않습니다. 치료가 필요할 수 있습니다.",
+      medium: "치아 상태가 보통입니다. 정기적인 검진이 필요합니다.",
+      high: "치아 상태가 양호합니다. 잘 관리하고 있습니다.",
+    },
+    bone: {
+      low: "뼈 건강이 좋지 않습니다. 수의사와 상담하세요.",
+      medium: "뼈 건강이 보통입니다. 주의가 필요합니다.",
+      high: "뼈 건강이 양호합니다. 잘 관리하고 있습니다.",
+    },
+    eye: {
+      low: "눈 건강이 좋지 않습니다. 치료가 필요할 수 있습니다.",
+      medium: "눈 건강이 보통입니다. 정기적인 검진이 필요합니다.",
+      high: "눈 건강이 양호합니다. 잘 관리하고 있습니다.",
+    },
+    heart: {
+      low: "심장 건강이 좋지 않습니다. 즉시 상담하세요.",
+      medium: "심장 건강이 보통입니다. 주의가 필요합니다.",
+      high: "심장 건강이 양호합니다. 잘 관리하고 있습니다.",
+    },
+    immunity: {
+      low: "면역력이 좋지 않습니다. 수의사와 상담하세요.",
+      medium: "면역력이 보통입니다. 주의가 필요합니다.",
+      high: "면역력이 양호합니다. 잘 관리하고 있습니다.",
+    },
+  };
+  const getHealthStatusColor = (status) => {
+    switch (status) {
+      case "매우 위험 단계!":
+        return "#ff0000"; // 매우 위험
+      case "위험 단계!":
+        return "#ff9999"; // 위험
+      case "주의 단계!":
+        return "#ffcc66"; // 주의
+      case "양호":
+        return "#66cc66"; // 양호
+      case "건강":
+        return "#5799ff"; // 건강
+      default:
+        return "#fff"; // 기본 색상
+    }
+  };
+
   return (
     <div className="container">
       <Link to="/service/petService" style={{ color: "#ffa518" }}>
@@ -450,9 +509,6 @@ const HealthTest = () => {
                   다음으로
                 </button>
               </div>
-              <div>
-                <h3>현재 피부 점수: {skinScore}</h3>
-              </div>
             </div>
           ) : !isBoneTestStarted ? (
             <div>
@@ -477,9 +533,6 @@ const HealthTest = () => {
                 <button onClick={nextToBone} className="petTest-btn">
                   다음으로
                 </button>
-              </div>
-              <div>
-                <h3>현재 치아 점수: {dentalScore}</h3>
               </div>
             </div>
           ) : !isEyeTestStarted ? (
@@ -506,9 +559,6 @@ const HealthTest = () => {
                   다음으로
                 </button>
               </div>
-              <div>
-                <h3>현재 뼈 점수: {boneScore}</h3>
-              </div>
             </div>
           ) : !isHeartTestStarted ? (
             <div>
@@ -533,9 +583,6 @@ const HealthTest = () => {
                 <button onClick={nextToHeart} className="petTest-btn">
                   다음으로
                 </button>
-              </div>
-              <div>
-                <h3>현재 눈 점수: {eyeScore}</h3>
               </div>
             </div>
           ) : !isImmunityTestStarted ? (
@@ -562,11 +609,8 @@ const HealthTest = () => {
                   다음으로
                 </button>
               </div>
-              <div>
-                <h3>현재 심장 점수: {heartScore}</h3>
-              </div>
             </div>
-          ) : (
+          ) : !isFinalScoreVisible ? (
             <div>
               <h1>면역력 / 호흡기 상태 질문</h1>
               <div className="test-box2">
@@ -590,23 +634,37 @@ const HealthTest = () => {
                   결과 확인
                 </button>
               </div>
-              <div>
-                <h3>현재 면역력 / 호흡기 점수: {immunityScore}</h3>
-              </div>
             </div>
-          )}
-
-          {finalScores && (
+          ) : (
             <div>
-              <h2>최종 점수</h2>
-              <ul>
-                <li>피부 점수: {finalScores.skin}</li>
-                <li>치아 점수: {finalScores.dental}</li>
-                <li>뼈 점수: {finalScores.bone}</li>
-                <li>눈 점수: {finalScores.eye}</li>
-                <li>심장 점수: {finalScores.heart}</li>
-                <li>면역력 점수: {finalScores.immunity}</li>
-              </ul>
+              <h1>테스트 결과</h1>
+              <div className="result-box">
+                {Object.keys(finalScores).map((key) => (
+                  <div
+                    key={key}
+                    className="result-item"
+                    style={{
+                      backgroundColor: getHealthStatusColor(
+                        getHealthStatus(finalScores[key])
+                      ),
+                    }}
+                  >
+                    {key === "skin"
+                      ? "피부 상태"
+                      : key === "dental"
+                      ? "치아 점수"
+                      : key === "bone"
+                      ? "뼈 점수"
+                      : key === "eye"
+                      ? "눈 점수"
+                      : key === "heart"
+                      ? "심장 점수"
+                      : "면역력 점수"}
+                    : {finalScores[key]}점 <br />
+                    {getHealthStatus(finalScores[key])}
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
