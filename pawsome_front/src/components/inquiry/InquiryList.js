@@ -12,7 +12,6 @@ const InquiryList = () => {
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
   const isLogin = useRecoilValue(isLoginState);
-  const [search, setSearch] = useState(0);
   const [type, setType] = useState("all");
   const [keyword, setKeyword] = useState("");
   const [option, setOption] = useState(0);
@@ -36,10 +35,10 @@ const InquiryList = () => {
   const searchInquiry = () => {
     if (keyword) {
       navigate(
-        `/inquiry/search?reqPage=${reqPage}&type=${type}&keyword=${keyword}&option=${option}`
+        `/inquiry/search?type=${type}&keyword=${keyword}&option=${option}`
       );
     } else {
-      navigate(`/inquiry/search?reqPage=${reqPage}&option=${option}`);
+      navigate(`/inquiry/search?option=${option}`);
     }
   };
   const changeOption = (e) => {

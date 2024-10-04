@@ -42,14 +42,238 @@
 		select count(*) from member
 	</select>
 	<select id="selectMemberListMagnum" resultType="member">
-		select * from (select rownum as rnum, b.* from(SELECT MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_NAME,MEMBER_ADDR1,MEMBER_ADDR2,MEMBER_ADDR3,MEMBER_LEVEL,MEMBER_PROFILE,ENROLL_DATE,LOGIN_TYPE,MEMBER_PHONE from member order by 1 desc)b) where rnum BETWEEN #{start} and #{end}
+		select * from (select rownum as rnum, b.* from(SELECT MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_NAME,MEMBER_ADDR1,MEMBER_ADDR2,MEMBER_ADDR3,MEMBER_LEVEL,MEMBER_PROFILE,ENROLL_DATE,LOGIN_TYPE,MEMBER_PHONE from member order by ENROLL_DATE desc)b) where rnum BETWEEN #{start} and #{end}
 	</select>
 	<update id="updateMemberLevelMagnum">
 		update member set member_level=#{memberLevel} where member_email=#{memberEmail}
 	</update>
+	<select id="searchTotalCountMemberMagnum" resultType="int">
+		select count(*) from member where
+		<choose>
+			<when test="option==0"> 
+				<choose>
+					<when test="type.equals('all')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%' or MEMBER_NICKNAME like '%'||#{keyword}||'%' or MEMBER_NAME like '%'||#{keyword}||'%' or MEMBER_NAME like '%'||#{keyword}||'%' or MEMBER_NICKNAME like '%'||#{keyword}||'%' or MEMBER_addr1 like '%'||#{keyword}||'%' or MEMBER_addr2 like '%'||#{keyword}||'%' or MEMBER_addr3 like '%'||#{keyword}||'%' or LOGIN_TYPE like '%'||#{keyword}||'%' or member_phone like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('memberEmail')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('nickname')">
+						MEMBER_NICKNAME like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('name')">
+						MEMBER_NAME like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('addrNum')">
+						MEMBER_addr1 like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('address')">
+						MEMBER_addr2 like '%'||#{keyword}||'%' or MEMBER_addr3 like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('loginType')">
+						login_type like '%'||#{keyword}||'%'					
+					</when>
+					<when test="type.equals('phone')">
+						MEMBER_PHONE like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				<choose>
+					<when test="type.equals('all')">
+						(MEMBER_EMAIL like '%'||#{keyword}||'%' or MEMBER_NICKNAME like '%'||#{keyword}||'%' or MEMBER_NAME like '%'||#{keyword}||'%' or MEMBER_NAME like '%'||#{keyword}||'%' or MEMBER_NICKNAME like '%'||#{keyword}||'%' or MEMBER_addr1 like '%'||#{keyword}||'%' or MEMBER_addr2 like '%'||#{keyword}||'%' or MEMBER_addr3 like '%'||#{keyword}||'%' or LOGIN_TYPE like '%'||#{keyword}||'%' or member_phone like '%'||#{keyword}||'%') and member_level=#{option}
+					</when>
+					<when test="type.equals('memberEmail')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%' and member_level=#{option}
+					</when>
+					<when test="type.equals('nickname')">
+						MEMBER_NICKNAME like '%'||#{keyword}||'%' and member_level=#{option}
+					</when>
+					<when test="type.equals('name')">
+						MEMBER_NAME like '%'||#{keyword}||'%' and member_level=#{option}
+					</when>
+					<when test="type.equals('addrNum')">
+						MEMBER_addr1 like '%'||#{keyword}||'%' and member_level=#{option}
+					</when>
+					<when test="type.equals('address')">
+						(MEMBER_addr2 like '%'||#{keyword}||'%' or MEMBER_addr3 like '%'||#{keyword}||'%') and member_level=#{option}
+					</when>
+					<when test="type.equals('loginType')">
+						login_type like '%'||#{keyword}||'%' and member_level=#{option}					
+					</when>
+					<when test="type.equals('phone')">
+						MEMBER_PHONE like '%'||#{keyword}||'%' and member_level=#{option}
+					</when>
+				</choose>
+			</otherwise>
+		</choose>
+	</select>
+	<select id="searchMemberListMagnum" resultType="member">
+		select * from (select rownum as rnum, b.* from(SELECT MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_NAME,MEMBER_ADDR1,MEMBER_ADDR2,MEMBER_ADDR3,MEMBER_LEVEL,MEMBER_PROFILE,ENROLL_DATE,LOGIN_TYPE,MEMBER_PHONE from member where
+		<choose>
+			<when test="option==0"> 
+				<choose>
+					<when test="type.equals('all')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%' or MEMBER_NICKNAME like '%'||#{keyword}||'%' or MEMBER_NAME like '%'||#{keyword}||'%' or MEMBER_NAME like '%'||#{keyword}||'%' or MEMBER_NICKNAME like '%'||#{keyword}||'%' or MEMBER_addr1 like '%'||#{keyword}||'%' or MEMBER_addr2 like '%'||#{keyword}||'%' or MEMBER_addr3 like '%'||#{keyword}||'%' or LOGIN_TYPE like '%'||#{keyword}||'%' or member_phone like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('memberEmail')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('nickname')">
+						MEMBER_NICKNAME like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('name')">
+						MEMBER_NAME like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('addrNum')">
+						MEMBER_addr1 like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('address')">
+						MEMBER_addr2 like '%'||#{keyword}||'%' or MEMBER_addr3 like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('loginType')">
+						login_type like '%'||#{keyword}||'%'					
+					</when>
+					<when test="type.equals('phone')">
+						MEMBER_PHONE like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				<choose>
+					<when test="type.equals('all')">
+						(MEMBER_EMAIL like '%'||#{keyword}||'%' or MEMBER_NICKNAME like '%'||#{keyword}||'%' or MEMBER_NAME like '%'||#{keyword}||'%' or MEMBER_NAME like '%'||#{keyword}||'%' or MEMBER_NICKNAME like '%'||#{keyword}||'%' or MEMBER_addr1 like '%'||#{keyword}||'%' or MEMBER_addr2 like '%'||#{keyword}||'%' or MEMBER_addr3 like '%'||#{keyword}||'%' or LOGIN_TYPE like '%'||#{keyword}||'%' or member_phone like '%'||#{keyword}||'%') and member_level=#{option}
+					</when>
+					<when test="type.equals('memberEmail')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%' and member_level=#{option}
+					</when>
+					<when test="type.equals('nickname')">
+						MEMBER_NICKNAME like '%'||#{keyword}||'%' and member_level=#{option}
+					</when>
+					<when test="type.equals('name')">
+						MEMBER_NAME like '%'||#{keyword}||'%' and member_level=#{option}
+					</when>
+					<when test="type.equals('addrNum')">
+						MEMBER_addr1 like '%'||#{keyword}||'%' and member_level=#{option}
+					</when>
+					<when test="type.equals('address')">
+						(MEMBER_addr2 like '%'||#{keyword}||'%' or MEMBER_addr3 like '%'||#{keyword}||'%') and member_level=#{option}
+					</when>
+					<when test="type.equals('loginType')">
+						login_type like '%'||#{keyword}||'%' and member_level=#{option}					
+					</when>
+					<when test="type.equals('phone')">
+						MEMBER_PHONE like '%'||#{keyword}||'%' and member_level=#{option}
+					</when>
+				</choose>
+			</otherwise>
+		</choose>
+		order by ENROLL_DATE desc)b) where rnum BETWEEN #{start} and #{end}
+	</select>
+	<select id="searchTotalCountMemberOption" resultType="int">
+		select count(*) from member where member_level=#{option}
+	</select>
+	<select id="searchMemberListOption" resultType="member">
+		select * from (select rownum as rnum, b.* from(SELECT MEMBER_EMAIL,MEMBER_NICKNAME,MEMBER_NAME,MEMBER_ADDR1,MEMBER_ADDR2,MEMBER_ADDR3,MEMBER_LEVEL,MEMBER_PROFILE,ENROLL_DATE,LOGIN_TYPE,MEMBER_PHONE from member where member_level=#{option} order by ENROLL_DATE desc)b) where rnum BETWEEN #{start} and #{end}
+	</select>
+	<select id="searchTotalCountPetMagnum" resultType="int">
+		select count(*) from pet where
+		<choose>
+			<when test="option==0"> 
+				<choose>
+					<when test="type.equals('all')">
+						PET_NAME like '%'||#{keyword}||'%' or PET_BREED like '%'||#{keyword}||'%' or MEMBER_EMAIL like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('name')">
+						PET_NAME like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('breed')">
+						PET_breed like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('memberEmail')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				<choose>
+					<when test="type.equals('all')">
+						(PET_NAME like '%'||#{keyword}||'%' or PET_BREED like '%'||#{keyword}||'%' or MEMBER_EMAIL like '%'||#{keyword}||'%') and PET_CLASSES=#{option}
+					</when>
+					<when test="type.equals('name')">
+						PET_NAME like '%'||#{keyword}||'%' and PET_CLASSES=#{option}
+					</when>
+					<when test="type.equals('breed')">
+						PET_breed like '%'||#{keyword}||'%' and PET_CLASSES=#{option}
+					</when>
+					<when test="type.equals('memberEmail')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%' and PET_CLASSES=#{option}
+					</when>	
+				</choose>
+			</otherwise>
+		</choose>
+	</select>
+	<select id="searchPetListMagnum" resultType="pet">
+		select * from (select rownum as rnum, b.* from(SELECT pet_no,pet_name,pet_classes,pet_breed,to_char(pet_birth,'yyyy-mm-dd') as pet_birth,pet_gender,neutering,pet_profile,pet_weight,member_email from pet where
+		<choose>
+			<when test="option==0"> 
+				<choose>
+					<when test="type.equals('all')">
+						PET_NAME like '%'||#{keyword}||'%' or PET_BREED like '%'||#{keyword}||'%' or MEMBER_EMAIL like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('name')">
+						PET_NAME like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('breed')">
+						PET_breed like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('memberEmail')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				<choose>
+					<when test="type.equals('all')">
+						(PET_NAME like '%'||#{keyword}||'%' or PET_BREED like '%'||#{keyword}||'%' or MEMBER_EMAIL like '%'||#{keyword}||'%') and PET_CLASSES=#{option}
+					</when>
+					<when test="type.equals('name')">
+						PET_NAME like '%'||#{keyword}||'%' and PET_CLASSES=#{option}
+					</when>
+					<when test="type.equals('breed')">
+						PET_breed like '%'||#{keyword}||'%' and PET_CLASSES=#{option}
+					</when>
+					<when test="type.equals('memberEmail')">
+						MEMBER_EMAIL like '%'||#{keyword}||'%' and PET_CLASSES=#{option}
+					</when>	
+				</choose>
+			</otherwise>
+		</choose>
+		order by pet_birth desc)b) where rnum BETWEEN #{start} and #{end}
+	</select>
+	<select id="searchTotalCountPetOption" resultType="int">
+		select count(*) from pet where PET_CLASSES=#{option}
+	</select>
+	<select id="searchPetListOption" resultType="pet">
+		select * from (select rownum as rnum, b.* from(SELECT pet_no,pet_name,pet_classes,pet_breed,to_char(pet_birth,'yyyy-mm-dd') as pet_birth,pet_gender,neutering,pet_profile,pet_weight,member_email from pet where PET_CLASSES=#{option} order by 1 desc)b) where rnum BETWEEN #{start} and #{end}
+		</select>
 	<insert id="insertPet">
 	  	insert into pet values(pet_seq.nextval, #{petName}, #{petClasses}, #{petBreed}, #{petBirth}, #{petGender}, #{neutering}, #{petProfile}, #{petWeight}, #{memberEmail})
 	</insert>
+	
+	<update id="updatePet">
+	    update pet
+	    set pet_name = #{petName},
+	        pet_classes = #{petClasses},
+	        pet_breed = #{petBreed},
+	        pet_gender = #{petGender},
+	        pet_weight = #{petWeight},
+	        pet_birth = TO_DATE(#{petBirth}, 'YYYY-MM-DD'),
+	        neutering = #{neutering},
+	        pet_profile = #{petProfile}
+	    where pet_no = #{petNo}
+	</update>
+	
 	<select id="selectOnePet" resultType="pet">
 		select * from pet where pet_no = #{petNo}
 	</select>
@@ -102,21 +326,13 @@
   	<delete id="deleteMember">
   		delete from member where member_email = #{memberEmail}
   	</delete>
-  	<update id="updatePet">
-	    update pet
-	    set pet_name = #{petName},
-	        pet_classes = #{petClasses},
-	        pet_breed = #{petBreed},
-	        pet_gender = #{petGender},
-	        pet_weight = #{petWeight},
-	        pet_birth = TO_DATE(#{petBirth}, 'YYYY-MM-DD'),
-	        neutering = #{neutering},
-	        pet_profile = #{petProfile}
-	    where pet_no = #{petNo}
-	</update>
 	
 	<delete id="deletePet">
 		delete from pet where pet_no = #{petNo}
 	</delete>
+	
+	<select id="selectBuyList" resultType="buyList">
+		select * from buy_list where member_email = #{memberEmail}
+	</select>
 
 </mapper>

@@ -71,7 +71,11 @@ const PetView = () => {
       <div className="pet-profile">
         <img
           className="pet-image"
-          src={pet.petProfile ? `${backServer}/member/pet/${pet.petProfile}` : "/images/default-pet.png"}
+          src={
+            pet.petProfile
+              ? `${backServer}/member/pet/${pet.petProfile}`
+              : "/images/default-pet.png"
+          }
           alt={pet.petName}
         />
       </div>

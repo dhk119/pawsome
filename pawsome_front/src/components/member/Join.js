@@ -109,6 +109,7 @@ const Join = () => {
     setMemberPwRe(e.target.value);
   };
 
+  //이름 유효성 검사
   const nameMessage = useRef(null);
   const checkName = () => {
     nameMessage.current.classList.remove("valid");

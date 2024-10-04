@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.iei.market.model.dto.BuyListDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 
 import kr.co.iei.util.PageInfo;
@@ -59,4 +60,22 @@ public interface MemberDao {
 	int updatePet(PetDTO pet);
 
 	int deletePet(int petNo);
+
+	List selectBuyList(String memberEmail);
+
+	int searchTotalCountMemberMagnum(String type, String keyword, String option);
+
+	List searchMemberListMagnum(int start, int end, String type, String keyword, String option);
+
+	int searchTotalCountMemberOption(String option);
+
+	List searchMemberListOption(int start, int end, String option);
+
+	int searchTotalCountPetMagnum(String type, String keyword, int option);
+
+	List searchPetListMagnum(int start, int end, String type, String keyword, int option);
+
+	int searchTotalCountPetOption(int option);
+
+	List searchPetListOption(int start, int end, int option);
 }

@@ -104,8 +104,8 @@ const ProductDetail = () => {
                       icon: "success",
                       showCancelButton: true,
                       confirmButtonColor: "#ffa518",
-                      confirmButtonText: "예",
-                      cancelButtonText: "아니오",
+                      confirmButtonText: "장바구니 확인",
+                      cancelButtonText: "계속 쇼핑하기",
                     }).then((result) => {
                       if (result.isConfirmed) {
                         navigate("/market/main/cart");

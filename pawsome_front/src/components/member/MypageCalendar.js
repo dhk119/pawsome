@@ -260,7 +260,7 @@ const MypageCalendar = () => {
         className="calendar-modal"
       >
         <h2>일정 추가</h2>
-        <IoCloseSharp onClick={closeAddModal} />
+        {/* <IoCloseSharp onClick={closeAddModal} /> */}
         <div>
           <label>제목</label>
           <input
@@ -379,7 +379,7 @@ const MypageCalendar = () => {
             ) : (
               <>
                 <h2>{selectedSchedule.dayTitle}</h2>
-                <IoCloseSharp onClick={closeDetailModal} />
+                {/* <IoCloseSharp onClick={closeDetailModal} /> */}
                 <p>시작일: {selectedSchedule.dayStart}</p>
                 {selectedSchedule.dayEnd && (
                   <p>종료일: {selectedSchedule.dayEnd}</p>

@@ -52,7 +52,14 @@ const ProductView = () => {
     });
   }, []);
   const updateProduct = () => {
-    if (
+    if (productPrice && !Number(productPrice)) {
+      Swal.fire({
+        text: "가격에는 숫자만 입력 가능합니다.",
+        icon: "info",
+        iconColor: "var(--main1)",
+        confirmButtonColor: "var(--point1)",
+      });
+    } else if (
       productName !== "" &&
       typeCategory !== "" &&
       mainCategory !== "" &&

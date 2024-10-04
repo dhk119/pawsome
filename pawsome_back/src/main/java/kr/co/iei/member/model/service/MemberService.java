@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.iei.market.model.dto.BuyListDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
@@ -178,6 +179,11 @@ public class MemberService {
 	public int deletePet(int petNo) {
 		int result = memberDao.deletePet(petNo);
 		return result;
+	}
+
+	public List selectBuyList(String memberEmail) {
+		List<BuyListDTO> buyList = memberDao.selectBuyList(memberEmail);
+		return buyList;
 	}
 
 

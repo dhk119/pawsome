@@ -54,7 +54,8 @@
 .member-page .resetProfileImage {
   background-color: var(--gray5);
   color: #fff;
-  width: 200px;
+  width: 150px;
+  border-radius: 5px;
   height: 30px;
   display: block;
   margin: 10px auto;

@@ -39,7 +39,7 @@ public class PayController {
 	
 	@PostMapping(value="/payment")
 	public ResponseEntity<Boolean> insertPayment (@ModelAttribute PayDTO pay){
-		System.out.println(pay);
+		System.out.println("결제값 : "+pay);
 		boolean result = payService.insertPayment(pay);
 		System.out.println(result);
 		return ResponseEntity.ok(result);

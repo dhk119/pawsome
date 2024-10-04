@@ -327,3 +327,13 @@
   background-color: var(--gray4);
   margin-left: 10px;
 }
+
+/* 주문조회 css */
+.buy-list-wrap {
+  background-color: #fff;
+  min-height: 500px;
+  padding: 50px;
+}
+.buy-list-wrap > h1 {
+  color: var(--point1);
+}

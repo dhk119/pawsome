@@ -37,23 +37,29 @@ public class PayService {
 
 	@Transactional
 	public boolean insertPayment(PayDTO pay) {
-		StringTokenizer sT = new StringTokenizer(pay.getPayProductNo(), "-");
 		boolean result = false;
-		while (sT.hasMoreElements()) {
-			int payProductNo = Integer.parseInt(sT.nextToken());
-			int reResult = marketDao.insertPayment(pay, payProductNo);
-			if(reResult == 1) {
-				result = true;
-				int delResult = marketDao.payDeleteCart(payProductNo,pay.getMemberEmail());
-				if(delResult < 1) {
-					result = false;
+		int payResult = marketDao.insertPayment(pay);
+		System.out.println("payResult : "+payResult);
+		if(payResult > 0) {
+			//결제 성공
+			StringTokenizer sT = new StringTokenizer(pay.getPayCartNo(), "-");
+			while (sT.hasMoreElements()) {
+				int payCartNo = Integer.parseInt(sT.nextToken());
+				CartDTO cart = marketDao.selectPayCartList(payCartNo);
+				int buyResult = marketDao.insertBuyList(pay, cart);
+				if(buyResult == 1) {
+					result = true;
+					int delResult = marketDao.payDeleteCart(payCartNo);
+					if(delResult < 1) {
+						result = false;
+						break;
+					}
+				}else {
 					break;
 				}
-			}else {
-				break;
-			}
 		}
-		return result;
+	}
+	return result;
 	}
 	
 }

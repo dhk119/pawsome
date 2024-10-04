@@ -49,8 +49,88 @@
 	<select id="selectOneQnaMagnum" resultType="qna">
 		select product_no, qna_type, qna_title, qna_content, qna_reg_date, qna_writer, qna_answer_content, qna_answer_reg_date, qna_answer_writer from qna left join qna_answer using(qna_no) where qna_no=#{qnaNo}
 	</select>
+	<select id="searchTotalCountMagnum" resultType="int">
+		select count(*) from product where
+		<choose>
+			<when test="option.equals('A')">
+				<choose>
+					<when test="type.equals('all')">
+						product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('name')">
+						product_name like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('category')">
+						main_category like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('price')">
+						product_price like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				<choose>
+					<when test="type.equals('all')">
+						(product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price like '%'||#{keyword}||'%')and product_show=#{option}
+					</when>
+					<when test="type.equals('name')">
+						product_name like '%'||#{keyword}||'%' and product_show=#{option}
+					</when>
+					<when test="type.equals('category')">
+						main_category like '%'||#{keyword}||'%' and product_show=#{option}
+					</when>
+					<when test="type.equals('price')">
+						product_price like '%'||#{keyword}||'%' and product_show=#{option}
+					</when>
+				</choose>
+			</otherwise>
+		</choose>
+	</select>
+	<select id="searchProductListMagnum" resultType="product">
+		select * from (select rownum as rnum, b.* from(SELECT * from product where
+		<choose>
+			<when test="option.equals('A')">
+				<choose>
+					<when test="type.equals('all')">
+						product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('name')">
+						product_name like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('category')">
+						main_category like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('price')">
+						product_price like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				<choose>
+					<when test="type.equals('all')">
+						(product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price like '%'||#{keyword}||'%')and product_show=#{option}
+					</when>
+					<when test="type.equals('name')">
+						product_name like '%'||#{keyword}||'%' and product_show=#{option}
+					</when>
+					<when test="type.equals('category')">
+						main_category like '%'||#{keyword}||'%' and product_show=#{option}
+					</when>
+					<when test="type.equals('price')">
+						product_price like '%'||#{keyword}||'%' and product_show=#{option}
+					</when>
+				</choose>
+			</otherwise>
+		</choose>
+		order by product_no desc)b) where rnum BETWEEN #{start} and #{end}
+	</select>
+	<select id="searchTotalCountOption" resultType="int">
+		select count(*) from product where product_show=#{option}
+	</select>
+	<select id="searchProductListOption" resultType="product">
+		select * from (select rownum as rnum, b.* from(SELECT * from product where product_show=#{option} order by product_no desc)b) where rnum BETWEEN #{start} and #{end}
+	</select>
 	
-
 	<!-- 원희 -->
 	<select id="totalCount" resultType="int">
 		select count(*) from product where product_show='Y'
@@ -150,9 +230,15 @@
 		select member_name, member_addr1, member_addr2, member_addr3 from member where member_email=#{memberEmail}
 	</select>
 	<insert id="insertPayment">
-		insert into pay values(#{pay.payUid},#{pay.totalPrice},sysdate,#{pay.payAddr1},#{pay.payAddr2},#{pay.payAddr3},#{pay.payName},1,#{pay.memberEmail},#{payProductNo})
+		insert into pay values(#{payUid},#{totalPrice},sysdate,#{payAddr1},#{payAddr2},#{payAddr3},#{payName},1,#{memberEmail})
+	</insert>
+	<insert id="insertBuyList">
+		insert into buy_list values(buy_list_seq.nextval, #{cart.productNo}, #{pay.payUid}, #{cart.productCartCount}, #{pay.memberEmail}, 1)
 	</insert>
 	<delete id="payDeleteCart">
-		delete from cart where product_no=#{payProductNo} and member_email=#{memberEmail}
+		delete from cart where cart_no=#{payCartNo}
 	</delete>
+	<select id="selectPayCartList" resultType="cart">
+		select product_no, product_cart_count from cart where cart_no=#{payCartNo}
+	</select>
 </mapper>
