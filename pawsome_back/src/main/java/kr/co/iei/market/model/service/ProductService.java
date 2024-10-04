@@ -23,14 +23,21 @@ public class ProductService {
 	@Autowired
 	private PageUtil pageUtil;
 
-	public Map selectProductList(int typeCategory, String mainCategory, int reqPage, int filterType) {
+	public Map selectProductList(int typeCategory, String mainCategory, int reqPage, int filterType, String loginEmail) {
 		int numPerPage = 15;
 		int pageNaviSize = 5;
 		int totalCount = marketDao.totalCount(typeCategory, mainCategory);
 		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
 		int start = pi.getStart();
 		int end = pi.getEnd();
-		List list = marketDao.selectProductList(typeCategory, mainCategory,start,end,filterType);
+		List<ProductDTO> list = marketDao.selectProductList(typeCategory, mainCategory,start,end,filterType);
+		//좋아요 여부 세팅
+		for (ProductDTO product : list) {
+			int isLike = marketDao.isLike(product.getProductNo(),loginEmail);
+			if(isLike == 1) {
+				product.setIsLike(isLike);
+			}
+		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("pi", pi);
@@ -96,6 +103,33 @@ public class ProductService {
 	@Transactional
 	public int deleteQnaAnswer(int qnaNo) {
 		int result = marketDao.deleteQnaAnswer(qnaNo);
+		return result;
+	}
+
+
+
+	@Transactional
+	public int insertLikePush(ProductDTO product) {
+		int result = marketDao.insertLikePush(product);
+		return result;
+	}
+
+	@Transactional
+	public int changeLike(String loginEmail, ProductDTO product) {
+		int result = -1;
+		if(product.getIsLike() == 1) {
+			product.setIsLike(0);
+			int reResult = marketDao.deleteLike(loginEmail, product);
+			if(reResult > 0) {
+				result = 2;
+			}
+		}else {
+			product.setIsLike(1);
+			int reResult = marketDao.insertLike(loginEmail, product);
+			if(reResult > 0) {
+				result = 3;
+			}
+		}
 		return result;
 	}
 	

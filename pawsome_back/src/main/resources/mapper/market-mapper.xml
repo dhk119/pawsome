@@ -131,6 +131,8 @@
 		select * from (select rownum as rnum, b.* from(SELECT * from product where product_show=#{option} order by product_no desc)b) where rnum BETWEEN #{start} and #{end}
 	</select>
 	
+	
+	
 	<!-- 원희 -->
 	<select id="totalCount" resultType="int">
 		select count(*) from product where product_show='Y'
@@ -164,9 +166,15 @@
 					)p)
 		where rnum between #{start} and #{end}
 	</select>
+	<select id="isLike" resultType="int">
+		select count(*) from product_like where product_no=#{productNo} and member_email=#{loginEmail}
+	</select>
 	<select id="selectOneProduct" resultType="product">
 		select product_no, product_name, type_category, main_category, product_price, product_thumb, product_detail from product where product_no=#{productNo}
 	</select>
+	<insert id="insertLikePush">
+		insert into product_like values(#{productNo}, #{memberEmail})
+	</insert>
 <!-- Q&A -->
 	<insert id="insertQna">
 		insert into qna values(qna_seq.nextval,#{productNo},#{qnaType},#{qnaTitle},#{qnaContent},#{qnaPublic},sysdate,#{qnaWriter})
@@ -254,4 +262,14 @@
 	<select id="payTotalCount" resultType="int">
 		select count(*) from buy_list where member_email=#{loginEmail}
 	</select>
+	<select id="selectOnePay" resultType="pay">
+		select * from pay where pay_uid=#{payUid}
+	</select>
+	
+	<delete id="deleteLike">
+		delete from product_like where product_no=#{product.productNo} and member_email=#{loginEmail}
+	</delete>
+	<insert id="insertLike">
+		insert into	product_like values(#{product.productNo},#{loginEmail})
+	</insert>
 </mapper>

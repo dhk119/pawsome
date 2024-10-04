@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { loginEmailState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
 import { TiDelete } from "react-icons/ti";
+import { cancelPay } from "./refund";
 
 const PayCancel = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -41,6 +42,8 @@ const PayCancel = () => {
 const BuyItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const buy = props.buy;
+  const [result, setResult] = useState(-1);
+
   return (
     <div className="product-cart-wrap">
       <div className="product-pay-detail">
@@ -68,8 +71,8 @@ const BuyItem = (props) => {
                 </th>
               </tr>
               <tr>
-                <td>구매번호</td>
-                <th>{buy.payUid}</th>
+                <td>구매일자</td>
+                <th>{buy.payUid}수정!</th>
               </tr>
               <tr>
                 <td>상품명</td>
@@ -85,16 +88,20 @@ const BuyItem = (props) => {
               </tr>
             </tbody>
           </table>
-          {/* 
           <div
             className="cancelBtn"
             onClick={() => {
-              cancelBuy(cart.cartNo);
+              cancelPay(
+                buy.buyNo,
+                buy.productNo,
+                buy.payUid,
+                buy.buyCount * buy.productPrice,
+                setResult
+              );
             }}
           >
             <TiDelete />
           </div>
-           */}
           <div className="product-totalprice">
             해당상품 총 금액 :{" "}
             {(buy.buyCount * buy.productPrice).toLocaleString("ko-KR")}원

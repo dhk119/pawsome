@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.iei.market.model.dto.PayDTO;
+import kr.co.iei.market.model.dto.RefundRequestDTO;
 import kr.co.iei.market.model.service.PayService;
 import kr.co.iei.member.model.dto.MemberDTO;
 
@@ -47,6 +48,12 @@ public class PayController {
 	public ResponseEntity<Map> buyList (@PathVariable String loginEmail, @PathVariable int reqPage){
 		Map map = payService.selectBuyList(loginEmail, reqPage);
 		return ResponseEntity.ok(map);
+	}
+	
+	@PostMapping(value="/refund")
+	public ResponseEntity<Integer> refund (@RequestBody RefundRequestDTO refund){
+		int result = payService.refundService(refund);
+		return ResponseEntity.ok(result);
 	}
 	
 }

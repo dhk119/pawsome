@@ -21,4 +21,6 @@ public class ProductDTO {
 	private String productRegDate;		//상품 등록일
 	private String productShow;			//Y/N
 	private String memberEmail;			//등록자(관리자로 고정)
+	
+	private int isLike;				//0-안눌러진, 1-눌러진
 }

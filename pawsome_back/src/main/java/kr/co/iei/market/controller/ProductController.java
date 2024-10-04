@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,9 +34,9 @@ public class ProductController {
 	@Value("${file.root}")
 	public String root;
 	
-	@GetMapping(value="/productList/{typeCategory}/{mainCategory}/{reqPage}/{filterType}")
-	public ResponseEntity<Map> productList (@PathVariable int typeCategory, @PathVariable String mainCategory, @PathVariable int reqPage, @PathVariable int filterType) {
-		Map map = productService.selectProductList(typeCategory, mainCategory, reqPage, filterType);
+	@GetMapping(value="/productList/{typeCategory}/{mainCategory}/{reqPage}/{filterType}/{loginEmail}")
+	public ResponseEntity<Map> productList (@PathVariable int typeCategory, @PathVariable String mainCategory, @PathVariable int reqPage, @PathVariable int filterType, @PathVariable String loginEmail) {
+		Map map = productService.selectProductList(typeCategory, mainCategory, reqPage, filterType, loginEmail);
 		return ResponseEntity.ok(map);
 	}
 	
@@ -92,4 +93,20 @@ public class ProductController {
 		int result = productService.deleteQnaAnswer(qnaNo);
 		return ResponseEntity.ok(result);
 	}
+	
+
+	@PostMapping(value="likePush")
+	public ResponseEntity<Boolean> likePush(@RequestBody ProductDTO product){
+		System.out.println(product);
+		int result = productService.insertLikePush(product);
+		return ResponseEntity.ok(true);
+	}
+	
+	@PostMapping(value="/changeLike/{loginEmail}")
+	public ResponseEntity<Integer> changeLike(@PathVariable String loginEmail, @RequestBody ProductDTO product){
+		System.out.println(product);
+		int result = productService.changeLike(loginEmail,product);
+		return ResponseEntity.ok(result);
+	}
+	
 }

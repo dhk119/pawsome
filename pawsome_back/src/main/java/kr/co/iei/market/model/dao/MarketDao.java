@@ -94,6 +94,16 @@ public interface MarketDao {
 
 	int payTotalCount(String loginEmail);
 
+	PayDTO selectOnePay(String payUid);
+
+	int isLike(int productNo, String loginEmail);
+
+	int insertLikePush(ProductDTO product);
+
+	int deleteLike(String loginEmail, ProductDTO product);
+
+	int insertLike(String loginEmail, ProductDTO product);
+
 
 
 

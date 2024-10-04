@@ -9,10 +9,12 @@ import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import { Autoplay, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Autoplay, Pagination } from "swiper/modules";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { loginEmailState } from "../utils/RecoilData";
 
 const ProductList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -24,11 +26,12 @@ const ProductList = () => {
   const typeCategory = params.typeCategory;
   const mainCategory = params.mainCategory;
   const [filterType, setFilterType] = useState(1);
+  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
 
   useEffect(() => {
     axios
       .get(
-        `${backServer}/product/productList/${typeCategory}/${mainCategory}/${reqPage}/${filterType}`
+        `${backServer}/product/productList/${typeCategory}/${mainCategory}/${reqPage}/${filterType}/${loginEmail}`
       )
       .then((res) => {
         console.log(res);
@@ -39,7 +42,7 @@ const ProductList = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [typeCategory, mainCategory, reqPage, filterType]);
+  }, [loginEmail, typeCategory, mainCategory, reqPage, filterType]);
 
   const changeFilterType = (e) => {
     setFilterType(e.target.value);
@@ -48,14 +51,27 @@ const ProductList = () => {
   return (
     <>
       <div className="best-item">
-      <>
-      <Swiper pagination={true} modules={[Pagination,Autoplay]} autoplay={{ delay: 4000 }} className="mySwiper">
-        <SwiperSlide><img src="/image/swiper1.png"/></SwiperSlide>
-        <SwiperSlide><img src="/image/swiper2.jpg"/></SwiperSlide>
-        <SwiperSlide><img src="/image/swiper3.jpg"/></SwiperSlide>
-        <SwiperSlide><img src="/image/swiper4.jpg"/></SwiperSlide>
-      </Swiper>
-    </>
+        <>
+          <Swiper
+            pagination={true}
+            modules={[Pagination, Autoplay]}
+            autoplay={{ delay: 4000 }}
+            className="mySwiper"
+          >
+            <SwiperSlide>
+              <img src="/image/swiper1.png" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src="/image/swiper2.jpg" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src="/image/swiper3.jpg" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src="/image/swiper4.jpg" />
+            </SwiperSlide>
+          </Swiper>
+        </>
       </div>
       <div className="page-title">
         {mainCategory === "feed"
@@ -133,7 +149,14 @@ const ProductList = () => {
       </div>
       <div className="productList-content">
         {productList.map((product, i) => {
-          return <ProductItem key={"product-" + i} product={product} />;
+          return (
+            <ProductItem
+              key={"product-" + i}
+              product={product}
+              loginEmail={loginEmail}
+              setLoginEmail={setLoginEmail}
+            />
+          );
         })}
       </div>
     </>
@@ -143,17 +166,32 @@ const ProductList = () => {
 const ProductItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const product = props.product;
+  const loginEmail = props.loginEmail;
   const navigate = useNavigate();
+
+  const likePush = () => {
+    axios
+      .post(`${backServer}/product/changeLike/${loginEmail}`, product)
+      .then((res) => {
+        console.log(res);
+        if (res.data == 3) {
+          //insert됨
+          product.isLike = 1;
+        } else if (res.data == 2) {
+          //delete됨
+          product.isLike = 0;
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <div
-      className="product-wrap"
-      onClick={() => {
-        navigate(`/market/main/productDetail/${product.productNo}/detail`);
-      }}
-    >
+    <div className="product-wrap">
       <div className="product-thumb">
-        <div className="product-like">
-          <FaRegHeart />
+        <div className="product-like" onClick={likePush}>
+          {product.isLike == 1 ? <FaHeart /> : <FaRegHeart />}
         </div>
         <img
           src={
@@ -161,6 +199,9 @@ const ProductItem = (props) => {
               ? `${backServer}/product/thumb/${product.productThumb}`
               : "/image/basicimage.png"
           }
+          onClick={() => {
+            navigate(`/market/main/productDetail/${product.productNo}/detail`);
+          }}
         />
       </div>
       <div className="product-info">
