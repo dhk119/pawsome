@@ -52,7 +52,7 @@ const ProductView = () => {
     });
   }, []);
   const updateProduct = () => {
-    if (!Number(productPrice)) {
+    if (productPrice && !Number(productPrice)) {
       Swal.fire({
         text: "가격에는 숫자만 입력 가능합니다.",
         icon: "info",
