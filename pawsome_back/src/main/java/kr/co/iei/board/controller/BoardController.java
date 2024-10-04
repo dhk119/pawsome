@@ -119,9 +119,14 @@ public class BoardController {
 			}
 	 }
 	 @PostMapping(value="/like")
-	 public ResponseEntity<Boolean> isLike(@ModelAttribute BoardDTO board){
-		 int result = boardService.isLike(board);
-		 return ResponseEntity.ok(result >0);
+	 public ResponseEntity<Boolean> isLike(@RequestBody BoardDTO board){
+		 int result = boardService.insertBoardLike(board);
+		 return ResponseEntity.ok(true);
+	 }
+	 @DeleteMapping(value="/like/{boardNo}/{memberNickname}")
+	 public ResponseEntity<Boolean> deleteBoardLike(@PathVariable int boardNo, @PathVariable String memberNickname){
+		 int result = boardService.deleteBoardLike(boardNo, memberNickname);
+		 return ResponseEntity.ok(true);
 	 }
 	 
 	 @GetMapping(value="/replyList/{boardNo}/{reqPage}/{type}/{memberNickname}")
@@ -145,14 +150,19 @@ public class BoardController {
 			 return ResponseEntity.ok(0);
 		 }
 	 }
-	 @PostMapping(value="/reply/like")
+	 @PostMapping(value="/replyLike")
 	 public ResponseEntity<Boolean> replyLike(@RequestBody ReplyDTO reply){
-		 System.out.println(reply);
-		 int result = boardService.replyLike(reply);
-		 System.out.println("re : "+result);
+		 int result = boardService.insertReplyLike(reply);
 		 return ResponseEntity.ok(true);
 	 }
-	 
+	 @DeleteMapping(value="/replyLike/{replyNo}/{memberNickname}")
+	 public ResponseEntity<Boolean> deleteReplyLike(@PathVariable int replyNo, @PathVariable String memberNickname){
+		 System.out.println("댓글번호 : "+replyNo);
+		 System.out.println("멤버 닉 : "+memberNickname);
+		 int result = boardService.deleteReplyLike(replyNo, memberNickname);
+		 
+		 return ResponseEntity.ok(true);
+	 }
 	 @PatchMapping(value="/updateReply")
 	 public ResponseEntity<Boolean> updateReply(@ModelAttribute ReplyDTO reply){
 		 int result = boardService.updateReply(reply);

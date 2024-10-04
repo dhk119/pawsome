@@ -32,7 +32,6 @@ const BoardView = () => {
   const [boardTag, setBoardTag] = useState(0);
   const [pi, setPi] = useState({});
   const [boardLike, setBoardLike] = useState(0);
-  const [replyNo, setReplyNo] = useState(0);
   const [replyContent, setreplyContent] = useState("");
   const [writeType, setWriteType] = useState(true);
   const changeReply = (e) => {
@@ -45,6 +44,7 @@ const BoardView = () => {
   const commentRef = useRef(null);
   const [hide, setHide] = useState(true);
   const [type, setType] = useState(1);
+  console.log(board);
   const changeType = (e) => {
     setType(e.target.value);
   };
@@ -134,19 +134,19 @@ const BoardView = () => {
         .then((res) => {
           console.log(res);
           setBoardLike(boardLike + 1);
+          setBoard({ ...board, isLike: 1 });
         })
         .catch((err) => {
           console.log(err);
         });
     } else {
       axios
-        .delete(`${backServer}/board/like`, {
-          boardNo: board.boardNo,
-          memberNickname: memberNickname,
-        })
+        .delete(`${backServer}/board/like/${board.boardNo}/${memberNickname}`)
         .then((res) => {
           if (res.data > 0) {
             setBoardLike(boardLike - 1);
+
+            setBoard({ ...board, isLike: 0 });
           }
         })
         .catch((err) => {
@@ -342,10 +342,17 @@ const BoardView = () => {
               )}
             </div>
             <div className="boardView-btn">
-              <button onClick={isLike}>
-                <AiIcons.AiFillHeart />
-                좋아요
-              </button>
+              {board.isLike === 1 ? (
+                <button onClick={isLike}>
+                  <AiIcons.AiOutlineHeart />
+                  좋아요 취소
+                </button>
+              ) : (
+                <button onClick={isLike}>
+                  <AiIcons.AiFillHeart />
+                  좋아요
+                </button>
+              )}
               <button>
                 <IoIosSend />
                 공유하기
@@ -546,21 +553,34 @@ const ReplyItem = (props) => {
   const [editType, setEditType] = useState(false);
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
-
+  const [replyState, setReply] = useState({});
   const { commentRef, setWriteType, writeType, replyNoState, setReplyNoState } =
     props;
-
   const isLike = () => {
-    if (memberNickname !== "") {
+    if (reply.isLike === 0) {
       axios
-        .post(`${backServer}/board/reply/like`, {
+        .post(`${backServer}/board/replyLike`, {
           replyNo: reply.replyNo,
           memberNickname: memberNickname,
         })
         .then((res) => {
           console.log(res);
           setReplyLike(replyLike + 1);
-          setChangedComment(!changedComment);
+          setReply({ ...reply, isLike: 1 });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .delete(
+          `${backServer}/board/replyLike/${reply.replyNo}/${memberNickname}`
+        )
+        .then((res) => {
+          if (res.data > 0) {
+            setReplyLike(replyLike - 1);
+            setReply({ ...reply, isLike: 0 });
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -643,19 +663,32 @@ const ReplyItem = (props) => {
                 />
               </div>
             </div>
-
             <div style={{ marginTop: "10px", display: "flex", gap: "5px" }}>
-              <button
-                style={{
-                  border: "none",
-                  backgroundColor: "transparent",
-                  fontSize: "20px",
-                  color: "#ffa518",
-                }}
-                onClick={isLike}
-              >
-                <AiIcons.AiFillHeart />
-              </button>
+              {reply.isLike === 1 ? (
+                <button
+                  style={{
+                    border: "none",
+                    backgroundColor: "transparent",
+                    fontSize: "20px",
+                    color: "#ffa518",
+                  }}
+                  onClick={isLike}
+                >
+                  <AiIcons.AiFillHeart />
+                </button>
+              ) : (
+                <button
+                  style={{
+                    border: "none",
+                    backgroundColor: "transparent",
+                    fontSize: "20px",
+                    color: "#ffa518",
+                  }}
+                  onClick={isLike}
+                >
+                  <AiIcons.AiOutlineHeart />
+                </button>
+              )}
               <div>{reply.replyLike}</div>
             </div>
           </div>

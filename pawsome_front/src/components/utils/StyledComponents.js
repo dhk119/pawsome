@@ -2,18 +2,20 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
-  gap: 100px;
+  gap: 300px;
   align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
-  width: 100%;
-  height: 600px;
+  width: 90%;
+  margin-right: 20px;
+  height: 550px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 `;
 export const VideoContainer = styled.div`
   position: absolute;
   width: 100%;
-  height: 600px;
+  height: 550px;
   border-radius: 15px; /* 둥근 모서리 추가 */
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -23,7 +25,7 @@ export const BackgroundVideo = styled.video`
   z-index: -1;
   object-fit: cover;
   width: 100%;
-  height: 600px;
+  height: 550px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 `;
 
@@ -91,7 +93,7 @@ export const WeatherBox = styled.div`
   justify-content: space-between; // 내용 정렬
   align-items: center; // 가운데 정렬
   width: 350px; // 각 박스의 너비
-  height: 80px; // 각 박스의 높이
+  height: 30px; // 각 박스의 높이
 `;
 
 export const DateText = styled.span`

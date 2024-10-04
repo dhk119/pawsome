@@ -402,6 +402,7 @@
   border: 1px solid #ffa518;
   color: #ffa518;
   background-color: transparent;
+  width: 120px;
 }
 .boardView-btn > button:hover {
   background-color: #ffa518;

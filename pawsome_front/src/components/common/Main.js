@@ -63,9 +63,10 @@ const Main = () => {
           <Link to="/board/map">
             <div
               style={{
-                width: "100%",
+                width: "90%",
                 height: "402px",
                 backgroundColor: "#ffbe58",
+                marginLeft: "80px",
               }}
             >
               <img src="/image/nursecat.png" />
@@ -76,7 +77,7 @@ const Main = () => {
         </div>
       </div>
       <div className="api-wrap">
-        <div className="weather-title" style={{ marginLeft: "50px" }}>
+        <div className="weather-title" style={{ marginLeft: "90px" }}>
           <span>
             <span
               className="material-icons"
