@@ -22,6 +22,7 @@ const PetService = () => {
         </ul>
       </nav>
       <img src="/image/service/ServiceHeader.png" style={{ width: "1200px" }} />
+      <Link to="/service/test">테스트</Link>
     </div>
   );
 };

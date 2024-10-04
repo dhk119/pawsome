@@ -260,15 +260,15 @@ const HealthTest = () => {
   ];
   const startWithPet = () => {
     if (sessionPets.length > 0) {
-      const pet = sessionPets[0]; // 첫 번째 반려동물로 진행
+      const pet = sessionPets[0]; // 첫 번째 반려동물 가져오기
       setFormData({
         name: pet.name,
         birthDate: pet.birthDate,
         gender: pet.gender,
         weight: pet.weight,
       });
-      setSelectedPet(pet.type);
-      setIsTestStarted(true);
+      setSelectedPet(pet.type); // 반려동물 유형 설정
+      setIsTestStarted(true); // 테스트 시작
     }
   };
 
@@ -344,8 +344,8 @@ const HealthTest = () => {
           ) : !isTestStarted ? (
             <div>
               <h2>{selectedPet}의 정보를 입력해 주세요.</h2>
-              <form onSubmit={handleSubmit}>
-                <div>
+              <form className="petInfo-container" onSubmit={handleSubmit}>
+                <div className="pet-input-box">
                   <label>이름 : </label>
                   <input
                     type="text"
@@ -355,7 +355,7 @@ const HealthTest = () => {
                     required
                   />
                 </div>
-                <div>
+                <div className="pet-input-box">
                   <label>생년월일 : </label>
                   <input
                     type="date"
@@ -365,7 +365,7 @@ const HealthTest = () => {
                     required
                   />
                 </div>
-                <div>
+                <div className="pet-input-box">
                   <label>성별 : </label>
                   <select
                     name="gender"
@@ -378,7 +378,7 @@ const HealthTest = () => {
                     <option value="female">암컷</option>
                   </select>
                 </div>
-                <div>
+                <div className="pet-input-box">
                   <label>체중 상태 : </label>
                   <select
                     name="weight"
@@ -397,27 +397,34 @@ const HealthTest = () => {
                     <option value="obese">많이 살찜</option>
                   </select>
                 </div>
-                <button type="submit">정보 입력 완료</button>
+                <button className="petTest-btn" type="submit">
+                  정보 입력 완료
+                </button>
               </form>
             </div>
           ) : !isDentalTestStarted ? (
             <div>
               <h2>피부 상태 질문</h2>
-              {skinQuestionsList.map((question, index) => (
-                <div key={index}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={selectedSkinIssues[index]}
-                      onChange={() => skinIssueChange(index)}
-                    />
+              <div className="test-box">
+                {skinQuestionsList.map((question, index) => (
+                  <div
+                    key={index}
+                    className={`question-item ${
+                      selectedSkinIssues[index] ? "selected" : ""
+                    }`}
+                    onClick={() => skinIssueChange(index)}
+                  >
                     {question}
-                  </label>
-                </div>
-              ))}
+                  </div>
+                ))}
+              </div>
               <div>
-                <button onClick={noSkinIssues}>없어요</button>
-                <button onClick={nextToDental}>다음으로</button>
+                <button onClick={noSkinIssues} className="petTest-btn">
+                  없어요
+                </button>
+                <button onClick={nextToDental} className="petTest-btn">
+                  다음으로
+                </button>
               </div>
               <div>
                 <h3>현재 피부 점수: {skinScore}</h3>
@@ -446,7 +453,7 @@ const HealthTest = () => {
                 <h3>현재 치아 점수: {dentalScore}</h3>
               </div>
             </div>
-          ) : (
+          ) : !isEyeTestStarted ? (
             <div>
               <h2>뼈 상태 질문</h2>
               {boneQuestionsList.map((question, index) => (
@@ -463,6 +470,75 @@ const HealthTest = () => {
               ))}
               <div>
                 <button onClick={noBoneIssues}>없어요</button>
+                <button onClick={nextToEye}>다음으로</button>
+              </div>
+              <div>
+                <h3>현재 뼈 점수: {boneScore}</h3>
+              </div>
+            </div>
+          ) : !isHeartTestStarted ? (
+            <div>
+              <h2>눈 상태 질문</h2>
+              {eyeQuestionsList.map((question, index) => (
+                <div key={index}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={selectedEyeIssues[index]}
+                      onChange={() => EyeIssueChange(index)}
+                    />
+                    {question}
+                  </label>
+                </div>
+              ))}
+              <div>
+                <button onClick={noEyeIssues}>없어요</button>
+                <button onClick={nextToHeart}>다음으로</button>
+              </div>
+              <div>
+                <h3>현재 눈 점수: {eyeScore}</h3>
+              </div>
+            </div>
+          ) : !isImmunityTestStarted ? (
+            <div>
+              <h2>심장 상태 질문</h2>
+              {heartQuestionsList.map((question, index) => (
+                <div key={index}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={selectedHeartIssues[index]}
+                      onChange={() => HeartIssueChange(index)}
+                    />
+                    {question}
+                  </label>
+                </div>
+              ))}
+              <div>
+                <button onClick={noHeartIssues}>없어요</button>
+                <button onClick={nextToImmunity}>다음으로</button>
+              </div>
+              <div>
+                <h3>현재 심장 점수: {heartScore}</h3>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <h2>면역력 / 호흡기 상태 질문</h2>
+              {immunityQuestionsList.map((question, index) => (
+                <div key={index}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={selectedImmunityIssues[index]}
+                      onChange={() => ImmunityIssueChange(index)}
+                    />
+                    {question}
+                  </label>
+                </div>
+              ))}
+              <div>
+                <button onClick={noImmunityIssues}>없어요</button>
                 <button
                   onClick={() =>
                     alert(
@@ -475,7 +551,7 @@ const HealthTest = () => {
                 </button>
               </div>
               <div>
-                <h3>현재 뼈 점수: {boneScore}</h3>
+                <h3>현재 면역력 / 호흡기 점수: {immunityScore}</h3>
               </div>
             </div>
           )}
