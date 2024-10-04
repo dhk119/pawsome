@@ -330,9 +330,5 @@
 	<delete id="deletePet">
 		delete from pet where pet_no = #{petNo}
 	</delete>
-	
-	<select id="selectBuyList" resultType="buyList">
-		select * from buy_list where member_email = #{memberEmail}
-	</select>
 
 </mapper>

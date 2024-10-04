@@ -35,12 +35,32 @@ const MypageProfile = () => {
       });
   }, [loginEmail]);
 
+  // 생년월일을 'n년 n개월' 형식으로 변환하는 함수
+  const getPetAge = (birthDate) => {
+    const birth = new Date(birthDate); // 반려동물의 생일을 Date 객체로 변환
+    const now = new Date(); // 현재 날짜를 가져오기
+
+    let years = now.getFullYear() - birth.getFullYear(); // 년도 차이 계산
+    let months = now.getMonth() - birth.getMonth(); // 월 차이 계산
+
+    // 만약 월 차이가 음수라면, 1년을 빼고 개월을 12 더해서 조정
+    if (months < 0) {
+      years -= 1;
+      months += 12;
+    }
+
+    return `${years}년 ${months}개월`;
+  };
+
   return (
     <>
       <div className="profile-wrap">
         <h2>프로필</h2>
         <div className="profile-img">
-          <img src={`${backServer}/member/profile/${member.memberProfile}`} />
+          <img
+            src={`${backServer}/member/profile/${member.memberProfile}`}
+            alt="profile"
+          />
         </div>
         <div className="member-name">{member.memberName}</div>
         <div>{member.memberEmail}</div>
@@ -63,11 +83,16 @@ const MypageProfile = () => {
               onClick={() => navigate(`/mypage/pet-view/${pet.petNo}`)} // 클릭 시 상세보기 페이지로 이동
             >
               <div className="pet-img">
-                <img src={`${backServer}/member/pet/${pet.petProfile}`} />
+                <img
+                  src={`${backServer}/member/pet/${pet.petProfile}`}
+                  alt="pet-profile"
+                />
               </div>
               <div className="pet-info">
                 <div className="pet-name">{pet.petName}</div>
                 <div>{pet.petBreed}</div>
+                <div>{getPetAge(pet.petBirth)}</div>{" "}
+                {/* 생년월일을 변환하여 표시 */}
               </div>
               <div className="pet-more-view">
                 <SlArrowRight />

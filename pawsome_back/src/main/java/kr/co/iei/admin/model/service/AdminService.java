@@ -183,4 +183,26 @@ public class AdminService {
 		map.put("pi",pi);
 		return map;
 	}
+	public Map searchQnaList(int reqPage, boolean answer, String type, String keyword, int option) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=marketDao.searchTotalCountQnaMagnum(answer, type, keyword, option);
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=marketDao.searchQnaListMagnum(pi.getStart(), pi.getEnd(), answer, type, keyword, option);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
+	public Map searchQnaList(int reqPage, boolean answer, int option) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=marketDao.searchTotalCountQnaOption(answer, option , answer);
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=marketDao.searchQnaListOption(pi.getStart(), pi.getEnd(), answer, option);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
 }

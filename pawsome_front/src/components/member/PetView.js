@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // useNavigate 추가
+import { useParams, useNavigate, Link } from "react-router-dom"; // useNavigate 추가
 import { useRecoilState } from "recoil";
 import { loginEmailState } from "../utils/RecoilData";
 import Swal from "sweetalert2"; // 삭제 확인용
@@ -66,61 +66,68 @@ const PetView = () => {
   };
 
   return (
-    <div className="pet-container">
-      <h2 className="pet-title">반려동물 상세보기</h2>
-      <div className="pet-profile">
-        <img
-          className="pet-image"
-          src={
-            pet.petProfile
-              ? `${backServer}/member/pet/${pet.petProfile}`
-              : "/images/default-pet.png"
-          }
-          alt={pet.petName}
-        />
-      </div>
-      <table className="pet-table">
-        <tbody>
-          <tr>
-            <th>이름</th>
-            <td>{pet.petName}</td>
-          </tr>
-          <tr>
-            <th>품종</th>
-            <td>{pet.petBreed}</td>
-          </tr>
-          <tr>
-            <th>분류</th>
-            <td>{pet.petClasses === 1 ? "강아지" : "고양이"}</td>
-          </tr>
-          <tr>
-            <th>생일</th>
-            <td>{formatDate(pet.petBirth)}</td>
-          </tr>
-          <tr>
-            <th>성별</th>
-            <td>{pet.petGender === "남" ? "수컷" : "암컷"}</td>
-          </tr>
-          <tr>
-            <th>중성화 여부</th>
-            <td>{pet.neutering === 1 ? "예" : "아니오"}</td>
-          </tr>
-          <tr>
-            <th>체중</th>
-            <td>{pet.petWeight} kg</td>
-          </tr>
-        </tbody>
-      </table>
+    <>
+      <div className="pet-container">
+        <h2 className="pet-title">반려동물 상세보기</h2>
+        <div className="pet-profile">
+          <img
+            className="pet-image"
+            src={
+              pet.petProfile
+                ? `${backServer}/member/pet/${pet.petProfile}`
+                : "/images/default-pet.png"
+            }
+            alt={pet.petName}
+          />
+        </div>
+        <table className="pet-table">
+          <tbody>
+            <tr>
+              <th>이름</th>
+              <td>{pet.petName}</td>
+            </tr>
+            <tr>
+              <th>품종</th>
+              <td>{pet.petBreed}</td>
+            </tr>
+            <tr>
+              <th>분류</th>
+              <td>{pet.petClasses === 1 ? "강아지" : "고양이"}</td>
+            </tr>
+            <tr>
+              <th>생일</th>
+              <td>{formatDate(pet.petBirth)}</td>
+            </tr>
+            <tr>
+              <th>성별</th>
+              <td>{pet.petGender === "남" ? "수컷" : "암컷"}</td>
+            </tr>
+            <tr>
+              <th>중성화 여부</th>
+              <td>{pet.neutering === 1 ? "예" : "아니오"}</td>
+            </tr>
+            <tr>
+              <th>체중</th>
+              <td>{pet.petWeight} kg</td>
+            </tr>
+          </tbody>
+        </table>
 
-      <div className="pet-btn-wrap">
-        <button className="pet-update-btn" onClick={handleUpdate}>
-          수정하기
-        </button>
-        <button className="pet-delete-btn" onClick={handleDelete}>
-          삭제하기
-        </button>
+        <div className="pet-btn-wrap">
+          <button className="pet-update-btn" onClick={handleUpdate}>
+            수정하기
+          </button>
+          <button className="pet-delete-btn" onClick={handleDelete}>
+            삭제하기
+          </button>
+        </div>
       </div>
-    </div>
+      <div className="pet-mbti-link">
+        <Link to="/service/mbti">
+          <img src="/image/dogBTI.jpg" alt="Pet MBTI" />
+        </Link>
+      </div>
+    </>
   );
 };
 

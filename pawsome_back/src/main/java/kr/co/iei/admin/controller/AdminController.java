@@ -143,4 +143,14 @@ public class AdminController {
 		Map map=adminService.searchPetList(reqPage, option);
 		return ResponseEntity.ok(map);
 	}
+	@GetMapping(value = "/searchQna/{reqPage}/{answer}/{type}/{keyword}/{option}")
+	public ResponseEntity<Map> searchQna(@PathVariable int reqPage,@PathVariable boolean answer, @PathVariable String type, @PathVariable String keyword, @PathVariable int option){
+		Map map=adminService.searchQnaList(reqPage, answer, type, keyword, option);
+		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/searchQna/{reqPage}/{answer}/{option}")
+	public ResponseEntity<Map> searchQna(@PathVariable int reqPage,@PathVariable boolean answer, @PathVariable int option){
+		Map map=adminService.searchQnaList(reqPage, answer, option);
+		return ResponseEntity.ok(map);
+	}
 }

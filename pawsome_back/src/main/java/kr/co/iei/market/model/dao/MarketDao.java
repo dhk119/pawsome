@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.iei.market.model.dto.BuyListDTO;
 import kr.co.iei.market.model.dto.CartDTO;
 import kr.co.iei.market.model.dto.PayDTO;
 import kr.co.iei.market.model.dto.ProductDTO;
@@ -42,6 +43,14 @@ public interface MarketDao {
 	int searchTotalCountOption(String option);
 
 	List searchProductListOption(int start, int end, String option);
+	
+	int searchTotalCountQnaMagnum(boolean answer, String type, String keyword, int option);
+
+	List searchQnaListMagnum(int start, int end, boolean answer, String type, String keyword, int option);
+
+	int searchTotalCountQnaOption(boolean answer, int option, boolean answer2);
+
+	List searchQnaListOption(int start, int end, boolean answer, int option);
 	
 	/*원희*/
 	int totalCount(int typeCategory, String mainCategory);
@@ -90,9 +99,7 @@ public interface MarketDao {
 
 	CartDTO selectPayCartList(int payCartNo);
 
-
-
-
-	
+/*마이페이지 구매내역 - 정원*/
+	List<BuyListDTO> selectBuyList(String memberEmail);
 
 }

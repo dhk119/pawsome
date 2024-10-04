@@ -62,8 +62,8 @@ public class BoardService {
 		 }
 
 
-	public BoardDTO selectOneBoard(int boardNo) {
-		BoardDTO board = boardDao.selectOneBoard(boardNo);
+	public BoardDTO selectOneBoard(int boardNo, String memberNickname) {
+		BoardDTO board = boardDao.selectOneBoard(boardNo, memberNickname);
 		List<BoardFileDTO> fileList = boardDao.selectFileImage(boardNo);
 		int readCount = boardDao.updateBoardCount(boardNo);
 		board.setFileList(fileList);
@@ -116,7 +116,7 @@ public class BoardService {
 	}
 
 
-	public Map selectReplyList(int reqPage, int boardNo, int type) {
+	public Map selectReplyList(int reqPage, int boardNo, int type, String memberNickname) {
 		int numPerPage = 5;
 		int pageNaviSize = 5;
 		int totalCount = boardDao.totalReplyCount(boardNo);
@@ -126,6 +126,7 @@ public class BoardService {
 		m.put("end", pi.getEnd());
 		m.put("boardNo", boardNo);
 		m.put("type", type);
+		m.put("memberNickname", memberNickname);
 		List list = boardDao.selectReplyList(m);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list.size() == 0 ? null : list);
@@ -156,15 +157,19 @@ public class BoardService {
 		int result = 0;
 		if(reply.getReplyNo() != 0 ) {
 			result = boardDao.insertReplyLike(reply);
-			System.out.println(result);
 		}
 		if(result >0){
 			int likeCount = boardDao.selectReplyLikeCount(reply);
-			System.out.println("count : "+likeCount);
 			return likeCount;
 		}else {
 			return -1;
 		}
+	}
+
+	@Transactional
+	public int updateReply(ReplyDTO reply) {
+		int result = boardDao.updateReply(reply); 
+		return result;
 	}
 
 
