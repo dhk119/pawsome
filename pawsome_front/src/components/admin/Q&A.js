@@ -47,6 +47,7 @@ const Qna = () => {
           <tr>
             <th>Q&A 번호</th>
             <th>상품 번호</th>
+            <th>상품명</th>
             <th>분류</th>
             <th>제목</th>
             <th>공개여부</th>
@@ -65,6 +66,7 @@ const Qna = () => {
               >
                 <td>{qna.qnaNo}</td>
                 <td>{qna.productNo}</td>
+                <td>{qna.productName}</td>
                 <td>{qna.qnaType}</td>
                 <td>{qna.qnaTitle}</td>
                 {qna.qnaPublic === 0 ? <td>{"공개"}</td> : <td>{"비공개"}</td>}

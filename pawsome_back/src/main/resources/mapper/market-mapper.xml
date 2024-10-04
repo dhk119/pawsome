@@ -35,7 +35,7 @@
 		</choose>
 	</select>
 	<select id="selectQnaListMagnum" resultType="qna">
-		select * from (select rownum as rnum, b.* from(SELECT qna_no, product_no, qna_type, qna_title, qna_public, qna_reg_date, qna_writer from qna
+		select * from (select rownum as rnum, b.* from(SELECT qna_no, product_no, qna_type, qna_title, qna_public, qna_reg_date, qna_writer,(select product.product_name from product where qna.product_no = product.product_no) as product_name from qna
 		<choose>
 			<when test="answer==true">
 				where qna_no in (select qna_answer.qna_no from qna_answer)

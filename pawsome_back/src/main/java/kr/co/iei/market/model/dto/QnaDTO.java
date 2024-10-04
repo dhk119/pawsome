@@ -24,4 +24,5 @@ public class QnaDTO {
 	private String qnaAnswerContent;		//답글 컨텐츠
 	private String qnaAnswerRegDate;		//답글 작성일
 	private String qnaAnswerWriter;			//답글 작성자(관리자 고정)
+	private String productName;				//qna리스트에서 보여줄 상품명
 }
