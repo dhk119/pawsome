@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import {
   Bar,
   BarChart,
@@ -11,48 +12,92 @@ import {
 } from "recharts";
 
 const PetChart = () => {
-  const [data, setData] = useState([
-    { pv: 2, uv: 10 },
-    { pv: 3, uv: 5 },
-    { pv: 12, uv: 100 },
-    { pv: 4, uv: 12 },
-    { pv: 8, uv: 2 },
-  ]);
-  const [data01, setData01] = useState([
-    { value: 10, fill: "#ff0000", name: "1" },
-    { value: 8, fill: "#0000ff", name: "2" },
-    { value: 35, fill: "#ffff00", name: "3" },
-    { value: 44, fill: "#00ff00", name: "4" },
-    { value: 20, fill: "#00ffff", name: "5" },
-  ]);
-
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [dataData, setDataData] = useState([]);
+  useEffect(() => {
+    axios.get(`${backServer}/admin/petPercentClass`).then((res) => {
+      setData([
+        {
+          value: res.data[0],
+          fill: "#ffbe58",
+          name: "강아지",
+        },
+        {
+          value: res.data[1],
+          fill: "#5799ff",
+          name: "고양이",
+        },
+      ]);
+      setDataData([
+        {
+          value:
+            Math.round((10000 * res.data[0]) / (res.data[0] + res.data[1])) /
+            100,
+          fill: "#ffbe58",
+          name: "강아지",
+        },
+        {
+          value:
+            Math.round((10000 * res.data[1]) / (res.data[0] + res.data[1])) /
+            100,
+          fill: "#5799ff",
+          name: "고양이",
+        },
+      ]);
+    });
+  }, []);
+  const [data, setData] = useState([]);
   return (
     <div className="App">
-      <BarChart width={730} height={250} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Legend />
-        <Bar dataKey="pv" fill="#8884d8" />
-        <Bar dataKey="uv" fill="#82ca9d" />
-      </BarChart>
-      <PieChart width={730} height={250}>
-        <Pie
-          data={data01}
-          dataKey="value"
-          nameKey="name"
-          cx="50%"
-          cy="50%"
-          outerRadius={50}
-          label
-        />
-      </PieChart>
-      <div>
-        <div style={{ color: "#ff0000", width: "20px", height: "20px" }}>1</div>
-        <div style={{ color: "#0000ff", width: "20px", height: "20px" }}>2</div>
-        <div style={{ color: "#ffff00", width: "20px", height: "20px" }}>3</div>
-        <div style={{ color: "#00ff00", width: "20px", height: "20px" }}>4</div>
-        <div style={{ color: "#00ffff", width: "20px", height: "20px" }}>5</div>
+      <div className="admin-title">펫 차트</div>
+      <div className="admin-flex admin-pet-chart-top">
+        <div className="inquiry-sub-title">수량/퍼센트</div>
+        <PieChart width={500} height={500}>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            outerRadius={100}
+            label
+          />
+          <Pie
+            data={dataData}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            innerRadius={150}
+            outerRadius={200}
+            fill="#82ca9d"
+            label
+          />
+        </PieChart>
+      </div>
+      <div className="admin-pet-chart-bottom admin-flex-left">
+        <div className="admin-chart-label-one"></div>
+        <div
+          style={{
+            color: "#ffbe58",
+            width: "50px",
+            height: "20px",
+            fontWeight: "bold",
+          }}
+        >
+          강아지
+        </div>
+        <div className="admin-chart-label-two"></div>
+        <div
+          style={{
+            color: "#5799ff",
+            width: "50px",
+            height: "20px",
+            fontWeight: "bold",
+          }}
+        >
+          고양이
+        </div>
       </div>
     </div>
   );

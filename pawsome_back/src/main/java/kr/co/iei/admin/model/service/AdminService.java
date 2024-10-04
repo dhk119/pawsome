@@ -205,4 +205,9 @@ public class AdminService {
 		map.put("pi",pi);
 		return map;
 	}
+	public List<Integer> petPercentClass() {
+		Map<String, Integer> map=new HashMap<String, Integer>();
+		List<Integer> list=memberDao.petPercentClass();
+		return list;
+	}
 }
