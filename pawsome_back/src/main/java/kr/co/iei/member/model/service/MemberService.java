@@ -8,6 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.iei.market.model.dao.MarketDao;
+import kr.co.iei.market.model.dto.BuyListDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
@@ -23,6 +25,9 @@ public class MemberService {
 	private BCryptPasswordEncoder encoder;
 	@Autowired
 	private JwtUtils jwtUtil;
+	
+	@Autowired
+	private MarketDao MarketDao;
 
 	@Transactional
 	public int insertMember(MemberDTO member) {
@@ -180,5 +185,11 @@ public class MemberService {
 		return result;
 	}
 
+	public List selectBuyList(String memberEmail) {
+		System.out.println(memberEmail);
+		List<BuyListDTO> buyList = MarketDao.selectBuyList(memberEmail);
+		System.out.println(buyList);
+		return buyList;
+	}
 
 }

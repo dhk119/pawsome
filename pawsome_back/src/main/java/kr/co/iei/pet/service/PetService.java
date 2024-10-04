@@ -14,7 +14,7 @@ public class PetService {
 	
 	public List<PetDTO> selectPetList(String memberEmail) {
 		List<PetDTO> petList = petDao.selectPetList(memberEmail);
-		return null;
+		return petList;
 	}
 
 	

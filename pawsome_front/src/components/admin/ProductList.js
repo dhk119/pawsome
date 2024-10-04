@@ -1,7 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { isLoginState } from "../utils/RecoilData";
 import { Link, useNavigate } from "react-router-dom";
 import PageNavi from "../utils/PageNavi";
 import { Switch } from "@mui/material";
@@ -26,14 +24,14 @@ const ProductList = () => {
       : keyword
       ? axios
           .get(
-            `${backServer}/admin/productSearch/${reqPage}/${type}/${keyword}/${option}`
+            `${backServer}/admin/searchProduct/${reqPage}/${type}/${keyword}/${option}`
           )
           .then((res) => {
             setProductList(res.data.list);
             setPi(res.data.pi);
           })
       : axios
-          .get(`${backServer}/admin/productSearch/${reqPage}/${option}`)
+          .get(`${backServer}/admin/searchProduct/${reqPage}/${option}`)
           .then((res) => {
             setProductList(res.data.list);
             setPi(res.data.pi);
@@ -61,6 +59,7 @@ const ProductList = () => {
       setSearch(0);
     } else {
       setSearch(search + 1);
+      setReqPage(1);
     }
   };
   const changeOption = (e) => {

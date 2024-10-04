@@ -24,7 +24,7 @@ public interface BoardDao {
 
 	int selectBoardNo();
 
-	BoardDTO selectOneBoard(int boardNo);
+	BoardDTO selectOneBoard(int boardNo, String memberNickname);
 
 	List selectFileImage(int boardNo);
 
@@ -57,6 +57,14 @@ public interface BoardDao {
 	int insertReplyLike(ReplyDTO reply);
 
 	int selectReplyLikeCount(ReplyDTO reply);
+
+	int updateReply(ReplyDTO reply);
+
+	int isLike(int boardNo, String memberNickname);
+
+	int deleteBoardLike(BoardDTO board);
+
+	int deleteReplyLike(ReplyDTO reply);
 
 
 

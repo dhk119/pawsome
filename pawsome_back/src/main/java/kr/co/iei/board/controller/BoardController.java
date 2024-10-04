@@ -71,10 +71,10 @@ public class BoardController {
 		 return ResponseEntity.ok(result == 1+boardFileList.size());
 		 }
 	 
-	 @GetMapping(value="/boardNo/{boardNo}")
-	 public ResponseEntity<BoardDTO> selectOneBoard(@PathVariable int boardNo){
+	 @GetMapping(value="/boardNo/{boardNo}/{memberNickname}")
+	 public ResponseEntity<BoardDTO> selectOneBoard(@PathVariable int boardNo,@PathVariable String memberNickname){
 		 List<ReplyDTO> replyList = new ArrayList<ReplyDTO>();
-		 BoardDTO board = boardService.selectOneBoard(boardNo);
+		 BoardDTO board = boardService.selectOneBoard(boardNo, memberNickname);
 		 return ResponseEntity.ok(board);
 	 }
 	 
@@ -118,15 +118,20 @@ public class BoardController {
 				return ResponseEntity.ok(false);
 			}
 	 }
-	 @PostMapping(value="{boardNo}")
-	 public ResponseEntity<Boolean> isLike(@ModelAttribute BoardDTO board){
-		 int result = boardService.isLike(board);
+	 @PostMapping(value="/like")
+	 public ResponseEntity<Boolean> isLike(@RequestBody BoardDTO board){
+		 int result = boardService.insertBoardLike(board);
+		 return ResponseEntity.ok(true);
+	 }
+	 @DeleteMapping(value="/like/{boardNo}/{memberNickname}")
+	 public ResponseEntity<Boolean> deleteBoardLike(@PathVariable int boardNo, @PathVariable String memberNickname){
+		 int result = boardService.deleteBoardLike(boardNo, memberNickname);
 		 return ResponseEntity.ok(true);
 	 }
 	 
-	 @GetMapping(value="/replyList/{boardNo}/{reqPage}/{type}")
-	 public ResponseEntity<Map> replyList(@PathVariable int reqPage, @PathVariable int boardNo, @PathVariable int type){
-		 Map map = boardService.selectReplyList(reqPage, boardNo, type);
+	 @GetMapping(value="/replyList/{boardNo}/{reqPage}/{type}/{memberNickname}")
+	 public ResponseEntity<Map> replyList(@PathVariable int reqPage, @PathVariable int boardNo, @PathVariable int type,@PathVariable String memberNickname){
+		 Map map = boardService.selectReplyList(reqPage, boardNo, type, memberNickname);
 			return ResponseEntity.ok(map);
 	 }
 	 
@@ -145,13 +150,29 @@ public class BoardController {
 			 return ResponseEntity.ok(0);
 		 }
 	 }
-	 @PostMapping(value="/reply/like")
+	 @PostMapping(value="/replyLike")
 	 public ResponseEntity<Boolean> replyLike(@RequestBody ReplyDTO reply){
-		 System.out.println(reply);
-		 int result = boardService.replyLike(reply);
-		 System.out.println("re : "+result);
+		 int result = boardService.insertReplyLike(reply);
 		 return ResponseEntity.ok(true);
 	 }
+	 @DeleteMapping(value="/replyLike/{replyNo}/{memberNickname}")
+	 public ResponseEntity<Boolean> deleteReplyLike(@PathVariable int replyNo, @PathVariable String memberNickname){
+		 System.out.println("댓글번호 : "+replyNo);
+		 System.out.println("멤버 닉 : "+memberNickname);
+		 int result = boardService.deleteReplyLike(replyNo, memberNickname);
+		 
+		 return ResponseEntity.ok(true);
+	 }
+	 @PatchMapping(value="/updateReply")
+	 public ResponseEntity<Boolean> updateReply(@ModelAttribute ReplyDTO reply){
+		 int result = boardService.updateReply(reply);
+		 return ResponseEntity.ok(result == 1);
+	 }
 	 
+	 @PatchMapping(value="/reply/reComment")
+	 public ResponseEntity<Boolean> insertReComment(@ModelAttribute ReplyDTO reply){
+		 System.out.println(reply);
+		 return ResponseEntity.ok(true);
+	 }
 	 
 }

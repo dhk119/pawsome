@@ -18,8 +18,62 @@ const PetFrm = ({ pet, setPet }) => {
 
   // 강아지 및 고양이 품종 목록
   const breeds = {
-    dog: ["진돗개", "허스키", "웰시코기", "리트리버", "비숑 프리제"],
-    cat: ["러시안 블루", "샴", "페르시안", "메인쿤", "스코티시 폴드"],
+    dog: [
+      "진돗개",
+      "허스키",
+      "웰시코기",
+      "비숑 프리제",
+      "푸들",
+      "말티즈",
+      "시츄",
+      "포메라니안",
+      "불독",
+      "슈나우저",
+      "치와와",
+      "요크셔 테리어",
+      "스피츠",
+      "래브라도 리트리버",
+      "프렌치 불독",
+      "믹스견",
+      "시바견",
+      "퍼그",
+      "닥스훈트",
+      "사모예드",
+      "차우차우",
+      "아키타",
+      "골든 리트리버",
+      "코카 스파니엘",
+      "케인 코르소",
+      "로트와일러",
+      "저먼 셰퍼드",
+    ],
+    cat: [
+      "러시안 블루",
+      "샴",
+      "페르시안",
+      "메인쿤",
+      "스코티시 폴드",
+      "코리안 숏헤어",
+      "아비시니안",
+      "벵갈",
+      "랙돌",
+      "노르웨이 숲",
+      "스핑크스",
+      "브리티시 숏헤어",
+      "먼치킨",
+      "터키시 앙고라",
+      "샤르트뢰",
+      "히말라얀",
+      "봄베이",
+      "데본 렉스",
+      "오리엔탈 숏헤어",
+      "터키시 반",
+      "아메리칸 숏헤어",
+      "셀커크 렉스",
+      "버만",
+      "네벨룽",
+      "사바나",
+    ],
   };
 
   // 사진 미리보기 및 초기 이미지 설정
@@ -112,7 +166,7 @@ const PetFrm = ({ pet, setPet }) => {
               id="dog"
               name="petClasses"
               value="1"
-              checked={String(pet.petClasses) === "1"} // 문자열 비교로 변경
+              checked={String(pet.petClasses) === "1"}
               onChange={handleInputChange}
               className="breed-input"
             />
@@ -125,7 +179,7 @@ const PetFrm = ({ pet, setPet }) => {
               id="cat"
               name="petClasses"
               value="2"
-              checked={String(pet.petClasses) === "2"} // 문자열 비교로 변경
+              checked={String(pet.petClasses) === "2"}
               onChange={handleInputChange}
               className="breed-input"
             />
@@ -163,8 +217,8 @@ const PetFrm = ({ pet, setPet }) => {
           type="radio"
           name="petGender"
           id="m"
-          value="1"
-          checked={String(pet.petGender).trim() === "1"} // 공백 제거
+          value="남"
+          checked={String(pet.petGender).trim() === "남"}
           onChange={handleInputChange}
         />
         <label htmlFor="m">남</label>
@@ -172,8 +226,8 @@ const PetFrm = ({ pet, setPet }) => {
           type="radio"
           name="petGender"
           id="f"
-          value="2"
-          checked={String(pet.petGender).trim() === "2"} // 공백 제거
+          value="여"
+          checked={String(pet.petGender).trim() === "여"}
           onChange={handleInputChange}
         />
         <label htmlFor="f">여</label>

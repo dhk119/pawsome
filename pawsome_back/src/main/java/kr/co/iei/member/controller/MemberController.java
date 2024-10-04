@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.iei.board.model.dto.BoardDTO;
+import kr.co.iei.market.model.dto.BuyListDTO;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.PetDTO;
@@ -152,6 +152,32 @@ public class MemberController {
 	    
 	    return ResponseEntity.ok(result);
 	}
+	
+	
+	//카카오 로그인
+//	@GetMapping("/kakao-login")
+//	public ResponseEntity<> kakaoLogin(@RequestParam String code) {
+
+	   // URL에 포함된 code를 이용하여 액세스 토큰 발급
+//	   String accessToken = memberService.getKakaoAccessToken(code);
+//	   System.out.println(accessToken);
+
+	   // 액세스 토큰을 이용하여 카카오 서버에서 유저 정보(이메일) 받아오기
+//	   String KaKaoEmail = memberService.getUserInfo(accessToken);
+//	   System.out.println("login Controller : " + KaKaoEmail);
+
+//	   PostLoginRes postLoginRes = null;
+
+	   // 만일, DB에 해당 email을 가지는 유저가 없으면 회원가입 시키고 유저 식별자와 JWT 반환
+	   // 현재 카카오 유저의 전화번호를 받아올 권한이 없어서 테스트를 하지 못함.
+//	   if(loginProvider.checkEmail(String.valueOf(userInfo.get("email"))) == 0) {
+//	       //PostLoginRes postLoginRes = 해당 서비스;
+//	        return new BaseResponse<>(postLoginRes);
+//	   } else {
+//	      // 아니면 기존 유저의 로그인으로 판단하고 유저 식별자와 JWT 반환
+//	      postLoginRes = loginProvider.getUserInfo(String.valueOf(userInfo.get("email")));
+//	      return new BaseResponse<>(postLoginRes);
+//	}
 	
 	// 마이페이지 프로필 조회
 	@PostMapping(value = "/profile")
@@ -389,5 +415,14 @@ public class MemberController {
 		System.out.println("수정 스케쥴 : " + schedule);
 		int result = memberService.updateSchedule(schedule);
 		return ResponseEntity.ok(result);
+	}
+	
+	// 구매 내역 불러오기
+	@GetMapping(value = "/selectBuyList/{memberEmail}")
+	public ResponseEntity<List> selectBuyList(@PathVariable String memberEmail) {
+		System.out.println(memberEmail);
+		List<BuyListDTO> buyList = memberService.selectBuyList(memberEmail);
+		System.out.println(buyList);
+		return ResponseEntity.ok(buyList);
 	}
 }

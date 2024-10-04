@@ -109,6 +109,7 @@ const Join = () => {
     setMemberPwRe(e.target.value);
   };
 
+  //이름 유효성 검사
   const nameMessage = useRef(null);
   const checkName = () => {
     nameMessage.current.classList.remove("valid");
@@ -323,6 +324,7 @@ const Join = () => {
                 value={member.memberAddr1}
                 onChange={changeMember}
                 placeholder="우편번호"
+                disabled
               />
               <input
                 className="addr-btn"
@@ -338,6 +340,7 @@ const Join = () => {
               value={member.memberAddr2}
               onChange={changeMember}
               placeholder="주소"
+              disabled
             />
             <input
               type="text"

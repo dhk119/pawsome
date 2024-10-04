@@ -1,5 +1,6 @@
 package kr.co.iei.admin.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,14 +114,49 @@ public class AdminController {
 		int result=adminService.deleteQnaAnswer(qnaNo);
 		return ResponseEntity.ok(result); 
 	}
-	@GetMapping(value = "/productSearch/{reqPage}/{type}/{keyword}/{option}")
-	public ResponseEntity<Map> productSearch(@PathVariable int reqPage, @PathVariable String type, @PathVariable String keyword, @PathVariable String option){
+	@GetMapping(value = "/searchProduct/{reqPage}/{type}/{keyword}/{option}")
+	public ResponseEntity<Map> searchProduct(@PathVariable int reqPage, @PathVariable String type, @PathVariable String keyword, @PathVariable String option){
 		Map map=adminService.searchProductList(reqPage, type, keyword, option);
 		return ResponseEntity.ok(map);
 	}
-	@GetMapping(value = "/productSearch/{reqPage}/{option}")
-	public ResponseEntity<Map> productSearch(@PathVariable int reqPage, @PathVariable String option){
+	@GetMapping(value = "/searchProduct/{reqPage}/{option}")
+	public ResponseEntity<Map> searchProduct(@PathVariable int reqPage, @PathVariable String option){
 		Map map=adminService.searchProductList(reqPage, option);
 		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/searchMember/{reqPage}/{type}/{keyword}/{option}")
+	public ResponseEntity<Map> searchMember(@PathVariable int reqPage, @PathVariable String type, @PathVariable String keyword, @PathVariable String option){
+		Map map=adminService.searchMemberList(reqPage, type, keyword, option);
+		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/searchMember/{reqPage}/{option}")
+	public ResponseEntity<Map> searchMember(@PathVariable int reqPage, @PathVariable String option){
+		Map map=adminService.searchMemberList(reqPage, option);
+		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/searchPet/{reqPage}/{type}/{keyword}/{option}")
+	public ResponseEntity<Map> searchPet(@PathVariable int reqPage, @PathVariable String type, @PathVariable String keyword, @PathVariable int option){
+		Map map=adminService.searchPetList(reqPage, type, keyword, option);
+		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/searchPet/{reqPage}/{option}")
+	public ResponseEntity<Map> searchPet(@PathVariable int reqPage, @PathVariable int option){
+		Map map=adminService.searchPetList(reqPage, option);
+		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/searchQna/{reqPage}/{answer}/{type}/{keyword}/{option}")
+	public ResponseEntity<Map> searchQna(@PathVariable int reqPage,@PathVariable boolean answer, @PathVariable String type, @PathVariable String keyword, @PathVariable int option){
+		Map map=adminService.searchQnaList(reqPage, answer, type, keyword, option);
+		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/searchQna/{reqPage}/{answer}/{option}")
+	public ResponseEntity<Map> searchQna(@PathVariable int reqPage,@PathVariable boolean answer, @PathVariable int option){
+		Map map=adminService.searchQnaList(reqPage, answer, option);
+		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/petPercentClass")
+	public ResponseEntity<List> petPercentClass(){
+		List<Integer> list=adminService.petPercentClass();
+		return ResponseEntity.ok(list);
 	}
 }

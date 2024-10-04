@@ -1,6 +1,5 @@
 package kr.co.iei.pet.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,9 @@ public class PetController {
 	private PetService petService;
 	
 	@GetMapping("/petList/{memberEmail}")
-	public ResponseEntity<PetDTO> selectPetList(@PathVariable String memberEmail){
+	public ResponseEntity<List> selectPetList(@PathVariable String memberEmail){
+		System.out.println(memberEmail);
 		List<PetDTO> petList = petService.selectPetList(memberEmail);
-		return null;	
+		return ResponseEntity.ok(petList);	
 	}
 }

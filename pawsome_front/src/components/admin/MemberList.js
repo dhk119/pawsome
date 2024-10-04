@@ -8,19 +8,92 @@ const MemberList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
+  const [type, setType] = useState("all");
+  const [keyword, setKeyword] = useState("");
+  const [option, setOption] = useState(0);
+  const [search, setSearch] = useState(0);
   useEffect(() => {
-    axios.get(`${backServer}/admin/memberList/${reqPage}`).then((res) => {
-      setMemberList(res.data.list);
-      setPi(res.data.pi);
-    });
-  }, [reqPage]);
+    search === 0
+      ? axios.get(`${backServer}/admin/memberList/${reqPage}`).then((res) => {
+          setMemberList(res.data.list);
+          setPi(res.data.pi);
+        })
+      : keyword
+      ? axios
+          .get(
+            `${backServer}/admin/searchMember/${reqPage}/${type}/${keyword}/${option}`
+          )
+          .then((res) => {
+            setMemberList(res.data.list);
+            setPi(res.data.pi);
+          })
+      : axios
+          .get(`${backServer}/admin/searchMember/${reqPage}/${option}`)
+          .then((res) => {
+            setMemberList(res.data.list);
+            setPi(res.data.pi);
+          });
+  }, [reqPage, search]);
   const changeLevel = (i, memberLevel) => {
     memberList[i].memberLevel = memberLevel;
     setMemberList([...memberList]);
   };
+  const changeKeyword = (e) => {
+    setKeyword(e.target.value);
+  };
+  const changeType = (e) => {
+    setType(e.target.value);
+  };
+  const searchMember = () => {
+    if (!keyword && option === 0) {
+      setSearch(0);
+    } else {
+      setSearch(search + 1);
+    }
+  };
+  const changeOption = (e) => {
+    setOption(Number(e.target.value));
+  };
   return (
     <section>
       <div className="admin-title">회원 리스트</div>
+      <div className="admin-write-wrap">
+        <div className="admin-top-left"></div>
+        <div className="admin-top-mid"></div>
+        <div className="admin-search-wrap">
+          <div className="inquiry-keyword">
+            <label htmlFor="option"></label>
+            <select id="option" value={option} onChange={changeOption}>
+              <option value={0}>전체</option>
+              <option value={1}>관리자</option>
+              <option value={2}>일반회원</option>
+            </select>
+            <label htmlFor="type"></label>
+            <select id="type" value={type} onChange={changeType}>
+              <option value={"all"}>전체</option>
+              <option value={"memberEmail"}>회원 이메일</option>
+              <option value={"nickname"}>닉네임</option>
+              <option value={"name"}> 회원명 </option>
+              <option value={"addrNum"}>우편번호</option>
+              <option value={"address"}>주소</option>
+              <option value={"loginType"}> 로그인 타입 </option>
+              <option value={"phone"}> 전화번호 </option>
+            </select>
+          </div>
+          <div className="search-input-wrap" id="inquiry-search">
+            <button type="button" className="search-btn" onClick={searchMember}>
+              <img src="/image/paw.png" className="search-icon" />
+            </button>
+            <input
+              type="text"
+              className="search-input"
+              placeholder="검색어를 입력하세요"
+              value={keyword}
+              onChange={changeKeyword}
+            ></input>
+          </div>
+        </div>
+      </div>
       <table className="admin-tbl">
         <thead>
           <tr>

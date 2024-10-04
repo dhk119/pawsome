@@ -41,9 +41,11 @@
   color: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 .nav-box > ul > li:hover > a {
   color: #fff;
+  transition: background-color 0.3s;
 }
 .service-container {
   width: 1200px;
@@ -73,6 +75,10 @@
   z-index: 100;
   width: 400px;
   height: 450px;
+  cursor: pointer;
+}
+#menu_wrap > button :hover {
+  cursor: pointer;
 }
 
 #keyword {
@@ -92,8 +98,11 @@
   border: none;
   font-weight: bold;
   color: white;
+  cursor: pointer;
 }
-
+#searchButton :hover {
+  cursor: pointer;
+}
 #placesList {
   border: 2px solid #ffa518;
   margin: 0 auto;
@@ -139,6 +148,7 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   padding: 5px 10px;
+  transition: background-color 0.3s;
 }
 .start-btn > span {
   padding: 30px;
@@ -164,8 +174,9 @@
   color: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+  transition: background-color 0.3s;
 }
-/*RecordList, FeedSugest*/
+/*RecordList, HealthTest*/
 .container {
   display: flex;
   justify-content: center;
@@ -174,16 +185,13 @@
 .service-wrap {
   width: 1000px;
   border-radius: 10px;
-  padding: 50px;
-  margin: 30px;
+
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
   text-align: center;
-  color: #ffa518;
+  color: #5799ff;
 }
-/*FeedSugest*/
-.feedtest {
-  margin-top: 50px;
-}
+
+/*HealthTest*/
 
 .test-box {
   display: flex;
@@ -192,13 +200,18 @@
   align-items: flex-start;
   gap: 80px;
 }
-
+.test-box > * {
+  border: 3px solid transparent;
+  border-radius: 20px;
+}
 .set-dog,
 .set-cat {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  width: 350px;
+  height: 350px;
 }
 .set-dog > img {
   width: 300px;
@@ -221,4 +234,102 @@
   border: 3px solid #5799ff;
   border-radius: 20px;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+.petInfo-container {
+  justify-content: center;
+}
+.pet-input-box {
+  margin: 0 auto;
+  width: 500px;
+  margin-top: 10px;
+  font-size: larger;
+  border-radius: 20px;
+  border: 3px solid #5799ff;
+  padding: 10px;
+  font-weight: bold;
+}
+.petTest-btn {
+  margin: 15px;
+  padding: 10px 20px;
+  background-color: white;
+  color: #5799ff;
+  border: 3px solid #5799ff;
+  border-radius: 20px;
+  font-size: larger;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.petTest-btn:hover {
+  background-color: #5799ff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.question-item.selected {
+  background-color: #5799ff;
+  color: white;
+}
+.question-item :hover {
+  background-color: #5799ff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.test-box2 {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.test-box2 > div {
+  width: 400px;
+  font-weight: bold;
+  border: 3px solid;
+  border-radius: 20px;
+  padding: 15px;
+  text-align: center;
+  font-size: larger;
+}
+.test-box2 > div:hover {
+  background-color: #5799ff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.result-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.result-item {
+  color: #fff;
+  width: 45%;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 15px;
+  text-align: center;
+  font-size: larger;
+  transition: background-color 0.3s;
+  margin: 10px;
+}
+
+.result-item:hover {
+  background-color: #5799ff;
+  color: white;
+  cursor: pointer;
+}
+.detail-description {
+  margin-top: 10px;
+  font-size: smaller;
+  color: #fff;
 }

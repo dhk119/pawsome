@@ -19,5 +19,8 @@ public class BuyListDTO {
 	private int buyState;		//결제상태
 	private String productThumb;//상품썸네일
 	private String productName;	//상품이름
-	private int productPrice;	//상품가격
+	private int productPrice; //상품가격
+	
+	private ProductDTO product;
+	private PayDTO pay;
 }
