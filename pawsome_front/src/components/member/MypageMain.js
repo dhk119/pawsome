@@ -13,6 +13,7 @@ import UpdateMember from "./UpdateMember";
 import ChangePw from "./ChangePw";
 import PetView from "./PetView";
 import DeleteMember from "./DeleteMember";
+import BuyList from "./BuyList";
 
 const MypageMain = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
@@ -39,7 +40,7 @@ const MypageMain = () => {
               <Link to="/mypage/calendar">일정</Link>
             </li>
             <li>
-              <Link to="#">주문조회</Link>
+              <Link to="/mypage/buy-list">주문조회</Link>
             </li>
           </ul>
         </div>
@@ -52,6 +53,7 @@ const MypageMain = () => {
           <Route path="/change-pw" element={<ChangePw />} />
           <Route path="/pet-view/:petNo" element={<PetView />} />
           <Route path="/deleteMember/:memberEmail" element={<DeleteMember />} />
+          <Route path="/buy-list" element={<BuyList />} />
         </Routes>
       </div>
     </div>

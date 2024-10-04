@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.co.iei.board.model.dto.BoardDTO;
+import kr.co.iei.market.model.dto.BuyListDTO;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.PetDTO;
@@ -389,5 +389,13 @@ public class MemberController {
 		System.out.println("수정 스케쥴 : " + schedule);
 		int result = memberService.updateSchedule(schedule);
 		return ResponseEntity.ok(result);
+	}
+	
+	// 구매 내역 불러오기
+	@GetMapping(value = "/selectBuyList/{memberEmail}")
+	public ResponseEntity<List> selectBuyList(@PathVariable String memberEmail) {
+		List<BuyListDTO> buyList = memberService.selectBuyList(memberEmail);
+		System.out.println(buyList);
+		return ResponseEntity.ok(buyList);
 	}
 }

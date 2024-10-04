@@ -50,6 +50,20 @@
 	<insert id="insertPet">
 	  	insert into pet values(pet_seq.nextval, #{petName}, #{petClasses}, #{petBreed}, #{petBirth}, #{petGender}, #{neutering}, #{petProfile}, #{petWeight}, #{memberEmail})
 	</insert>
+	
+	<update id="updatePet">
+	    update pet
+	    set pet_name = #{petName},
+	        pet_classes = #{petClasses},
+	        pet_breed = #{petBreed},
+	        pet_gender = #{petGender},
+	        pet_weight = #{petWeight},
+	        pet_birth = TO_DATE(#{petBirth}, 'YYYY-MM-DD'),
+	        neutering = #{neutering},
+	        pet_profile = #{petProfile}
+	    where pet_no = #{petNo}
+	</update>
+	
 	<select id="selectOnePet" resultType="pet">
 		select * from pet where pet_no = #{petNo}
 	</select>
@@ -102,21 +116,13 @@
   	<delete id="deleteMember">
   		delete from member where member_email = #{memberEmail}
   	</delete>
-  	<update id="updatePet">
-	    update pet
-	    set pet_name = #{petName},
-	        pet_classes = #{petClasses},
-	        pet_breed = #{petBreed},
-	        pet_gender = #{petGender},
-	        pet_weight = #{petWeight},
-	        pet_birth = TO_DATE(#{petBirth}, 'YYYY-MM-DD'),
-	        neutering = #{neutering},
-	        pet_profile = #{petProfile}
-	    where pet_no = #{petNo}
-	</update>
 	
 	<delete id="deletePet">
 		delete from pet where pet_no = #{petNo}
 	</delete>
+	
+	<select id="selectBuyList" resultType="buyList">
+		select * from buy_list where member_email = #{memberEmail}
+	</select>
 
 </mapper>

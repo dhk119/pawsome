@@ -16,4 +16,5 @@ public class BuyListDTO {
 	private String payUid;		//결제번호
 	private int buyCount;		//상품 하나의 구매수량
 	private String memberEmail;	//구매자
+	private int buyState;		//구매상태
 }
