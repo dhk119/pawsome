@@ -503,3 +503,14 @@ tbody > tr:last-child td:last-child {
 .active-page {
   color: var(--point1);
 }
+.admin-interceptor {
+  text-align: center;
+  color: var(--point1);
+  font-weight: bold;
+  font-size: x-large;
+  margin-top: 100px;
+}
+.admin-icons {
+  margin-top: 20px;
+  font-size: 48px;
+}

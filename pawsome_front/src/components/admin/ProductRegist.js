@@ -2,9 +2,10 @@ import { useState } from "react";
 import ProductFrm from "./ProductFrm";
 import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
-import { loginEmailState } from "../utils/RecoilData";
+import { loginEmailState, memberLevelState } from "../utils/RecoilData";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Interceptor from "./Interceptor";
 
 const ProductRegist = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -29,6 +30,7 @@ const ProductRegist = () => {
   const [productDetail, setProductDetail] = useState("");
   const [productShow, setProductShow] = useState("");
   const [memberEmail, setMemberEmail] = useRecoilState(loginEmailState);
+  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
   const inputName = (e) => {
     setProductName(e.target.value);
     setProduct({ ...product, productName: e.target.value });
@@ -50,7 +52,7 @@ const ProductRegist = () => {
     setProduct({ ...product, productShow: e.target.value });
   };
   const registProduct = () => {
-    if (!Number(productPrice)) {
+    if (productPrice && !Number(productPrice)) {
       Swal.fire({
         text: "가격에는 숫자만 입력 가능합니다.",
         icon: "info",
@@ -98,37 +100,43 @@ const ProductRegist = () => {
   };
   return (
     <section>
-      <div className="admin-title">제품 등록</div>
-      <form
-        className="product-regist-frm"
-        onSubmit={(e) => {
-          e.preventDefault();
-          registProduct();
-        }}
-      >
-        <ProductFrm
-          productName={productName}
-          setProductName={inputName}
-          typeCategory={typeCategory}
-          setTypeCategory={inputTypeCategory}
-          mainCategory={mainCategory}
-          setMainCategory={inputMainCategory}
-          productPrice={productPrice}
-          setProductPrice={inputPrice}
-          thumb={thumb}
-          setThumb={setThumb}
-          productDetail={productDetail}
-          setProductDetail={setProductDetail}
-          productShow={productShow}
-          setProductShow={inputShow}
-          memberEmail={memberEmail}
-        ></ProductFrm>
-        <div className="admin-button-zone">
-          <button type="submit" className="admin-write-submit">
-            제품 등록
-          </button>
+      {memberLevel === 1 ? (
+        <div>
+          <div className="admin-title">제품 등록</div>
+          <form
+            className="product-regist-frm"
+            onSubmit={(e) => {
+              e.preventDefault();
+              registProduct();
+            }}
+          >
+            <ProductFrm
+              productName={productName}
+              setProductName={inputName}
+              typeCategory={typeCategory}
+              setTypeCategory={inputTypeCategory}
+              mainCategory={mainCategory}
+              setMainCategory={inputMainCategory}
+              productPrice={productPrice}
+              setProductPrice={inputPrice}
+              thumb={thumb}
+              setThumb={setThumb}
+              productDetail={productDetail}
+              setProductDetail={setProductDetail}
+              productShow={productShow}
+              setProductShow={inputShow}
+              memberEmail={memberEmail}
+            ></ProductFrm>
+            <div className="admin-button-zone">
+              <button type="submit" className="admin-write-submit">
+                제품 등록
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      ) : (
+        <Interceptor />
+      )}
     </section>
   );
 };
