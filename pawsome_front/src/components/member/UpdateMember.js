@@ -293,6 +293,7 @@ const UpdateMember = () => {
                 value={member.memberAddr1 || ""}
                 onChange={changeMember}
                 placeholder="우편번호"
+                disabled
               />
               <input
                 className="addr-btn"
@@ -309,6 +310,7 @@ const UpdateMember = () => {
               value={member.memberAddr2 || ""}
               onChange={changeMember}
               placeholder="주소"
+              disabled
             />
 
             <input

@@ -17,4 +17,6 @@ public class BuyListDTO {
 	private int buyCount;		//상품 하나의 구매수량
 	private String memberEmail;	//구매자
 	private int buyState;		//구매상태
+	private ProductDTO product;
+	private PayDTO pay;
 }

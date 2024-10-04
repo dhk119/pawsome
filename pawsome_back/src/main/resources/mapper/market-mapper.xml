@@ -241,4 +241,48 @@
 	<select id="selectPayCartList" resultType="cart">
 		select product_no, product_cart_count from cart where cart_no=#{payCartNo}
 	</select>
+	
+<!-- 정원 -->
+<!-- 마이페이지 구매내역 -->
+	<resultMap id="buyListMap" type="kr.co.iei.market.model.dto.BuyListDTO">
+        <result property="buyNo" column="buy_no"/>
+        <result property="productNo" column="product_no"/>
+        <result property="payUid" column="pay_uid"/>
+        <result property="buyCount" column="buy_count"/>
+        <result property="memberEmail" column="member_email"/>
+        <result property="buyState" column="buy_state"/>
+
+        <!-- 상품 정보 매핑 -->
+        <association property="product" javaType="kr.co.iei.market.model.dto.ProductDTO">
+            <result property="productNo" column="product_no"/>
+            <result property="productName" column="product_name"/>
+            <result property="typeCategory" column="type_category"/>
+            <result property="mainCategory" column="main_category"/>
+            <result property="productPrice" column="product_price"/>
+            <result property="productThumb" column="product_thumb"/>
+            <result property="productDetail" column="product_detail"/>
+            <result property="productShow" column="product_show"/>
+        </association>
+
+        <!-- 결제 정보 매핑 -->
+        <association property="pay" javaType="kr.co.iei.market.model.dto.PayDTO">
+            <result property="payUid" column="pay_uid"/>
+            <result property="totalPrice" column="total_price"/>
+            <result property="payDate" column="pay_date"/>
+            <result property="payAddr1" column="pay_addr1"/>
+            <result property="payAddr2" column="pay_addr2"/>
+            <result property="payAddr3" column="pay_addr3"/>
+            <result property="payName" column="pay_name"/>
+            <result property="payState" column="pay_state"/>
+        </association>
+    </resultMap>
+
+    <select id="selectBuyList" resultMap="buyListMap">
+        SELECT b.*, p.*, pay.*
+        FROM buy_list b
+        JOIN product p ON b.product_no = p.product_no
+        JOIN pay pay ON b.pay_uid = pay.pay_uid
+        WHERE b.member_email = #{memberEmail}
+    </select>
+	
 </mapper>

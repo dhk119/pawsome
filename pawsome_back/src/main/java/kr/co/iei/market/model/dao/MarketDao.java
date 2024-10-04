@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.iei.market.model.dto.BuyListDTO;
 import kr.co.iei.market.model.dto.CartDTO;
 import kr.co.iei.market.model.dto.PayDTO;
 import kr.co.iei.market.model.dto.ProductDTO;
@@ -90,9 +91,7 @@ public interface MarketDao {
 
 	CartDTO selectPayCartList(int payCartNo);
 
-
-
-
-	
+/*마이페이지 구매내역 - 정원*/
+	List<BuyListDTO> selectBuyList(String memberEmail);
 
 }

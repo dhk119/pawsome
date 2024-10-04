@@ -394,6 +394,7 @@ public class MemberController {
 	// 구매 내역 불러오기
 	@GetMapping(value = "/selectBuyList/{memberEmail}")
 	public ResponseEntity<List> selectBuyList(@PathVariable String memberEmail) {
+		System.out.println(memberEmail);
 		List<BuyListDTO> buyList = memberService.selectBuyList(memberEmail);
 		System.out.println(buyList);
 		return ResponseEntity.ok(buyList);
