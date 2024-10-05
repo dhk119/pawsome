@@ -88,7 +88,7 @@ const BoardList = () => {
                 <option value="2">인기순</option>
               </select>
             </div>
-            {isLogin ? <Link to="/board/write">글쓰기</Link> : ""}
+            <div>{isLogin ? <Link to="/board/write">글쓰기</Link> : ""}</div>
           </div>
           <div className="board-list-wrap">
             <ul className="posting-wrap">

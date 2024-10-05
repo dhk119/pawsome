@@ -33,7 +33,7 @@ export const Content = styled.div`
   position: relative;
   z-index: 1; /* 콘텐츠를 앞쪽에 표시 */
   color: white;
-  padding: 0 50px;
+  padding: 0 10px;
 `;
 export const SpaceAround = styled.div`
   display: flex;

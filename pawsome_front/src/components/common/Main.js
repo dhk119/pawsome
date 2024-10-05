@@ -191,8 +191,9 @@ const Main = () => {
           </span>
           <span>#커뮤니티를 둘러보세요</span>
         </div>
-
-        <BoardList />
+        <div>
+          <BoardList />
+        </div>
       </div>
       <div className="up-btn">
         <ScrollToTop smooth />

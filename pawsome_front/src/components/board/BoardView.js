@@ -657,6 +657,13 @@ const ReplyItem = (props) => {
               </div>
               <div style={{ display: "none" }} ref={editRef}>
                 <input
+                  style={{
+                    border: "none",
+                    backgroundColor: "#ffd697",
+                    width: "950px",
+                    borderRadius: "5px",
+                    padding: "7px 7px",
+                  }}
                   onChange={(e) => {
                     setChangeReply(e.target.value);
                   }}
@@ -717,7 +724,9 @@ const ReplyItem = (props) => {
             {editType ? (
               <>
                 <div>
-                  <button onClick={updateReply}>수정완료</button>
+                  <button className="" onClick={updateReply}>
+                    수정완료
+                  </button>
                 </div>
                 <div>
                   <button
@@ -986,6 +995,13 @@ const ReReplyItem = (props) => {
             </div>
             <div style={{ display: "none" }} ref={editRef}>
               <input
+                style={{
+                  border: "none",
+                  backgroundColor: "#ffd697",
+                  width: "950px",
+                  borderRadius: "5px",
+                  padding: "7px 7px",
+                }}
                 onChange={(e) => {
                   setChangeReply(e.target.value);
                 }}
