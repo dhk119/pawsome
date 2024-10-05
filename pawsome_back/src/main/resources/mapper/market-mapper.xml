@@ -470,7 +470,13 @@
 	<select id="selectOnePay" resultType="pay">
 		select * from pay where pay_uid=#{payUid}
 	</select>
-	
+	<update id="updateBuyList">
+		update buy_list set buy_state = 2 where buy_no=#{buyNo}
+	</update>
+	<update id="updatePayList">
+		update pay set total_price=total_price - #{cancelRequestAmount} where pay_uid=#{payUid}
+	</update>
+<!-- 좋아요 -->
 	<delete id="deleteLike">
 		delete from product_like where product_no=#{product.productNo} and member_email=#{loginEmail}
 	</delete>

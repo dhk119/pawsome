@@ -86,13 +86,13 @@ public class PayService {
 	}
 
 	public Map selectAllBuyList(String loginEmail, int reqPage) {
-		int numPerPage = 10;
+		int numPerPage = 6;
 		int pageNaviSize = 5;
 		int totalCount = marketDao.payTotalCount(loginEmail);
 		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
 		int start = pi.getStart();
 		int end = pi.getEnd();
-		List list = marketDao.selectBuyList(loginEmail, start, end);
+		List list = marketDao.selectAllBuyList(loginEmail, start, end);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("pi", pi);
@@ -100,20 +100,24 @@ public class PayService {
 		return map;
 	}
 
+	@Transactional
 	public int refundService(RefundRequestDTO refund) {
+		int result = -1;
 		//토큰 받는 메서드
 		String token = getToken();
 		//환불받는 메서드
 		String code = refundRequest(token, refund);
 		System.out.println("code 2 : "+code);
+		//환불성공시
 		if(code.equals("0")) {
-//			성공한거
-			
+			//결제상태 변경
+			result = marketDao.updateBuyList(refund);
+			if(result >0) {
+				//결제 총금액 변경
+				result = marketDao.updatePayList(refund);
+			}
 		}
-		else {
-			
-		}
-		return 0;
+		return result;
 	}
 	
 	//결제취소위한 토큰 만듦
@@ -153,11 +157,15 @@ public class PayService {
 		//uid로 해당 결제정보 조회
 		PayDTO pay = marketDao.selectOnePay(refund.getPayUid());
 		System.out.println(pay);
-		
-		String uid = pay.getPayUid(); //주문번호
 		int amount = pay.getTotalPrice(); //결제했던 금액
-		int cancelAmount = refund.getCancelRequestAmount(); //결제취소할 금액
 		int cancelProductNo = refund.getProductNo(); //결제취소할 상품
+		int cancelAmount = refund.getCancelRequestAmount(); //결제취소할 금액
+		int totalAmount = pay.getTotalPrice() - refund.getCancelRequestAmount();
+		if(totalAmount < 30000) {
+			cancelAmount = refund.getCancelRequestAmount() - 3000;
+		}
+		System.out.println("환불금액 : "+cancelAmount);
+		
 		/*
 		//환불 가능 금액 계산
 		int cancelableAmount = amount - cancelAmount;
@@ -174,7 +182,7 @@ public class PayService {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("merchant_uid", pay.getPayUid());
-//		map.put("amount", refund.getCancelRequestAmount());
+		map.put("amount", cancelAmount);
 		
 		HttpEntity<Map<String, Object>> entity = new HttpEntity<>(map, headers);
 		ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);

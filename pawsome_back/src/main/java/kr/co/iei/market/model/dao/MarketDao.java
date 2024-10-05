@@ -10,6 +10,7 @@ import kr.co.iei.market.model.dto.PayDTO;
 import kr.co.iei.market.model.dto.ProductDTO;
 import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
+import kr.co.iei.market.model.dto.RefundRequestDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.util.PageInfo;
 
@@ -104,20 +105,22 @@ public interface MarketDao {
 	int payTotalCount(String loginEmail);
 
 	PayDTO selectOnePay(String payUid);
+	
+	int updateBuyList(RefundRequestDTO refund);
 
 	int isLike(int productNo, String loginEmail);
-
-	int insertLikePush(ProductDTO product);
 
 	int deleteLike(String loginEmail, ProductDTO product);
 
 	int insertLike(String loginEmail, ProductDTO product);
 
-
+	int updatePayList(RefundRequestDTO refund);
 
 
 	
 /*마이페이지 구매내역 - 정원*/
 	List<BuyListDTO> selectBuyList(String memberEmail);
+
+
 
 }

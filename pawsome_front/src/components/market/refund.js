@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 class CancelPay {
   cancelPay = (buyNo, productNo, payUid, cancelRequestAmount, setResult) => {
@@ -25,7 +27,21 @@ class CancelPay {
     })
       .then((res) => {
         if (res.data) {
+          console.log(res);
           setResult(1);
+          if (res.data == 1) {
+            Swal.fire({
+              title: "결제 취소 완료",
+              hmtl: "카드사 정책에 따라 환불처리가 영업일기준 3~4일 소요될 수 있습니다.</br>더 좋은 상품으로 찾아뵙겠습니다.",
+              icon: "success",
+            });
+          } else {
+            Swal.fire({
+              title: "결제 취소 실패",
+              text: "나중에 다시 시도해주시기 바랍니다.",
+              icon: "warning",
+            });
+          }
         } else {
           setResult(0);
         }

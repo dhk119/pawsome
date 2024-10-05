@@ -94,14 +94,6 @@ public class ProductController {
 		return ResponseEntity.ok(result);
 	}
 	
-
-	@PostMapping(value="likePush")
-	public ResponseEntity<Boolean> likePush(@RequestBody ProductDTO product){
-		System.out.println(product);
-		int result = productService.insertLikePush(product);
-		return ResponseEntity.ok(true);
-	}
-	
 	@PostMapping(value="/changeLike/{loginEmail}")
 	public ResponseEntity<Integer> changeLike(@PathVariable String loginEmail, @RequestBody ProductDTO product){
 		System.out.println(product);

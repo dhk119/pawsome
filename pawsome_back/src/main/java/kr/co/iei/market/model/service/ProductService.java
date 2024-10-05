@@ -106,14 +106,6 @@ public class ProductService {
 		return result;
 	}
 
-
-
-	@Transactional
-	public int insertLikePush(ProductDTO product) {
-		int result = marketDao.insertLikePush(product);
-		return result;
-	}
-
 	@Transactional
 	public int changeLike(String loginEmail, ProductDTO product) {
 		int result = -1;

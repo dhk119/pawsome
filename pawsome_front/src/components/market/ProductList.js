@@ -27,7 +27,7 @@ const ProductList = () => {
   const mainCategory = params.mainCategory;
   const [filterType, setFilterType] = useState(1);
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
-
+  const [like, setLike] = useState(false);
   useEffect(() => {
     axios
       .get(
@@ -42,7 +42,7 @@ const ProductList = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [loginEmail, typeCategory, mainCategory, reqPage, filterType]);
+  }, [loginEmail, typeCategory, mainCategory, reqPage, filterType, like]);
 
   const changeFilterType = (e) => {
     setFilterType(e.target.value);
@@ -155,6 +155,8 @@ const ProductList = () => {
               product={product}
               loginEmail={loginEmail}
               setLoginEmail={setLoginEmail}
+              setLike={setLike}
+              like={like}
             />
           );
         })}
@@ -168,7 +170,8 @@ const ProductItem = (props) => {
   const product = props.product;
   const loginEmail = props.loginEmail;
   const navigate = useNavigate();
-
+  const like = props.like;
+  const setLike = props.setLike;
   const likePush = () => {
     axios
       .post(`${backServer}/product/changeLike/${loginEmail}`, product)
@@ -181,6 +184,7 @@ const ProductItem = (props) => {
           //delete됨
           product.isLike = 0;
         }
+        setLike(!like);
       })
       .catch((err) => {
         console.log(err);

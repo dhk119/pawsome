@@ -186,7 +186,7 @@ const Payment = () => {
         pay_method: "card",
         merchant_uid: dateString,
         name: `${cartList[0].productName} 외 ${cartList.length - 1}건`,
-        amount: 100, //테스트 끝나면 totalPrice로 수정
+        amount: totalPrice, //테스트 끝나면 totalPrice로 수정
         buyer_email: loginEmail,
         buyer_name: payer.payName,
         buyer_tel: payer.payPhone,

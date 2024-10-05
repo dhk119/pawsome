@@ -526,3 +526,6 @@ td {
   background-color: #ffa518;
   color: #fff;
 }
+.cancelBtn:hover {
+  cursor: pointer;
+}
