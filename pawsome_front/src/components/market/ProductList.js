@@ -15,6 +15,7 @@ import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loginEmailState } from "../utils/RecoilData";
+import ScrollPage from "../utils/ScrollPage";
 
 const ProductList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -35,7 +36,12 @@ const ProductList = () => {
       )
       .then((res) => {
         console.log(res);
-        setProductList(res.data.list);
+        if (reqPage != 1) {
+          const array = productList.concat(res.data.list);
+          setProductList(array);
+        } else {
+          setProductList(res.data.list);
+        }
         setPi(res.data.pi);
         setTotalCount(res.data.totalCount);
       })
@@ -161,6 +167,11 @@ const ProductList = () => {
           );
         })}
       </div>
+      {reqPage !== pi.totalPage ? (
+        <ScrollPage pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+      ) : (
+        ""
+      )}
     </>
   );
 };

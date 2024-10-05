@@ -7,6 +7,7 @@ import MainNav from "./MainNav";
 import PaySuccess from "./PaySuccess";
 import Payment from "./Payment";
 import PayCancel from "./PayCancel";
+import WriteReview from "./reviewComponent/WriteReview";
 
 const MarketMain = () => {
   return (
@@ -15,6 +16,8 @@ const MarketMain = () => {
       <Route path="payment/:str" element={<Payment />} />
       <Route path="payment/success" element={<PaySuccess />} />
       <Route path="payment/payCancel" element={<PayCancel />} />
+      {/* 나중에 경로 수정 */}
+      <Route path="writeReview" element={<WriteReview />} />
     </Routes>
   );
 };

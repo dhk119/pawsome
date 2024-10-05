@@ -122,7 +122,42 @@
   color: #fff;
   cursor: pointer;
 }
-
 .qna-wrap > .list-tbl-wrap > .list-tbl .btn-wrap {
   align-self: center;
+}
+
+/*review*/
+.review-page-wrap {
+  width: 1400px;
+  margin: 0 auto;
+}
+.review-wrap {
+  width: 70%;
+  border: 3px solid #ffa518;
+  border-radius: 10px;
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+.center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.qna-content svg {
+  font-size: 50px;
+}
+.qna-writeFrm-info > .margin-btm {
+  margin-bottom: 40px;
+}
+.qna-writeFrm-info > .margin-qauil {
+  margin-bottom: 85px;
+}
+
+.qna-writeFrm-info .review-title {
+  font-family: ns-b;
+  width: 400px;
+}
+
+.review-img-wrap > input {
+  display: none;
 }
