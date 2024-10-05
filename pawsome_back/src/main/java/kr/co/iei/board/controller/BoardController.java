@@ -168,11 +168,10 @@ public class BoardController {
 		 int result = boardService.updateReply(reply);
 		 return ResponseEntity.ok(result == 1);
 	 }
-	 
-	 @PatchMapping(value="/reply/reComment")
-	 public ResponseEntity<Boolean> insertReComment(@ModelAttribute ReplyDTO reply){
-		 System.out.println(reply);
-		 return ResponseEntity.ok(true);
+	 @PostMapping(value="reReply")
+	 public ResponseEntity<Boolean> reReply(@ModelAttribute ReplyDTO reply){
+		 int result = boardService.insertReReply(reply);
+		 return ResponseEntity.ok(result == 1);
 	 }
 	 
 }

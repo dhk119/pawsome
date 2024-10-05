@@ -66,6 +66,10 @@ public interface BoardDao {
 
 	int deleteReplyLike(ReplyDTO reply);
 
+	int insertReReply(ReplyDTO reply);
+
+	List selectReReplyList(ReplyDTO reply,String memberNickname);
+
 
 
 
