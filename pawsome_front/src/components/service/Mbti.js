@@ -206,6 +206,7 @@ const Mbti = () => {
             style={{ width: "600px" }}
           />
         )}
+
         <div
           style={{
             borderRadius: "20px",
@@ -236,6 +237,10 @@ const Mbti = () => {
           <p>{contentArray[2]}</p>
           <p>{contentArray[3]}</p>
         </div>
+        <img
+          src="/image/service/MBTI/dbti-graph.png"
+          style={{ width: "600px" }}
+        ></img>
       </div>
     );
   };

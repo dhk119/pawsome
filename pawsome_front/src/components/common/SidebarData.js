@@ -94,12 +94,8 @@ export const SidebarData = [
         path: "/service/mbti",
       },
       {
-        title: "사료추천",
-        path: "/service/feedSuggest",
-      },
-      {
-        title: "칩 등록 조회",
-        path: "/service/recordList",
+        title: "건강체크",
+        path: "/service/healthTest",
       },
     ],
   },
