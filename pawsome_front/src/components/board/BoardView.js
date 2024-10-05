@@ -12,10 +12,10 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import * as AiIcons from "react-icons/ai";
 import { TbEye } from "react-icons/tb";
-import { IoIosSend } from "react-icons/io";
 import { RiWechatLine } from "react-icons/ri";
 import Swal from "sweetalert2";
 import { FiCornerDownRight } from "react-icons/fi";
+import ShareKakaoLink from "../utils/ShareKakaoLink";
 // import { ShareKakaoLink } from "src/components/utils/ShareKakaoLink";
 const BoardView = () => {
   const isLogin = useRecoilValue(isLoginState);
@@ -96,14 +96,14 @@ const BoardView = () => {
       });
   }, [boardNo, memberNickname]);
 
-  //공유하기
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-    script.async = true;
-    document.body.appendChild(script);
-    return () => document.body.removeChild(script);
-  }, []);
+  // //공유하기
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+  //   script.async = true;
+  //   document.body.appendChild(script);
+  //   return () => document.body.removeChild(script);
+  // }, []);
   const deleteBoard = () => {
     axios
       .delete(`${backServer}/board/${board.boardNo}`)
@@ -329,10 +329,7 @@ const BoardView = () => {
                   좋아요
                 </button>
               )}
-              <button>
-                <IoIosSend />
-                공유하기
-              </button>
+              <ShareKakaoLink />
             </div>
           </div>
         </div>
