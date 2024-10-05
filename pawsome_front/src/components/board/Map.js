@@ -224,54 +224,65 @@ const Map = () => {
   };
 
   return (
-    <div
-      id="map-box"
-      style={{ position: "relative", textAlign: "center", color: "#FFA518" }}
-    >
-      <h3>
-        검색하실때 주변 지하철역이나 **동,**구를 이용해 검색해주세요. "예)당산
-        동물병원, 영등포구 동물병원"
-      </h3>
-
-      <nav className="nav-box">
-        <ul>
-          <li className="nav-btn">
-            <Link to="#" onClick={() => searchClick("서울 동물병원")}>
-              동물병원
-            </Link>
-          </li>
-          <li className="nav-btn">
-            <Link to="#" onClick={() => searchClick("서울 애견용품")}>
-              애견용품
-            </Link>
-          </li>
-          <li className="nav-btn">
-            <Link to="#" onClick={() => searchClick("서울 애견호텔")}>
-              애견호텔
-            </Link>
-          </li>
-          <li className="nav-btn">
-            <Link to="#" onClick={() => searchClick("서울 공원")}>
-              산책공원
-            </Link>
-          </li>
-        </ul>
-      </nav>
-
+    <div>
       <div
-        id="map"
-        style={{ margin: "0 auto", width: "1300px", height: "600px" }}
+        id="map-box"
+        style={{
+          position: "relative",
+          textAlign: "center",
+          color: "#FFA518",
+          margin: "60px auto",
+        }}
       >
-        <div id="menu_wrap">
-          <input
-            type="text"
-            id="keyword"
-            ref={keywordInputRef} // ref 추가
-            placeholder="검색어를 입력하세요"
-          />
-          <button id="searchButton">검색</button>
-          <ul id="placesList"></ul>
-          <div id="pagination"></div>
+        <h3>
+          검색하실때 주변 지하철역이나 **동,**구를 이용해 검색해주세요. "예)당산
+          동물병원, 영등포구 동물병원"
+        </h3>
+
+        <nav className="nav-box">
+          <ul>
+            <li className="nav-btn">
+              <Link to="#" onClick={() => searchClick("서울 동물병원")}>
+                동물병원
+              </Link>
+            </li>
+            <li className="nav-btn">
+              <Link to="#" onClick={() => searchClick("서울 애견용품")}>
+                애견용품
+              </Link>
+            </li>
+            <li className="nav-btn">
+              <Link to="#" onClick={() => searchClick("서울 애견호텔")}>
+                애견호텔
+              </Link>
+            </li>
+            <li className="nav-btn">
+              <Link to="#" onClick={() => searchClick("서울 공원")}>
+                산책공원
+              </Link>
+            </li>
+          </ul>
+        </nav>
+
+        <div
+          id="map"
+          style={{
+            margin: "0 auto",
+            width: "1000px",
+            height: "600px",
+          }}
+        >
+          <div id="menu_wrap">
+            <input
+              type="text"
+              id="keyword"
+              ref={keywordInputRef} // ref 추가
+              placeholder="검색어를 입력하세요"
+            />
+            <button id="searchButton">검색</button>
+            <ul id="placesList"></ul>
+            <div id="pagination"></div>
+          </div>
         </div>
       </div>
     </div>

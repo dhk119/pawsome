@@ -3,6 +3,7 @@
   align-items: center;
   flex-direction: column;
   margin: 30px auto;
+  width: 100%;
 }
 .board-nav {
   display: flex;
@@ -41,7 +42,7 @@
 }
 .board-list-options {
   width: 400px;
-  margin-right: 500px;
+  margin-right: 400px;
 }
 .board-list-options > select {
   border: none;
@@ -55,16 +56,18 @@
 /*글쓰기 전용 css*/
 .write-wrap {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   margin-right: 50px;
 }
-.write-wrap > a {
+.write-wrap > div > a {
   border-radius: 30px;
   color: var(--point1);
   border: 2px solid #ffa518;
   padding: 5px 30px;
+  width: 60px;
+  text-align: center;
 }
-.write-wrap > a:hover {
+.write-wrap > div > a:hover {
   background-color: #ffa518;
   color: var(--gray8);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);

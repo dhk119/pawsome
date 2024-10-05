@@ -123,8 +123,8 @@ const Weather = () => {
           width: "850px",
           background: "rgba(255, 255, 255, 0.3)",
           borderRadius: "10px",
-          padding: "30px",
-          marginLeft: "120px",
+          padding: "50px",
+          marginLeft: "200px",
           boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
         }}
       >
