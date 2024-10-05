@@ -54,6 +54,31 @@
   margin: 30px auto;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
 }
+/*메인 버튼*/
+.sm-btn1,
+.sm-btn2,
+.sm-btn3 {
+  position: absolute;
+}
+.sm-btn1 {
+  width: 280px;
+  height: 90px;
+  top: 450px;
+  right: 1000px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.sm-btn2 {
+  width: 280px;
+  top: 600px;
+  right: 1000px;
+}
+.sm-btn3 {
+  width: 280px;
+  top: 600px;
+  right: 310px;
+}
 /* Map.css */
 #map {
   margin: 0 auto;
@@ -177,7 +202,7 @@
   transition: background-color 0.3s;
 }
 /*RecordList, HealthTest*/
-.container {
+.HT-container {
   display: flex;
   justify-content: center;
 }
@@ -185,7 +210,8 @@
 .service-wrap {
   width: 1000px;
   border-radius: 10px;
-
+  padding: 50px;
+  margin: 30px;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
   text-align: center;
   color: #5799ff;
@@ -314,6 +340,7 @@
 .result-item {
   color: #fff;
   width: 45%;
+  height: 150px;
   font-weight: bold;
   border-radius: 20px;
   padding: 15px;

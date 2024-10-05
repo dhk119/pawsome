@@ -74,7 +74,7 @@ const HealthTest = () => {
     false,
   ]);
   const [immunityScore, setImmunityScore] = useState(100);
-
+  const [registeredPets, setRegisteredPets] = useState([]); // 반려동물 목록 상태 추가
   const [isTestStarted, setIsTestStarted] = useState(false);
   const [isStartWithoutPet, setIsStartWithoutPet] = useState(false);
   const [sessionPets, setSessionPets] = useState([]); // 세션에 등록된 반려동물 목록
@@ -83,6 +83,14 @@ const HealthTest = () => {
   const [isFinalScoreVisible, setIsFinalScoreVisible] = useState(false);
   const [expandedResult, setExpandedResult] = useState(null);
   const [expandedResults, setExpandedResults] = useState({});
+  const addPet = () => {
+    setPets([...pets, { name: "", birthDate: "", gender: "" }]);
+  };
+
+  const removePet = (index) => {
+    setPets(pets.filter((_, i) => i !== index));
+  };
+  const [pets, setPets] = useState([{ name: "", birthDate: "", gender: "" }]);
   const [data, setData] = useState([
     { "회원 평균": 81, 피부: skinScore },
     { "회원 평균": 85, 치아: dentalScore },
@@ -102,7 +110,7 @@ const HealthTest = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [backServer]);
+  }, [backServer, isLogin]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -113,7 +121,8 @@ const HealthTest = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // 기본 동작 방지
+    console.log("정보 입력 완료"); // 확인용 로그
     setIsTestStarted(true);
   };
 
@@ -304,6 +313,16 @@ const HealthTest = () => {
   };
   const resultSubmit = async () => {};
 
+  const petDataSelection = (pet) => {
+    setSelectedPet(pet.petName);
+    setFormData({
+      name: pet.name,
+      birthDate: pet.birthDate,
+      gender: pet.gender,
+    });
+    setIsTestStarted(true);
+  };
+
   const showFinalResults = () => {
     setIsFinalScoreVisible(true);
     setFinalScores({
@@ -342,53 +361,53 @@ const HealthTest = () => {
     },
     dental: {
       "매우 위험 단계!":
-        "피부 상태가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
+        "치아 상태가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
       "위험 단계!":
-        "피부 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
+        "치아 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
       "주의 단계!":
-        "피부 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
-      양호: "피부 상태가 양호합니다. 계속 관리하세요.",
-      건강: "피부 상태가 아주 건강합니다!!",
+        "치아 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
+      양호: "치아 상태가 양호합니다. 계속 관리하세요.",
+      건강: "치아 상태가 아주 건강합니다!!",
     },
     bone: {
       "매우 위험 단계!":
-        "피부 상태가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
+        "뼈가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
       "위험 단계!":
-        "피부 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
+        "뼈가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
       "주의 단계!":
-        "피부 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
-      양호: "피부 상태가 양호합니다. 계속 관리하세요.",
-      건강: "피부 상태가 아주 건강합니다!!",
+        "뼈가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
+      양호: "뼈가 양호합니다. 계속 관리하세요.",
+      건강: "뼈가 아주 건강합니다!!",
     },
     eye: {
       "매우 위험 단계!":
-        "피부 상태가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
+        "눈이 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
       "위험 단계!":
-        "피부 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
+        "눈 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
       "주의 단계!":
-        "피부 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
-      양호: "피부 상태가 양호합니다. 계속 관리하세요.",
-      건강: "피부 상태가 아주 건강합니다!!",
+        "눈이 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
+      양호: "눈이 양호합니다. 계속 관리하세요.",
+      건강: "눈이 아주 건강합니다!!",
     },
     heart: {
       "매우 위험 단계!":
-        "피부 상태가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
+        "심장 상태가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
       "위험 단계!":
-        "피부 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
+        "심장 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
       "주의 단계!":
-        "피부 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
-      양호: "피부 상태가 양호합니다. 계속 관리하세요.",
-      건강: "피부 상태가 아주 건강합니다!!",
+        "심장 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
+      양호: "심장 상태가 양호합니다. 계속 관리하세요.",
+      건강: "심장 상태가 아주 건강합니다!!",
     },
     immunity: {
       "매우 위험 단계!":
-        "피부 상태가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
+        "면역력이나 호흡기가 매우 좋지 않으며 지금 당장 수의사와의 상담이나 치료가 필요합니다! 가까운 동물병원에 당장 방문하세요.  ",
       "위험 단계!":
-        "피부 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
+        "면역력이나 호흡기가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
       "주의 단계!":
-        "피부 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
-      양호: "피부 상태가 양호합니다. 계속 관리하세요.",
-      건강: "피부 상태가 아주 건강합니다!!",
+        "면역력이나 호흡기가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
+      양호: "면역력이나 호흡기가 양호합니다. 계속 관리하세요.",
+      건강: "면역력이나 호흡기가 아주 건강합니다!!",
     },
   };
   const getHealthStatusColor = (status) => {
@@ -418,7 +437,7 @@ const HealthTest = () => {
   };
 
   return (
-    <div className="container">
+    <div className="HT-container">
       <Link to="/service/petService" style={{ color: "#ffa518" }}>
         메인으로
       </Link>
@@ -434,9 +453,23 @@ const HealthTest = () => {
               {isLogin ? (
                 <>
                   <p>등록된 반려동물이 있습니다. 진행하시겠어요?</p>
-                  <button onClick={startWithPet}>
-                    등록된 반려동물로 시작하기
-                  </button>
+                  <select
+                    onChange={(e) => {
+                      const selectedPet = sessionPets.find(
+                        (pet) => pet.petName === e.target.value
+                      );
+                      if (selectedPet) {
+                        petDataSelection(selectedPet);
+                      }
+                    }}
+                  >
+                    <option value="">반려동물 선택</option>
+                    {sessionPets.map((pet, index) => (
+                      <option key={index} value={pet.petName}>
+                        {pet.petName}
+                      </option>
+                    ))}
+                  </select>
                   <h2>어떤 반려동물과 함께하고 있나요?</h2>
                   <div className="test-box">
                     <div
@@ -479,41 +512,8 @@ const HealthTest = () => {
             </div>
           ) : !isTestStarted ? (
             <div>
-              <h2>{selectedPet}의 정보를 입력해 주세요.</h2>
+              <h2>{selectedPet}의 체중을 입력해 주세요.</h2>
               <form className="petInfo-container" onSubmit={handleSubmit}>
-                <div className="pet-input-box">
-                  <label>이름 : </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="pet-input-box">
-                  <label>생년월일 : </label>
-                  <input
-                    type="date"
-                    name="birthDate"
-                    value={formData.birthDate}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="pet-input-box">
-                  <label>성별 : </label>
-                  <select
-                    name="gender"
-                    value={formData.gender}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">선택하세요</option>
-                    <option value="male">수컷</option>
-                    <option value="female">암컷</option>
-                  </select>
-                </div>
                 <div className="pet-input-box">
                   <label>체중 상태 : </label>
                   <select
@@ -527,10 +527,10 @@ const HealthTest = () => {
                       이상적인 체중을 기준으로 약간 마름
                     </option>
                     <option value="normal">이상적인 상태(보통)</option>
-                    <option value="slightly_overweight">
+                    <option value="overweight">
                       이상적인 체중을 기준으로 약간 살찜
                     </option>
-                    <option value="obese">많이 살찜</option>
+                    <option value="very-overweight">많이 살찜</option>
                   </select>
                 </div>
                 <button className="petTest-btn" type="submit">
