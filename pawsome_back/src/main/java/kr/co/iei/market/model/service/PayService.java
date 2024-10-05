@@ -85,7 +85,7 @@ public class PayService {
 	return result;
 	}
 
-	public Map selectBuyList(String loginEmail, int reqPage) {
+	public Map selectAllBuyList(String loginEmail, int reqPage) {
 		int numPerPage = 10;
 		int pageNaviSize = 5;
 		int totalCount = marketDao.payTotalCount(loginEmail);

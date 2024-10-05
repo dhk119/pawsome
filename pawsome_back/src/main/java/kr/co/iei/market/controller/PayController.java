@@ -46,7 +46,7 @@ public class PayController {
 	
 	@GetMapping(value="/buyList/{loginEmail}/{reqPage}")
 	public ResponseEntity<Map> buyList (@PathVariable String loginEmail, @PathVariable int reqPage){
-		Map map = payService.selectBuyList(loginEmail, reqPage);
+		Map map = payService.selectAllBuyList(loginEmail, reqPage);
 		return ResponseEntity.ok(map);
 	}
 	
