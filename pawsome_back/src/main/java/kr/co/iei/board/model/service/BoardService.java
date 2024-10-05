@@ -116,7 +116,12 @@ public class BoardService {
 		m.put("boardNo", boardNo);
 		m.put("type", type);
 		m.put("memberNickname", memberNickname);
-		List list = boardDao.selectReplyList(m);
+		List<ReplyDTO> list = boardDao.selectReplyList(m);
+		System.out.println(list.size());
+		for(ReplyDTO reply : list) {
+			List reReplyList = boardDao.selectReReplyList(reply,memberNickname);
+			reply.setReReplyList(reReplyList);
+		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list.size() == 0 ? null : list);
 		map.put("pi", pi);
@@ -125,7 +130,6 @@ public class BoardService {
 
 	@Transactional
 	public int insertReply(ReplyDTO reply) {
-		System.out.println(reply);
 		int result = boardDao.insertReply(reply);
 		return result;
 	}
@@ -175,6 +179,13 @@ public class BoardService {
 		reply.setReplyNo(replyNo);
 		reply.setMemberNickname(memberNickname);
 		return boardDao.deleteReplyLike(reply);
+	}
+
+	@Transactional
+	public int insertReReply(ReplyDTO reply) {
+		System.out.println("reply : "+reply);
+		int result = boardDao.insertReReply(reply);
+		return result;
 	}
 
 

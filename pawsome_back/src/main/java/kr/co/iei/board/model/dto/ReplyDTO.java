@@ -1,5 +1,7 @@
 package kr.co.iei.board.model.dto;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
@@ -21,5 +23,5 @@ public class ReplyDTO {
 	private int reReplyCount;
 	private int replyLike;
 	private int isLike;
-
+	private List reReplyList;
 }

@@ -33,14 +33,13 @@ const BoardView = () => {
   const [pi, setPi] = useState({});
   const [boardLike, setBoardLike] = useState(0);
   const [replyContent, setreplyContent] = useState("");
-  const [writeType, setWriteType] = useState(true);
   const changeReply = (e) => {
     setreplyContent(e.target.value);
   };
   const [changedComment, setChangedComment] = useState(true);
   const viewDelUpdateRef = useRef(null);
   const [replyNoState, setReplyNoState] = useState(0);
-
+  const [like, setLike] = useState(false);
   const commentRef = useRef(null);
   const [hide, setHide] = useState(true);
   const [type, setType] = useState(1);
@@ -65,7 +64,7 @@ const BoardView = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPage, boardNo, changedComment, type, memberNickname]);
+  }, [reqPage, boardNo, changedComment, type, memberNickname, like]);
   console.log(replyList);
   useEffect(() => {
     axios
@@ -155,45 +154,22 @@ const BoardView = () => {
     }
   };
   const writeReply = () => {
-    if (replyContent !== "") {
-      console.log("답줘:", replyContent);
-
-      const form = new FormData();
-      form.append("replyContent", replyContent);
-      form.append("boardNo", boardNo);
-      form.append("memberNickname", memberNickname);
-      if (writeType) {
-        axios
-          .post(`${backServer}/board/reply`, form)
-          .then((res) => {
-            console.log(res);
-            if (res.data) {
-              setChangedComment(!changedComment);
-              setreplyContent("");
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
-        console.log("replyNo : ", replyNoState);
-
-        form.append("replyNoRef", replyNoState);
-        axios
-          .patch(`${backServer}/board/reply/reComment`, form)
-          .then((res) => {
-            console.log(res);
-            if (res.data) {
-              setWriteType(true);
-              setChangedComment(!changedComment);
-              setreplyContent("");
-            }
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-    }
+    const form = new FormData();
+    form.append("replyContent", replyContent);
+    form.append("boardNo", boardNo);
+    form.append("memberNickname", memberNickname);
+    axios
+      .post(`${backServer}/board/reply`, form)
+      .then((res) => {
+        console.log(res);
+        if (res.data) {
+          setChangedComment(!changedComment);
+          setreplyContent("");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <section className="section board-view-wrap">
@@ -453,11 +429,10 @@ const BoardView = () => {
                       replyList={replyList}
                       changedComment={changedComment}
                       setChangedComment={setChangedComment}
-                      commentRef={commentRef}
-                      setWriteType={setWriteType}
-                      writeType={writeType}
-                      setReplyNoState={setReplyNoState}
-                      replyNoState={replyNoState}
+                      setLike={setLike}
+                      like={like}
+                      replyContent={replyContent}
+                      setReplyContent={setreplyContent}
                     />
                   </Fragment>
                 );
@@ -495,17 +470,6 @@ const BoardView = () => {
                   width: "1000px",
                   marginLeft: "30px",
                   border: "none",
-                  paddingBottom: "3px",
-                  color: "#ccc",
-                }}
-                readOnly
-                ref={commentRef}
-              ></input>
-              <input
-                style={{
-                  width: "1000px",
-                  marginLeft: "30px",
-                  border: "none",
                   borderBottom: "1px solid #d6d6d6",
                   paddingBottom: "3px",
                 }}
@@ -523,8 +487,7 @@ const BoardView = () => {
                   padding: "5px 20px",
                   borderRadius: "10px",
                   width: "70px",
-                  marginTop: "15px",
-                  marginRight: "25px",
+                  marginLeft: "25px",
                 }}
               >
                 등록
@@ -541,6 +504,8 @@ const BoardView = () => {
 const ReplyItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const reply = props.reply;
+  const params = useParams();
+  const [replyNo, setReplyNo] = useState(params.replyNo);
   const replyList = props.replyList;
   const setReplyList = props.setReplyList;
   const viewDelUpdateRef = useRef(null);
@@ -554,8 +519,12 @@ const ReplyItem = (props) => {
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
   const [replyState, setReply] = useState({});
-  const { commentRef, setWriteType, writeType, replyNoState, setReplyNoState } =
-    props;
+  const setLike = props.setLike;
+  const like = props.like;
+  const [reReply, setReReply] = useState(true);
+  const replyContent = props.replyContent;
+  const setReplyContent = props.setReplyContent;
+
   const isLike = () => {
     if (reply.isLike === 0) {
       axios
@@ -567,6 +536,7 @@ const ReplyItem = (props) => {
           console.log(res);
           setReplyLike(replyLike + 1);
           setReply({ ...reply, isLike: 1 });
+          setLike(!like);
         })
         .catch((err) => {
           console.log(err);
@@ -580,6 +550,7 @@ const ReplyItem = (props) => {
           if (res.data > 0) {
             setReplyLike(replyLike - 1);
             setReply({ ...reply, isLike: 0 });
+            setLike(!like);
           }
         })
         .catch((err) => {
@@ -622,6 +593,31 @@ const ReplyItem = (props) => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const writeReReply = () => {
+    if (reply.replyContent != "") {
+      const form = new FormData();
+      form.append("replyContent", replyContent);
+      form.append("replyNo", reply.replyNo);
+      form.append("memberNickname", memberNickname);
+      form.append("boardNo", reply.boardNo);
+      axios
+        .post(`${backServer}/board/reReply`, form)
+        .then((res) => {
+          console.log(res);
+          if (res.data) {
+            setChangedComment(!changedComment);
+            setReplyContent("");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+  const changeReReply = (e) => {
+    setReplyContent(e.target.value);
   };
 
   return (
@@ -763,10 +759,7 @@ const ReplyItem = (props) => {
                 backgroundColor: "transparent",
               }}
               onClick={() => {
-                commentRef.current.value =
-                  "@" + reply.memberNickname + "님에게 답글 남기는 중";
-                setWriteType(false);
-                setReplyNoState(reply.replyNo);
+                setReReply(!reReply);
               }}
             >
               <AiIcons.AiFillEdit style={{ marginRight: "3px" }} />
@@ -776,20 +769,76 @@ const ReplyItem = (props) => {
         </div>
       </li>
       <li>
-        {replyList.map((reply, i) => {
+        {reReply ? (
+          <input
+            style={{
+              width: "1000px",
+              marginLeft: "30px",
+              paddingBottom: "3px",
+              color: "#ccc",
+              display: "none",
+            }}
+          ></input>
+        ) : (
+          <>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                writeReReply();
+              }}
+            >
+              <input
+                style={{
+                  width: "1000px",
+                  marginLeft: "30px",
+                  paddingBottom: "3px",
+                  color: "#ccc",
+                  border: "none",
+                }}
+                readOnly
+                placeholder={`@${reply.memberNickname}님에게 댓글 남기는 중 `}
+              ></input>
+              <input
+                style={{
+                  width: "1000px",
+                  marginLeft: "30px",
+                  paddingBottom: "3px",
+                  border: "none",
+                  borderBottom: "1px solid #ccc",
+                }}
+                placeholder="답글을 남겨주세요"
+                value={replyContent}
+                onChange={changeReReply}
+              ></input>
+              <button
+                type="submit"
+                style={{
+                  border: "none",
+                  backgroundColor: "#ffd697",
+                  padding: "5px 20px",
+                  borderRadius: "10px",
+                  width: "70px",
+                  marginLeft: "25px",
+                }}
+              >
+                등록
+              </button>
+            </form>
+          </>
+        )}
+      </li>
+      <li>
+        {reply.reReplyList.map((reReply, index) => {
           return (
-            <Fragment key={("reply-", i)}>
+            <Fragment key={("reReply-", index)}>
               <ReReplyItem
-                reply={reply}
+                reply={reReply}
                 setReplyList={setReplyList}
                 replyList={replyList}
                 changedComment={changedComment}
                 setChangedComment={setChangedComment}
-                commentRef={commentRef}
-                setWriteType={setWriteType}
-                writeType={writeType}
-                setReplyNoState={setReplyNoState}
-                replyNoState={replyNoState}
+                changeReply={changeReply}
+                setChangeReply={setChangeReply}
               />
             </Fragment>
           );
@@ -804,17 +853,16 @@ const ReReplyItem = (props) => {
   const reply = props.reply;
   const replyList = props.replyList;
   const setReplyList = props.setReplyList;
+  const changeReply = props.changeReply;
+  const setChangeReply = props.setChangeReply;
   const viewDelUpdateRef = useRef(null);
   const [hide, setHide] = useState(true);
   const [replyLike, setReplyLike] = useState(0);
-  const [changeReply, setChangeReply] = useState(reply.replyContent);
+  const [changeReReply, setChangeReReply] = useState("");
   const { changedComment, setChangedComment } = props;
   const editRef = useRef(null);
   const originalRef = useRef(null);
   const [editType, setEditType] = useState(false);
-
-  const { commentRef, setWriteType, writeType, replyNoState, setReplyNoState } =
-    props;
 
   const isLike = () => {
     console.log(reply);
@@ -823,7 +871,6 @@ const ReReplyItem = (props) => {
       .then((res) => {
         console.log(res);
         setReplyLike(replyLike + 1);
-        setChangedComment(!changedComment);
       })
       .catch((err) => {
         console.log(err);
@@ -902,9 +949,9 @@ const ReReplyItem = (props) => {
             <div style={{ display: "none" }} ref={editRef}>
               <input
                 onChange={(e) => {
-                  setChangeReply(e.target.value);
+                  setChangeReReply(e.target.value);
                 }}
-                value={changeReply}
+                value={changeReReply}
               />
             </div>
           </div>
@@ -980,30 +1027,6 @@ const ReReplyItem = (props) => {
               </div>
             </>
           )}
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            bottom: "0",
-            marginBottom: "5px",
-            width: "100px",
-          }}
-        >
-          <button
-            style={{
-              border: "none",
-              backgroundColor: "transparent",
-            }}
-            onClick={() => {
-              commentRef.current.value =
-                "@" + reply.memberNickname + "님에게 답글 남기는 중";
-              setWriteType(false);
-              setReplyNoState(reply.replyNo);
-            }}
-          >
-            <AiIcons.AiFillEdit style={{ marginRight: "3px" }} />
-            답글쓰기
-          </button>
         </div>
       </div>
     </li>
