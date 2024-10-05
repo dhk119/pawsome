@@ -157,8 +157,6 @@ public class BoardController {
 	 }
 	 @DeleteMapping(value="/replyLike/{replyNo}/{memberNickname}")
 	 public ResponseEntity<Boolean> deleteReplyLike(@PathVariable int replyNo, @PathVariable String memberNickname){
-		 System.out.println("댓글번호 : "+replyNo);
-		 System.out.println("멤버 닉 : "+memberNickname);
 		 int result = boardService.deleteReplyLike(replyNo, memberNickname);
 		 
 		 return ResponseEntity.ok(true);

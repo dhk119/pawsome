@@ -524,6 +524,7 @@ const ReplyItem = (props) => {
   const [reReply, setReReply] = useState(true);
   const replyContent = props.replyContent;
   const setReplyContent = props.setReplyContent;
+  const [changeReReplystate, setChangeReReply] = useState(replyContent);
 
   const isLike = () => {
     if (reply.isLike === 0) {
@@ -598,7 +599,7 @@ const ReplyItem = (props) => {
   const writeReReply = () => {
     if (reply.replyContent != "") {
       const form = new FormData();
-      form.append("replyContent", replyContent);
+      form.append("replyContent", changeReReplystate);
       form.append("replyNo", reply.replyNo);
       form.append("memberNickname", memberNickname);
       form.append("boardNo", reply.boardNo);
@@ -608,7 +609,8 @@ const ReplyItem = (props) => {
           console.log(res);
           if (res.data) {
             setChangedComment(!changedComment);
-            setReplyContent("");
+            setChangeReReply("");
+            setReReply(!reReply);
           }
         })
         .catch((err) => {
@@ -617,7 +619,7 @@ const ReplyItem = (props) => {
     }
   };
   const changeReReply = (e) => {
-    setReplyContent(e.target.value);
+    setChangeReReply(e.target.value);
   };
 
   return (
@@ -807,7 +809,7 @@ const ReplyItem = (props) => {
                   borderBottom: "1px solid #ccc",
                 }}
                 placeholder="답글을 남겨주세요"
-                value={replyContent}
+                value={changeReReplystate}
                 onChange={changeReReply}
               ></input>
               <button
@@ -839,6 +841,12 @@ const ReplyItem = (props) => {
                 setChangedComment={setChangedComment}
                 changeReply={changeReply}
                 setChangeReply={setChangeReply}
+                changeReReplystate={changeReReplystate}
+                setChangeReReply={setChangeReReply}
+                like={like}
+                setLike={setLike}
+                memberNickname={memberNickname}
+                setReply={setReply}
               />
             </Fragment>
           );
@@ -853,28 +861,53 @@ const ReReplyItem = (props) => {
   const reply = props.reply;
   const replyList = props.replyList;
   const setReplyList = props.setReplyList;
-  const changeReply = props.changeReply;
-  const setChangeReply = props.setChangeReply;
   const viewDelUpdateRef = useRef(null);
   const [hide, setHide] = useState(true);
   const [replyLike, setReplyLike] = useState(0);
-  const [changeReReply, setChangeReReply] = useState("");
+  const [changeReply, setChangeReply] = useState(reply.replyContent);
   const { changedComment, setChangedComment } = props;
   const editRef = useRef(null);
   const originalRef = useRef(null);
   const [editType, setEditType] = useState(false);
+  const changeReReplystate = props.changeReReplystate;
+  const setChangeReReply = props.setChangeReReply;
+  const setLike = props.setLike;
+  const like = props.like;
+  const memberNickname = props.memberNickname;
+  const setReply = props.setReply;
 
   const isLike = () => {
-    console.log(reply);
-    axios
-      .post(`${backServer}/board/reply/like`, reply)
-      .then((res) => {
-        console.log(res);
-        setReplyLike(replyLike + 1);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (reply.isLike === 0) {
+      axios
+        .post(`${backServer}/board/replyLike`, {
+          replyNo: reply.replyNo,
+          memberNickname: memberNickname,
+        })
+        .then((res) => {
+          console.log(res);
+          setReplyLike(replyLike + 1);
+          setReply({ ...reply, isLike: 1 });
+          setLike(!like);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .delete(
+          `${backServer}/board/replyLike/${reply.replyNo}/${memberNickname}`
+        )
+        .then((res) => {
+          if (res.data > 0) {
+            setReplyLike(replyLike - 1);
+            setReply({ ...reply, isLike: 0 });
+            setLike(!like);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const deleteReply = () => {
@@ -887,8 +920,7 @@ const ReReplyItem = (props) => {
             title: "댓글이 삭제 되었습니다.",
             icon: "success",
           }).then((res) => {
-            replyList.splice(res.data, 1);
-            setReplyList([...replyList]);
+            setLike(!like);
           });
         }
       })
@@ -949,25 +981,39 @@ const ReReplyItem = (props) => {
             <div style={{ display: "none" }} ref={editRef}>
               <input
                 onChange={(e) => {
-                  setChangeReReply(e.target.value);
+                  setChangeReply(e.target.value);
                 }}
-                value={changeReReply}
+                value={changeReply}
               />
             </div>
           </div>
 
           <div style={{ marginTop: "10px", display: "flex", gap: "5px" }}>
-            <button
-              style={{
-                border: "none",
-                backgroundColor: "transparent",
-                fontSize: "20px",
-                color: "#ffa518",
-              }}
-              onClick={isLike}
-            >
-              <AiIcons.AiFillHeart />
-            </button>
+            {reply.isLike === 1 ? (
+              <button
+                style={{
+                  border: "none",
+                  backgroundColor: "transparent",
+                  fontSize: "20px",
+                  color: "#ffa518",
+                }}
+                onClick={isLike}
+              >
+                <AiIcons.AiFillHeart />
+              </button>
+            ) : (
+              <button
+                style={{
+                  border: "none",
+                  backgroundColor: "transparent",
+                  fontSize: "20px",
+                  color: "#ffa518",
+                }}
+                onClick={isLike}
+              >
+                <AiIcons.AiOutlineHeart />
+              </button>
+            )}
             <div>{reply.replyLike}</div>
           </div>
         </div>
