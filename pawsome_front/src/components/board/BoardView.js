@@ -590,6 +590,9 @@ const ReplyItem = (props) => {
         editRef.current.style.display = "none";
         originalRef.current.style.display = "block";
         setChangedComment(!changedComment);
+        setEditType(!editType);
+        viewDelUpdateRef.current.style.display = "none";
+        setHide(!hide);
       })
       .catch((err) => {
         console.log(err);
@@ -939,6 +942,9 @@ const ReReplyItem = (props) => {
         editRef.current.style.display = "none";
         originalRef.current.style.display = "block";
         setChangedComment(!changedComment);
+        setEditType(!editType);
+        viewDelUpdateRef.current.style.display = "none";
+        setHide(!hide);
       })
       .catch((err) => {
         console.log(err);
