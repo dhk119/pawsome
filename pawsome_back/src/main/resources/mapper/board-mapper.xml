@@ -146,7 +146,7 @@
                      	(select count(*) from reply_like where reply_like.reply_no = reply.reply_no) reply_like,
                      	(select count(*) from reply_like where reply_no=reply.reply_no and member_nickname=#{memberNickname}) as is_like
 		from reply 
-		join member using(member_nickname) where board_no=#{boardNo}
+		join member using(member_nickname) where board_no=#{boardNo} and reply_no_ref is null
 		<choose>
 			<when test="type == 1">
 				order by reply_no desc)
@@ -186,4 +186,33 @@
   			reply_content= #{replyContent}
   		where reply_no = #{replyNo}
   	</update>
+  	<insert id="insertReReply">
+  		insert into reply values(reply_seq.nextval,#{boardNo},#{replyNo},#{replyContent},sysdate, #{memberNickname})
+  	</insert>
+  	<select id="selectReReplyList" resultType="reply">
+  		select * from
+  			(select rownum as rnum, r. * from
+				(select reply_no,
+						reply_content,
+        				board_no,
+        				(case  
+		       			when trunc((sysdate - reply_reg_date)*24*60) <![CDATA[ < ]]> 60 
+		        		then trunc((sysdate - reply_reg_date)*24*60)||'분전' 
+    	        		when trunc((sysdate - reply_reg_date)*24) <![CDATA[ < ]]> 24 
+		        		then trunc((sysdate - reply_reg_date)*24)||'시간전' 
+                		when trunc((sysdate - reply_reg_date)) <![CDATA[ < ]]> 30 
+						then trunc((sysdate - reply_reg_date)) || '일 전' 
+    					when trunc((sysdate - reply_reg_date) / 30) <![CDATA[ < ]]> 12 
+    					then trunc((sysdate - reply_reg_date) / 30) || '개월 전' 
+    					else trunc((sysdate - reply_reg_date) / 365) || '년 전'  
+                		end)as reply_reg_date,
+                     	member_nickname,
+                     	member_profile,
+                     	(select count(*) from reply_like where reply_like.reply_no = reply.reply_no) reply_like,
+                     	(select count(*) from reply_like where reply_no=reply.reply_no and member_nickname=#{memberNickname}) as is_like
+		from reply 
+		join member using(member_nickname) where reply_no_ref = #{reply.replyNo}
+		order by reply_no desc)
+		 r)
+  	</select>
 </mapper>
