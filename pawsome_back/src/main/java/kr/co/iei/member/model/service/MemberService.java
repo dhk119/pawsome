@@ -94,6 +94,12 @@ public class MemberService {
 		}
 		return member;
 	}
+	
+	public MemberDTO selectMember(String memberEmail) {
+		MemberDTO member = memberDao.selectOneMember(memberEmail);
+		member.setMemberPw(null);
+		return member;
+	}
 
 	@Transactional
 	public int insertPet(PetDTO pet) {

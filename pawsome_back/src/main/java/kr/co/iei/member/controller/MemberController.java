@@ -1,5 +1,6 @@
 package kr.co.iei.member.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,11 +72,26 @@ public class MemberController {
 	
 	// 회원탈퇴
 	@DeleteMapping(value = "/memberEmail/{memberEmail}")
-	public ResponseEntity<Integer> deleteSchedule(@PathVariable String memberEmail) {
-	    System.out.println(memberEmail);
+	public ResponseEntity<Integer> deleteMember(@PathVariable String memberEmail) {
+	    // 회원 정보 조회
+	    MemberDTO member = memberService.selectMember(memberEmail);
+	    
+	    if (member != null && member.getMemberProfile() != null) {
+	        // 기본 이미지가 아닌 업로드된 파일이면 삭제
+	        String profileImagePath = root + "/member/profile/" + member.getMemberProfile();
+	        if (!"member_img.png".equals(member.getMemberProfile())) {
+	            File file = new File(profileImagePath);
+	            if (file.exists()) {
+	                file.delete(); // 파일 삭제
+	            }
+	        }
+	    }
+
+	    // 회원 정보 삭제
 	    int result = memberService.deleteMember(memberEmail);
 	    return ResponseEntity.ok(result);
 	}
+
 	
 	// 로그인
 	@PostMapping(value = "/login")
@@ -185,31 +201,7 @@ public class MemberController {
 		MemberDTO member = memberService.selectOneMember(token);
 		return ResponseEntity.ok(member);
 	}
-	
-	// 반려동물 정보 삽입
-	@PostMapping(value = "/insertPet")
-	public ResponseEntity<Integer> insertPet(@ModelAttribute PetDTO pet, @ModelAttribute MultipartFile petProfile1) {
-		if(petProfile1 != null) {
-			String savepath = root + "/member/pet/";
-			String filepath = fileUtil.upload(savepath, petProfile1);
-			pet.setPetProfile(filepath);
-		}
-		int result = memberService.insertPet(pet);
-		return ResponseEntity.ok(result);
-	}
-	
-	//반려동물 정보 조회
-	@GetMapping(value = "/petNo/{petNo}")
-	public ResponseEntity<PetDTO> selectOnePet(@PathVariable int petNo){
-		PetDTO pet = memberService.selectOnePet(petNo);
-		System.out.println(petNo);
-		System.out.println(pet);
-		return ResponseEntity.ok(pet);
-	}
 
-	
-	//반려동물 정보 삭제
-	
 	// 인증 메일 받기
 	@PostMapping(value = "/sendMailCode")
 	public ResponseEntity<String> sendMailCode(@RequestBody MemberDTO member) {
@@ -314,22 +306,60 @@ public class MemberController {
 	// 회원 정보 업데이트
 	@PatchMapping
 	public ResponseEntity<Integer> updateMember(
-	        @ModelAttribute MemberDTO member, @ModelAttribute MultipartFile memberProfile1, @RequestHeader("Authorization") String token) {
-	    // 프로필 사진이 비어있지 않으면 업로드 처리
+	        @ModelAttribute MemberDTO member, 
+	        @ModelAttribute MultipartFile memberProfile1, 
+	        @RequestHeader("Authorization") String token) {
+
+	    // 프로필 사진 파일이 있을 때만 처리
 	    if (memberProfile1 != null && !memberProfile1.isEmpty()) {
 	        String savepath = root + "/member/profile/";
 	        String filepath = fileUtil.upload(savepath, memberProfile1);
 	        member.setMemberProfile(filepath);  // 새 파일 경로로 설정
-	    } else {
-	        // 프로필 사진을 수정하지 않으므로 기존 프로필을 유지하도록 설정
+	    }
+
+	    // 만약 memberProfile이 기본 이미지("member_img.png")일 경우 처리
+	    if ("member_img.png".equals(member.getMemberProfile())) {
+	        member.setMemberProfile("member_img.png");
+	    }
+
+	    // 기존 프로필을 유지하거나 업데이트
+	    if (member.getMemberProfile() == null || member.getMemberProfile().isEmpty()) {
 	        MemberDTO existingMember = memberService.selectOneMember(token);
 	        member.setMemberProfile(existingMember.getMemberProfile());
 	    }
-	    
+
 	    int result = memberService.updateMember(member);
 	    return ResponseEntity.ok(result);
 	}
 	
+	// 반려동물 정보 삽입
+	@PostMapping(value = "/insertPet")
+	public ResponseEntity<Integer> insertPet(@ModelAttribute PetDTO pet, @ModelAttribute MultipartFile petProfile1) {
+		String savepath = root + "/member/pet/";
+		    
+	    // petProfile1이 null이거나 파일이 비어 있을 경우 기본 이미지 설정
+	    if (petProfile1 != null && !petProfile1.isEmpty()) {
+	        // 파일이 존재하면 해당 파일을 업로드하고 경로를 설정
+	        String filepath = fileUtil.upload(savepath, petProfile1);
+	        pet.setPetProfile(filepath);
+	    } else {
+	        // 파일이 없으면 기본 이미지 경로 설정
+	        pet.setPetProfile("pet_img.png");
+	    }
+	    
+	    int result = memberService.insertPet(pet);
+	    return ResponseEntity.ok(result);
+	}
+
+		
+	//반려동물 정보 조회
+	@GetMapping(value = "/petNo/{petNo}")
+	public ResponseEntity<PetDTO> selectOnePet(@PathVariable int petNo){
+		PetDTO pet = memberService.selectOnePet(petNo);
+		System.out.println(petNo);
+		System.out.println(pet);
+		return ResponseEntity.ok(pet);
+	}
 	
 	//반려동물 정보 수정
 	@PostMapping(value = "/updatePet/{petNo}")
@@ -355,11 +385,25 @@ public class MemberController {
 	    return ResponseEntity.ok(result);
 	}
 	
-	//반려동물 정보 삭제
+	// 반려동물 정보 삭제
 	@DeleteMapping(value = "/deletePet/{petNo}")
 	public ResponseEntity<Integer> deletePet(@PathVariable int petNo) {
-		int result = memberService.deletePet(petNo);
-		return ResponseEntity.ok(result);
+	    // petNo로 반려동물 정보 조회
+	    PetDTO pet = memberService.selectOnePet(petNo);
+	    
+	    if (pet != null && pet.getPetProfile() != null) {
+	        // 기본 이미지가 아닌 업로드된 파일이면 삭제
+	        String profileImagePath = root + "/member/pet/" + pet.getPetProfile();
+	        if (!"pet_img.png".equals(pet.getPetProfile())) {
+	            File file = new File(profileImagePath);
+	            if (file.exists()) {
+	                file.delete(); // 파일 삭제
+	            }
+	        }
+	    }
+	    // 반려동물 정보 삭제
+	    int result = memberService.deletePet(petNo);
+	    return ResponseEntity.ok(result);
 	}
 
 	

@@ -23,6 +23,15 @@ const PetInsert = () => {
   });
 
   const insertPet = (e) => {
+    if (!pet.petName || !pet.petBirth || !pet.petBreed || pet.petClasses === "0" || pet.petGender === "0" || pet.neutering === "0" || !pet.petWeight) {
+      Swal.fire({
+        title: "모두 입력해주세요.",
+        text: "입력되지 않은 정보가 있습니다.",
+        icon: "warning",
+      });
+      return;
+    }
+
     const form = new FormData();
     form.append("memberEmail", memberEmail);
     form.append("petName", pet.petName);
