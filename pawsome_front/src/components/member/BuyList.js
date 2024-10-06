@@ -45,7 +45,6 @@ const BuyList = () => {
                   <p>가격: {item.product.productPrice}원</p>
                   <p>수량: {item.buyCount}</p>
                 </div>
-              </div>
               <div className="buy-item-footer">
                 <span
                   className={`buy-state ${
@@ -72,6 +71,7 @@ const BuyList = () => {
                   ) : null}
                 </div>
               </div>
+              </div>
             </div>
           ))
         ) : (
@@ -80,6 +80,7 @@ const BuyList = () => {
       </div>
     </div>
   );
+  
 };
 
 export default BuyList;

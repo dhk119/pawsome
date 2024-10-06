@@ -19,6 +19,7 @@ const PetFrm = ({ pet, setPet }) => {
   // 강아지 및 고양이 품종 목록
   const breeds = {
     dog: [
+      "",
       "진돗개",
       "허스키",
       "웰시코기",
@@ -48,6 +49,7 @@ const PetFrm = ({ pet, setPet }) => {
       "저먼 셰퍼드",
     ],
     cat: [
+      "",
       "러시안 블루",
       "샴",
       "페르시안",
@@ -79,7 +81,7 @@ const PetFrm = ({ pet, setPet }) => {
   // 사진 미리보기 및 초기 이미지 설정
   useEffect(() => {
     if (pet.petProfile && typeof pet.petProfile === "string") {
-      // 기존에 저장된 파일인 경우
+
       setPetImgPreview(`${backServer}/member/pet/${pet.petProfile}`);
     } else if (pet.petProfile instanceof File) {
       // 새로 업로드한 파일인 경우
@@ -89,7 +91,7 @@ const PetFrm = ({ pet, setPet }) => {
         setPetImgPreview(reader.result);
       };
     } else {
-      setPetImgPreview("/images/default-pet.png");
+      setPetImgPreview(`${backServer}/member/pet/pet_img.png`);
     }
   }, [pet.petProfile, backServer]);
 

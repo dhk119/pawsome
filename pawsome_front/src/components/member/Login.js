@@ -15,13 +15,20 @@ const Login = () => {
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
-  useRecoilState(memberNicknameState);
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [member, setMember] = useState({ memberEmail: "", memberPw: "" });
   const navigate = useNavigate();
+
   const changeMember = (e) => {
     const name = e.target.name;
     setMember({ ...member, [name]: e.target.value });
+  };
+
+  // 엔터 키 감지 함수
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      login(); // 엔터 키를 누르면 로그인 실행
+    }
   };
 
   //네이버 로그인
@@ -50,9 +57,7 @@ const Login = () => {
         setMemberLevel(res.data.memberLevel);
         setMemberNickname(res.data.memberNickname);
 
-        //로그인 이후 axios 요청 시 발급받은 토큰값을 자동으로 axios에 추가하는 설정
         axios.defaults.headers.common["Authorization"] = res.data.accessToken;
-        //로그인 상태를 지속적으로 유지시키기위해 발급받은 refreshToken을 브라우저에 저장
         window.localStorage.setItem("refreshToken", res.data.refreshToken);
         navigate("/");
       })
@@ -64,6 +69,7 @@ const Login = () => {
         });
       });
   };
+
   return (
     <div className="body">
       <div className="login-page">
@@ -82,6 +88,7 @@ const Login = () => {
               id="memberEmail"
               value={member.memberEmail}
               onChange={changeMember}
+              onKeyPress={handleKeyPress} // 엔터 키 감지 추가
               placeholder="이메일"
             />
             <input
@@ -90,6 +97,7 @@ const Login = () => {
               id="memberPw"
               value={member.memberPw}
               onChange={changeMember}
+              onKeyPress={handleKeyPress} // 엔터 키 감지 추가
               placeholder="비밀번호"
             />
             <button className="submit" type="submit">
