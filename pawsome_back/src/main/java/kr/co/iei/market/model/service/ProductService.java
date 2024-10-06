@@ -13,6 +13,8 @@ import kr.co.iei.market.model.dao.MarketDao;
 import kr.co.iei.market.model.dto.ProductDTO;
 import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
+import kr.co.iei.market.model.dto.ReviewDTO;
+import kr.co.iei.market.model.dto.ReviewFileDTO;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.util.PageUtil;
 
@@ -123,6 +125,22 @@ public class ProductService {
 			}
 		}
 		return result;
+	}
+
+	@Transactional
+	public int insertReview(ReviewDTO review, List<ReviewFileDTO> reviewFileList) {
+		int result = marketDao.insertReview(review);
+		int reviewNo = marketDao.selectReviewNo(review);
+		for(ReviewFileDTO reviewFile : reviewFileList) {
+			reviewFile.setReviewNo(reviewNo);
+			result += marketDao.insertReviewFile(reviewFile);
+		}
+		System.out.println("파일인서트결과 : "+result);
+		if(result > 0) {
+			return result;
+		}else {
+			return 0;			
+		}
 	}
 	
 	

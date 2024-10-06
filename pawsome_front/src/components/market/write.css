@@ -161,3 +161,9 @@
 .review-img-wrap > input {
   display: none;
 }
+.review-img-wrap {
+  display: flex;
+}
+.review-img-wrap > .preview-img svg {
+  font-size: 20px;
+}

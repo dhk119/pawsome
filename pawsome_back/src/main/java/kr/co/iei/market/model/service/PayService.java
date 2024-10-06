@@ -160,10 +160,13 @@ public class PayService {
 		int amount = pay.getTotalPrice(); //결제했던 금액
 		int cancelProductNo = refund.getProductNo(); //결제취소할 상품
 		int cancelAmount = refund.getCancelRequestAmount(); //결제취소할 금액
+		/*
+		 * 현재 부분취소가 안되므로 그냥 전체환불로 진행
 		int totalAmount = pay.getTotalPrice() - refund.getCancelRequestAmount();
 		if(totalAmount < 30000) {
 			cancelAmount = refund.getCancelRequestAmount() - 3000;
 		}
+		*/
 		System.out.println("환불금액 : "+cancelAmount);
 		
 		/*

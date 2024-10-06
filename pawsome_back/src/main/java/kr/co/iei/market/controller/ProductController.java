@@ -1,5 +1,7 @@
 package kr.co.iei.market.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.market.model.dto.ProductDTO;
 import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
+import kr.co.iei.market.model.dto.ReviewDTO;
+import kr.co.iei.market.model.dto.ReviewFileDTO;
 import kr.co.iei.market.model.service.ProductService;
 import kr.co.iei.util.FileUtils;
 
@@ -99,6 +105,37 @@ public class ProductController {
 		System.out.println(product);
 		int result = productService.changeLike(loginEmail,product);
 		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping(value="/writeReview")
+	//받아올 때 multipartFile을 ModelAttribute 로 받아오니까 임시저장소에 저장이 안 되엉서 받아와지지가 않음... requestparam으로 하나씩 다 받아옴
+	public ResponseEntity<Boolean> insertReview(@RequestParam(value="productNo") int productNo,
+												@RequestParam(value="reviewStar") int reviewStar,
+												@RequestParam(value="reviewContent") String reviewContent,
+												@RequestParam(value="reviewWriter") String reviewWriter,												
+												@RequestParam(value="fileList", required=false) MultipartFile[] fileList){
+		//받아온 애들 객체로 묶어줌
+		ReviewDTO review = new ReviewDTO();
+		review.setProductNo(productNo);
+		review.setReviewStar(reviewStar);
+		review.setReviewContent(reviewContent);
+		review.setReviewWriter(reviewWriter);
+		
+		List<ReviewFileDTO> reviewFileList = new ArrayList<ReviewFileDTO>();
+		if(fileList != null) {
+			String savepath = root + "/review/";
+			for(MultipartFile reviewfIle : fileList) {
+				ReviewFileDTO file = new ReviewFileDTO();
+				String reviewFileOrg = reviewfIle.getOriginalFilename();
+				String reviewFileStorage = fileUtil.upload(savepath, reviewfIle);
+				file.setReviewFileOrg(reviewFileOrg);
+				file.setReviewFileStorage(reviewFileStorage); 
+				reviewFileList.add(file); 
+			}
+		}
+		System.out.println("reviewFileList : "+reviewFileList);
+		int result = productService.insertReview(review, reviewFileList);
+		return ResponseEntity.ok(result == 1+reviewFileList.size());
 	}
 	
 }

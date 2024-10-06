@@ -1,8 +1,10 @@
 const Review = () => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+
   return (
     <div className="review-wrap">
       <div className="star-wrap">
-        <span> 별점 자리</span>
+        <span>별점 자리</span>
       </div>
       <div className="review-list">
         <div className="review-detail">

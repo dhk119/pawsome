@@ -1,12 +1,10 @@
 import { useState } from "react";
 import QuillEditor from "./../../utils/QuillEditor";
 import Star from "./Star";
+import { TiDelete } from "react-icons/ti";
 
 const ReviewFrm = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const memberNickname = props.memberNickname;
-  const reviewStar = props.reviewStar;
-  const setReviewStar = props.setReviewStar;
   const reviewContent = props.reviewContent;
   const setReviewContent = props.setReviewContent;
   const reviewFile = props.reviewFile;
@@ -15,11 +13,12 @@ const ReviewFrm = (props) => {
   //별점처리
   const value = props.value;
   const setValue = props.setValue;
-
+  //파일 미리보기
   const [showFile, setShowFile] = useState([]);
+  //첨부파일추가
   const addFile = (e) => {
-    const files = e.currentTarget.files;
-    const fileArr = new Array(); //전송할 이미지
+    const files = e.currentTarget.files; //배열같지만 아니기에 for문으로 넣어줘야 함
+    const fileArr = new Array(); //백으로 전송할 이미지
     const showArr = new Array(); //화면에 보여줄 이미지
     for (let i = 0; i < files.length; i++) {
       fileArr.push(files[i]);
@@ -86,6 +85,22 @@ const ReviewFrm = (props) => {
               onChange={addFile}
               multiple
             />
+            {showFile.map((fileimg, i) => {
+              const deleteFile = () => {
+                reviewFile.splice(i, 1);
+                setReviewFile([...reviewFile]);
+                showFile.splice(i, 1);
+                setShowFile([...showFile]);
+              };
+              return (
+                <div className="preview-img" key={"newFile-" + i}>
+                  <img className="fileimg" src={fileimg} />
+                  <span className="del-file-icon" onClick={deleteFile}>
+                    <TiDelete />
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

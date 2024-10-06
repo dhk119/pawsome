@@ -11,6 +11,8 @@ import kr.co.iei.market.model.dto.ProductDTO;
 import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
 import kr.co.iei.market.model.dto.RefundRequestDTO;
+import kr.co.iei.market.model.dto.ReviewDTO;
+import kr.co.iei.market.model.dto.ReviewFileDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.util.PageInfo;
 
@@ -115,7 +117,15 @@ public interface MarketDao {
 	int insertLike(String loginEmail, ProductDTO product);
 
 	int updatePayList(RefundRequestDTO refund);
+/*리뷰*/
+	int insertReview(ReviewDTO review);
+	
+	int selectReviewNo(ReviewDTO review);
+	
+	int insertReviewFile(ReviewFileDTO reviewFile);
 
+	
+	
 
 	
 /*마이페이지 구매내역 - 정원*/

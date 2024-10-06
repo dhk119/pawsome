@@ -483,6 +483,23 @@
 	<insert id="insertLike">
 		insert into	product_like values(#{product.productNo},#{loginEmail})
 	</insert>
+<!-- 리뷰 -->
+	<insert id="insertReview">
+		insert into review values (review_seq.nextval, #{productNo}, #{reviewStar}, #{reviewContent}, sysdate, #{reviewWriter})
+	</insert>	
+	<select id="selectReviewNo" resultType="int">
+		select max(review_no) from review where review_writer=#{reviewWriter}
+	</select>
+	<insert id="insertReviewFile">
+		insert into review_file values(review_file_seq.nextval, #{reviewFileOrg}, #{reviewFileStorage}, #{reviewNo})
+	</insert>
+	
+	
+	
+	
+	
+	
+	
 	
 <!-- 정원 -->
 <!-- 마이페이지 구매내역 -->

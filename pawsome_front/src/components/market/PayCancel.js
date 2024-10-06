@@ -101,7 +101,7 @@ const BuyItem = (props) => {
             className="cancelBtn"
             onClick={() => {
               Swal.fire({
-                title: "결제를 취소하시겠습니까? 복구가 불가능합니다.",
+                title: "결제를 취소하시겠습니까?",
                 html: "부분 결제 취소 후 총 결제금액이 30,000원 이하일 경우,</br>배송비 3,000원을 제외한 금액이 환불됩니다.",
                 icon: "question",
                 showCancelButton: true,
