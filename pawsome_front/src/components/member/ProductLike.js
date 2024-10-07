@@ -10,9 +10,9 @@ const ProductLike = () => {
 
   useEffect(() => {
     axios
-      .get(`${backServer}/product/product-like/${loginEmail}`)
+      .get(`${backServer}/member/product-like/${loginEmail}`)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         setProductLike(res.data);
       })
       .catch((err) => {

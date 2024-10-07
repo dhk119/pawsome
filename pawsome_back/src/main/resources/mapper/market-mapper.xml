@@ -650,5 +650,13 @@ group by star order by star desc
 	    </association>
 	</resultMap>
     
+    <!-- 
+	<select id="productLike" resultType="list">
+	    SELECT * 
+	    FROM product_like 
+	    WHERE member_email = #{memberEmail}
+	</select>
+ 	-->
+    
 	
 </mapper>

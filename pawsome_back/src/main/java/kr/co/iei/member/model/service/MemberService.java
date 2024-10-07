@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.iei.market.model.dao.MarketDao;
 import kr.co.iei.market.model.dto.BuyListDTO;
+import kr.co.iei.market.model.dto.ProductLikeDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
@@ -202,6 +203,11 @@ public class MemberService {
 	public BuyListDTO selectOneBuy(int buyNo) {
 		BuyListDTO buy = MarketDao.selectOneBuy(buyNo);
 	    return buy;
+	}
+
+	public List<ProductLikeDTO> productLike(String memberEmail) {
+		List<ProductLikeDTO> list = MarketDao.productLike(memberEmail);
+		return list;
 	}
 
 }
