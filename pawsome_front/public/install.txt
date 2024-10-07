@@ -72,3 +72,7 @@ npm install googleapis --force
 
 이원희 2021-10-05 16:07
 npm install @mui/icons-material --force
+
+이원희 2024-10-07 19:05
+npm install @mui/x-charts@latest --force
+npm install @mui/material @emotion/react @emotion/styled --force

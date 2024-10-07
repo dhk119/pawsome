@@ -18,10 +18,9 @@ const UpdateReview = () => {
   const productNo = 94;
   const [product, setProduct] = useState({});
 
+  //수정
   const [newFile, setNewFile] = useState([]);
   const [delFileNo, setDelFileNo] = useState([]);
-  //수정
-  const [newFileList, setNewFileList] = useState([]);
 
   useEffect(() => {
     axios
@@ -36,7 +35,7 @@ const UpdateReview = () => {
     axios
       .get(`${backServer}/product/selectReview/${reviewNo}`)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         setReviewContent(res.data.reviewContent);
         setValue(res.data.reviewStar);
         setNewFile(res.data.reviewFileList);
@@ -45,6 +44,7 @@ const UpdateReview = () => {
         console.log(err);
       });
   }, []);
+  console.log(delFileNo);
 
   const updateReview = () => {
     if (value !== 0 && reviewContent !== "") {
@@ -68,17 +68,20 @@ const UpdateReview = () => {
         })
         .then((res) => {
           console.log(res);
-          /*
           Swal.fire({
             title: "리뷰 수정 성공!",
             html: "리뷰 수정에 성공하셨습니다.</br>해당 제품의 상세보기 페이지로 이동합니다.",
             icon: "success",
           });
           navigate(`/market/main/productDetail/${productNo}/detail`);
-          */
         })
         .catch((err) => {
           console.log(err);
+          Swal.fire({
+            title: "리뷰 수정 실패...",
+            html: "리뷰 수정에 실패하였습니다.</br>잠시 후 다시 시도해주세요.",
+            icon: "success",
+          });
         });
     }
   };

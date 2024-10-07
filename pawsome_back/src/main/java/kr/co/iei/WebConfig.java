@@ -28,6 +28,8 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addResourceHandler("/member/profile/**").addResourceLocations("file:///"+root+"/member/profile/");
 		registry.addResourceHandler("/member/pet/**").addResourceLocations("file:///"+root+"/member/pet/");
 		registry.addResourceHandler("/board/thumb/**").addResourceLocations("file:///"+root+"/board/");
+		registry.addResourceHandler("/review/thumb/**").addResourceLocations("file:///"+root+"/review/thumb/");
+		
 	}
 	
 	//결제취소

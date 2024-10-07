@@ -1,5 +1,6 @@
 package kr.co.iei.market.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.jsonwebtoken.lang.Arrays;
 import kr.co.iei.market.model.dto.ProductDTO;
 import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
@@ -123,7 +125,7 @@ public class ProductController {
 		
 		List<ReviewFileDTO> reviewFileList = new ArrayList<ReviewFileDTO>();
 		if(fileList != null) {
-			String savepath = root + "/review/sum/";
+			String savepath = root + "/review/thumb/";
 			for(MultipartFile reviewfIle : fileList) {
 				ReviewFileDTO file = new ReviewFileDTO();
 				String reviewFileOrg = reviewfIle.getOriginalFilename();
@@ -150,9 +152,55 @@ public class ProductController {
 												@RequestParam(value="reviewContent") String reviewContent,											
 												@RequestParam(value="fileList", required=false) MultipartFile[] fileList,
 												@RequestParam(value="delFileNo") int[] delFileNo){
-		
-		System.out.println(fileList);
-		return null;
+		ReviewDTO review = new ReviewDTO();
+		review.setReviewNo(reviewNo);
+		review.setReviewStar(reviewStar);
+		review.setReviewContent(reviewContent);
+		review.setDelFileNo(delFileNo);
+		System.out.println(delFileNo);
+		List<ReviewFileDTO> reviewFileList = new ArrayList<ReviewFileDTO>();
+		if(fileList != null) {
+			String savepath = root + "/review/thumb/";
+			System.out.println(fileList);
+			for(MultipartFile reviewfIle : fileList) {
+				ReviewFileDTO file = new ReviewFileDTO();
+				String reviewFileOrg = reviewfIle.getOriginalFilename();
+				String reviewFileStorage = fileUtil.upload(savepath, reviewfIle);
+				file.setReviewFileOrg(reviewFileOrg);
+				file.setReviewFileStorage(reviewFileStorage);
+				file.setReviewNo(reviewNo);
+				reviewFileList.add(file); 
+			}
+		}
+		List<ReviewFileDTO> delFileList = productService.updateReview(review,reviewFileList);
+		System.out.println(delFileList);
+			if(delFileList != null) {
+				String savepath = root + "/review/thumb/";
+				for(ReviewFileDTO deleteFile : delFileList) {
+					File delFile = new File(savepath+deleteFile.getReviewFileStorage());
+					delFile.delete();
+				}
+				return ResponseEntity.ok(true);
+			}else {
+				return ResponseEntity.ok(false);
+			}
 	}
 	
+	@GetMapping(value="/selectReviewList/{productNo}/{reqPage}")
+	public ResponseEntity<Map> selectReviewList (@PathVariable int productNo, @PathVariable int reqPage){
+		Map map = productService.selectReviewList(productNo,reqPage);
+		return ResponseEntity.ok(map);
+	}
+	
+	@GetMapping(value="/selectOneReviewFile/{reviewNo}")
+	public ResponseEntity<List> selectOneReviewFileList (@PathVariable int reviewNo){
+		List list = productService.selectOneReviewFileList(reviewNo);
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping(value="/selectStar/{productNo}")
+	public ResponseEntity<List> selectStar (@PathVariable int productNo){
+		List list = productService.selectStar(productNo);
+		return ResponseEntity.ok(list);
+	}
 }

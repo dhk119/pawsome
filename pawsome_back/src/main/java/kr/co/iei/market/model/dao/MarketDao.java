@@ -127,6 +127,22 @@ public interface MarketDao {
 	ReviewDTO selectOneReview(int reviewNo);
 	
 	List selectReviewFileList(int reviewNo);
+	
+	int updateReview(ReviewDTO review);
+	
+	List<ReviewFileDTO> selectDelReviewFileList(int[] delFileNo);
+	
+	int deleteReviewFile(int[] delFileNo);
+	
+	int reviewTotalCount(int productNo);
+	
+	List<ReviewDTO> selectReviewList(int productNo, int start, int end);
+	
+	List selectOneReviewFileList(int reviewNo);
+/*평점만들기*/	
+	int countStar(int productNo);
+	
+	List<ReviewDTO> starList(int productNo);
 
 	
 	

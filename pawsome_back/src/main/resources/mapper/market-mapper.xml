@@ -499,10 +499,43 @@
 	<select id="selectReviewFileList" resultType="reviewFile">
 		select * from review_file where review_no = #{reviewNo}
 	</select>
-	
-	
-	
-	
+	<update id="updateReview">
+		update review set review_star=#{reviewStar}, review_content=#{reviewContent} where review_no=#{reviewNo}
+	</update>
+	<select id="selectDelReviewFileList" resultType="reviewFile">
+		select * from review_file where review_file_no in
+		<foreach collection="array" item="reviewFileNo" open="(" close=")" separator=",">
+			#{reviewFileNo}
+		</foreach>
+	</select>
+	<delete id="deleteReviewFile">
+		delete from review_file where review_file_no in
+		<foreach collection="array" item="reviewFileNo" open="(" close=")" separator=",">
+			#{reviewFileNo}
+		</foreach>
+	</delete>
+	<select id="reviewTotalCount" resultType="int">
+		select count(*) from review where product_no=#{productNo}
+	</select>
+	<select id="selectReviewList" resultType="review">
+		select * from (select rownum as rnum, r.* from(select * from review where product_no=#{productNo} order by review_no desc)r) where rnum between #{start} and #{end}
+	</select>
+	<select id="selectOneReviewFileList" resultType="reviewFile">
+		select review_no, review_file_no, review_file_storage from review_file where review_no=#{reviewNo} order by review_file_no
+	</select>
+	<select id="countStar" resultType="int">
+		select count(*) from review where product_no=#{productNo}
+	</select>
+	<select id="starList" resultType="review">
+		with stars as (
+ select 1 as star from dual union all
+ select 2 as star from dual union all
+ select 3 as star from dual union all
+ select 4 as star from dual union all
+ select 5 as star from dual
+)select star,coalesce(count(review_star),0) as totalStar from stars s left join review r on(s.star = r.review_star) and product_no=#{productNo}
+group by star order by star desc
+	</select>
 	
 	
 	

@@ -63,6 +63,7 @@ const ProductList = (props) => {
         <>
           <Swiper
             pagination={true}
+            loop={true}
             modules={[Pagination, Autoplay]}
             autoplay={{ delay: 4000 }}
             className="mySwiper"

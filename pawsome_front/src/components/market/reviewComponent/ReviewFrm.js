@@ -118,7 +118,10 @@ const ReviewFrm = (props) => {
                   };
                   return (
                     <div className="preview-img" key={"oldFile-" + i}>
-                      <img className="fileimg" src={file.fileimg} />
+                      <img
+                        className="fileimg"
+                        src={`${backServer}/review/thumb/${file.reviewFileStorage}`}
+                      />
                       <span className="del-file-icon" onClick={deleteFile}>
                         <TiDelete />
                       </span>

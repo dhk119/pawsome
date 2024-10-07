@@ -1,5 +1,6 @@
 package kr.co.iei.market.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -148,6 +149,54 @@ public class ProductService {
 		List reviewFileList = marketDao.selectReviewFileList(reviewNo);
 		review.setReviewFileList(reviewFileList);
 		return review;
+	}
+
+	@Transactional
+	public List<ReviewFileDTO> updateReview(ReviewDTO review, List<ReviewFileDTO> reviewFileList) {
+		int result = marketDao.updateReview(review);
+		if(result > 0) {
+			List<ReviewFileDTO> delFileList = new ArrayList<ReviewFileDTO>();
+			if(review.getDelFileNo()!=null && review.getDelFileNo().length > 0) {
+				delFileList = marketDao.selectDelReviewFileList(review.getDelFileNo());
+				result += marketDao.deleteReviewFile(review.getDelFileNo());
+			}
+			for(ReviewFileDTO reviewFile : reviewFileList) {
+				result += marketDao.insertReviewFile(reviewFile);
+			}
+			int updateTotal = review.getDelFileNo() == null
+								? 1 + reviewFileList.size()
+								: 1 + reviewFileList.size() + review.getDelFileNo().length;
+			if(result == updateTotal) {
+				return delFileList;
+			}
+		}
+		return null;
+	}
+
+	public Map selectReviewList(int productNo,int reqPage) {
+		int numPerPage = 5;
+		int pageNaviSize = 5;
+		int totalCount = marketDao.reviewTotalCount(productNo);
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		int start = pi.getStart();
+		int end = pi.getEnd();
+		List<ReviewDTO> list = marketDao.selectReviewList(productNo,start,end);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("pi", pi);
+		map.put("totalCount", totalCount);
+		return map;
+	}
+
+	public List selectOneReviewFileList(int reviewNo) {
+		List list = marketDao.selectOneReviewFileList(reviewNo);
+		return list;
+	}
+
+	public List selectStar(int productNo) {
+		List<ReviewDTO> starList = marketDao.starList(productNo); //별점리스트
+		
+		return starList;
 	}
 	
 	

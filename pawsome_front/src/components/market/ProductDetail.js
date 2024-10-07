@@ -22,7 +22,6 @@ const ProductDetail = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams(); //주소창에 데이터 가져오기
   const productNo = params.productNo;
-  console.log(productNo);
   const [product, setProduct] = useState({});
   const [currentTab, setCurrentTab] = useState(0);
   const [productPrice, setProductPrice] = useState(0);
