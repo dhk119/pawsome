@@ -34,7 +34,6 @@ const WriteReview = () => {
         console.log(err);
       });
   }, []);
-  console.log(reviewFile);
 
   const writeReview = () => {
     if (value !== 0 && reviewContent !== "") {

@@ -123,7 +123,7 @@ public class ProductController {
 		
 		List<ReviewFileDTO> reviewFileList = new ArrayList<ReviewFileDTO>();
 		if(fileList != null) {
-			String savepath = root + "/review/";
+			String savepath = root + "/review/sum/";
 			for(MultipartFile reviewfIle : fileList) {
 				ReviewFileDTO file = new ReviewFileDTO();
 				String reviewFileOrg = reviewfIle.getOriginalFilename();
@@ -142,6 +142,23 @@ public class ProductController {
 	public ResponseEntity<List> productLike(@PathVariable String memberEmail) {
 		List productList = productService.productLike(memberEmail);
 		return ResponseEntity.ok(productList);
+	}
+
+	@GetMapping(value="/selectReview/{reviewNo}")
+	public ResponseEntity<ReviewDTO> selectOneReview (@PathVariable int reviewNo){
+		ReviewDTO review = productService.selectOneReview(reviewNo);
+		return ResponseEntity.ok(review);
+	}
+	
+	@PatchMapping(value="/updateReview")
+	public ResponseEntity<Boolean> updateReview (@RequestParam(value="reviewNo") int reviewNo,
+												@RequestParam(value="reviewStar") int reviewStar,
+												@RequestParam(value="reviewContent") String reviewContent,											
+												@RequestParam(value="fileList", required=false) MultipartFile[] fileList,
+												@RequestParam(value="delFileNo") int[] delFileNo){
+		
+		System.out.println(fileList);
+		return null;
 	}
 	
 }

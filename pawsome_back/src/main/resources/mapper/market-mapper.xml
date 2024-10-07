@@ -493,7 +493,12 @@
 	<insert id="insertReviewFile">
 		insert into review_file values(review_file_seq.nextval, #{reviewFileOrg}, #{reviewFileStorage}, #{reviewNo})
 	</insert>
-	
+	<select id="selectOneReview" resultType="review">
+		select * from review where review_no = #{reviewNo}
+	</select>
+	<select id="selectReviewFileList" resultType="reviewFile">
+		select * from review_file where review_no = #{reviewNo}
+	</select>
 	
 	
 	
