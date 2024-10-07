@@ -464,6 +464,8 @@ public class MemberController {
 	@GetMapping(value = "/selectOneBuy/{buyNo}")
 	public ResponseEntity<BuyListDTO> selectOneBuy(@PathVariable int buyNo) {
 	    BuyListDTO buyList = memberService.selectOneBuy(buyNo);
+	    System.out.println("test");
+	    System.out.println(buyList);
 	    return ResponseEntity.ok(buyList);
 	}
 }

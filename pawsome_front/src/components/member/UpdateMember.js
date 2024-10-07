@@ -1,3 +1,4 @@
+
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
@@ -104,19 +105,17 @@ const UpdateMember = () => {
     form.append("memberAddr1", member.memberAddr1);
     form.append("memberAddr2", member.memberAddr2);
     form.append("memberAddr3", member.memberAddr3);
-
     if (member.memberPhone !== null) {
       form.append("memberPhone", member.memberPhone);
     }
 
-    // memberProfile 파일명 전송
-    if (member.memberProfile) {
-      form.append("memberProfile", member.memberProfile); // 파일명 전송
-    } else {
-      console.log("memberProfile is null");
+    // 프로필 사진 전송 (변경된 경우에만)
+    if (
+      member.memberProfile !== null &&
+      member.memberProfile !== initialProfile
+    ) {
+      form.append("memberProfile1", member.memberProfile);
     }
-
-    console.log("FormData 확인:", form.get("memberProfile"));
 
     if (
       /^[가-힣]{2,10}$/.test(member.memberName) && // 이름이 유효한지
@@ -184,7 +183,7 @@ const UpdateMember = () => {
     setMemberImgPreview("member_img.png");
     setMember((prevMember) => ({
       ...prevMember,
-      memberProfile: "member_img.png",
+      memberProfile: null,
     }));
   };
 
