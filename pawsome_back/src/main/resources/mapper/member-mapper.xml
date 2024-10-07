@@ -257,11 +257,17 @@
 	<select id="searchPetListOption" resultType="pet">
 		select * from (select rownum as rnum, b.* from(SELECT pet_no,pet_name,pet_classes,pet_breed,to_char(pet_birth,'yyyy-mm-dd') as pet_birth,pet_gender,neutering,pet_profile,pet_weight,member_email from pet where PET_CLASSES=#{option} order by 1 desc)b) where rnum BETWEEN #{start} and #{end}
 	</select>
-	<select id="petPercentClass" resultType="int">
-		select count(*) from pet group by pet_classes
+	<select id="petChartClass" resultType="chartData">
+		select pet_classes as key, count(*) as count from pet group by pet_classes
 	</select>
-	<select id="petPercentClasses" resultType="int">
-		select pet_classes from pet group by pet_classes;
+	<select id="petChartBreedDog" resultType="chartData">
+		select pet_breed as key, count(*) as count from pet where pet_classes=1 group by pet_breed
+	</select>
+	<select id="petChartBreedCat" resultType="chartData">
+		select pet_breed as key, count(*) as count from pet where pet_classes=2 group by pet_breed
+	</select>
+	<select id="petChartGender" resultType="chartData">
+		select pet_gender as key, count(*) as count from pet group by pet_gender
 	</select>
 	<insert id="insertPet">
 	  	insert into pet values(pet_seq.nextval, #{petName}, #{petClasses}, #{petBreed}, #{petBirth}, #{petGender}, #{neutering}, #{petProfile}, #{petWeight}, #{memberEmail})

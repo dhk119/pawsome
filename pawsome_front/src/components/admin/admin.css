@@ -77,7 +77,7 @@ tbody > tr:last-child td:last-child {
   line-height: 40px;
   background-color: var(--main1);
   text-align: center;
-  border-radius: 10px;
+  border-radius: 20px;
   box-sizing: border-box;
   border: none;
   font-weight: bold;
@@ -531,13 +531,13 @@ tbody > tr:last-child td:last-child {
   gap: 20px;
 }
 .admin-chart-label-one {
-  border-radius: 5px;
-  width: 250px;
+  border-radius: 10px;
+  width: 20px;
   background-color: var(--main1);
 }
 .admin-chart-label-two {
-  border-radius: 5px;
-  width: 250px;
+  border-radius: 10px;
+  width: 20px;
   background-color: var(--point2);
 }
 .admin-pet-chart-bottom {
@@ -549,8 +549,98 @@ tspan {
   font-size: large;
 }
 .admin-pet-chart-top {
-  margin-top: 100px;
+  margin-top: 40px;
 }
 .admin-chart-label-three {
-  width: 500px;
+  border-radius: 10px;
+  width: 20px;
+  background-color: var(--main2);
+}
+.admin-chart-label-four {
+  border-radius: 10px;
+  width: 20px;
+  background-color: var(--gray3);
+}
+#chart-option {
+  width: 100%;
+  height: 100%;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+  background-color: var(--point1);
+  border: 2px solid var(--point1);
+  color: #fff;
+  border-radius: 15px;
+}
+#admin-chart-height {
+  height: 100%;
+  margin-top: 20px;
+}
+.admin-search-chart {
+  width: 10%;
+  height: 40px;
+}
+.admin-search-chart > * {
+  height: 40px;
+}
+#admin-chart-margin-top {
+  margin-top: 40px;
+}
+.chart-flex {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+}
+.chart-label-one {
+  background-color: var(--main1);
+}
+.chart-bottom {
+  border-radius: 10px;
+  width: 20px;
+}
+.chart-label-two {
+  background-color: var(--point2);
+}
+.chart-label-three {
+  background-color: var(--main2);
+}
+.chart-label-four {
+  background-color: var(--gray3);
+}
+.chart-margin-bottom {
+  margin-bottom: 100px;
+}
+.chart-width-fix {
+  width: 520px;
+}
+.chart-select {
+  height: 100%;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+  background-color: var(--point1);
+  border: 2px solid var(--point1);
+  color: #fff;
+  border-radius: 15px;
+  font-weight: bold;
+}
+#chart-button {
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  background-color: var(--main1);
+  text-align: center;
+  border-radius: 20px;
+  box-sizing: border-box;
+  border: none;
+  font-weight: bold;
+  color: #fff;
+  font-size: 16px;
+}
+#chart-margin-right {
+  width: 100%;
+  height: 40px;
+  justify-content: right;
+}
+.chart-select-wrap {
+  display: flex;
+  width: 100%;
+  justify-content: end;
 }

@@ -61,7 +61,6 @@ public class MemberController {
     // 회원가입
 	@PostMapping
 	public ResponseEntity<Integer> join(@RequestBody MemberDTO member) {
-		System.out.println(member);
 		int result = memberService.insertMember(member);
 		if(result > 0) {
 			return ResponseEntity.ok(result);
@@ -226,7 +225,6 @@ public class MemberController {
 					ranCode += randomCode;
 				}
 			}
-			System.out.println("생성된 랜덤 코드: "+ranCode);
 			
 			String emailContent = "<div !important; width: 540px; height: 600px; border-top: 4px solid #ffa518; margin: 100px auto; padding: 30px 0; box-sizing: border-box;\">\r\n" + 
 					"	<h1 style=\"margin: 0; padding: 0 5px; font-size: 28px; font-weight: 400;\">\r\n" + 
@@ -245,9 +243,6 @@ public class MemberController {
 					"		<span style=\"font-size: 24px;\">"+ranCode+"</span>\r\n" + 
 					"	</p>\r\n" +  
 					"</div>";
-			
-			System.out.println("제목 : "+emailTitle);
-			System.out.println("받는 사람 : " +member.getMemberEmail());
 			
 			emailSender.sendMail(emailTitle, member.getMemberEmail(), emailContent);
 			
@@ -275,7 +270,6 @@ public class MemberController {
 				ranCode += randomCode;
 			}
 		}
-		System.out.println("생성된 랜덤 코드: "+ranCode);
 		
 		String memberEmail = member.getMemberEmail();
 		
@@ -309,6 +303,9 @@ public class MemberController {
 	        @ModelAttribute MemberDTO member, 
 	        @ModelAttribute MultipartFile memberProfile1, 
 	        @RequestHeader("Authorization") String token) {
+		
+		System.out.println(member);
+		System.out.println(memberProfile1);
 
 	    // 프로필 사진 파일이 있을 때만 처리
 	    if (memberProfile1 != null && !memberProfile1.isEmpty()) {
@@ -356,8 +353,6 @@ public class MemberController {
 	@GetMapping(value = "/petNo/{petNo}")
 	public ResponseEntity<PetDTO> selectOnePet(@PathVariable int petNo){
 		PetDTO pet = memberService.selectOnePet(petNo);
-		System.out.println(petNo);
-		System.out.println(pet);
 		return ResponseEntity.ok(pet);
 	}
 	
@@ -367,8 +362,6 @@ public class MemberController {
 	    @PathVariable int petNo, 
 	    @ModelAttribute PetDTO pet, 
 	    @ModelAttribute MultipartFile petProfile1) {
-		
-		System.out.println(pet);
 
 	    // 프로필 사진이 비어있지 않으면 업로드 처리
 	    if (petProfile1 != null && !petProfile1.isEmpty()) {
@@ -440,7 +433,6 @@ public class MemberController {
 	// 일정 추가
 	@PostMapping(value = "/insertSchedule")
 	public ResponseEntity<Integer> insertSchedule(@RequestBody ScheduleDTO schedule) {
-		System.out.println(schedule);
 		int result = memberService.insertSchedule(schedule);
 		return ResponseEntity.ok(result);
 	}
@@ -448,7 +440,6 @@ public class MemberController {
 	// 일정 삭제
 	@DeleteMapping(value = "/deleteSchedule")
 	public ResponseEntity<Integer> deleteSchedule(@RequestParam int dayNo) {
-	    System.out.println(dayNo);
 	    int result = memberService.deleteSchedule(dayNo);
 	    return ResponseEntity.ok(result);
 	}
@@ -456,7 +447,6 @@ public class MemberController {
 	// 일정 수정
 	@PostMapping(value = "/updateSchedule")
 	public ResponseEntity<Integer> updateSchedule(@RequestBody ScheduleDTO schedule) {
-		System.out.println("수정 스케쥴 : " + schedule);
 		int result = memberService.updateSchedule(schedule);
 		return ResponseEntity.ok(result);
 	}
@@ -468,5 +458,12 @@ public class MemberController {
 		List<BuyListDTO> buyList = memberService.selectBuyList(memberEmail);
 		System.out.println(buyList);
 		return ResponseEntity.ok(buyList);
+	}
+	
+	// 구매 내역 상세보기
+	@GetMapping(value = "/selectOneBuy/{buyNo}")
+	public ResponseEntity<BuyListDTO> selectOneBuy(@PathVariable int buyNo) {
+	    BuyListDTO buyList = memberService.selectOneBuy(buyNo);
+	    return ResponseEntity.ok(buyList);
 	}
 }

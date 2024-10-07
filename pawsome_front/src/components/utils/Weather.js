@@ -20,6 +20,7 @@ import {
   WeatherList,
 } from "./StyledComponents"; // 스타일 컴포넌트를 불러오는 경로를 수정하세요.
 import { SlDrop } from "react-icons/sl"; // 아이콘을 불러오는 경로를 수정하세요.
+import Loading from "./Loading";
 
 const Weather = () => {
   const [currentWeather, setCurrentWeather] = useState(null);
@@ -38,6 +39,7 @@ const Weather = () => {
       .then(([weatherResponse, forecastResponse]) => {
         setCurrentWeather(weatherResponse.data);
         groupForecastByDay(forecastResponse.data.list);
+        getKoreanWeekday(forecastResponse.data.list);
         setLoading(false);
       })
       .catch((error) => {
@@ -59,7 +61,7 @@ const Weather = () => {
   };
 
   const getKoreanWeekday = (date) => {
-    const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+    const weekdays = ["월", "화", "수", "목", "금", "토", "일"];
     return weekdays[new Date(date).getDay()]; // 요일 인덱스에 맞춰 한글 요일 반환
   };
 
@@ -96,11 +98,11 @@ const Weather = () => {
   };
 
   if (loading) {
-    return <p>로딩 중...</p>;
+    return <Loading />;
   }
 
   if (error) {
-    return <p>오류가 발생했습니다: {error.message}</p>;
+    return <Loading />;
   }
 
   const temp = currentWeather.main.temp;

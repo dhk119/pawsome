@@ -140,6 +140,12 @@ public class ProductController {
 		return ResponseEntity.ok(result == 1+reviewFileList.size());
 	}
 	
+	@GetMapping(value = "/product-like")
+	public ResponseEntity<List> productLike(@PathVariable String memberEmail) {
+		List productList = productService.productLike(memberEmail);
+		return ResponseEntity.ok(productList);
+	}
+
 	@GetMapping(value="/selectReview/{reviewNo}")
 	public ResponseEntity<ReviewDTO> selectOneReview (@PathVariable int reviewNo){
 		ReviewDTO review = productService.selectOneReview(reviewNo);

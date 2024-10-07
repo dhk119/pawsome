@@ -1,6 +1,7 @@
 package kr.co.iei.market.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,6 +15,7 @@ import kr.co.iei.market.model.dto.RefundRequestDTO;
 import kr.co.iei.market.model.dto.ReviewDTO;
 import kr.co.iei.market.model.dto.ReviewFileDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.util.ChartData;
 import kr.co.iei.util.PageInfo;
 
 @Mapper
@@ -54,6 +56,10 @@ public interface MarketDao {
 	int searchTotalCountQnaOption(boolean answer, int option, boolean answer2);
 
 	List searchQnaListOption(int start, int end, boolean answer, int option);
+	
+	List<ChartData> productChart(int typeCategory, int buyState);
+	
+	List<ChartData> producIncomeChart(int typeCategory, int buyState);
 	
 	/*원희*/
 	int totalCount(int typeCategory, String mainCategory);
@@ -145,12 +151,13 @@ public interface MarketDao {
 	List<ReviewDTO> starList(int productNo);
 
 	
-	
 
-	
 /*마이페이지 구매내역 - 정원*/
 	List<BuyListDTO> selectBuyList(String memberEmail);
 
+	List productLike(String memberEmail);
+
+	BuyListDTO selectOneBuy(int buyNo);
 
 
 }

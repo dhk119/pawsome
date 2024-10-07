@@ -2,6 +2,7 @@ package kr.co.iei.member.model.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -196,6 +197,11 @@ public class MemberService {
 		List<BuyListDTO> buyList = MarketDao.selectBuyList(memberEmail);
 		System.out.println(buyList);
 		return buyList;
+	}
+
+	public BuyListDTO selectOneBuy(int buyNo) {
+		BuyListDTO buy = MarketDao.selectOneBuy(buyNo);
+	    return buy;
 	}
 
 }

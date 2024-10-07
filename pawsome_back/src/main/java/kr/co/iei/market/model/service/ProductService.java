@@ -144,6 +144,11 @@ public class ProductService {
 		}
 	}
 
+	public List productLike(String memberEmail) {
+		List list = marketDao.productLike(memberEmail);
+		return list;
+	}
+
 	public ReviewDTO selectOneReview(int reviewNo) {
 		ReviewDTO review = marketDao.selectOneReview(reviewNo);
 		List reviewFileList = marketDao.selectReviewFileList(reviewNo);

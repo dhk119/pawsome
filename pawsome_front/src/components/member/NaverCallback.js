@@ -48,7 +48,7 @@ const NaverCallback = () => {
     }
   }, []);
 
-  return <div>로딩...</div>;
+  return <div></div>;
 };
 
 export default NaverCallback;

@@ -15,7 +15,7 @@ const PetService = () => {
     navigate("/service/healthTest");
   };
   return (
-    <div className="service-container">
+    <div>
       <nav className="nav-box">
         <ul>
           <li className="nav-btn">
@@ -29,20 +29,22 @@ const PetService = () => {
           </li>
         </ul>
       </nav>
-      <div style={{ position: "relative" }}>
-        <img
-          src="/image/service/serviceHeader.png"
-          style={{ width: "1200px", position: "relative" }}
-        />
-        <button className="sm-btn1" onClick={buttonClick1}>
-          지도
-        </button>
-        <button className="sm-btn2" onClick={buttonClick2}>
-          멍BTI
-        </button>
-        <button className="sm-btn3" onClick={buttonClick3}>
-          건강체크
-        </button>
+      <div className="service-container">
+        <div style={{ position: "relative" }}>
+          <img
+            src="/image/service/serviceHeader.png"
+            style={{ width: "1200px", position: "relative" }}
+          />
+          <button className="sm-btn1" onClick={buttonClick1}>
+            지도
+          </button>
+          <button className="sm-btn2" onClick={buttonClick2}>
+            멍BTI
+          </button>
+          <button className="sm-btn3" onClick={buttonClick3}>
+            건강체크
+          </button>
+        </div>
       </div>
     </div>
   );

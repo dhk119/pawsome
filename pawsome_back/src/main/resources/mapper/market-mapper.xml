@@ -52,7 +52,7 @@
 	<select id="searchTotalCountMagnum" resultType="int">
 		select count(*) from product where
 		<choose>
-			<when test="option.equals('A')">
+			<when test='option.equals("A")'>
 				<choose>
 					<when test="type.equals('all')">
 						product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price like '%'||#{keyword}||'%'
@@ -89,7 +89,7 @@
 	<select id="searchProductListMagnum" resultType="product">
 		select * from (select rownum as rnum, b.* from(SELECT * from product where
 		<choose>
-			<when test="option.equals('A')">
+			<when test='option.equals("A")'>
 				<choose>
 					<when test="type.equals('all')">
 						product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price like '%'||#{keyword}||'%'
@@ -336,7 +336,30 @@
 		</choose>
 		order by qna_no desc)b) where rnum BETWEEN #{start} and #{end}
 	</select>
-
+	<select id="productChart" resultType="chartData">
+		select product.main_category as key, sum(buy_count) as count from buy_list join product using(product_no) where 
+		<choose>
+			<when test="typeCategory==0">
+				buy_state=#{buyState}
+			</when>
+			<otherwise>
+				 type_category=#{typeCategory} and buy_state=#{buyState}
+			</otherwise>
+		</choose>
+		group by main_category
+	</select>
+	<select id="producIncomeChart" resultType="chartData">
+		select main_category as key, sum(product_price*(buy_count)) as count from buy_list join product using(product_no) where
+		<choose>
+			<when test="typeCategory==0">
+				buy_state=#{buyState}
+			</when>
+			<otherwise>
+				type_category=#{typeCategory} and buy_state=#{buyState}
+			</otherwise>
+		</choose>
+		group by main_category
+	</select>
 
 	<!-- 원희 -->
 	<select id="totalCount" resultType="int">
@@ -541,7 +564,7 @@ group by star order by star desc
 	
 <!-- 정원 -->
 <!-- 마이페이지 구매내역 -->
-	<resultMap id="buyListMap" type="kr.co.iei.market.model.dto.BuyListDTO">
+	<resultMap id="buyListMap" type="buyList">
         <result property="buyNo" column="buy_no"/>
         <result property="productNo" column="product_no"/>
         <result property="payUid" column="pay_uid"/>
@@ -550,7 +573,7 @@ group by star order by star desc
         <result property="buyState" column="buy_state"/>
 
         <!-- 상품 정보 매핑 -->
-        <association property="product" javaType="kr.co.iei.market.model.dto.ProductDTO">
+        <association property="product" javaType="product">
             <result property="productNo" column="product_no"/>
             <result property="productName" column="product_name"/>
             <result property="typeCategory" column="type_category"/>
@@ -562,7 +585,7 @@ group by star order by star desc
         </association>
 
         <!-- 결제 정보 매핑 -->
-        <association property="pay" javaType="kr.co.iei.market.model.dto.PayDTO">
+        <association property="pay" javaType="pay">
             <result property="payUid" column="pay_uid"/>
             <result property="totalPrice" column="total_price"/>
             <result property="payDate" column="pay_date"/>
@@ -581,5 +604,50 @@ group by star order by star desc
         JOIN pay pay ON b.pay_uid = pay.pay_uid
         WHERE b.member_email = #{memberEmail}
     </select>
+    
+    <select id="productLike" resultType="productLike">
+    	select * from product_like JOIN product p USING (product_no)
+    </select>
+    
+    <select id="selectOneBuy" parameterType="int" resultMap="buyListResultMap">
+        SELECT
+            b.buy_no,
+            b.product_no,
+            b.pay_uid,
+            b.buy_count,
+            b.member_email,
+            b.buy_state,
+            p.product_thumb,
+            p.product_name,
+            p.product_price,
+            py.pay_date
+        FROM
+            buy_list b
+        JOIN
+            product p ON b.product_no = p.product_no
+        JOIN
+            pay py ON b.pay_uid = py.pay_uid
+        WHERE
+            b.buy_no = #{buyNo}
+    </select>
+
+    <resultMap id="buyListResultMap" type="buyList">
+        <id property="buyNo" column="buyNo" />
+        <result property="productNo" column="productNo" />
+        <result property="payUid" column="payUid" />
+        <result property="buyCount" column="buyCount" />
+        <result property="memberEmail" column="memberEmail" />
+        <result property="buyState" column="buyState" />
+        
+        <association property="product" javaType="product">
+            <result property="productThumb" column="productThumb" />
+            <result property="productName" column="productName" />
+            <result property="productPrice" column="productPrice" />
+        </association>
+
+        <association property="pay" javaType="pay">
+            <result property="payDate" column="payDate" />
+        </association>
+    </resultMap>
 	
 </mapper>
