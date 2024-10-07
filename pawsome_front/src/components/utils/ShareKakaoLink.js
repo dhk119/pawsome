@@ -1,13 +1,17 @@
 import { useEffect } from "react";
 import { IoIosSend } from "react-icons/io";
+import * as DOMPurify from "dompurify";
 // kakao 기능 동작을 위해 넣어준다.
 const { Kakao } = window;
 
-export default () => {
+export default (props) => {
+  const board = props.board;
   // 배포한 자신의 사이트
-  const realUrl = "http://localhost:3000";
+  const realUrl = `http://192.168.10.16:3000/board/view/${board.boardNo}`;
   // 로컬 주소 (localhost 3000 같은거)
   const resultUrl = window.location.href;
+  const cleanContent = DOMPurify.sanitize(String(board.boardContent));
+  const strippedContent = cleanContent.replace(/<\/?p[^>]*>/g, ""); // 정규표현식으로 에디터 태그 없애기
 
   // 재랜더링시에 실행되게 해준다.
   useEffect(() => {
@@ -23,19 +27,20 @@ export default () => {
     Kakao.Share.sendDefault({
       objectType: "feed",
       content: {
-        title: "오늘의 디저트",
-        description: "아메리카노, 빵, 케익",
-        imageUrl:
-          "https://mud-kage.kakao.com/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg",
+        title: board.boardTitle,
+        description: strippedContent,
+        imageUrl: "https://ifh.cc/g/bD50pd.png",
         link: {
           mobileWebUrl: realUrl,
+          webUrl: realUrl,
         },
       },
       buttons: [
         {
-          title: "나도 테스트 하러가기",
+          title: "상세보기",
           link: {
             mobileWebUrl: realUrl,
+            webUrl: realUrl,
           },
         },
       ],

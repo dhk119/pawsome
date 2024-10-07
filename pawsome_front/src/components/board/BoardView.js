@@ -16,7 +16,6 @@ import { RiWechatLine } from "react-icons/ri";
 import Swal from "sweetalert2";
 import { FiCornerDownRight } from "react-icons/fi";
 import ShareKakaoLink from "../utils/ShareKakaoLink";
-// import { ShareKakaoLink } from "src/components/utils/ShareKakaoLink";
 const BoardView = () => {
   const isLogin = useRecoilValue(isLoginState);
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -96,14 +95,6 @@ const BoardView = () => {
       });
   }, [boardNo, memberNickname]);
 
-  // //공유하기
-  // useEffect(() => {
-  //   const script = document.createElement("script");
-  //   script.src = "https://developers.kakao.com/sdk/js/kakao.js";
-  //   script.async = true;
-  //   document.body.appendChild(script);
-  //   return () => document.body.removeChild(script);
-  // }, []);
   const deleteBoard = () => {
     axios
       .delete(`${backServer}/board/${board.boardNo}`)
@@ -329,7 +320,7 @@ const BoardView = () => {
                   좋아요
                 </button>
               )}
-              <ShareKakaoLink />
+              <ShareKakaoLink board={board} />
             </div>
           </div>
         </div>
