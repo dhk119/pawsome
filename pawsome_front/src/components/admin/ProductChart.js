@@ -154,7 +154,11 @@ const ProductChart = () => {
           >
             <CartesianGrid strokeDasharray="10 10" />
             <XAxis dataKey="key" />
-            <YAxis />
+            {renderChart === "수입 통계" ? (
+              <YAxis />
+            ) : (
+              <YAxis domain={[10000, 90000]} />
+            )}
             <Tooltip />
             <Bar dataKey="count" fill="#ffa518" />
           </BarChart>
