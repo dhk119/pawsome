@@ -67,8 +67,14 @@ npm install styled-components --force
 김대헌 2024-10-04 18:08
 npm install googleapis --force
 
-이원희 2021-10-05 16:07
+이재호 2024-10-07 11:55
+npm install html2canvas --force
+ 
+이원희 2024-10-05 16:07
 npm install @mui/icons-material --force
 
-이재호 2024-10-07 11:55
-npm install html2canvas --force 
+김대헌 2024-10-07 15:48
+npm install react-youtube --force
+
+김대헌 2024-10-07 21:30
+npm install react-i18next i18next --save --force

@@ -363,12 +363,20 @@ a {
   font-weight: 200;
 }
 .video-wrap {
-  width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1600px;
   height: 500px;
   margin: 50px;
-  background-color: var(--main1);
+  padding: 0 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
-
+.video-wrap > div:hover {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
 .market-preview-wrap {
   display: flex;
   justify-content: center;
@@ -406,7 +414,7 @@ a {
 }
 .Swiper {
   position: absolute;
-  width: 1700px;
+  width: 1600px;
   height: 500px;
 }
 .swiper-slide {
