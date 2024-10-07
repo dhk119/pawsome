@@ -9,10 +9,14 @@ import { useState } from "react";
 import "./default.css";
 import BoardList from "../board/BoardList";
 import Weather from "../utils/Weather";
+import YouTube from "react-youtube";
+import VideoList from "./VideoList";
+import ProductList from "../market/ProductList";
 
 const Main = () => {
   const [product, setProduct] = useState("");
   const navigate = useNavigate();
+
   return (
     <section className="section" style={{ width: "100%" }}>
       <div className="search-wrap">
@@ -94,7 +98,19 @@ const Main = () => {
         </div>
       </div>
       <div className="api-wrap">
-        <div className="video-wrap">동영상 api 자리</div>
+        <div className="weather-title" style={{ marginLeft: "90px" }}>
+          <span>
+            <span
+              className="material-icons"
+              style={{ color: "#ffa518", marginRight: "15px" }}
+            >
+              pets
+            </span>
+            반려동물 SHORTS
+          </span>
+          <span>#재미난 영상을 확인해 보세요</span>
+        </div>
+        <VideoList />
       </div>
       <div className="market-preview-wrap">
         <div className="market-main-title">
@@ -120,7 +136,7 @@ const Main = () => {
         <div className="main-swiper">
           <>
             <Swiper
-              slidesPerView={5}
+              slidesPerView={4}
               className="Swiper"
               pagination={{
                 type: "fraction",
@@ -139,7 +155,7 @@ const Main = () => {
                 />
               </SwiperSlide>
               <SwiperSlide>
-                <img src="/image/nursecat.png" />-
+                <img src="/image/nursecat.png" />
               </SwiperSlide>
               <SwiperSlide>
                 <img src="/image/nursecat.png" />
