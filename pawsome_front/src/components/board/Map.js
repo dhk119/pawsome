@@ -234,11 +234,6 @@ const Map = () => {
           margin: "60px auto",
         }}
       >
-        <h3>
-          검색하실때 주변 지하철역이나 **동,**구를 이용해 검색해주세요. "예)당산
-          동물병원, 영등포구 동물병원"
-        </h3>
-
         <nav className="nav-box">
           <ul>
             <li className="nav-btn">
@@ -263,25 +258,42 @@ const Map = () => {
             </li>
           </ul>
         </nav>
-
         <div
-          id="map"
           style={{
-            margin: "0 auto",
-            width: "1000px",
-            height: "600px",
+            borderRadius: "15px",
+            padding: "50px 0",
+            width: "1400px",
+            display: "flex",
+            flexDirection: "column",
+            marginLeft: "250px",
+            boxShadow: "0 4px 15px rgba(0, 0, 0, 0.3)",
+            marginTop: "50px",
           }}
         >
-          <div id="menu_wrap">
-            <input
-              type="text"
-              id="keyword"
-              ref={keywordInputRef} // ref 추가
-              placeholder="검색어를 입력하세요"
-            />
-            <button id="searchButton">검색</button>
-            <ul id="placesList"></ul>
-            <div id="pagination"></div>
+          <h3 style={{ margin: "30px 0" }}>
+            검색하실때 주변 지하철역이나 **동,**구를 이용해 검색해주세요.
+            "예)당산 동물병원, 영등포구 동물병원"
+          </h3>
+
+          <div
+            id="map"
+            style={{
+              margin: "0 auto",
+              width: "1000px",
+              height: "600px",
+            }}
+          >
+            <div id="menu_wrap">
+              <input
+                type="text"
+                id="keyword"
+                ref={keywordInputRef} // ref 추가
+                placeholder="검색어를 입력하세요"
+              />
+              <button id="searchButton">검색</button>
+              <ul id="placesList"></ul>
+              <div id="pagination"></div>
+            </div>
           </div>
         </div>
       </div>
