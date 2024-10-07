@@ -229,4 +229,12 @@ public class AdminService {
 		List<ChartData> list=memberDao.petChartGender();
 		return list;
 	}
+	public List<ChartData> productChart(int typeCategory, int buyState) {
+		List<ChartData> list=marketDao.productChart(typeCategory,buyState);
+		return list;
+	}
+	public List<ChartData> productIncomeChart(int typeCategory, int buyState) {
+		List<ChartData> list=marketDao.producIncomeChart(typeCategory,buyState);
+		return list;
+	}
 }

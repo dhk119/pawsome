@@ -175,4 +175,14 @@ public class AdminController {
 		List<ChartData> list=adminService.petChartGender();
 		return ResponseEntity.ok(list);
 	}
+	@GetMapping(value = "/productChart/{typeCategory}/{buyState}")
+	public ResponseEntity<List<ChartData>> productChart(@PathVariable int typeCategory, @PathVariable int buyState){
+		List<ChartData> list=adminService.productChart(typeCategory, buyState);
+		return ResponseEntity.ok(list);
+	}
+	@GetMapping(value = "/productIncomeChart/{typeCategory}/{buyState}")
+	public ResponseEntity<List<ChartData>> productIncomeChart(@PathVariable int typeCategory, @PathVariable int buyState){
+		List<ChartData> list=adminService.productIncomeChart(typeCategory, buyState);
+		return ResponseEntity.ok(list);
+	}
 }
