@@ -11,14 +11,17 @@ import Cart from "./Cart";
 const MainNav = () => {
   const [typeCategory, setTypeCategory] = useState(0);
   const [mainCategory, setMainCategory] = useState("all");
+  const [reqPage, setReqPage] = useState(1);
   const navigate = useNavigate();
   const changeType = (e) => {
     setTypeCategory(e.target.id);
     setMainCategory("all");
+    setReqPage(1);
     navigate(`/market/main/productList/${e.target.id}/all`);
   };
   const changeMain = (e) => {
     setMainCategory(e.target.id);
+    setReqPage(1);
     navigate(`/market/main/productList/${typeCategory}/${e.target.id}`);
   };
 
@@ -95,7 +98,7 @@ const MainNav = () => {
       <Routes>
         <Route
           path="productList/:typeCategory/:mainCategory"
-          element={<ProductList />}
+          element={<ProductList reqPage={reqPage} setReqPage={setReqPage} />}
         />
         <Route path="productDetail/:productNo/*" element={<ProductDetail />} />
         <Route

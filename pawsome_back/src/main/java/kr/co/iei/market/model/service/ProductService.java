@@ -142,6 +142,13 @@ public class ProductService {
 			return 0;			
 		}
 	}
+
+	public ReviewDTO selectOneReview(int reviewNo) {
+		ReviewDTO review = marketDao.selectOneReview(reviewNo);
+		List reviewFileList = marketDao.selectReviewFileList(reviewNo);
+		review.setReviewFileList(reviewFileList);
+		return review;
+	}
 	
 	
 }

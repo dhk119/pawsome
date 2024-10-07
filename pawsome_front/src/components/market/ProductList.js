@@ -17,10 +17,11 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { loginEmailState } from "../utils/RecoilData";
 import ScrollPage from "../utils/ScrollPage";
 
-const ProductList = () => {
+const ProductList = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [productList, setProductList] = useState([]);
-  const [reqPage, setReqPage] = useState(1);
+  const reqPage = props.reqPage;
+  const setReqPage = props.setReqPage;
   const [pi, setPi] = useState({});
   const [totalCount, setTotalCount] = useState();
   const params = useParams();
@@ -29,6 +30,8 @@ const ProductList = () => {
   const [filterType, setFilterType] = useState(1);
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [like, setLike] = useState(false);
+
+  console.log(reqPage);
   useEffect(() => {
     axios
       .get(
