@@ -164,6 +164,20 @@
 .review-img-wrap {
   display: flex;
 }
+.review-img-wrap > div {
+  margin-right: 20px;
+}
+.review-img-wrap > label {
+  margin-right: 20px;
+}
 .review-img-wrap > .preview-img svg {
-  font-size: 20px;
+  font-size: 24px;
+}
+.review-img-wrap img {
+  border: 1px solid #ffa518;
+  width: 70px;
+  height: 70px;
+  padding: 10px 10px;
+  border-radius: 15px;
+  margin: 10px 10px;
 }

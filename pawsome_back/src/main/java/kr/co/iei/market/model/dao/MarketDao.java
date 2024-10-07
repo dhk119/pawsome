@@ -123,6 +123,10 @@ public interface MarketDao {
 	int selectReviewNo(ReviewDTO review);
 	
 	int insertReviewFile(ReviewFileDTO reviewFile);
+	
+	ReviewDTO selectOneReview(int reviewNo);
+	
+	List selectReviewFileList(int reviewNo);
 
 	
 	

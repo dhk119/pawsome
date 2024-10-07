@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import QuillEditor from "./../../utils/QuillEditor";
 import Star from "./Star";
 import { TiDelete } from "react-icons/ti";
@@ -10,12 +10,32 @@ const ReviewFrm = (props) => {
   const reviewFile = props.reviewFile;
   const setReviewFile = props.setReviewFile;
   const product = props.product;
-  //별점처리
   const value = props.value;
   const setValue = props.setValue;
   //파일 미리보기
   const [showFile, setShowFile] = useState([]);
-  //첨부파일추가
+  //수정 시 사용
+  const newFile = props.newFile;
+  const setNewFile = props.setNewFile;
+  const delFileNo = props.delFileNo;
+  const setDelFileNo = props.setDelFileNo;
+
+  /*
+  useEffect(() => {
+    const addShowFile = () => {
+      const showArr = new Array(); //화면에 보여줄 이미지
+      for (let i = 0; i < newFile.length; i++) {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(newFile[i]);
+        fileReader.onloadend = () => {
+          showArr.push(fileReader.result);
+          setShowFile([...showFile, ...showArr]);
+        };
+      }
+    };
+  }, []);
+  */
+  //첨부파일추가함수
   const addFile = (e) => {
     const files = e.currentTarget.files; //배열같지만 아니기에 for문으로 넣어줘야 함
     const fileArr = new Array(); //백으로 전송할 이미지
@@ -31,6 +51,7 @@ const ReviewFrm = (props) => {
     }
     setReviewFile([...reviewFile, ...fileArr]);
   };
+  console.log(delFileNo);
 
   return (
     <>
@@ -85,6 +106,27 @@ const ReviewFrm = (props) => {
               onChange={addFile}
               multiple
             />
+            {/* 리뷰 수정 시 돌아가는 함수 */}
+            {newFile
+              ? newFile.map((file, i) => {
+                  const deleteFile = () => {
+                    const newFileList = newFile.filter((item) => {
+                      return item !== file;
+                    });
+                    setNewFile(newFileList);
+                    setDelFileNo([...delFileNo, file.reviewFileNo]);
+                  };
+                  return (
+                    <div className="preview-img" key={"oldFile-" + i}>
+                      <img className="fileimg" src={file.fileimg} />
+                      <span className="del-file-icon" onClick={deleteFile}>
+                        <TiDelete />
+                      </span>
+                    </div>
+                  );
+                })
+              : ""}
+            {/* 파일 추가 시 돌아가는 함수(화면에 하나씩 추가로 보여줌) */}
             {showFile.map((fileimg, i) => {
               const deleteFile = () => {
                 reviewFile.splice(i, 1);
