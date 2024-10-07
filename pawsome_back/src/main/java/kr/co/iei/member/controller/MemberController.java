@@ -454,16 +454,16 @@ public class MemberController {
 	// 구매 내역 불러오기
 	@GetMapping(value = "/selectBuyList/{memberEmail}")
 	public ResponseEntity<List> selectBuyList(@PathVariable String memberEmail) {
-
+		System.out.println(memberEmail);
 		List<BuyListDTO> buyList = memberService.selectBuyList(memberEmail);
 		System.out.println(buyList);
 		return ResponseEntity.ok(buyList);
 	}
 	
 	// 구매 내역 상세보기
-		@GetMapping(value = "/selectBuyList/{buyNo}")
-		public ResponseEntity<BuyListDTO> selectOneBuy(@PathVariable int buyNo) {
-		    BuyListDTO buyList = memberService.selectOneBuy(buyNo);
-		    return ResponseEntity.ok(buyList);
-		}
+	@GetMapping(value = "/selectOneBuy/{buyNo}")
+	public ResponseEntity<BuyListDTO> selectOneBuy(@PathVariable int buyNo) {
+	    BuyListDTO buyList = memberService.selectOneBuy(buyNo);
+	    return ResponseEntity.ok(buyList);
+	}
 }

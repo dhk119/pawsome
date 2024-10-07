@@ -555,16 +555,16 @@
     
     <select id="selectOneBuy" parameterType="int" resultMap="buyListResultMap">
         SELECT
-            b.buy_no AS buyNo,
-            b.product_no AS productNo,
-            b.pay_uid AS payUid,
-            b.buy_count AS buyCount,
-            b.member_email AS memberEmail,
-            b.buy_state AS buyState,
-            p.product_thumb AS productThumb,
-            p.product_name AS productName,
-            p.product_price AS productPrice,
-            py.pay_date AS payDate
+            b.buy_no,
+            b.product_no,
+            b.pay_uid,
+            b.buy_count,
+            b.member_email,
+            b.buy_state,
+            p.product_thumb,
+            p.product_name,
+            p.product_price,
+            py.pay_date
         FROM
             buy_list b
         JOIN

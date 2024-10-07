@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom"; // useParams를 추가
 const BuyView = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [buy, setBuy] = useState({});
-  const { buyNo } = useParams(); // URL에서 buyNo 값을 가져옴
+  const { buyNo } = useParams();
 
   useEffect(() => {
     if (buyNo) {
