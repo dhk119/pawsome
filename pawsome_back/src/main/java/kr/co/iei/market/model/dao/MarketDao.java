@@ -1,6 +1,7 @@
 package kr.co.iei.market.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -125,12 +126,12 @@ public interface MarketDao {
 	int insertReviewFile(ReviewFileDTO reviewFile);
 
 	
-	
 
-	
 /*마이페이지 구매내역 - 정원*/
 	List<BuyListDTO> selectBuyList(String memberEmail);
 
+	List productLike(String memberEmail);
 
+	BuyListDTO selectOneBuy(int buyNo);
 
 }

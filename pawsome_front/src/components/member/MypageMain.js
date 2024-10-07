@@ -15,6 +15,7 @@ import PetView from "./PetView";
 import DeleteMember from "./DeleteMember";
 import BuyList from "./BuyList";
 import ProductLike from "./ProductLike";
+import BuyView from "./BuyView";
 
 const MypageMain = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
@@ -59,6 +60,7 @@ const MypageMain = () => {
           <Route path="/deleteMember/:memberEmail" element={<DeleteMember />} />
           <Route path="/buy-list" element={<BuyList />} />
           <Route path="/product-like" element={<ProductLike />} />
+          <Route path="/buy-view/:buyNo" element={<BuyView />} />
         </Routes>
       </div>
     </div>

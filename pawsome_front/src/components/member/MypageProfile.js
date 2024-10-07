@@ -92,7 +92,6 @@ const MypageProfile = () => {
                 <div className="pet-name">{pet.petName}</div>
                 <div>{pet.petBreed}</div>
                 <div>{getPetAge(pet.petBirth)}</div>{" "}
-                {/* 생년월일을 변환하여 표시 */}
               </div>
               <div className="pet-more-view">
                 <SlArrowRight />

@@ -142,6 +142,11 @@ public class ProductService {
 			return 0;			
 		}
 	}
+
+	public List productLike(String memberEmail) {
+		List list = marketDao.productLike(memberEmail);
+		return list;
+	}
 	
 	
 }

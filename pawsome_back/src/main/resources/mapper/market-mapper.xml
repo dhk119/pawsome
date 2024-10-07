@@ -503,7 +503,7 @@
 	
 <!-- 정원 -->
 <!-- 마이페이지 구매내역 -->
-	<resultMap id="buyListMap" type="kr.co.iei.market.model.dto.BuyListDTO">
+	<resultMap id="buyListMap" type="buyList">
         <result property="buyNo" column="buy_no"/>
         <result property="productNo" column="product_no"/>
         <result property="payUid" column="pay_uid"/>
@@ -512,7 +512,7 @@
         <result property="buyState" column="buy_state"/>
 
         <!-- 상품 정보 매핑 -->
-        <association property="product" javaType="kr.co.iei.market.model.dto.ProductDTO">
+        <association property="product" javaType="product">
             <result property="productNo" column="product_no"/>
             <result property="productName" column="product_name"/>
             <result property="typeCategory" column="type_category"/>
@@ -524,7 +524,7 @@
         </association>
 
         <!-- 결제 정보 매핑 -->
-        <association property="pay" javaType="kr.co.iei.market.model.dto.PayDTO">
+        <association property="pay" javaType="pay">
             <result property="payUid" column="pay_uid"/>
             <result property="totalPrice" column="total_price"/>
             <result property="payDate" column="pay_date"/>
@@ -543,5 +543,50 @@
         JOIN pay pay ON b.pay_uid = pay.pay_uid
         WHERE b.member_email = #{memberEmail}
     </select>
+    
+    <select id="productLike" resultType="productLike">
+    	select * from product_like JOIN product p USING (product_no)
+    </select>
+    
+    <select id="selectOneBuy" parameterType="int" resultMap="buyListResultMap">
+        SELECT
+            b.buy_no AS buyNo,
+            b.product_no AS productNo,
+            b.pay_uid AS payUid,
+            b.buy_count AS buyCount,
+            b.member_email AS memberEmail,
+            b.buy_state AS buyState,
+            p.product_thumb AS productThumb,
+            p.product_name AS productName,
+            p.product_price AS productPrice,
+            py.pay_date AS payDate
+        FROM
+            buy_list b
+        JOIN
+            product p ON b.product_no = p.product_no
+        JOIN
+            pay py ON b.pay_uid = py.pay_uid
+        WHERE
+            b.buy_no = #{buyNo}
+    </select>
+
+    <resultMap id="buyListResultMap" type="buyList">
+        <id property="buyNo" column="buyNo" />
+        <result property="productNo" column="productNo" />
+        <result property="payUid" column="payUid" />
+        <result property="buyCount" column="buyCount" />
+        <result property="memberEmail" column="memberEmail" />
+        <result property="buyState" column="buyState" />
+        
+        <association property="product" javaType="product">
+            <result property="productThumb" column="productThumb" />
+            <result property="productName" column="productName" />
+            <result property="productPrice" column="productPrice" />
+        </association>
+
+        <association property="pay" javaType="pay">
+            <result property="payDate" column="payDate" />
+        </association>
+    </resultMap>
 	
 </mapper>

@@ -2,6 +2,7 @@ package kr.co.iei.member.model.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -80,4 +81,6 @@ public interface MemberDao {
 	List petPercentClass();
 	
 	List petPercentClasses();
+
+	Map<String, Object> selectOneBuy(int buyNo);
 }
