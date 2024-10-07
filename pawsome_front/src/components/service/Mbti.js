@@ -243,6 +243,7 @@ const Mbti = () => {
             style={{ width: "600px" }}
           ></img>
         </div>
+
         <button width="1000px" onClick={onClickDownloadButton}>
           앨범에 저장
         </button>

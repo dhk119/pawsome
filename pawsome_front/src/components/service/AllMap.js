@@ -226,8 +226,22 @@ const Map = () => {
   return (
     <div
       id="map-box"
-      style={{ position: "relative", textAlign: "center", color: "#FFA518" }}
+      style={{
+        position: "relative",
+        textAlign: "center",
+        color: "#FFA518",
+        width: "1300px",
+      }}
     >
+      <div>
+        <Link
+          to="/service/petService"
+          style={{ color: "#ffa518", float: "left" }}
+        >
+          메인으로
+        </Link>
+      </div>
+
       <nav className="nav-box">
         <ul>
           <li className="nav-btn">
@@ -252,10 +266,12 @@ const Map = () => {
           </li>
         </ul>
       </nav>
+
       <h3>
         검색하실때 주변 지하철역이나 **동,**구를 이용해 검색해주세요. "예)당산
         동물병원, 영등포구 동물병원"
       </h3>
+
       <div id="map">
         <div id="menu_wrap">
           <input

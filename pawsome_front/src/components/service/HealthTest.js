@@ -5,8 +5,11 @@ import { isLoginState, loginEmailState } from "../utils/RecoilData";
 import axios from "axios";
 import { Bar, BarChart, CartesianGrid, Legend, XAxis, YAxis } from "recharts";
 import { Tooltip } from "@mui/material";
-
+import html2canvas from "html2canvas";
 const HealthTest = () => {
+  const [selectedWeightManagementTip, setSelectedWeightManagementTip] =
+    useState("");
+
   const [result, setResults] = useState([
     { name: "dog", count: 0 },
     { name: "cat", count: 0 },
@@ -140,6 +143,7 @@ const HealthTest = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault(); // 기본 동작 방지
+    setSelectedWeightManagementTip(weightManagementTips[formData.weight]);
     console.log("정보 입력 완료"); // 확인용 로그
     setIsTestStarted(true);
   };
@@ -335,7 +339,13 @@ const HealthTest = () => {
   const startWithoutPet = () => {
     setIsStartWithoutPet(true);
   };
-  const resultSubmit = async () => {};
+  const weightManagementTips = {
+    thin: "체중이 약간 마른 상태입니다. 적절한 영양 공급과 함께 건강한 체중을 유지하세요.",
+    normal: "체중이 정상입니다. 꾸준한 운동과 균형 잡힌 식사를 유지하세요.",
+    overweight: "체중이 약간 살찐 상태입니다. 다이어트를 고려해보세요.",
+    veryOverweight:
+      "체중이 많이 살찐 상태입니다. 전문가의 도움을 받는 것이 좋습니다.",
+  };
 
   const petDataSelection = (pet) => {
     setSelectedPet(pet.petName);
@@ -488,6 +498,20 @@ const HealthTest = () => {
         return "gray";
     }
   };
+  const onClickDownloadButton = () => {
+    const target = document.getElementById("result");
+    if (!target) {
+      return alert("사진 저장에 실패했습니다.");
+    }
+    html2canvas(target).then((canvas) => {
+      const link = document.createElement("a");
+      document.body.appendChild(link);
+      link.href = canvas.toDataURL("image/png");
+      link.download = "HealthTest.png"; // 다운로드 이미지 파일 이름
+      link.click();
+      document.body.removeChild(link);
+    });
+  };
   return (
     <div className="HT-container">
       <Link to="/service/petService" style={{ color: "#ffa518" }}>
@@ -504,8 +528,11 @@ const HealthTest = () => {
             <div>
               {isLogin ? (
                 <>
-                  <p>등록된 반려동물이 있습니다. 진행하시겠어요?</p>
+                  <p style={{ fontSize: "x-large", fontWeight: "bold" }}>
+                    등록된 반려동물이 있습니다. 진행하시겠어요?
+                  </p>
                   <select
+                    className="HT-Select"
                     onChange={(e) => {
                       const selectedPet = sessionPets.find(
                         (pet) => pet.petName === e.target.value
@@ -569,6 +596,7 @@ const HealthTest = () => {
                 <div className="pet-input-box">
                   <label>체중 상태 : </label>
                   <select
+                    className="HT-Select"
                     name="weight"
                     value={formData.weight}
                     onChange={handleInputChange}
@@ -582,7 +610,7 @@ const HealthTest = () => {
                     <option value="overweight">
                       이상적인 체중을 기준으로 약간 살찜
                     </option>
-                    <option value="very-overweight">많이 살찜</option>
+                    <option value="veryOverweight">많이 살찜</option>
                   </select>
                 </div>
                 <button className="petTest-btn" type="submit">
@@ -741,57 +769,69 @@ const HealthTest = () => {
               </div>
             </div>
           ) : (
-            <div className="result-box">
-              <BarChart
-                width={700}
-                height={400}
-                data={data}
-                barSize={80}
-                barGap={20}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis
-                  domain={[20, 100]} // y축 범위
-                  ticks={[20, 40, 60, 80, 100]} // y축에 표시할 점수
-                  tickFormatter={(value) => {
-                    if (value <= 20) return "매우 위험";
-                    if (value <= 40) return "위험";
-                    if (value <= 60) return "주의";
-                    if (value <= 80) return "양호";
-                    return "건강";
-                  }}
-                />
-                <Tooltip />
-
-                <Bar
-                  dataKey="score"
-                  fill="#5799ff"
-                  label={{ position: "top" }}
-                />
-              </BarChart>
-              {Object.keys(finalScores).map((key) => (
-                <div
-                  key={key}
-                  className="result-item"
-                  style={{
-                    backgroundColor: getHealthStatusColor(
-                      getHealthStatus(finalScores[key])
-                    ),
-                  }}
-                  onClick={() => toggleResultDescription(key)}
+            <div>
+              <div className="result-box" id="result">
+                <h1>{selectedPet}의 건강테스트 결과</h1>
+                <BarChart
+                  width={700}
+                  height={400}
+                  data={data}
+                  barSize={80}
+                  barGap={20}
                 >
-                  {healthLabels[key]}: {finalScores[key]}점 <br />
-                  {getHealthStatus(finalScores[key])}
-                  {expandedResults[key] && (
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis
+                    domain={[20, 100]} // y축 범위
+                    ticks={[15, 35, 55, 80, 105]} // y축에 표시할 점수
+                    tickFormatter={(value) => {
+                      if (value <= 20) return "매우 위험";
+                      if (value <= 40) return "위험";
+                      if (value <= 60) return "주의";
+                      if (value <= 80) return "양호";
+                      return "건강";
+                    }}
+                  />
+                  <Tooltip />
+                  <Bar
+                    dataKey="score"
+                    fill="#5799ff"
+                    label={{ position: "top" }}
+                  />
+                </BarChart>
+                {Object.keys(finalScores).map((key) => (
+                  <div
+                    key={key}
+                    className="result-item"
+                    style={{
+                      backgroundColor: getHealthStatusColor(
+                        getHealthStatus(finalScores[key])
+                      ),
+                    }}
+                  >
+                    {healthLabels[key]}: {finalScores[key]}점 <br />
+                    {getHealthStatus(finalScores[key])}
                     <div className="detail-description">
                       {healthDescriptions[key][
                         getHealthStatus(finalScores[key])
                       ] || "상세 정보가 없습니다."}
                     </div>
-                  )}
+                  </div>
+                ))}
+                <div className="color-box">
+                  <div backgroundColor="#ff0000">매우 위험</div>
+                  <div color="#ff9999">위험</div>
+                  <div color="#ffcc66">주의</div>
+                  <div color="#66cc66">양호</div>
+                  <div color="#5799ff">건강</div>
                 </div>
-              ))}
+                <p className="weight-status">
+                  몸무게 관리 방법: {selectedWeightManagementTip}
+                </p>
+                <br />
+              </div>
+              <Link to="/service/allMap">주변 동물병원 검색</Link>
+              <button onClick={onClickDownloadButton}>앨범에 저장</button>
             </div>
           )}
         </div>
