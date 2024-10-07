@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-
+import html2canvas from "html2canvas";
 const Mbti = () => {
   const [qNumber, setPage] = useState(-1); // 초기값 -1로 설정
   const [results, setResults] = useState([
@@ -198,53 +198,71 @@ const Mbti = () => {
     return (
       //결과 화면 출력함
       <div className="results">
-        <h1>테스트 결과</h1>
-        {image && (
-          <img
-            src={image}
-            alt={`${result} 이미지`}
-            style={{ width: "600px" }}
-          />
-        )}
+        <div id="results">
+          <h1>테스트 결과</h1>
+          {image && (
+            <img
+              src={image}
+              alt={`${result} 이미지`}
+              style={{ width: "600px" }}
+            />
+          )}
 
-        <div
-          style={{
-            borderRadius: "20px",
-            border: "10px solid #FFD697",
-            color: "black",
-          }}
-        >
-          <p style={{ fontWeight: "bolder", fontSize: "25px" }}>
-            반려견의 DBTI는? : {result}
-          </p>
+          <div
+            style={{
+              borderRadius: "20px",
+              border: "10px solid #FFD697",
+              color: "black",
+            }}
+          >
+            <p style={{ fontWeight: "bolder", fontSize: "25px" }}>
+              반려견의 DBTI는? : {result}
+            </p>
+            <br></br>
+            <p style={{ fontWeight: "bolder", fontSize: "25px" }}>
+              {contentArray[0]}
+            </p>
+          </div>
           <br></br>
-          <p style={{ fontWeight: "bolder", fontSize: "25px" }}>
-            {contentArray[0]}
-          </p>
+          <div
+            style={{
+              borderRadius: "15px",
+              border: "5px solid #FFD697",
+              color: "black",
+              fontWeight: "bolder",
+              fontSize: "18px",
+              float: "left",
+            }}
+          >
+            <p>{contentArray[1]}</p>
+            <p>{contentArray[2]}</p>
+            <p>{contentArray[3]}</p>
+          </div>
+          <img
+            src="/image/service/MBTI/dbti-graph.png"
+            style={{ width: "600px" }}
+          ></img>
         </div>
-        <br></br>
-        <div
-          style={{
-            borderRadius: "15px",
-            border: "5px solid #FFD697",
-            color: "black",
-            fontWeight: "bolder",
-            fontSize: "18px",
-            float: "left",
-          }}
-        >
-          <p>{contentArray[1]}</p>
-          <p>{contentArray[2]}</p>
-          <p>{contentArray[3]}</p>
-        </div>
-        <img
-          src="/image/service/MBTI/dbti-graph.png"
-          style={{ width: "600px" }}
-        ></img>
+        <button width="1000px" onClick={onClickDownloadButton}>
+          앨범에 저장
+        </button>
       </div>
     );
   };
-
+  const onClickDownloadButton = () => {
+    const target = document.getElementById("results");
+    if (!target) {
+      return alert("사진 저장에 실패했습니다.");
+    }
+    html2canvas(target).then((canvas) => {
+      const link = document.createElement("a");
+      document.body.appendChild(link);
+      link.href = canvas.toDataURL("image/png");
+      link.download = "dbti.png"; // 다운로드 이미지 파일 이름
+      link.click();
+      document.body.removeChild(link);
+    });
+  };
   const mc = [
     {
       mbti: "WTIL",

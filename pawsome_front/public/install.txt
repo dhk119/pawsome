@@ -36,9 +36,6 @@ npm un quill@2.0.2 (삭제 함)
 김대헌 2024-09-20 21:47
 npm install @looop/quill-image-resize-module-react
 
-이재호 2024-09-23 11:55
-npm install html2canvas --force (삭제함..)
-
 이승환 2024-09-23 16:20
 npm install @mui/material @emotion/react @emotion/styled --force
 
@@ -72,3 +69,6 @@ npm install googleapis --force
 
 이원희 2021-10-05 16:07
 npm install @mui/icons-material --force
+
+이재호 2024-10-07 11:55
+npm install html2canvas --force 

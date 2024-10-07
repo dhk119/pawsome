@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginState, loginEmailState } from "../utils/RecoilData";
 import axios from "axios";
@@ -92,12 +92,30 @@ const HealthTest = () => {
   };
   const [pets, setPets] = useState([{ name: "", birthDate: "", gender: "" }]);
   const [data, setData] = useState([
-    { "회원 평균": 81, 피부: skinScore },
-    { "회원 평균": 85, 치아: dentalScore },
-    { "회원 평균": 73, 뼈: boneScore },
-    { "회원 평균": 70, 눈: eyeScore },
-    { "회원 평균": 60, 심장: heartScore },
-    { "회원 평균": 90, 면역력: immunityScore },
+    {
+      name: "피부",
+      score: skinScore,
+    },
+    {
+      name: "치아",
+      score: dentalScore,
+    },
+    {
+      name: "뼈",
+      score: boneScore,
+    },
+    {
+      name: "눈",
+      score: eyeScore,
+    },
+    {
+      name: "심장",
+      score: heartScore,
+    },
+    {
+      name: "면역력",
+      score: immunityScore,
+    },
   ]);
 
   useEffect(() => {
@@ -287,7 +305,14 @@ const HealthTest = () => {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
     }
   };
-  const [finalScores, setFinalScores] = useState(null); // 초기값을 null로 설정
+  const [finalScores, setFinalScores] = useState({
+    skin: 0,
+    dental: 0,
+    bone: 0,
+    eye: 0,
+    heart: 0,
+    immunity: 0,
+  });
 
   const startWithPet = () => {
     if (sessionPets.length > 0) {
@@ -296,7 +321,6 @@ const HealthTest = () => {
         name: pet.name,
         birthDate: pet.birthDate,
         gender: pet.gender,
-        weight: pet.weight,
       });
       setSelectedPet(pet.type); // 반려동물 유형 설정
       setIsTestStarted(true); // 테스트 시작
@@ -320,7 +344,7 @@ const HealthTest = () => {
       birthDate: pet.birthDate,
       gender: pet.gender,
     });
-    setIsTestStarted(true);
+    setIsTestStarted(false);
   };
 
   const showFinalResults = () => {
@@ -333,13 +357,17 @@ const HealthTest = () => {
       heart: heartScore,
       immunity: immunityScore,
     });
-    data[0].skin = skinScore;
-    data[1].dental = dentalScore;
-    data[2].bone = boneScore;
-    data[3].eye = eyeScore;
-    data[4].heart = heartScore;
-    data[5].immunity = immunityScore;
-    setData([...data]);
+
+    const newData = [
+      { name: "피부", score: skinScore },
+      { name: "치아", score: dentalScore },
+      { name: "뼈", score: boneScore },
+      { name: "눈", score: eyeScore },
+      { name: "심장", score: heartScore },
+      { name: "면역력", score: immunityScore },
+    ];
+
+    setData(newData);
   };
   const getHealthStatus = (score) => {
     if (score <= 20) return "매우 위험 단계!";
@@ -348,6 +376,7 @@ const HealthTest = () => {
     if (score <= 80) return "양호";
     return "건강";
   };
+
   const healthDescriptions = {
     skin: {
       "매우 위험 단계!":
@@ -355,8 +384,8 @@ const HealthTest = () => {
       "위험 단계!":
         "피부 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
       "주의 단계!":
-        "피부 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
-      양호: "피부 상태가 양호합니다. 계속 관리하세요.",
+        "피부 상태가 조금 좋지 않습니다! 동물병원을 방문하거나 관리를 꾸준히 해주세요. ",
+      양호: "피부 상태가 양호합니다. 계속 관심을 가져주세요.",
       건강: "피부 상태가 아주 건강합니다!!",
     },
     dental: {
@@ -365,8 +394,8 @@ const HealthTest = () => {
       "위험 단계!":
         "치아 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
       "주의 단계!":
-        "치아 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
-      양호: "치아 상태가 양호합니다. 계속 관리하세요.",
+        "치아 상태가 조금 좋지 않습니다! 동물병원을 방문하거나 관리를 꾸준히 해주세요. ",
+      양호: "치아 상태가 양호합니다. 계속 관심을 가져주세요.",
       건강: "치아 상태가 아주 건강합니다!!",
     },
     bone: {
@@ -375,8 +404,8 @@ const HealthTest = () => {
       "위험 단계!":
         "뼈가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
       "주의 단계!":
-        "뼈가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
-      양호: "뼈가 양호합니다. 계속 관리하세요.",
+        "뼈가 조금 좋지 않습니다! 동물병원을 방문하거나 관리를 꾸준히 해주세요. ",
+      양호: "뼈가 양호합니다. 계속 관심을 가져주세요.",
       건강: "뼈가 아주 건강합니다!!",
     },
     eye: {
@@ -385,8 +414,8 @@ const HealthTest = () => {
       "위험 단계!":
         "눈 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
       "주의 단계!":
-        "눈이 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
-      양호: "눈이 양호합니다. 계속 관리하세요.",
+        "눈이 조금 좋지 않습니다!동물병원을 방문하거나 관리를 꾸준히 해주세요. ",
+      양호: "눈이 양호합니다. 계속 관심을 가져주세요.",
       건강: "눈이 아주 건강합니다!!",
     },
     heart: {
@@ -395,8 +424,8 @@ const HealthTest = () => {
       "위험 단계!":
         "심장 상태가 좋지 않습니다. 정기적인 검진이나 치료가 필요합니다. 가까운 동물병원에 방문해주세요.",
       "주의 단계!":
-        "심장 상태가 조금 좋지 않습니다! 안좋은곳을 파악하여 관리를 꾸준히 해주세요.",
-      양호: "심장 상태가 양호합니다. 계속 관리하세요.",
+        "심장 상태가 조금 좋지 않습니다!동물병원을 방문하거나 관리를 꾸준히 해주세요. ",
+      양호: "심장 상태가 양호합니다. 계속 관심을 가져주세요.",
       건강: "심장 상태가 아주 건강합니다!!",
     },
     immunity: {
@@ -413,29 +442,52 @@ const HealthTest = () => {
   const getHealthStatusColor = (status) => {
     switch (status) {
       case "매우 위험 단계!":
-        return "#ff0000"; // 매우 위험
+        return "#ff0000";
       case "위험 단계!":
-        return "#ff9999"; // 위험
+        return "#ff9999";
       case "주의 단계!":
-        return "#ffcc66"; // 주의
+        return "#ffcc66";
       case "양호":
-        return "#66cc66"; // 양호
+        return "#66cc66";
       case "건강":
-        return "#5799ff"; // 건강
+        return "#5799ff";
       default:
-        return "#fff"; // 기본 색상
+        return "#fff";
     }
   };
-  const toggleResultDetail = (key) => {
-    setExpandedResult(expandedResult === key ? null : key);
-  };
+
   const toggleResultDescription = (key) => {
     setExpandedResults((prev) => ({
       ...prev,
-      [key]: !prev[key], // 해당 항목의 상태를 반전
+      [key]: !prev[key],
     }));
   };
-
+  const healthLabels = {
+    skin: "피부",
+    dental: "치아",
+    bone: "뼈",
+    eye: "눈",
+    heart: "심장",
+    immunity: "면역력",
+  };
+  const getBarColor = (key) => {
+    switch (key) {
+      case "skin":
+        return "brown";
+      case "dental":
+        return "orange";
+      case "bone":
+        return "gray";
+      case "eye":
+        return "blue";
+      case "heart":
+        return "red";
+      case "immunity":
+        return "black";
+      default:
+        return "gray";
+    }
+  };
   return (
     <div className="HT-container">
       <Link to="/service/petService" style={{ color: "#ffa518" }}>
@@ -512,7 +564,7 @@ const HealthTest = () => {
             </div>
           ) : !isTestStarted ? (
             <div>
-              <h2>{selectedPet}의 체중을 입력해 주세요.</h2>
+              <h2>{selectedPet}의 체중을 선택해 주세요.</h2>
               <form className="petInfo-container" onSubmit={handleSubmit}>
                 <div className="pet-input-box">
                   <label>체중 상태 : </label>
@@ -534,7 +586,7 @@ const HealthTest = () => {
                   </select>
                 </div>
                 <button className="petTest-btn" type="submit">
-                  정보 입력 완료
+                  입력 완료
                 </button>
               </form>
             </div>
@@ -690,55 +742,56 @@ const HealthTest = () => {
             </div>
           ) : (
             <div className="result-box">
-              <BarChart width={1000} height={300} data={data}>
+              <BarChart
+                width={700}
+                height={400}
+                data={data}
+                barSize={80}
+                barGap={20}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
-                <YAxis />
+                <YAxis
+                  domain={[20, 100]} // y축 범위
+                  ticks={[20, 40, 60, 80, 100]} // y축에 표시할 점수
+                  tickFormatter={(value) => {
+                    if (value <= 20) return "매우 위험";
+                    if (value <= 40) return "위험";
+                    if (value <= 60) return "주의";
+                    if (value <= 80) return "양호";
+                    return "건강";
+                  }}
+                />
                 <Tooltip />
-                <Legend />
-                <Bar dataKey="회원 평균" fill="#8884D8" />
-                <Bar dataKey={"피부"} fill="#82CA9D" />
-                <Bar dataKey={"치아"} fill="#82CA9D" />
-                <Bar dataKey={"뼈"} fill="#82CA9D" />
-                <Bar dataKey={"눈"} fill="#82CA9D" />
-                <Bar dataKey={"심장"} fill="#82CA9D" />
-                <Bar dataKey={"면역력"} fill="#82CA9D" />
+
+                <Bar
+                  dataKey="score"
+                  fill="#5799ff"
+                  label={{ position: "top" }}
+                />
               </BarChart>
-              {Object.keys(finalScores).map((key, i) => {
-                return (
-                  <div
-                    key={key}
-                    className="result-item"
-                    style={{
-                      backgroundColor: getHealthStatusColor(
+              {Object.keys(finalScores).map((key) => (
+                <div
+                  key={key}
+                  className="result-item"
+                  style={{
+                    backgroundColor: getHealthStatusColor(
+                      getHealthStatus(finalScores[key])
+                    ),
+                  }}
+                  onClick={() => toggleResultDescription(key)}
+                >
+                  {healthLabels[key]}: {finalScores[key]}점 <br />
+                  {getHealthStatus(finalScores[key])}
+                  {expandedResults[key] && (
+                    <div className="detail-description">
+                      {healthDescriptions[key][
                         getHealthStatus(finalScores[key])
-                      ),
-                    }}
-                    onClick={() => toggleResultDescription(key)} // 클릭 시 상태 토글
-                  >
-                    {key === "skin"
-                      ? "피부 상태"
-                      : key === "dental"
-                      ? "치아 점수"
-                      : key === "bone"
-                      ? "뼈 점수"
-                      : key === "eye"
-                      ? "눈 점수"
-                      : key === "heart"
-                      ? "심장 점수"
-                      : "면역력 점수"}
-                    : {finalScores[key]}점 <br />
-                    {getHealthStatus(finalScores[key])}
-                    {expandedResults[key] && ( // 상태가 true일 때만 설명 표시
-                      <div className="detail-description">
-                        {healthDescriptions[key][
-                          getHealthStatus(finalScores[key])
-                        ] || "상세 정보가 없습니다."}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                      ] || "상세 정보가 없습니다."}
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           )}
         </div>
