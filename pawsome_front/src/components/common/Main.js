@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ScrollToTop from "react-scroll-to-top";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -9,12 +9,13 @@ import { useState } from "react";
 import "./default.css";
 import BoardList from "../board/BoardList";
 import Weather from "../utils/Weather";
-import YouTube from "react-youtube";
 import VideoList from "./VideoList";
-import ProductList from "../market/ProductList";
+import MarketViewNav from "./MarketViewNav";
 
 const Main = () => {
-  const [product, setProduct] = useState("");
+  const params = useParams();
+  const productNo = params.productNo;
+  const [product, setProduct] = useState(params);
   const navigate = useNavigate();
 
   return (
@@ -134,6 +135,7 @@ const Main = () => {
           </span>
         </div>
         <div className="main-swiper">
+          <MarketViewNav />
           <>
             <Swiper
               slidesPerView={4}
@@ -148,6 +150,14 @@ const Main = () => {
                 <img
                   src="/image/nursecat.png"
                   onClick={() => {
+                    navigate(`/product/productDetail/${productNo}`);
+                  }}
+                />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img
+                  src="/image/nursecat.png"
+                  onClick={() => {
                     navigate(
                       `/market/main/productDetail/${product.productNo}/detail`
                     );
@@ -155,40 +165,34 @@ const Main = () => {
                 />
               </SwiperSlide>
               <SwiperSlide>
-                <img src="/image/nursecat.png" />
+                <img
+                  src="/image/nursecat.png"
+                  onClick={() => {
+                    navigate(
+                      `/market/main/productDetail/${product.productNo}/detail`
+                    );
+                  }}
+                />
               </SwiperSlide>
               <SwiperSlide>
-                <img src="/image/nursecat.png" />
+                <img
+                  src="/image/nursecat.png"
+                  onClick={() => {
+                    navigate(
+                      `/market/main/productDetail/${product.productNo}/detail`
+                    );
+                  }}
+                />
               </SwiperSlide>
               <SwiperSlide>
-                <img src="/image/nursecat.png" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="/image/nursecat.png" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="/image/nursecat.png" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="/image/nursecat.png" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="/image/nursecat.png" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="/image/nursecat.png" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="/image/nursecat.png" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="/image/nursecat.png" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="/image/nursecat.png" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="/image/nursecat.png" />
+                <img
+                  src="/image/nursecat.png"
+                  onClick={() => {
+                    navigate(
+                      `/market/main/productDetail/${product.productNo}/detail`
+                    );
+                  }}
+                />
               </SwiperSlide>
             </Swiper>
           </>
