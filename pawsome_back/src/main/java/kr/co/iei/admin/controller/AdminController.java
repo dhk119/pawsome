@@ -23,6 +23,7 @@ import kr.co.iei.market.model.dto.ProductDTO;
 import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.util.ChartData;
 import kr.co.iei.util.FileUtils;
 
 @CrossOrigin("*")
@@ -154,9 +155,24 @@ public class AdminController {
 		Map map=adminService.searchQnaList(reqPage, answer, option);
 		return ResponseEntity.ok(map);
 	}
-	@GetMapping(value = "/petPercentClass")
-	public ResponseEntity<List> petPercentClass(){
-		List<Integer> list=adminService.petPercentClass();
+	@GetMapping(value = "/petChartClass")
+	public ResponseEntity<List<ChartData>> petChartClass(){
+		List<ChartData> list=adminService.petChartClass();
+		return ResponseEntity.ok(list);
+	}
+	@GetMapping(value = "/petChartBreedDog")
+	public ResponseEntity<List<ChartData>> petChartBreedDog(){
+		List<ChartData> list=adminService.petChartBreedDog();
+		return ResponseEntity.ok(list);
+	}
+	@GetMapping(value = "/petChartBreedCat")
+	public ResponseEntity<List<ChartData>> petChartBreedCat(){
+		List<ChartData> list=adminService.petChartBreedCat();
+		return ResponseEntity.ok(list);
+	}
+	@GetMapping(value = "/petChartGender")
+	public ResponseEntity<List<ChartData>> petChartGender(){
+		List<ChartData> list=adminService.petChartGender();
 		return ResponseEntity.ok(list);
 	}
 }

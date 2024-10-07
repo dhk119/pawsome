@@ -549,8 +549,26 @@ tspan {
   font-size: large;
 }
 .admin-pet-chart-top {
-  margin-top: 100px;
+  margin-top: 20px;
 }
 .admin-chart-label-three {
-  width: 500px;
+  border-radius: 5px;
+  width: 250px;
+  background-color: var(--main2);
+}
+.admin-chart-label-four {
+  border-radius: 5px;
+  width: 250px;
+  background-color: var(--gray3);
+}
+#chart-option {
+  height: 100%;
+  cursor: url("/public/image/cursorpaw.png") 16 16, auto;
+  background-color: var(--point1);
+  border: 2px solid var(--point1);
+  color: #fff;
+  border-radius: 15px;
+}
+#admin-chart-hight {
+  height: 100%;
 }

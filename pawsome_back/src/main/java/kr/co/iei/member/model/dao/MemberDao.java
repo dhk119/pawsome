@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.iei.market.model.dto.BuyListDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
-
+import kr.co.iei.util.ChartData;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.member.model.dto.PetDTO;
 import kr.co.iei.member.model.dto.ScheduleDTO;
@@ -77,7 +77,11 @@ public interface MemberDao {
 
 	List searchPetListOption(int start, int end, int option);
 
-	List petPercentClass();
+	List<ChartData> petChartClass();
+
+	List<ChartData> petChartBreedDog();
 	
-	List petPercentClasses();
+	List<ChartData> petChartBreedCat();
+
+	List<ChartData> petChartGender();
 }

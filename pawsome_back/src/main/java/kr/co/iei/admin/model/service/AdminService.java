@@ -14,6 +14,7 @@ import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
 import kr.co.iei.member.model.dao.MemberDao;
 import kr.co.iei.member.model.dto.MemberDTO;
+import kr.co.iei.util.ChartData;
 import kr.co.iei.util.PageInfo;
 import kr.co.iei.util.PageUtil;
 
@@ -205,9 +206,27 @@ public class AdminService {
 		map.put("pi",pi);
 		return map;
 	}
-	public List<Integer> petPercentClass() {
-		Map<String, Integer> map=new HashMap<String, Integer>();
-		List<Integer> list=memberDao.petPercentClass();
+	public List<ChartData> petChartClass() {
+		List<ChartData> list=memberDao.petChartClass();
+		for (ChartData chartData : list) {
+			if(chartData.getKey().equals("1")) {
+				chartData.setKey("강아지");
+			}else {
+				chartData.setKey("고양이");
+			}
+		}
+		return list;
+	}
+	public List<ChartData> petChartBreedDog() {
+		List<ChartData> list=memberDao.petChartBreedDog();
+		return list;
+	}
+	public List<ChartData> petChartBreedCat() {
+		List<ChartData> list=memberDao.petChartBreedCat();
+		return list;
+	}
+	public List<ChartData> petChartGender() {
+		List<ChartData> list=memberDao.petChartGender();
 		return list;
 	}
 }
