@@ -165,7 +165,7 @@ const ProductList = () => {
                     viewNavigate();
                   }}
                 >
-                  {product.typeCategory}
+                  {product.typeCategory === 1 ? "강아지" : "고양이"}
                 </td>
                 <td
                   onClick={() => {

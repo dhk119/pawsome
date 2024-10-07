@@ -9,6 +9,7 @@ import PetList from "./PetList";
 import Qna from "./Q&A";
 import QnaView from "./Q&A(view)";
 import PetChart from "./PetChart";
+import ProductChart from "./ProductChart";
 const AdminMain = () => {
   return (
     <>
@@ -26,6 +27,7 @@ const AdminMain = () => {
           <Route path="qnaList" element={<Qna />}></Route>
           <Route path="qna/:qnaNo" element={<QnaView />}></Route>
           <Route path="petChart" element={<PetChart />}></Route>
+          <Route path="productChart" element={<ProductChart />}></Route>
         </Routes>
       </section>
     </>

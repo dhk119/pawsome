@@ -7,6 +7,7 @@ const PetChart = () => {
   const [chartData, setChartData] = useState([]);
   const [data, setData] = useState([]);
   const [option, setOption] = useState(0);
+  const [subTitle, setSubTitle] = useState("종 별 비율");
   const result = (resultData) => {
     for (let index = 0; index < resultData.length; index++) {
       let sum = 0;
@@ -67,23 +68,27 @@ const PetChart = () => {
             result(res.data);
             setChartData([...chartData]);
             setData([...data]);
+            setSubTitle("종 별 비율");
           })
         : option === 1
         ? axios.get(`${backServer}/admin/petChartBreedDog`).then((res) => {
             result(res.data);
             setChartData([...chartData]);
             setData([...data]);
+            setSubTitle("강아지 품종 별 비율");
           })
         : option === 2
         ? axios.get(`${backServer}/admin/petChartBreedCat`).then((res) => {
             result(res.data);
             setChartData([...chartData]);
             setData([...data]);
+            setSubTitle("고양이 품종 별 비율");
           })
         : axios.get(`${backServer}/admin/petChartGender`).then((res) => {
             result(res.data);
             setChartData([...chartData]);
             setData([...data]);
+            setSubTitle("펫 성별 비율");
           });
     }
   }, [option]);
@@ -94,8 +99,9 @@ const PetChart = () => {
   };
   return (
     <div className="App">
-      <div className="admin-title">펫 차트</div>
-      <div className="admin-write-wrap" id="admin-chart-hight">
+      <div className="admin-title">{`펫 차트(${subTitle})`}</div>
+      <div id="admin-chart-margin-top"></div>
+      <div className="admin-write-wrap" id="admin-chart-height">
         <div className="admin-top-left"></div>
         <div className="admin-top-left"></div>
         <div className="admin-top-left"></div>
@@ -114,8 +120,8 @@ const PetChart = () => {
         </div>
       </div>
       <div className="admin-flex admin-pet-chart-top">
-        <div className="inquiry-sub-title">수량/퍼센트</div>
-        <PieChart width={500} height={500}>
+        <div className="inquiry-sub-title">수/백분율</div>
+        <PieChart width={520} height={520}>
           <Pie
             data={data}
             dataKey="value"
@@ -149,9 +155,10 @@ const PetChart = () => {
                   <div
                     style={{
                       color: "#ffbe58",
-                      width: "50px",
+                      width: "100px",
                       height: "20px",
                       fontWeight: "bold",
+                      textAlign: "center",
                     }}
                   >
                     {chart.name}
@@ -163,9 +170,10 @@ const PetChart = () => {
                   <div
                     style={{
                       color: "#5799ff",
-                      width: "50px",
+                      width: "100px",
                       height: "20px",
                       fontWeight: "bold",
+                      textAlign: "center",
                     }}
                   >
                     {chart.name}
@@ -177,9 +185,10 @@ const PetChart = () => {
                   <div
                     style={{
                       color: "#ffd697",
-                      width: "50px",
+                      width: "100px",
                       height: "20px",
                       fontWeight: "bold",
+                      textAlign: "center",
                     }}
                   >
                     {chart.name}
@@ -191,9 +200,10 @@ const PetChart = () => {
                   <div
                     style={{
                       color: "#717171",
-                      width: "50px",
+                      width: "100px",
                       height: "20px",
                       fontWeight: "bold",
+                      textAlign: "center",
                     }}
                   >
                     {chart.name}

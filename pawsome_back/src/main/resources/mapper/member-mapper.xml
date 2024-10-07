@@ -267,7 +267,7 @@
 		select pet_breed as key, count(*) as count from pet where pet_classes=2 group by pet_breed
 	</select>
 	<select id="petChartGender" resultType="chartData">
-		select pet_gender as key, count(*) as count from pet where pet_classes=1 group by pet_gender
+		select pet_gender as key, count(*) as count from pet group by pet_gender
 	</select>
 	<insert id="insertPet">
 	  	insert into pet values(pet_seq.nextval, #{petName}, #{petClasses}, #{petBreed}, #{petBirth}, #{petGender}, #{neutering}, #{petProfile}, #{petWeight}, #{memberEmail})

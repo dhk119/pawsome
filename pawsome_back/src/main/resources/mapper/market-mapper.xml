@@ -52,7 +52,7 @@
 	<select id="searchTotalCountMagnum" resultType="int">
 		select count(*) from product where
 		<choose>
-			<when test="option.equals('A')">
+			<when test='option.equals("A")'>
 				<choose>
 					<when test="type.equals('all')">
 						product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price like '%'||#{keyword}||'%'
@@ -89,7 +89,7 @@
 	<select id="searchProductListMagnum" resultType="product">
 		select * from (select rownum as rnum, b.* from(SELECT * from product where
 		<choose>
-			<when test="option.equals('A')">
+			<when test='option.equals("A")'>
 				<choose>
 					<when test="type.equals('all')">
 						product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price like '%'||#{keyword}||'%'
@@ -336,7 +336,30 @@
 		</choose>
 		order by qna_no desc)b) where rnum BETWEEN #{start} and #{end}
 	</select>
-
+	<select id="productChart" resultType="chartData">
+		select product.main_category as key, sum(buy_count) as count from buy_list join product using(product_no) where 
+		<choose>
+			<when test="typeCategory==0">
+				buy_state=#{buyState}
+			</when>
+			<otherwise>
+				 type_category=#{typeCategory} and buy_state=#{buyState}
+			</otherwise>
+		</choose>
+		group by main_category
+	</select>
+	<select id="producIncomeChart" resultType="chartData">
+		select main_category as key, sum(product_price*(buy_count)) as count from buy_list join product using(product_no) where
+		<choose>
+			<when test="typeCategory==0">
+				buy_state=#{buyState}
+			</when>
+			<otherwise>
+				type_category=#{typeCategory} and buy_state=#{buyState}
+			</otherwise>
+		</choose>
+		group by main_category
+	</select>
 
 	<!-- 원희 -->
 	<select id="totalCount" resultType="int">
