@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
+import Stack from "@mui/material/Stack";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -32,19 +33,10 @@ const Review = () => {
         setReviewList(res.data.list);
         setPi(res.data.pi);
         setTotalCount(res.data.totalCount);
-        totalStar(starData);
       })
       .catch((err) => {
         console.log(err);
       });
-    const totalStar = () => {
-      let totalSum = 0;
-      starData.forEach((item, i) => {
-        let c = 5 - i;
-        totalSum += item * c;
-      });
-      setTotal(totalSum);
-    };
   }, []);
   console.log("평점 : ", total / 5);
 
@@ -53,14 +45,20 @@ const Review = () => {
       <div className="star-wrap">
         <div className="star-wrap-title">
           <div className="total_star">{total / 5}</div>
+
           <Rating
             name="half-rating-read"
-            defaultValue={total / 5}
+            value={total / 5}
             precision={0.1}
             readOnly
           />
         </div>
-        <StarAvr starData={starData} setStarData={setStarData} />
+        <StarAvr
+          starData={starData}
+          setStarData={setStarData}
+          total={total}
+          setTotal={setTotal}
+        />
       </div>
       <div className="review-list">
         {reviewList.map((review, i) => {

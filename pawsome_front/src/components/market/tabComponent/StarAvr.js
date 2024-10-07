@@ -11,6 +11,8 @@ const StarAvr = (props) => {
   const productNo = params.productNo;
   const starData = props.starData;
   const setStarData = props.setStarData;
+  const total = props.total;
+  const setTotal = props.setTotal;
   useEffect(() => {
     axios
       .get(`${backServer}/product/selectStar/${productNo}`)
@@ -25,6 +27,20 @@ const StarAvr = (props) => {
         console.log(err);
       });
   }, []);
+  useEffect(() => {
+    const totalStar = (starData) => {
+      let totalSum = 0;
+      starData.forEach((item, i) => {
+        let c = 5 - i;
+        totalSum += item * c;
+      });
+      setTotal(totalSum);
+    };
+    if (starData.length) {
+      totalStar(starData); // starData가 있을 때 호출
+    }
+  }, [starData, setTotal]);
+
   const xColors = ["#ffa518", "#ffa518", "#ffa518", "#ffa518", "#ffa518"];
   const xLabels = ["5점", "4점", "3점", "2점", "1점"];
   const chekData = [25, 25, 23, 21, 32];
