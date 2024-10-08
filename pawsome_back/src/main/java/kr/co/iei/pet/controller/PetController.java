@@ -7,10 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.iei.member.model.dto.PetDTO;
+
+import kr.co.iei.pet.dto.SaveStatusDTO;
 import kr.co.iei.pet.service.PetService;
 
 @CrossOrigin
@@ -26,4 +30,10 @@ public class PetController {
 		List<PetDTO> petList = petService.selectPetList(memberEmail);
 		return ResponseEntity.ok(petList);	
 	}
+	
+	@PostMapping("/saveStatus")
+	public ResponseEntity<Integer> savePetStatus(@RequestBody SaveStatusDTO saveResultStatus){
+		int saveResult = petService.savePetStatus(saveResultStatus);
+	return ResponseEntity.ok(saveResult);
+}
 }
