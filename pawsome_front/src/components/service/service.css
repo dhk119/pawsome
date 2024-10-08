@@ -11,12 +11,16 @@
 }
 */
 /*PetService,AllMap*/
-#map-box {
+#allmap-box {
   position: relative;
   text-align: center;
   color: #ffa518;
   width: 1300px;
-  margin: 0 auto;
+  margin: 30px auto;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  border-radius: 10px;
+  z-index: 5;
 }
 
 .nav-box {
@@ -78,21 +82,27 @@
 .sm-btn1 {
   width: 280px;
   height: 90px;
-  top: 450px;
-  right: 1000px;
-  opacity: 0;
+  top: 180px;
+  right: 820px;
   cursor: pointer;
+  opacity: 0;
 }
 
 .sm-btn2 {
   width: 280px;
-  top: 600px;
-  right: 1000px;
+  height: 50px;
+  top: 280px;
+  right: 820px;
+  cursor: pointer;
+  opacity: 0;
 }
 .sm-btn3 {
   width: 280px;
-  top: 600px;
-  right: 310px;
+  height: 100px;
+  top: 220px;
+  right: 130px;
+  cursor: pointer;
+  opacity: 0;
 }
 /* Map.css */
 #map {
@@ -107,14 +117,13 @@
   color: black;
   text-align: left;
   margin: 0 auto;
-  margin-top: 20px;
   position: absolute;
   top: 10px;
   left: 10px;
   padding: 10px;
   z-index: 100;
   width: 400px;
-  height: 450px;
+  height: 500px;
   cursor: pointer;
 }
 #menu_wrap > button :hover {
@@ -147,7 +156,7 @@
   border: 2px solid #ffa518;
   margin: 0 auto;
   list-style-type: none;
-  max-height: 350px;
+  max-height: 400px;
   overflow-y: auto;
   padding: 0;
   border-radius: 5px;
@@ -165,7 +174,7 @@
 }
 
 .dog-mbti {
-  width: 700px;
+  width: 900px;
   border-radius: 10px;
   padding: 50px;
   margin: 30px;
@@ -225,7 +234,7 @@
 .service-wrap {
   width: 1000px;
   border-radius: 10px;
-  padding: 50px;
+  padding: 40px;
   margin: 30px;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
   text-align: center;
@@ -236,7 +245,7 @@
 
 .test-box {
   display: flex;
-  margin-top: 50px;
+  margin-top: 20px;
   justify-content: center;
   align-items: flex-start;
   gap: 80px;
@@ -256,16 +265,14 @@
 }
 .set-dog > img {
   width: 300px;
-  height: 250px;
-  margin-bottom: 20px;
+  height: 300px;
 }
 .set-cat {
   width: 300px;
 }
 .set-cat > img {
-  margin-bottom: 20px;
-  width: 250px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
 }
 .test-box > * > span {
   font-size: larger;
@@ -383,8 +390,9 @@
 }
 .weight-status {
   font-weight: bolder;
-  font-size: large;
+  font-size: larger;
   width: 1000px;
+  margin: 20px;
 }
 .HT-Select {
   margin-top: 10px;
@@ -401,9 +409,53 @@
 .HT-Select:hover {
   background-color: #f0f0f0;
 }
-.color-box {
+.color-squares {
+  width: 1000px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 }
-.color-box > * {
+.square {
   width: 100px;
-  height: 100px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  margin: 5px;
+}
+.ps-btn1 {
+  margin: 15px;
+  padding: 5px 20px;
+  background-color: white;
+  color: #ffa518;
+  border: 3px solid #ffa518;
+  border-radius: 20px;
+  font-size: medium;
+  font-weight: bold;
+  cursor: pointer;
+}
+.ps-btn1:hover {
+  background-color: #ffa518;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.ps-btn2 {
+  margin: 15px;
+  padding: 5px 20px;
+  background-color: white;
+  color: #5799ff;
+  border: 3px solid #5799ff;
+  border-radius: 20px;
+  font-size: medium;
+  font-weight: bold;
+  cursor: pointer;
+}
+.ps-btn2:hover {
+  background-color: #5799ff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }

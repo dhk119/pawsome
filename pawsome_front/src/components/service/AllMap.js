@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
 
 const Map = () => {
   const [keyword, setKeyword] = useState("당산 동물병원");
@@ -224,15 +225,7 @@ const Map = () => {
   };
 
   return (
-    <div
-      id="map-box"
-      style={{
-        position: "relative",
-        textAlign: "center",
-        color: "#FFA518",
-        width: "1300px",
-      }}
-    >
+    <div id="allmap-box">
       <div>
         <Link
           to="/service/petService"

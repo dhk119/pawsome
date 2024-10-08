@@ -204,6 +204,21 @@ public class ProductController {
 		return ResponseEntity.ok(list);
 	}
 	
+	@DeleteMapping(value="/deleteReview/{reviewNo}")
+	public ResponseEntity<Integer> deleteReview(@PathVariable int reviewNo){
+		List<ReviewFileDTO> delFileList = productService.deleteReview(reviewNo);
+		if(delFileList != null) {
+			String savepath = root+"/review/thumb/";
+			for(ReviewFileDTO reviewFile : delFileList) {
+				File delFile = new File(savepath+reviewFile.getReviewFileStorage());
+				delFile.delete();
+			}
+			return ResponseEntity.ok(1);
+		}else {
+			return ResponseEntity.ok(0);
+		}
+	}
+	
 	@GetMapping(value="/selectStar/{productNo}")
 	public ResponseEntity<List> selectStar (@PathVariable int productNo){
 		List list = productService.selectStar(productNo);
