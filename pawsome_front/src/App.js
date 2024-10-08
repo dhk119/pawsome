@@ -24,6 +24,8 @@ import PetInsert from "./components/member/PetInsert";
 import ForgotPw from "./components/member/ForgotPw";
 import ScrollToTop from "react-scroll-to-top";
 import PetUpdate from "./components/member/PetUpdate";
+import KakaoCallback from "./components/member/KakaoCallback";
+import KakaoJoin from "./components/member/KakaoJoin";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -74,12 +76,14 @@ function App() {
           <Route path="/*" element={<Main />} />
           <Route path="/board/*" element={<BoardMain />} />
           <Route path="/callback/naver" element={<NaverCallback />} />
+          <Route path="/callback/kakao" element={<KakaoCallback />} />
           <Route path="/market/*" element={<MarketMain />} />
           <Route path="/mypage/*" element={<MypageMain />} />
           <Route path="/petinsert" element={<PetInsert />} />
           <Route path="/petUpdate/:petNo" element={<PetUpdate />} />
           <Route path="/service/*" element={<ServiceMain />} />
           <Route path="/naverjoin" element={<NaverJoin />} />
+          <Route path="/kakaojoin" element={<KakaoJoin />} />
         </Routes>
       </main>
       <Footer />

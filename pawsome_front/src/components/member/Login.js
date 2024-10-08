@@ -31,14 +31,23 @@ const Login = () => {
     }
   };
 
-  //네이버 로그인
+  // 네이버 로그인
   const NAVER_CLIENT_ID = "mDIMmlDCzICGJPSiZ68R";
   const REDIRECT_URI = "http://localhost:3000/callback/naver"; // Callback URL
   const STATE = "flase";
   const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=${STATE}&redirect_uri=${REDIRECT_URI}`;
 
+  // 카카오 로그인
+  const KAKAO_CLIENT_ID = "655bae51c4f48e73787fb78710604be0";
+  const KAKAO_REDIRECT_URI = "http://localhost:3000/callback/kakao";
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}`;
+
   const NaverLogin = () => {
     window.location.href = NAVER_AUTH_URL;
+  };
+
+  const KakaoLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
   };
 
   const login = () => {
@@ -118,6 +127,7 @@ const Login = () => {
           <h3>간편하게 로그인 하기</h3>
           <div className="social-login">
             <img onClick={NaverLogin} src="/image/naver_btn.png" />
+            {/* <img onClick={KakaoLogin} src="/image/kakao_btn.png" /> */}
           </div>
         </div>
       </div>

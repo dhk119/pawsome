@@ -16,6 +16,8 @@ import DeleteMember from "./DeleteMember";
 import BuyList from "./BuyList";
 import ProductLike from "./ProductLike";
 import BuyView from "./BuyView";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const MypageMain = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
@@ -23,13 +25,30 @@ const MypageMain = () => {
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
   const isLogin = useRecoilValue(isLoginState);
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [member, setMember] = useState({});
+
+  useEffect(() => {
+    axios
+      .post(`${backServer}/member/profile`)
+      .then((res) => {
+        console.log(res);
+        setMember(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [loginEmail]);
 
   return (
     <div className="mypage-body">
       <div className="side-bar">
         <div className="user-info">
           <div>
-            <img className="profile-img" src="/image/paw.png" />
+            <img
+              className="profile-img"
+              src={`${backServer}/member/profile/${member.memberProfile}`}
+            />
           </div>
           <div>{memberNickname}</div>
         </div>
@@ -60,7 +79,7 @@ const MypageMain = () => {
           <Route path="/deleteMember/:memberEmail" element={<DeleteMember />} />
           <Route path="/buy-list" element={<BuyList />} />
           <Route path="/product-like" element={<ProductLike />} />
-          <Route path="/buy-view/:buyNo" element={<BuyView />} />
+          <Route path="/buy-view/:payUid" element={<BuyView />} />
         </Routes>
       </div>
     </div>

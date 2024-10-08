@@ -169,6 +169,9 @@ const MypageCalendar = () => {
           ]);
         }
 
+        // 캘린더의 선택 날짜를 새 일정의 시작 날짜로 설정
+        setValue(moment(addedSchedule.dayStart).toDate()); // 새 일정 시작 날짜로 설정
+
         // 모달 닫기 및 초기화
         closeAddModal();
 
