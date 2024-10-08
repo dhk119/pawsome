@@ -521,7 +521,7 @@ const HealthTest = () => {
         <h1>나의 반려동물 건강 체크</h1>
         <img
           src="/image/service/HealthTest/healthMain.png"
-          style={{ width: "300px" }}
+          style={{ width: "350px", marginTop: "20px" }}
         />
         <div className="feedtest">
           {!selectedPet ? (
@@ -555,15 +555,15 @@ const HealthTest = () => {
                       className="set-dog"
                       onClick={() => petSelection("반려견")}
                     >
-                      <img src="/image/service/HealthTest/dog-im.png" />
                       <span>반려견</span>
+                      <img src="/image/service/HealthTest/dog-im.png" />
                     </div>
                     <div
                       className="set-cat"
                       onClick={() => petSelection("반려묘")}
                     >
-                      <img src="/image/service/HealthTest/cat-im.png" />
                       <span>반려묘</span>
+                      <img src="/image/service/HealthTest/cat-im.png" />
                     </div>
                   </div>
                 </>
@@ -575,15 +575,15 @@ const HealthTest = () => {
                       className="set-dog"
                       onClick={() => petSelection("반려견")}
                     >
-                      <img src="/image/service/HealthTest/dog-im.png" />
                       <span>반려견</span>
+                      <img src="/image/service/HealthTest/dog-im.png" />
                     </div>
                     <div
                       className="set-cat"
                       onClick={() => petSelection("반려묘")}
                     >
-                      <img src="/image/service/HealthTest/cat-im.png" />
                       <span>반려묘</span>
+                      <img src="/image/service/HealthTest/cat-im.png" />
                     </div>
                   </div>
                 </div>
@@ -795,7 +795,18 @@ const HealthTest = () => {
                   <Tooltip />
                   <Bar
                     dataKey="score"
-                    fill="#5799ff"
+                    fill="#5799ff" // 기본 색상
+                    shape={(props) => {
+                      const { score } = props; // 점수를 가져옵니다
+                      let fillColor;
+                      if (score <= 20) fillColor = "#ff0000"; // 매우 위험
+                      else if (score <= 40) fillColor = "#ff9999"; // 위험
+                      else if (score <= 60) fillColor = "#ffcc66"; // 주의
+                      else if (score <= 80) fillColor = "#66cc66"; // 양호
+                      else fillColor = "#5799ff"; // 건강
+
+                      return <rect {...props} fill={fillColor} />;
+                    }}
                     label={{ position: "top" }}
                   />
                 </BarChart>
@@ -818,20 +829,53 @@ const HealthTest = () => {
                     </div>
                   </div>
                 ))}
-                <div className="color-box">
-                  <div backgroundColor="#ff0000">매우 위험</div>
-                  <div color="#ff9999">위험</div>
-                  <div color="#ffcc66">주의</div>
-                  <div color="#66cc66">양호</div>
-                  <div color="#5799ff">건강</div>
+                <div className="color-squares">
+                  <div
+                    className="square"
+                    style={{ backgroundColor: "#ff0000", color: "white" }}
+                  >
+                    매우 위험
+                  </div>
+                  <div
+                    className="square"
+                    style={{ backgroundColor: "#ff9999", color: "white" }}
+                  >
+                    위험
+                  </div>
+                  <div
+                    className="square"
+                    style={{ backgroundColor: "#ffcc66", color: "white" }}
+                  >
+                    주의
+                  </div>
+                  <div
+                    className="square"
+                    style={{ backgroundColor: "#66cc66", color: "white" }}
+                  >
+                    양호
+                  </div>
+                  <div
+                    className="square"
+                    style={{ backgroundColor: "#5799ff", color: "white" }}
+                  >
+                    건강
+                  </div>
+                </div>
+                <div>
+                  <span>
+                    매우 위험이나 위험이 나왔으면 꼭 가까운 동물 병원에 바로
+                    연락해보세요!
+                  </span>
+                  <Link to="/service/allMap"> -주변 동물병원 검색하기-</Link>
                 </div>
                 <p className="weight-status">
                   몸무게 관리 방법: {selectedWeightManagementTip}
                 </p>
                 <br />
               </div>
-              <Link to="/service/allMap">주변 동물병원 검색</Link>
-              <button onClick={onClickDownloadButton}>앨범에 저장</button>
+              <button className="ps-btn2" onClick={onClickDownloadButton}>
+                앨범에 저장
+              </button>
             </div>
           )}
         </div>
