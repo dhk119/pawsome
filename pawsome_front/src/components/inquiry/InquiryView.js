@@ -46,7 +46,7 @@ const InquiryView = () => {
       })
       .catch((err) => {
         Swal.fire({
-          text: "문제가 발생하여 페이지를 불러올 수 없습니다.",
+          text: "문제가 발생하여 페이지를 불러올 수 없습니다",
           icon: "error",
           iconColor: "var(--main1)",
           confirmButtonColor: "var(--point1)",
