@@ -170,7 +170,7 @@ const Payment = () => {
     }
   };
 
-  //결제
+  //KG결제
   const pay = () => {
     let name = "";
     if (cartList.length > 1) {
@@ -196,6 +196,80 @@ const Payment = () => {
     window.IMP.request_pay(
       {
         pg: "html5_inicis.INIpayTest",
+        pay_method: "card",
+        merchant_uid: dateString,
+        name: name,
+        amount: payPrice,
+        buyer_email: loginEmail,
+        buyer_name: payer.payName,
+        buyer_tel: payer.payPhone,
+        buyer_addr: payer.payAddr2,
+        buyer_postcode: payer.payAddr1,
+      },
+      (rsp) => {
+        if (rsp.success) {
+          // 결제 성공 시 로직
+          console.log(rsp);
+          // 결제 성공 시 저장할 데이터
+          const form = new FormData();
+          form.append("memberEmail", loginEmail);
+          form.append("payUid", rsp.merchant_uid);
+          form.append("totalPrice", totalPrice);
+          form.append("payDate", date);
+          form.append("payName", payer.payName);
+          form.append("payAddr1", payer.payAddr1);
+          form.append("payAddr2", payer.payAddr2);
+          form.append("payAddr3", payer.payAddr3);
+          form.append("payCartNo", checkCartNo);
+          axios
+            .post(`${backServer}/pay/payment`, form)
+            .then((res) => {
+              console.log(res);
+              Swal.fire({
+                title: "결제 성공",
+                text: "결제를 성공했습니다.",
+                icon: "success",
+              });
+              navigate("/market/payment/success");
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        } else {
+          // 결제 실패 시 로직
+          console.log(rsp.error_msg);
+          // 추가로 실행할 로직을 여기에 작성
+        }
+      }
+    );
+  };
+
+  //토스결제
+  const pay2 = () => {
+    let name = "";
+    if (cartList.length > 1) {
+      name = `${cartList[0].productName} 외 ${cartList.length - 1}건`;
+    } else {
+      name = `${cartList[0].productName}`;
+    }
+    const date = new Date();
+    const dateString =
+      date.getFullYear() +
+      "" +
+      (date.getMonth() + 1) +
+      "" +
+      date.getDate() +
+      "" +
+      date.getHours() +
+      "" +
+      date.getMinutes() +
+      "" +
+      date.getSeconds() +
+      "" +
+      date.getMilliseconds();
+    window.IMP.request_pay(
+      {
+        pg: "uplus.tlgdacomxpay",
         pay_method: "card",
         merchant_uid: dateString,
         name: name,
@@ -368,7 +442,7 @@ const Payment = () => {
             <tbody>
               <tr>
                 <th>주문상품</th>
-                <td>{totalPrice.toLocaleString("ko-KR")}</td>
+                <td>{totalPrice.toLocaleString("ko-KR")} 원</td>
               </tr>
               <tr>
                 <th>배송비</th>
@@ -388,12 +462,18 @@ const Payment = () => {
           >
             <div className="payment-total">최종 결제금액</div>
             <div className="payment-total">
-              {payPrice != 0 ? payPrice.toLocaleString("ko-KR") : payPrice} 원
+              {payPrice
+                ? payPrice === 0
+                  ? payPrice
+                  : payPrice.toLocaleString("ko-KR")
+                : ""}{" "}
+              원
             </div>
           </div>
         </div>
         <div className="pay-btn">
           <button onClick={pay}>결제하기</button>
+          <button onClick={pay2}>결제하기</button>
         </div>
       </div>
     </div>

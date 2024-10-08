@@ -567,8 +567,12 @@
 		group by star order by star desc)
 	</select>
 <!-- 바로구매 연결 -->
-	<select id="searchMaxCartNo">
+	<select id="searchMaxCartNo" resultType="int">
 		select max(cart_no) from cart where member_email=#{loginEmail}
+	</select>
+<!-- 부분취소 -->
+	<select id="selectBuyCount" resultType="int">
+		select count(*) from buy_list where pay_uid=#{payUid} and buy_state=1
 	</select>
 	
 	

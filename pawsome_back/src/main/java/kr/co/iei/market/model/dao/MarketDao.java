@@ -155,6 +155,10 @@ public interface MarketDao {
 	int deleteReivew(int reviewNo);
 /*바로구매 연결*/	
 	int searchMaxCartNo(String loginEmail);
+/*부분 취소*/
+	int selectBuyCount(String payUid);
+	
+	
 
 	
 
