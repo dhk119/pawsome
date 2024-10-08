@@ -153,6 +153,8 @@ public interface MarketDao {
 	List<Integer> starList(int productNo);
 	
 	int deleteReivew(int reviewNo);
+/*바로구매 연결*/	
+	int searchMaxCartNo(String loginEmail);
 
 	
 

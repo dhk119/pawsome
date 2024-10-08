@@ -557,15 +557,19 @@
 	</select>
 	<select id="starList" resultType="int">
 		with stars as (
- select 1 as star from dual union all
- select 2 as star from dual union all
- select 3 as star from dual union all
- select 4 as star from dual union all
- select 5 as star from dual
-)
-select totalStar from(
-select star,coalesce(count(review_star),0) as totalStar from stars s left join review r on(s.star = r.review_star) and product_no=#{productNo}
-group by star order by star desc)
+		 select 1 as star from dual union all
+		 select 2 as star from dual union all
+		 select 3 as star from dual union all
+		 select 4 as star from dual union all
+		 select 5 as star from dual
+		)
+		select totalStar from(
+		select star,coalesce(count(review_star),0) as totalStar from stars s left join review r on(s.star = r.review_star) and product_no=#{productNo}
+		group by star order by star desc)
+	</select>
+<!-- 바로구매 연결 -->
+	<select id="searchMaxCartNo">
+		select max(cart_no) from cart where member_email=#{loginEmail}
 	</select>
 	
 	

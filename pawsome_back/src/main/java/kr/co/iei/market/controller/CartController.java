@@ -60,4 +60,10 @@ public class CartController {
 		boolean result = cartService.deleteCartList(str);
 		return ResponseEntity.ok(result);
 	}
+	
+	@GetMapping(value="/maxCartNo/{loginEmail}")
+	public ResponseEntity<Integer> searchMaxCartNo (@PathVariable String loginEmail){
+		int result = cartService.searchMaxCartNo(loginEmail);
+		return ResponseEntity.ok(result);
+	}
 }

@@ -53,4 +53,9 @@ public class CartService {
 		return result;
 	}
 
+	public int searchMaxCartNo(String loginEmail) {
+		int result = marketDao.searchMaxCartNo(loginEmail);
+		return result;
+	}
+
 }
