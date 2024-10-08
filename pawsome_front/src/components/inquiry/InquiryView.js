@@ -44,7 +44,15 @@ const InquiryView = () => {
         }
         setButtonShowList([...buttonShowList]);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        Swal.fire({
+          text: "문제가 발생하여 페이지를 불러올 수 없습니다.",
+          icon: "error",
+          iconColor: "var(--main1)",
+          confirmButtonColor: "var(--point1)",
+        });
+        navigate("/inquiry/list");
+      });
   }, [changeComment]);
   const deleteInquiry = () => {
     Swal.fire({
@@ -327,6 +335,17 @@ const InquiryView = () => {
             <div className="inquiry-noComment">등록된 댓글이 없습니다.</div>
           )}
         </div>
+      </div>
+      <div className="admin-list-button-zone">
+        <button
+          className="admin-write-submit"
+          type="button"
+          onClick={() => {
+            navigate("/inquiry/list");
+          }}
+        >
+          문의목록
+        </button>
       </div>
     </section>
   );

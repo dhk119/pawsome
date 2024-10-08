@@ -3,9 +3,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductFrm from "./ProductFrm";
 import Swal from "sweetalert2";
+import { useRecoilState } from "recoil";
+import { memberLevelState } from "../utils/RecoilData";
+import Interceptor from "./Interceptor";
 
 const ProductView = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
   const navigate = useNavigate();
   const params = useParams();
   const [product, setProduct] = useState({});
@@ -141,47 +145,53 @@ const ProductView = () => {
   };
   return (
     <section>
-      <div className="admin-title">제품 상세</div>
-      <form
-        className="product-regist-frm"
-        onSubmit={(e) => {
-          e.preventDefault();
-          updateProduct();
-        }}
-      >
-        <ProductFrm
-          productName={productName}
-          setProductName={inputName}
-          typeCategory={typeCategory}
-          setTypeCategory={inputTypeCategory}
-          mainCategory={mainCategory}
-          setMainCategory={inputMainCategory}
-          productPrice={productPrice}
-          setProductPrice={inputPrice}
-          thumb={thumb}
-          setThumb={setThumb}
-          productThumb={productThumb}
-          setProductThumb={setProductThumb}
-          productDetail={productDetail}
-          setProductDetail={setProductDetail}
-          productShow={productShow}
-          setProductShow={inputShow}
-          memberEmail={memberEmail}
-        ></ProductFrm>
-        <div className="admin-button-zone">
-          <button
-            id="admin-delete"
-            className="admin-write-undo"
-            type="button"
-            onClick={deleteProduct}
+      {memberLevel === 1 ? (
+        <div>
+          <div className="admin-title">제품 상세</div>
+          <form
+            className="product-regist-frm"
+            onSubmit={(e) => {
+              e.preventDefault();
+              updateProduct();
+            }}
           >
-            삭제
-          </button>
-          <button type="submit" className="admin-write-submit">
-            수정하기
-          </button>
+            <ProductFrm
+              productName={productName}
+              setProductName={inputName}
+              typeCategory={typeCategory}
+              setTypeCategory={inputTypeCategory}
+              mainCategory={mainCategory}
+              setMainCategory={inputMainCategory}
+              productPrice={productPrice}
+              setProductPrice={inputPrice}
+              thumb={thumb}
+              setThumb={setThumb}
+              productThumb={productThumb}
+              setProductThumb={setProductThumb}
+              productDetail={productDetail}
+              setProductDetail={setProductDetail}
+              productShow={productShow}
+              setProductShow={inputShow}
+              memberEmail={memberEmail}
+            ></ProductFrm>
+            <div className="admin-button-zone">
+              <button
+                id="admin-delete"
+                className="admin-write-undo"
+                type="button"
+                onClick={deleteProduct}
+              >
+                삭제
+              </button>
+              <button type="submit" className="admin-write-submit">
+                수정하기
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      ) : (
+        <Interceptor />
+      )}
     </section>
   );
 };
