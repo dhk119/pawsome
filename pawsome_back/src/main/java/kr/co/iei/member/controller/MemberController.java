@@ -58,6 +58,12 @@ public class MemberController {
     private final String CLIENT_SECRET = "bmqkAwlkYr"; // 네이버 클라이언트 Secret
     private final String TOKEN_URL = "https://nid.naver.com/oauth2.0/token";
     private final String USER_INFO_URL = "https://openapi.naver.com/v1/nid/me";
+    
+    // 카카오 API 코드 받아오기
+ 	private final String KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
+    private final String KAKAO_CLIENT_ID = "655bae51c4f48e73787fb78710604be0";
+    private final String KAKAO_REDIRECT_URI = "http://localhost:3000/callback/kakao";
+
 	
     // 회원가입
 	@PostMapping
@@ -169,31 +175,49 @@ public class MemberController {
 	    return ResponseEntity.ok(result);
 	}
 	
-	
-	//카카오 로그인
-//	@GetMapping("/kakao-login")
-//	public ResponseEntity<> kakaoLogin(@RequestParam String code) {
+	// 카카오 로그인 처리
+	@GetMapping("/kakao-login")
+    public ResponseEntity<Map<String, Object>> kakaoLogin(@RequestParam String code) {
+        // 1. 카카오 API로 액세스 토큰 요청
+        String tokenUrl = String.format(
+            "%s?grant_type=authorization_code&client_id=%s&redirect_uri=%s&code=%s", 
+            KAKAO_TOKEN_URL, KAKAO_CLIENT_ID, KAKAO_REDIRECT_URI, code
+        );
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Map> tokenResponse = restTemplate.getForEntity(tokenUrl, Map.class);
 
-	   // URL에 포함된 code를 이용하여 액세스 토큰 발급
-//	   String accessToken = memberService.getKakaoAccessToken(code);
-//	   System.out.println(accessToken);
+        String accessToken = (String) tokenResponse.getBody().get("access_token");
 
-	   // 액세스 토큰을 이용하여 카카오 서버에서 유저 정보(이메일) 받아오기
-//	   String KaKaoEmail = memberService.getUserInfo(accessToken);
-//	   System.out.println("login Controller : " + KaKaoEmail);
+        // 2. 액세스 토큰으로 사용자 정보 요청
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + accessToken);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        ResponseEntity<Map> userInfoResponse = restTemplate.exchange(USER_INFO_URL, HttpMethod.GET, entity, Map.class);
 
-//	   PostLoginRes postLoginRes = null;
+        Map<String, Object> kakaoAccount = (Map<String, Object>) userInfoResponse.getBody().get("kakao_account");
+        String memberEmail = (String) kakaoAccount.get("email");
 
-	   // 만일, DB에 해당 email을 가지는 유저가 없으면 회원가입 시키고 유저 식별자와 JWT 반환
-	   // 현재 카카오 유저의 전화번호를 받아올 권한이 없어서 테스트를 하지 못함.
-//	   if(loginProvider.checkEmail(String.valueOf(userInfo.get("email"))) == 0) {
-//	       //PostLoginRes postLoginRes = 해당 서비스;
-//	        return new BaseResponse<>(postLoginRes);
-//	   } else {
-//	      // 아니면 기존 유저의 로그인으로 판단하고 유저 식별자와 JWT 반환
-//	      postLoginRes = loginProvider.getUserInfo(String.valueOf(userInfo.get("email")));
-//	      return new BaseResponse<>(postLoginRes);
-//	}
+        // 3. DB에서 회원 정보 확인 및 처리
+        int isMember = memberService.checkEmail(memberEmail);
+
+        Map<String, Object> result = new HashMap<>();
+        if (isMember == 1) {
+            LoginMemberDTO loginMember = memberService.login(memberEmail);
+            result.put("isMember", true);
+            result.put("memberEmail", loginMember.getMemberEmail());
+            result.put("memberLevel", loginMember.getMemberLevel());
+            result.put("memberNickname", loginMember.getMemberNickname());
+            result.put("accessToken", loginMember.getAccessToken());
+            result.put("refreshToken", loginMember.getRefreshToken());
+            result.put("loginType", loginMember.getLoginType());
+        } else {
+            result.put("isMember", false);
+            result.put("kakaoUserInfo", kakaoAccount);
+        }
+
+        return ResponseEntity.ok(result);
+    }
+
 	
 	// 마이페이지 프로필 조회
 	@PostMapping(value = "/profile")
@@ -455,25 +479,25 @@ public class MemberController {
 	// 구매 내역 불러오기
 	@GetMapping(value = "/selectBuyList/{memberEmail}")
 	public ResponseEntity<List> selectBuyList(@PathVariable String memberEmail) {
-		System.out.println(memberEmail);
 		List<BuyListDTO> buyList = memberService.selectBuyList(memberEmail);
-		System.out.println(buyList);
 		return ResponseEntity.ok(buyList);
 	}
 	
 	// 구매 내역 상세보기
-	@GetMapping(value = "/selectOneBuy/{buyNo}")
-	public ResponseEntity<BuyListDTO> selectOneBuy(@PathVariable int buyNo) {
-	    BuyListDTO buyList = memberService.selectOneBuy(buyNo);
-	    System.out.println("test");
+	@GetMapping(value = "/selectOneBuy/{payUid}")
+	public ResponseEntity<List> selectOneBuy(@PathVariable long payUid) {
+	    System.out.println(payUid);
+	    List buyList = memberService.selectOneBuy(payUid);
 	    System.out.println(buyList);
 	    return ResponseEntity.ok(buyList);
 	}
 	
 	//좋아요한 상품
-	@GetMapping(value = "/product-like/{memberEmail}")
-	public ResponseEntity<List> productLike(@PathVariable String memberEmail) {
-		List<ProductLikeDTO> productLikeList = memberService.productLike(memberEmail);
+	@GetMapping(value = "/product-like")
+	public ResponseEntity<List> selectProductLike(@RequestHeader("Authorization") String token) {
+		MemberDTO member = memberService.selectOneMember(token);
+		List<ProductLikeDTO> productLikeList = memberService.selectProductLike(member.getMemberEmail());
+		System.out.println(productLikeList);
 		return ResponseEntity.ok(productLikeList);
 	}
 }

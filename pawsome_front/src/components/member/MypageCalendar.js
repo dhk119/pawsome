@@ -104,7 +104,10 @@ const MypageCalendar = () => {
 
   //모달 열기/닫기 코드들
   const handleScheduleClick = (scheduleItem) => {
-    setSelectedSchedule(scheduleItem);
+    setSelectedSchedule({
+      ...scheduleItem,
+      dayStart: moment(scheduleItem.dayStart).format("YYYY-MM-DD"),
+    });
     setIsDetailModalOpen(true);
   };
 
@@ -115,6 +118,13 @@ const MypageCalendar = () => {
   };
 
   const openAddModal = () => {
+    setNewSchedule({
+      dayTitle: "",
+      dayStart: moment(value).format("YYYY-MM-DD"),
+      dayEnd: "",
+      dayContent: "",
+      memberEmail: loginEmail,
+    });
     setIsAddModalOpen(true);
   };
 
@@ -138,13 +148,10 @@ const MypageCalendar = () => {
 
   //일정 추가
   const handleAddSchedule = () => {
-    console.log("새 일정 추가:", newSchedule);
     axios
       .post(`${backServer}/member/insertSchedule`, newSchedule)
       .then((res) => {
-        const addedSchedule = res.data; // 서버에서 반환된 새 일정 정보 (dayNo 포함)
-        console.log("서버에서 반환된 일정:", addedSchedule);
-
+        const addedSchedule = res.data;
         // 전체 일정 상태 업데이트
         setSchedule((prevSchedules) => [...prevSchedules, addedSchedule]);
 
@@ -161,6 +168,9 @@ const MypageCalendar = () => {
             addedSchedule,
           ]);
         }
+
+        // 캘린더의 선택 날짜를 새 일정의 시작 날짜로 설정
+        setValue(moment(addedSchedule.dayStart).toDate()); // 새 일정 시작 날짜로 설정
 
         // 모달 닫기 및 초기화
         closeAddModal();

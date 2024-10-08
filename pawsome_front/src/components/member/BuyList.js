@@ -5,6 +5,20 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GoChevronRight } from "react-icons/go";
 
+const groupByPayUid = (data) => {
+  return data.reduce((acc, item) => {
+    const payUid = item.payUid;
+    if (!acc[payUid]) {
+      acc[payUid] = {
+        payInfo: item.pay,
+        items: [],
+      };
+    }
+    acc[payUid].items.push(item);
+    return acc;
+  }, {});
+};
+
 const BuyList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [buyList, setBuyList] = useState([]);
@@ -16,14 +30,29 @@ const BuyList = () => {
       axios
         .get(`${backServer}/member/selectBuyList/${loginEmail}`)
         .then((res) => {
-          setBuyList(res.data);
-          console.log(res.data);
+          const groupedData = groupByPayUid(res.data);
+          setBuyList(groupedData);
+          console.log(groupedData);
         })
         .catch((err) => {
           console.error(err);
         });
     }
   }, [loginEmail, backServer]);
+
+  const groupByPayUid = (data) => {
+    return data.reduce((acc, item) => {
+      const payUid = item.payUid;
+      if (!acc[payUid]) {
+        acc[payUid] = {
+          payInfo: item.pay, // 결제 정보를 묶음
+          items: [],
+        };
+      }
+      acc[payUid].items.push(item);
+      return acc;
+    }, {});
+  };
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat("ko-KR").format(price);
@@ -41,20 +70,20 @@ const BuyList = () => {
     <div className="buy-list-wrap">
       <h1>구매내역</h1>
       <div className="buy-list-container">
-        {buyList.length > 0 ? (
-          buyList.map((item) => (
-            <div key={item.buyNo} className="buy-item-card">
-              {/* 날짜와 상세보기 버튼 */}
+        {Object.keys(buyList).length > 0 ? (
+          Object.entries(buyList).map(([payUid, group]) => (
+            <div key={payUid} className="buy-group">
+              {/* 결제 정보 출력 */}
+              <div className="buy-list-payUid">주문번호 : {payUid}</div>
               <div className="buy-list-header">
                 <div className="buy-list-date">
-                  {formatDate(item.pay.payDate)}
+                  {formatDate(group.payInfo.payDate)}
                 </div>
                 <div className="view-details-button">
                   <button
                     className="btn-details"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/mypage/buy-view/${item.buyNo}`);
+                    onClick={() => {
+                      navigate(`/mypage/buy-view/${payUid}`);
                     }}
                   >
                     상세보기 <GoChevronRight />
@@ -62,55 +91,60 @@ const BuyList = () => {
                 </div>
               </div>
 
-              {/* 배송 상태 */}
-              <div className="buy-state">
-                {item.buyState === 1
-                  ? "결제완료"
-                  : item.buyState === 2
-                  ? "결제취소"
-                  : item.buyState === 3
-                  ? "배송중"
-                  : "배송완료"}
-              </div>
+              {/* 각 구매 내역 출력 */}
+              {group.items.map((item) => (
+                <div key={item.buyNo} className="buy-item-card">
+                  {/* 배송 상태 */}
+                  <div className="buy-state">
+                    {item.buyState === 1
+                      ? "결제완료"
+                      : item.buyState === 2
+                      ? "결제취소"
+                      : item.buyState === 3
+                      ? "배송중"
+                      : "배송완료"}
+                  </div>
 
-              {/* 제품 이미지 및 정보 */}
-              <div className="buy-item-header">
-                <img
-                  src={
-                    item.product.productThumb
-                      ? `${backServer}/product/thumb/${item.product.productThumb}`
-                      : "/image/basicimage.png"
-                  }
-                  alt={item.product.productName}
-                  className="product-thumbnail"
-                />
-                <div className="buy-item-info">
-                  <h3>{item.product.productName}</h3>
-                  <p>{formatPrice(item.product.productPrice)}원</p>
-                  <p>{item.buyCount}개</p>
-                </div>
-              </div>
+                  {/* 제품 이미지 및 정보 */}
+                  <div className="buy-item-header">
+                    <img
+                      src={
+                        item.product.productThumb
+                          ? `${backServer}/product/thumb/${item.product.productThumb}`
+                          : "/image/basicimage.png"
+                      }
+                      alt={item.product.productName}
+                      className="product-thumbnail"
+                    />
+                    <div className="buy-item-info">
+                      <h3>{item.product.productName}</h3>
+                      <p>{formatPrice(item.product.productPrice)}원</p>
+                      <p>{item.buyCount}개</p>
+                    </div>
+                  </div>
 
-              {/* 추가 버튼 (배송 조회, 리뷰 작성) */}
-              <div className="buy-item-footer">
-                <div className="buy-action-buttons">
-                  {item.buyState === 3 ? (
-                    <button className="btn btn-track">배송 조회</button>
-                  ) : item.buyState === 4 ? (
-                    <button
-                      className="btn btn-review"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(
-                          `/market/main/productDetail/${item.product.productNo}/review`
-                        );
-                      }}
-                    >
-                      리뷰 작성
-                    </button>
-                  ) : null}
+                  {/* 추가 버튼 (배송 조회, 리뷰 작성) */}
+                  <div className="buy-item-footer">
+                    <div className="buy-action-buttons">
+                      {item.buyState === 3 ? (
+                        <button className="btn btn-track">배송 조회</button>
+                      ) : item.buyState === 4 ? (
+                        <button
+                          className="btn btn-review"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(
+                              `/market/main/productDetail/${item.product.productNo}/review`
+                            );
+                          }}
+                        >
+                          리뷰 작성
+                        </button>
+                      ) : null}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           ))
         ) : (

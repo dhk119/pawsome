@@ -10,7 +10,7 @@ const ProductLike = () => {
 
   useEffect(() => {
     axios
-      .get(`${backServer}/member/product-like/${loginEmail}`)
+      .get(`${backServer}/member/product-like`)
       .then((res) => {
         console.log(res.data);
         setProductLike(res.data);

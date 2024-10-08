@@ -200,13 +200,13 @@ public class MemberService {
 		return buyList;
 	}
 
-	public BuyListDTO selectOneBuy(int buyNo) {
-		BuyListDTO buy = MarketDao.selectOneBuy(buyNo);
-	    return buy;
+	public List selectOneBuy(long payUid) {
+		List buyList = MarketDao.selectOneBuy(payUid);
+	    return buyList;
 	}
 
-	public List<ProductLikeDTO> productLike(String memberEmail) {
-		List<ProductLikeDTO> list = MarketDao.productLike(memberEmail);
+	public List<ProductLikeDTO> selectProductLike(String memberEmail) {
+		List<ProductLikeDTO> list = MarketDao.selectProductLike(memberEmail);
 		return list;
 	}
 
