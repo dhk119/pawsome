@@ -6,6 +6,7 @@ import axios from "axios";
 import { Bar, BarChart, CartesianGrid, Legend, XAxis, YAxis } from "recharts";
 import { Tooltip } from "@mui/material";
 import html2canvas from "html2canvas";
+import Swal from "sweetalert2";
 const HealthTest = () => {
   const [selectedWeightManagementTip, setSelectedWeightManagementTip] =
     useState("");
@@ -18,6 +19,7 @@ const HealthTest = () => {
   const [selectedPet, setSelectedPet] = useState(null);
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [formData, setFormData] = useState({
+    no: "",
     name: "",
     birthDate: "",
     gender: "",
@@ -77,18 +79,13 @@ const HealthTest = () => {
     false,
   ]);
   const [immunityScore, setImmunityScore] = useState(100);
-  const [registeredPets, setRegisteredPets] = useState([]); // 반려동물 목록 상태 추가
   const [isTestStarted, setIsTestStarted] = useState(false);
   const [isStartWithoutPet, setIsStartWithoutPet] = useState(false);
   const [sessionPets, setSessionPets] = useState([]); // 세션에 등록된 반려동물 목록
   const isLogin = useRecoilValue(isLoginState); // 로그인 여부
   const [memberEmail, setMemberEmail] = useRecoilState(loginEmailState);
   const [isFinalScoreVisible, setIsFinalScoreVisible] = useState(false);
-  const [expandedResult, setExpandedResult] = useState(null);
   const [expandedResults, setExpandedResults] = useState({});
-  const addPet = () => {
-    setPets([...pets, { name: "", birthDate: "", gender: "" }]);
-  };
 
   const removePet = (index) => {
     setPets(pets.filter((_, i) => i !== index));
@@ -125,13 +122,23 @@ const HealthTest = () => {
     axios
       .get(`${backServer}/pet/petList/${memberEmail}`)
       .then((res) => {
-        console.log(res);
         setSessionPets(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [backServer, isLogin]);
+
+  const saveStatus = () => {
+    axios.post(`${backServer}/pet/saveStatus`, saveResultStatus).then((res) => {
+      Swal.fire({
+        text: "저장에 성공하였습니다 !",
+        icon: "success",
+        iconColor: "#5799ff",
+        confirmButtonColor: "#5799ff",
+      });
+    });
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -144,7 +151,6 @@ const HealthTest = () => {
   const handleSubmit = (e) => {
     e.preventDefault(); // 기본 동작 방지
     setSelectedWeightManagementTip(weightManagementTips[formData.weight]);
-    console.log("정보 입력 완료"); // 확인용 로그
     setIsTestStarted(true);
   };
 
@@ -318,21 +324,7 @@ const HealthTest = () => {
     immunity: 0,
   });
 
-  const startWithPet = () => {
-    if (sessionPets.length > 0) {
-      const pet = sessionPets[0]; // 첫 번째 반려동물 가져오기
-      setFormData({
-        name: pet.name,
-        birthDate: pet.birthDate,
-        gender: pet.gender,
-      });
-      setSelectedPet(pet.type); // 반려동물 유형 설정
-      setIsTestStarted(true); // 테스트 시작
-    }
-  };
-
   const startWithoutLogin = () => {
-    console.log();
     setIsTestStarted(false);
   };
 
@@ -351,11 +343,35 @@ const HealthTest = () => {
     setSelectedPet(pet.petName);
     setFormData({
       name: pet.name,
+      no: pet.petNo,
       birthDate: pet.birthDate,
       gender: pet.gender,
     });
     setIsTestStarted(false);
   };
+  const weightStatus = {
+    thin: 1,
+    normal: 2,
+    overweight: 3,
+    veryOverweight: 4,
+  };
+  const setWeightResult = (formData) => {
+    if (formData.weight === "thin") return weightStatus.thin;
+    if (formData.weight === "normal") return weightStatus.normal;
+    if (formData.weight === "overweight") return weightStatus.overweight;
+    if (formData.weight === "veryOverweight")
+      return weightStatus.veryOverweight;
+  };
+  const [saveResultStatus, setSaveResultStatus] = useState({
+    petNo: 0,
+    petWeightStatus: 0,
+    petSkinStatus: 0,
+    petDentalStatus: 0,
+    petBoneStatus: 0,
+    petEyeStatus: 0,
+    petHeartStatus: 0,
+    petImmunityStatus: 0,
+  });
 
   const showFinalResults = () => {
     setIsFinalScoreVisible(true);
@@ -367,7 +383,17 @@ const HealthTest = () => {
       heart: heartScore,
       immunity: immunityScore,
     });
-
+    setSaveResultStatus({
+      //axios로 보내주는 점수와 번호
+      petNo: formData.no,
+      petWeightStatus: setWeightResult(formData),
+      petSkinStatus: skinScore,
+      petDentalStatus: dentalScore,
+      petBoneStatus: boneScore,
+      petEyeStatus: eyeScore,
+      petHeartStatus: heartScore,
+      petImmunityStatus: immunityScore,
+    });
     const newData = [
       { name: "피부", score: skinScore },
       { name: "치아", score: dentalScore },
@@ -804,7 +830,6 @@ const HealthTest = () => {
                       else if (score <= 60) fillColor = "#ffcc66"; // 주의
                       else if (score <= 80) fillColor = "#66cc66"; // 양호
                       else fillColor = "#5799ff"; // 건강
-
                       return <rect {...props} fill={fillColor} />;
                     }}
                     label={{ position: "top" }}
@@ -876,6 +901,13 @@ const HealthTest = () => {
               <button className="ps-btn2" onClick={onClickDownloadButton}>
                 앨범에 저장
               </button>
+              {isLogin ? (
+                <div>
+                  <button onClick={saveStatus}>저장하기</button>
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
           )}
         </div>
