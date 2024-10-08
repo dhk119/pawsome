@@ -145,10 +145,16 @@ public interface MarketDao {
 	List<ReviewDTO> selectReviewList(int productNo, int start, int end);
 	
 	List selectOneReviewFileList(int reviewNo);
+	
+	List<ReviewFileDTO> selectOneReviewFile(int reviewNo);
 /*평점만들기*/	
 	int countStar(int productNo);
 	
-	List<ReviewDTO> starList(int productNo);
+	List<Integer> starList(int productNo);
+	
+	int deleteReivew(int reviewNo);
+/*바로구매 연결*/	
+	int searchMaxCartNo(String loginEmail);
 
 	
 

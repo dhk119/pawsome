@@ -25,6 +25,8 @@ const Payment = () => {
   const checkCartNo = params.str;
   const [totalPrice, setTotalPrice] = useState(0); //총금액
   let paymentTotal = 0; //총금액 더하기위한 옹달샘
+  const [payPrice, setPayPrice] = useState(); //결제금액
+  console.log(payPrice);
   useEffect(() => {
     axios
       .get(`${backServer}/pay/payer/${loginEmail}`)
@@ -43,6 +45,11 @@ const Payment = () => {
           paymentTotal += cart.productCartCount * cart.productPrice;
         });
         setTotalPrice(paymentTotal);
+        if (paymentTotal >= 30000) {
+          setPayPrice(paymentTotal);
+        } else {
+          setPayPrice(paymentTotal + 3000);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -165,6 +172,12 @@ const Payment = () => {
 
   //결제
   const pay = () => {
+    let name = "";
+    if (cartList.length > 1) {
+      name = `${cartList[0].productName} 외 ${cartList.length - 1}건`;
+    } else {
+      name = `${cartList[0].productName}`;
+    }
     const date = new Date();
     const dateString =
       date.getFullYear() +
@@ -185,8 +198,8 @@ const Payment = () => {
         pg: "html5_inicis.INIpayTest",
         pay_method: "card",
         merchant_uid: dateString,
-        name: `${cartList[0].productName} 외 ${cartList.length - 1}건`,
-        amount: totalPrice, //테스트 끝나면 totalPrice로 수정
+        name: name,
+        amount: payPrice,
         buyer_email: loginEmail,
         buyer_name: payer.payName,
         buyer_tel: payer.payPhone,
@@ -375,10 +388,7 @@ const Payment = () => {
           >
             <div className="payment-total">최종 결제금액</div>
             <div className="payment-total">
-              {totalPrice >= 30000
-                ? totalPrice.toLocaleString("ko-KR")
-                : (totalPrice + 3000).toLocaleString("ko-KR")}{" "}
-              원
+              {payPrice != 0 ? payPrice.toLocaleString("ko-KR") : payPrice} 원
             </div>
           </div>
         </div>

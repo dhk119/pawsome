@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ReviewFrm from "./ReviewFrm";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Backspace } from "@mui/icons-material";
 
 const UpdateReview = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -86,6 +87,19 @@ const UpdateReview = () => {
     }
   };
 
+  const deleteReview = () => {
+    axios
+      .delete(`${backServer}/product/deleteReview/${reviewNo}`)
+      .then((res) => {
+        console.log(res);
+        if (res == 1) {
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <section className="review-page-wrap">
       <div className="page-title">REVIEW</div>
@@ -116,6 +130,13 @@ const UpdateReview = () => {
             <div className="submit-btn-wrap">
               <button type="submit" className="submit-btn">
                 리뷰 수정
+              </button>
+              <button
+                type="button"
+                className="submit-btn"
+                onClick={deleteReview}
+              >
+                리뷰 삭제
               </button>
             </div>
           </div>

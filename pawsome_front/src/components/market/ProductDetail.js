@@ -14,9 +14,10 @@ import Guide from "./tabComponent/Guide";
 import "./tab.css";
 import axios from "axios";
 import QuantityInput from "./QuantityInput";
-import { useRecoilState } from "recoil";
+import { constSelector, useRecoilState } from "recoil";
 import { loginEmailState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
+import { MaximizeOutlined } from "@mui/icons-material";
 
 const ProductDetail = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -172,6 +173,57 @@ const ProductDetail = () => {
       });
   };
 
+  //바로 구매
+  const Pay = () => {
+    let maxCartNo = 0;
+    const form = new FormData();
+    form.append("productNo", productNo);
+    form.append("productCartCount", quantity);
+    form.append("memberEmail", loginEmail);
+    Swal.fire({
+      title: "바로 구매하시겠습니까?",
+      html: `상품명 : ${product.productName}</br>상품수량 : ${quantity}`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#ffa518",
+      confirmButtonText: "예",
+      cancelButtonText: "아니오",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .post(`${backServer}/cart`, form)
+            .then((res) => {
+              console.log(res);
+              if (res.data) {
+                axios
+                  .get(`${backServer}/cart/maxCartNo/${loginEmail}`)
+                  .then((res) => {
+                    console.log(res);
+                    maxCartNo = res.data;
+                    navigate(`/market/payment/${maxCartNo}`);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              } else {
+                Swal.fire({
+                  title: "장바구니 담기 실패",
+                  text: "나중에 다시 시도해주세요.",
+                  icon: "error",
+                });
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <section className="section productList-wrap">
       <div className="productDetail-wrap">
@@ -258,7 +310,9 @@ const ProductDetail = () => {
 
               <div className="product-btn">
                 <button type="submit">장바구니 담기</button>
-                <button type="button">바로 구매</button>
+                <button type="button" onClick={Pay}>
+                  바로 구매
+                </button>
                 <button type="button">관심상품</button>
               </div>
             </form>

@@ -244,8 +244,8 @@ const Mbti = () => {
           ></img>
         </div>
 
-        <button width="1000px" onClick={onClickDownloadButton}>
-          앨범에 저장
+        <button className="ps-btn1" onClick={onClickDownloadButton}>
+          사진으로 저장하기
         </button>
       </div>
     );
