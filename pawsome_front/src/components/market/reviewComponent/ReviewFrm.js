@@ -51,7 +51,6 @@ const ReviewFrm = (props) => {
     }
     setReviewFile([...reviewFile, ...fileArr]);
   };
-  console.log(delFileNo);
 
   return (
     <>

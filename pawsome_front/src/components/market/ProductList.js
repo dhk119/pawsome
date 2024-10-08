@@ -31,7 +31,6 @@ const ProductList = (props) => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [like, setLike] = useState(false);
 
-  console.log(reqPage);
   useEffect(() => {
     axios
       .get(

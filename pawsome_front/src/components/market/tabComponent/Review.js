@@ -13,6 +13,7 @@ import StarAvr from "./StarAvr";
 import { useRecoilState } from "recoil";
 import { loginEmailState } from "../../utils/RecoilData";
 import PageNavi from "../../utils/PageNavi";
+import { Box } from "@mui/material";
 
 const Review = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -29,7 +30,7 @@ const Review = () => {
     axios
       .get(`${backServer}/product/selectReviewList/${productNo}/${reqPage}`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setReviewList(res.data.list);
         setPi(res.data.pi);
         setTotalCount(res.data.totalCount);
@@ -38,7 +39,6 @@ const Review = () => {
         console.log(err);
       });
   }, [reqPage]);
-  console.log("평점 : ", total / 5);
 
   return (
     <div className="reviewTotal-wrap">
@@ -76,11 +76,21 @@ const ReviewItem = (props) => {
   const review = props.review;
   const value = review.reviewStar;
   const [reviewFile, setReviewFile] = useState([]);
+  const labels = {
+    1: "나빠요",
+    2: "별로예요",
+    3: "보통이에요",
+    4: "좋아요",
+    5: "최고예요",
+  };
+  const getLabelText = (value) => {
+    return `${labels[value]}`;
+  };
   useEffect(() => {
     axios
       .get(`${backServer}/product/selectOneReviewFile/${review.reviewNo}`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setReviewFile(res.data);
       })
       .catch((err) => {
@@ -94,7 +104,16 @@ const ReviewItem = (props) => {
         <div>
           <div className="writer">{review.reviewWriter}</div>
           <div className="star">
-            <Rating name="read-only" value={value} readOnly />
+            <Box sx={{ width: 300, display: "flex", alignItems: "center" }}>
+              <Rating
+                name="half-rating-read"
+                value={value}
+                precision={1}
+                getLabelText={getLabelText}
+                readOnly
+              />
+              <span style={{ marginLeft: 8 }}>{getLabelText(value)}</span>
+            </Box>
           </div>
         </div>
         <div className="date">{review.reviewRegDate}</div>

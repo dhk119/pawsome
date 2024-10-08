@@ -48,8 +48,10 @@ public class ProductService {
 		return map;
 	}
 
-	public ProductDTO selectOneProduct(int productNo) {
+	public ProductDTO selectOneProduct(int productNo, String loginEmail) {
 		ProductDTO product = marketDao.selectOneProduct(productNo);
+		int result = marketDao.isLike(productNo, loginEmail);
+		product.setIsLike(result);
 		return product;
 	}
 

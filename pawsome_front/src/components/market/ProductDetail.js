@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Link,
   NavLink,
@@ -14,10 +14,11 @@ import Guide from "./tabComponent/Guide";
 import "./tab.css";
 import axios from "axios";
 import QuantityInput from "./QuantityInput";
-import { constSelector, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { loginEmailState } from "../utils/RecoilData";
 import Swal from "sweetalert2";
-import { MaximizeOutlined } from "@mui/icons-material";
+import { FaHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 
 const ProductDetail = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -27,9 +28,10 @@ const ProductDetail = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const [productPrice, setProductPrice] = useState(0);
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
+  const [like, setLike] = useState(false); //좋아요 관리
   useEffect(() => {
     axios
-      .get(`${backServer}/product/productDetail/${productNo}`)
+      .get(`${backServer}/product/productDetail/${productNo}/${loginEmail}`)
       .then((res) => {
         console.log(res);
         setProduct(res.data);
@@ -224,6 +226,42 @@ const ProductDetail = () => {
       });
   };
 
+  //좋아요
+  const likePush = () => {
+    if (loginEmail == "") {
+      Swal.fire({
+        title: "로그인 필요",
+        text: "로그인 후 다시 시도해주세요",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#ffa518",
+        confirmButtonText: "로그인페이지 이동",
+        cancelButtonText: "계속 구경하기",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
+    } else {
+      axios
+        .post(`${backServer}/product/changeLike/${loginEmail}`, product)
+        .then((res) => {
+          console.log(res);
+          if (res.data == 3) {
+            //insert됨
+            product.isLike = 1;
+          } else if (res.data == 2) {
+            //delete됨
+            product.isLike = 0;
+          }
+          setLike(!like);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <section className="section productList-wrap">
       <div className="productDetail-wrap">
@@ -309,11 +347,15 @@ const ProductDetail = () => {
               </div>
 
               <div className="product-btn">
-                <button type="submit">장바구니 담기</button>
-                <button type="button" onClick={Pay}>
+                <button type="button" className="like-btn" onClick={likePush}>
+                  {product.isLike == 1 ? <FaHeart /> : <FaRegHeart />}
+                </button>
+                <button type="submit" className="hover-btn">
+                  장바구니 담기
+                </button>
+                <button type="button" className="hover-btn" onClick={Pay}>
                   바로 구매
                 </button>
-                <button type="button">관심상품</button>
               </div>
             </form>
           </div>

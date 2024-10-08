@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ReviewFrm from "./ReviewFrm";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { memberNicknameState } from "../../utils/RecoilData";
+import { loginEmailState, memberNicknameState } from "../../utils/RecoilData";
 import "../write.css";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -12,6 +12,7 @@ const WriteReview = () => {
   const navigate = useNavigate();
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
+  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [reviewContent, setReviewContent] = useState("");
   const [reviewFile, setReviewFile] = useState([]);
   /* 나중에 연결하면 주소로 번호 받기
@@ -25,7 +26,7 @@ const WriteReview = () => {
 
   useEffect(() => {
     axios
-      .get(`${backServer}/product/productDetail/94`)
+      .get(`${backServer}/product/productDetail/94/${loginEmail}`)
       .then((res) => {
         console.log(res);
         setProduct(res.data);

@@ -181,13 +181,18 @@
   margin-right: 60px;
 }
 .productDetail > .product-thumb > img {
-  width: 100%;
+  width: 550px;
+  margin-left: 60px;
+  margin-bottom: 20px;
 }
 .productDetail > .product-info {
   width: 45%;
 }
 .productDetail > .product-info > * {
   margin: 15px 0;
+}
+.productDetail > .product-info > .product-category {
+  margin-top: 30px;
 }
 .productDetail > .product-info > .product-category > .typeCategory,
 .mainCategory {
@@ -220,8 +225,12 @@ td {
   width: 30%;
 }
 .productDetail > .product-info > form > .product-totalprice {
+  margin-top: 40px;
+  margin-bottom: 20px;
   padding: 10px 0;
   font-size: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 .productDetail > .product-info > form > .product-btn {
   margin-top: 30px;
@@ -233,10 +242,10 @@ td {
 }
 .product-btn > button {
   border: 2px solid #ffa518;
-  width: 30%;
+  width: 45%;
   background-color: #fff;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 18px;
   margin: 0 20px;
   line-height: 40px;
   font-family: ns-b;
@@ -245,10 +254,22 @@ td {
   cursor: pointer;
   text-align: center;
 }
-.product-btn > a:hover {
+.product-btn > .hover-btn:hover {
   background-color: #ffa518;
   color: #fff;
   cursor: pointer;
+}
+.product-btn > .like-btn {
+  width: 78px;
+  font-size: 37px;
+  padding: 0;
+  text-align: center;
+  padding-top: 5px;
+  border: none;
+  color: #fc1111;
+}
+.product-btn > .like-btn:hover {
+  font-size: 40px;
 }
 
 .detail-menu-wrap {
@@ -419,6 +440,8 @@ td {
   width: 900px;
   margin: 0 auto;
   background-color: var(--gray7);
+  /* 결제성공페이지때문에 설정 */
+  min-height: 708px;
 }
 .payment-page-wrap > .page-title {
   padding-top: 20px;
@@ -528,4 +551,15 @@ td {
 }
 .cancelBtn:hover {
   cursor: pointer;
+}
+
+/* paySuccess */
+.payment-success {
+  background-color: #fff;
+}
+.payment-success > .img > img {
+  width: 100%;
+}
+.payment-success > .text {
+  text-align: center;
 }

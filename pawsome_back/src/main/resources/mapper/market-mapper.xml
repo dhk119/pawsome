@@ -361,6 +361,8 @@
 		group by main_category
 	</select>
 
+
+
 	<!-- 원희 -->
 	<select id="totalCount" resultType="int">
 		select count(*) from product where product_show='Y'
@@ -400,9 +402,6 @@
 	<select id="selectOneProduct" resultType="product">
 		select product_no, product_name, type_category, main_category, product_price, product_thumb, product_detail from product where product_no=#{productNo}
 	</select>
-	<insert id="insertLikePush">
-		insert into product_like values(#{productNo}, #{memberEmail})
-	</insert>
 <!-- Q&A -->
 	<insert id="insertQna">
 		insert into qna values(qna_seq.nextval,#{productNo},#{qnaType},#{qnaTitle},#{qnaContent},#{qnaPublic},sysdate,#{qnaWriter})

@@ -48,9 +48,9 @@ public class ProductController {
 		return ResponseEntity.ok(map);
 	}
 	
-	@GetMapping(value="/productDetail/{productNo}")
-	public ResponseEntity<ProductDTO> selectOneProduct(@PathVariable int productNo){
-		ProductDTO product = productService.selectOneProduct(productNo);
+	@GetMapping(value="/productDetail/{productNo}/{loginEmail}")
+	public ResponseEntity<ProductDTO> selectOneProduct(@PathVariable int productNo, @PathVariable String loginEmail){
+		ProductDTO product = productService.selectOneProduct(productNo,loginEmail);
 		return ResponseEntity.ok(product);
 	}
 	
