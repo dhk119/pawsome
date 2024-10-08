@@ -61,6 +61,10 @@ public interface MarketDao {
 	
 	List<ChartData> producIncomeChart(int typeCategory, int buyState);
 	
+	List<ChartData> barChart(String barKey, int buyState);
+	
+	List<ChartData> barChartIncome(String barKey, int buyState);
+	
 	/*원희*/
 	int totalCount(int typeCategory, String mainCategory);
 

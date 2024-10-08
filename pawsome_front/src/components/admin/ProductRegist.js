@@ -56,7 +56,7 @@ const ProductRegist = () => {
       Swal.fire({
         text: "가격에는 숫자만 입력 가능합니다.",
         icon: "info",
-        iconColor: "var(--main1)",
+        iconColor: "var(--point1)",
         confirmButtonColor: "var(--point1)",
       });
     } else if (
@@ -93,7 +93,7 @@ const ProductRegist = () => {
       Swal.fire({
         text: "누락된 입력 값이 있습니다",
         icon: "info",
-        iconColor: "var(--main1)",
+        iconColor: "var(--point1)",
         confirmButtonColor: "var(--point1)",
       });
     }

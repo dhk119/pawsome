@@ -237,4 +237,26 @@ public class AdminService {
 		List<ChartData> list=marketDao.producIncomeChart(typeCategory,buyState);
 		return list;
 	}
+	public List<ChartData> barChart(String barKey , int buyState) {
+		List<ChartData> list=marketDao.barChart(barKey,buyState);
+		for (ChartData chartData : list) {
+			if(chartData.getKey().equals("1")) {
+				chartData.setKey("강아지");
+			}else {
+				chartData.setKey("고양이");
+			}
+		}
+		return list;
+	}
+	public List<ChartData> barChartIncome(String barKey, int buyState) {
+		List<ChartData> list=marketDao.barChartIncome(barKey,buyState);
+		for (ChartData chartData : list) {
+			if(chartData.getKey().equals("1")) {
+				chartData.setKey("강아지");
+			}else {
+				chartData.setKey("고양이");
+			}
+		}
+		return list;
+	}
 }
