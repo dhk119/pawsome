@@ -21,8 +21,6 @@ const HealthTest = () => {
   const [formData, setFormData] = useState({
     no: "",
     name: "",
-    birthDate: "",
-    gender: "",
     weight: "",
   });
 
@@ -344,8 +342,6 @@ const HealthTest = () => {
     setFormData({
       name: pet.name,
       no: pet.petNo,
-      birthDate: pet.birthDate,
-      gender: pet.gender,
     });
     setIsTestStarted(false);
   };
@@ -575,6 +571,11 @@ const HealthTest = () => {
                       </option>
                     ))}
                   </select>
+                  <div style={{ marginBottom: "20px", marginTop: "20px" }}>
+                    <Link to="/service/healthTestRecord">
+                      등록된 건강테스트 기록보기
+                    </Link>
+                  </div>
                   <h2>어떤 반려동물과 함께하고 있나요?</h2>
                   <div className="test-box">
                     <div
