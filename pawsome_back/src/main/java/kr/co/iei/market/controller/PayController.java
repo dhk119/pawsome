@@ -52,6 +52,7 @@ public class PayController {
 	
 	@PostMapping(value="/refund")
 	public ResponseEntity<Integer> refund (@RequestBody RefundRequestDTO refund){
+		System.out.println(refund);
 		int result = payService.refundService(refund);
 		return ResponseEntity.ok(result);
 	}

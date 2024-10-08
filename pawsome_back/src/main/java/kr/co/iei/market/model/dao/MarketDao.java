@@ -161,6 +161,8 @@ public interface MarketDao {
 	int searchMaxCartNo(String loginEmail);
 /*부분 취소*/
 	int selectBuyCount(String payUid);
+/*전체 취소*/	
+	List selectCancelList(String payUid);
 	
 	
 

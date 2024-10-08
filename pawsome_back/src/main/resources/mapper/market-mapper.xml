@@ -531,14 +531,13 @@
 		select product_no, product_cart_count from cart where cart_no=#{payCartNo}
 	</select>
 	<select id="selectAllBuyList" resultType="buyList">
-		select * from
-			(select rownum as rnum, t.* from
-				(select b.buy_no, b.pay_uid, b.product_no, b.buy_count, b.member_email, b.buy_state, p.product_thumb, p.product_name, p.product_price from
-					(select * from buy_list where member_email=#{loginEmail})b 
-					left join product p on b.product_no = p.product_no order by 1 desc
-				)t
-			)
-		where rnum between #{start} and #{end}
+		select * from (SELECT rownum AS rnum, t.* FROM
+	        (SELECT b.buy_no, b.pay_uid, b.product_no, b.buy_count, b.member_email, b.buy_state, p.product_thumb, p.product_name, p.product_price,a.total_price AS total_price FROM buy_list b 
+	            LEFT JOIN product p ON b.product_no = p.product_no 
+	            LEFT JOIN pay a ON b.pay_uid = a.pay_uid
+	            WHERE b.member_email = #{loginEmail} 
+	        ORDER BY b.buy_no desc) t)
+        where rnum BETWEEN #{start} AND #{end}
 	</select>
 	<select id="payTotalCount" resultType="int">
 		select count(*) from buy_list where member_email=#{loginEmail}
@@ -628,6 +627,11 @@
 	<select id="selectBuyCount" resultType="int">
 		select count(*) from buy_list where pay_uid=#{payUid} and buy_state=1
 	</select>
+<!-- 전체취소 -->
+	<select id="selectCancelList" resultType="int">
+		select buy_no from buy_list where pay_uid=#{payUid}
+	</select>
+	
 	
 	
 	
