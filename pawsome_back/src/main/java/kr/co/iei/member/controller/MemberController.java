@@ -455,9 +455,7 @@ public class MemberController {
 	// 구매 내역 불러오기
 	@GetMapping(value = "/selectBuyList/{memberEmail}")
 	public ResponseEntity<List> selectBuyList(@PathVariable String memberEmail) {
-		System.out.println(memberEmail);
 		List<BuyListDTO> buyList = memberService.selectBuyList(memberEmail);
-		System.out.println(buyList);
 		return ResponseEntity.ok(buyList);
 	}
 	
@@ -471,9 +469,11 @@ public class MemberController {
 	}
 	
 	//좋아요한 상품
-	@GetMapping(value = "/product-like/{memberEmail}")
-	public ResponseEntity<List> productLike(@PathVariable String memberEmail) {
-		List<ProductLikeDTO> productLikeList = memberService.productLike(memberEmail);
+	@GetMapping(value = "/product-like")
+	public ResponseEntity<List> selectProductLike(@RequestHeader("Authorization") String token) {
+		MemberDTO member = memberService.selectOneMember(token);
+		List<ProductLikeDTO> productLikeList = memberService.selectProductLike(member.getMemberEmail());
+		System.out.println(productLikeList);
 		return ResponseEntity.ok(productLikeList);
 	}
 }

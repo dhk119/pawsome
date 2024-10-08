@@ -205,8 +205,8 @@ public class MemberService {
 	    return buy;
 	}
 
-	public List<ProductLikeDTO> productLike(String memberEmail) {
-		List<ProductLikeDTO> list = MarketDao.productLike(memberEmail);
+	public List<ProductLikeDTO> selectProductLike(String memberEmail) {
+		List<ProductLikeDTO> list = MarketDao.selectProductLike(memberEmail);
 		return list;
 	}
 

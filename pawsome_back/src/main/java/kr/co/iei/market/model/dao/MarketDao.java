@@ -155,7 +155,7 @@ public interface MarketDao {
 /*마이페이지 구매내역 - 정원*/
 	List<BuyListDTO> selectBuyList(String memberEmail);
 
-	List productLike(String memberEmail);
+	List selectProductLike(String memberEmail);
 
 	BuyListDTO selectOneBuy(int buyNo);
 
