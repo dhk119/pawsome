@@ -16,7 +16,7 @@ const PayCancel = () => {
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
   const [totalCount, setTotalCount] = useState();
-  const [result, setResult] = useState(-1);
+  const [result, setResult] = useState(-1); //결제관련 state
   useEffect(() => {
     axios
       .get(`${backServer}/pay/buyList/${loginEmail}/${reqPage}`)
@@ -111,10 +111,10 @@ const BuyItem = (props) => {
               }).then((result) => {
                 if (result.isConfirmed) {
                   cancelPay(
-                    buy.buyNo,
-                    buy.productNo,
-                    buy.payUid,
-                    buy.buyCount * buy.productPrice,
+                    buy.buyNo, //결제시퀀스번호
+                    buy.productNo, //상품번호
+                    buy.payUid, //주문번호
+                    buy.buyCount * buy.productPrice, // 결제 총 금액
                     setResult
                   );
                   //결제내역확인페이지로 이동

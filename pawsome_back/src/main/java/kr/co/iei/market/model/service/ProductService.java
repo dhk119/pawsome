@@ -197,10 +197,20 @@ public class ProductService {
 		List list = marketDao.selectOneReviewFileList(reviewNo);
 		return list;
 	}
+	
+	@Transactional
+	public List<ReviewFileDTO> deleteReview(int reviewNo) {
+		List<ReviewFileDTO> delFileList = marketDao.selectOneReviewFile(reviewNo);
+		int result = marketDao.deleteReivew(reviewNo);
+		if(result>0) {
+			return delFileList;
+		}else {
+			return null;			
+		}
+	}
 
 	public List selectStar(int productNo) {
-		List<ReviewDTO> starList = marketDao.starList(productNo); //별점리스트
-		
+		List<Integer> starList = marketDao.starList(productNo); //별점리스트
 		return starList;
 	}
 	

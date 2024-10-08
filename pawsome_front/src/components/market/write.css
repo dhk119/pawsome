@@ -98,7 +98,7 @@
 .qna-writeFrm-info > .submit-btn-wrap {
   margin-top: 25px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 .qna-writeFrm-info > .answer {
   margin-top: 70px;

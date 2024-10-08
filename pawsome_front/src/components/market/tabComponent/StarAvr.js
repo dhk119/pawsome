@@ -17,11 +17,7 @@ const StarAvr = (props) => {
     axios
       .get(`${backServer}/product/selectStar/${productNo}`)
       .then((res) => {
-        const uData = new Array();
-        for (let i = 0; i < res.data.length; i++) {
-          uData.push(res.data[i].totalStar);
-        }
-        setStarData(uData);
+        setStarData(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -41,7 +37,6 @@ const StarAvr = (props) => {
     }
   }, [starData, setTotal]);
 
-  const xColors = ["#ffa518", "#ffa518", "#ffa518", "#ffa518", "#ffa518"];
   const xLabels = ["5점", "4점", "3점", "2점", "1점"];
   const chekData = [25, 25, 23, 21, 32];
   return (

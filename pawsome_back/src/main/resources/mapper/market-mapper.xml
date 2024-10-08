@@ -546,18 +546,26 @@
 	<select id="selectOneReviewFileList" resultType="reviewFile">
 		select review_no, review_file_no, review_file_storage from review_file where review_no=#{reviewNo} order by review_file_no
 	</select>
+	<select id="selectOneReviewFile" resultType="reviewFile">
+		select * from review_file where review_no=#{reviewNo}
+	</select>
+	<delete id="deleteReivew">
+		delete from review where review_no = #{reviewNo}
+	</delete>
 	<select id="countStar" resultType="int">
 		select count(*) from review where product_no=#{productNo}
 	</select>
-	<select id="starList" resultType="review">
+	<select id="starList" resultType="int">
 		with stars as (
  select 1 as star from dual union all
  select 2 as star from dual union all
  select 3 as star from dual union all
  select 4 as star from dual union all
  select 5 as star from dual
-)select star,coalesce(count(review_star),0) as totalStar from stars s left join review r on(s.star = r.review_star) and product_no=#{productNo}
-group by star order by star desc
+)
+select totalStar from(
+select star,coalesce(count(review_star),0) as totalStar from stars s left join review r on(s.star = r.review_star) and product_no=#{productNo}
+group by star order by star desc)
 	</select>
 	
 	

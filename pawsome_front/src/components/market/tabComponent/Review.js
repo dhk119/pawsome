@@ -37,7 +37,7 @@ const Review = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [reqPage]);
   console.log("평점 : ", total / 5);
 
   return (
@@ -45,7 +45,6 @@ const Review = () => {
       <div className="star-wrap">
         <div className="star-wrap-title">
           <div className="total_star">{total / 5}</div>
-
           <Rating
             name="half-rating-read"
             value={total / 5}
