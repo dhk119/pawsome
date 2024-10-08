@@ -28,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.iei.market.model.dto.BuyListDTO;
+import kr.co.iei.market.model.dto.ProductLikeDTO;
 import kr.co.iei.member.model.dto.LoginMemberDTO;
 import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.PetDTO;
@@ -464,6 +465,15 @@ public class MemberController {
 	@GetMapping(value = "/selectOneBuy/{buyNo}")
 	public ResponseEntity<BuyListDTO> selectOneBuy(@PathVariable int buyNo) {
 	    BuyListDTO buyList = memberService.selectOneBuy(buyNo);
+	    System.out.println("test");
+	    System.out.println(buyList);
 	    return ResponseEntity.ok(buyList);
+	}
+	
+	//좋아요한 상품
+	@GetMapping(value = "/product-like/{memberEmail}")
+	public ResponseEntity<List> productLike(@PathVariable String memberEmail) {
+		List<ProductLikeDTO> productLikeList = memberService.productLike(memberEmail);
+		return ResponseEntity.ok(productLikeList);
 	}
 }

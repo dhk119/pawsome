@@ -10,7 +10,7 @@ const BuyView = () => {
   useEffect(() => {
     if (buyNo) {
       axios
-        .get(`${backServer}/member/selectBuyList/${buyNo}`)
+        .get(`${backServer}/member/selectOneBuy/${buyNo}`)
         .then((res) => {
           setBuy(res.data);
           console.log(res.data);
