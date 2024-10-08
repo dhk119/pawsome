@@ -25,7 +25,7 @@ const KakaoCallback = () => {
 
     if (code) {
       axios
-        .get(`${backServer}/member/kakao-login?code=${code}&state=${state}`)
+        .get(`${backServer}/member/kakao-login?code=${code}`)
         .then((res) => {
           setLoginEmail(res.data.memberEmail);
           setMemberLevel(res.data.memberLevel);

@@ -127,7 +127,7 @@ const Login = () => {
           <h3>간편하게 로그인 하기</h3>
           <div className="social-login">
             <img onClick={NaverLogin} src="/image/naver_btn.png" />
-            {/* <img onClick={KakaoLogin} src="/image/kakao_btn.png" /> */}
+            <img onClick={KakaoLogin} src="/image/kakao_btn.png" />
           </div>
         </div>
       </div>

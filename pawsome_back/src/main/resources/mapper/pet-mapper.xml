@@ -5,4 +5,22 @@
  		select * from pet where member_email=
  		(select member_email from member where member.member_email= #{memberEmail})
  	</select> 
+ 	<insert id="savePetStatus">
+ 		insert into pet_health
+			values (pet_health_seq.nextval,#{petNo},#{petWeightStatus}
+			,#{petSkinStatus},#{petDentalStatus},#{petBoneStatus}
+			,#{petEyeStatus},#{petHeartStatus},#{petImmunityStatus})
+ 	</insert>
+ 	<select id="selectPetStatus" resultType ="int">
+ 		select count(*) from pet_health where pet_no=#{petNo}
+ 	</select>
+ 	<update id="updatePetStatus">
+ 		update pet_health set pet_weight_status=#{petWeightStatus},
+ 		pet_skin_status=#{petSkinStatus},
+ 		pet_dental_status=#{petDentalStatus},
+ 		pet_bone_status=#{petBoneStatus},
+ 		pet_eye_status=#{petEyeStatus},
+ 		pet_heart_status=#{petHeartStatus},
+ 		pet_immunity_status=#{petImmunityStatus}
+ 	</update>
 </mapper>

@@ -41,6 +41,14 @@ const InquiryWrite = () => {
           }
         })
         .catch((err) => {});
+    } else {
+      Swal.fire({
+        title: "입력값 누락",
+        text: "누락된 입력값이 있습니다.",
+        icon: "info",
+        iconColor: "var(--point1)",
+        confirmButtonColor: "var(--point1)",
+      });
     }
   };
   return (
@@ -65,11 +73,20 @@ const InquiryWrite = () => {
             setContent={setInquiryContent}
           ></QuillEditor>
         </div>
-        <div className="admin-button-zone">
+        <div className="admin-flex-zone">
+          <button
+            className="admin-write-undo"
+            type="button"
+            onClick={() => {
+              navigate("/inquiry/list");
+            }}
+          >
+            작성취소
+          </button>
           <button
             type="submit"
             className="admin-write-submit"
-            style={{ marginTop: "50px" }}
+            id="inquiry-bottom-regist"
           >
             등록하기
           </button>

@@ -131,7 +131,7 @@ const InquiryList = () => {
           })}
         </tbody>
       </table>
-      <div className="pageNavi-frm">
+      <div className="pageNavi-inquiry-list">
         <ul className="pageNavi-ul" id="inquiry-page">
           <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
         </ul>

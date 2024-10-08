@@ -1,6 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Pie, PieChart } from "recharts";
+import { memberLevelState } from "../utils/RecoilData";
+import { useRecoilState } from "recoil";
+import Interceptor from "./Interceptor";
+import { useNavigate } from "react-router-dom";
 
 const PetChart = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -8,6 +12,8 @@ const PetChart = () => {
   const [data, setData] = useState([]);
   const [option, setOption] = useState(0);
   const [subTitle, setSubTitle] = useState("종 별 비율");
+  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const navigate = useNavigate();
   const result = (resultData) => {
     for (let index = 0; index < resultData.length; index++) {
       let sum = 0;
@@ -98,123 +104,144 @@ const PetChart = () => {
     setData([]);
   };
   return (
-    <div className="App">
-      <div className="admin-title">{`펫 차트(${subTitle})`}</div>
-      <div id="admin-chart-margin-top"></div>
-      <div className="admin-write-wrap" id="admin-chart-height">
-        <div className="admin-top-left"></div>
-        <div className="admin-top-left"></div>
-        <div className="admin-top-left"></div>
-        <div className="admin-top-left"></div>
-        <div className="admin-top-mid"></div>
-        <div className="admin-search-chart">
-          <div className="admin-chart-right">
-            <label htmlFor="chart-option"></label>
-            <select id="chart-option" value={option} onChange={changeOption}>
-              <option value={0}>종</option>
-              <option value={1}>품종(강아지)</option>
-              <option value={2}>품종(고양이)</option>
-              <option value={3}>성별</option>
-            </select>
+    <section>
+      {memberLevel === 1 ? (
+        <div>
+          <div className="admin-title">{`펫 차트(${subTitle})`}</div>
+          <div id="admin-chart-margin-top"></div>
+          <div className="admin-write-wrap" id="admin-chart-height">
+            <div className="admin-top-left"></div>
+            <div className="admin-top-left"></div>
+            <div className="admin-top-left"></div>
+            <div className="admin-top-left"></div>
+            <div className="admin-top-mid"></div>
+            <div className="admin-search-chart">
+              <div className="admin-chart-right">
+                <label htmlFor="chart-option"></label>
+                <select
+                  id="chart-option"
+                  value={option}
+                  onChange={changeOption}
+                >
+                  <option value={0}>종</option>
+                  <option value={1}>품종(강아지)</option>
+                  <option value={2}>품종(고양이)</option>
+                  <option value={3}>성별</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="admin-flex admin-pet-chart-top">
+            <div className="inquiry-sub-title">수/백분율</div>
+            <PieChart width={520} height={520}>
+              <Pie
+                data={data}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                tspan={data + "%"}
+                outerRadius={100}
+                label
+              />
+              <Pie
+                data={chartData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                innerRadius={170}
+                outerRadius={220}
+                fill="#82ca9d"
+                label
+              />
+            </PieChart>
+          </div>
+          <div className="admin-pet-chart-bottom admin-flex-left">
+            {chartData.map((chart, i) => {
+              return (
+                <>
+                  {i % 4 === 0 ? (
+                    <>
+                      <div className="admin-chart-label-one"></div>
+                      <div
+                        style={{
+                          color: "#ffbe58",
+                          width: "100px",
+                          height: "20px",
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        {chart.name}
+                      </div>
+                    </>
+                  ) : i % 4 === 1 ? (
+                    <>
+                      <div className="admin-chart-label-two"></div>
+                      <div
+                        style={{
+                          color: "#5799ff",
+                          width: "100px",
+                          height: "20px",
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        {chart.name}
+                      </div>
+                    </>
+                  ) : i % 4 === 2 ? (
+                    <>
+                      <div className="admin-chart-label-three"></div>
+                      <div
+                        style={{
+                          color: "#ffd697",
+                          width: "100px",
+                          height: "20px",
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        {chart.name}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="admin-chart-label-four"></div>
+                      <div
+                        style={{
+                          color: "#717171",
+                          width: "100px",
+                          height: "20px",
+                          fontWeight: "bold",
+                          textAlign: "center",
+                        }}
+                      >
+                        {chart.name}
+                      </div>
+                    </>
+                  )}
+                </>
+              );
+            })}
+          </div>
+          <div className="admin-button-zone">
+            <button
+              className="admin-write-submit"
+              type="button"
+              onClick={() => {
+                navigate("/admin/main");
+              }}
+            >
+              관리자 페이지
+            </button>
           </div>
         </div>
-      </div>
-      <div className="admin-flex admin-pet-chart-top">
-        <div className="inquiry-sub-title">수/백분율</div>
-        <PieChart width={520} height={520}>
-          <Pie
-            data={data}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            tspan={data + "%"}
-            outerRadius={100}
-            label
-          />
-          <Pie
-            data={chartData}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            innerRadius={170}
-            outerRadius={220}
-            fill="#82ca9d"
-            label
-          />
-        </PieChart>
-      </div>
-      <div className="admin-pet-chart-bottom admin-flex-left">
-        {chartData.map((chart, i) => {
-          return (
-            <>
-              {i % 4 === 0 ? (
-                <>
-                  <div className="admin-chart-label-one"></div>
-                  <div
-                    style={{
-                      color: "#ffbe58",
-                      width: "100px",
-                      height: "20px",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    {chart.name}
-                  </div>
-                </>
-              ) : i % 4 === 1 ? (
-                <>
-                  <div className="admin-chart-label-two"></div>
-                  <div
-                    style={{
-                      color: "#5799ff",
-                      width: "100px",
-                      height: "20px",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    {chart.name}
-                  </div>
-                </>
-              ) : i % 4 === 2 ? (
-                <>
-                  <div className="admin-chart-label-three"></div>
-                  <div
-                    style={{
-                      color: "#ffd697",
-                      width: "100px",
-                      height: "20px",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    {chart.name}
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="admin-chart-label-four"></div>
-                  <div
-                    style={{
-                      color: "#717171",
-                      width: "100px",
-                      height: "20px",
-                      fontWeight: "bold",
-                      textAlign: "center",
-                    }}
-                  >
-                    {chart.name}
-                  </div>
-                </>
-              )}
-            </>
-          );
-        })}
-      </div>
-    </div>
+      ) : (
+        <Interceptor />
+      )}
+    </section>
   );
 };
 export default PetChart;
