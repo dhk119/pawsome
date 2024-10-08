@@ -97,6 +97,7 @@ const BuyItem = (props) => {
               </tr>
             </tbody>
           </table>
+          {/* 부분취소 */}
           <div
             className="cancelBtn"
             onClick={() => {
@@ -128,6 +129,39 @@ const BuyItem = (props) => {
           >
             <TiDelete />
           </div>
+          {/* 전체취소 */}
+          <div
+            className="cancelBtn"
+            onClick={() => {
+              Swal.fire({
+                title: "결제를 취소하시겠습니까?",
+                html: "부분 결제 취소 후 총 결제금액이 30,000원 이하일 경우,</br>배송비 3,000원을 제외한 금액이 환불됩니다.",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#ffa518",
+                confirmButtonText: "예",
+                cancelButtonText: "아니오",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  cancelPay(
+                    buy.buyNo, //결제시퀀스번호
+                    0, //상품번호 (백에서 상품번호가 0이면 전체 취소 되도록)
+                    buy.payUid, //주문번호
+                    buy.totalPrice, // 결제 총 금액
+                    setResult
+                  );
+                  //결제내역확인페이지로 이동
+                  navigate("/market/payment/payCancel");
+                } else {
+                  //결제취소화면으로 이동
+                  navigate("/market/payment/payCancel");
+                }
+              });
+            }}
+          >
+            <TiDelete />
+          </div>
+
           <div className="product-totalprice">
             해당상품 총 금액 :{" "}
             {(buy.buyCount * buy.productPrice).toLocaleString("ko-KR")}원

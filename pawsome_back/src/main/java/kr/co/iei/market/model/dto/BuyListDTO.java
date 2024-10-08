@@ -20,6 +20,7 @@ public class BuyListDTO {
 	private String productThumb;//상품썸네일
 	private String productName;	//상품이름
 	private int productPrice; //상품가격
+	private int totalPrice;		//총결제금액
 	
 	private ProductDTO product;
 	private PayDTO pay;

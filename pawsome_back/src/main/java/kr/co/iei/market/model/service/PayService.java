@@ -93,6 +93,7 @@ public class PayService {
 		int start = pi.getStart();
 		int end = pi.getEnd();
 		List list = marketDao.selectAllBuyList(loginEmail, start, end);
+		System.out.println("list : "+list);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("pi", pi);
@@ -100,7 +101,7 @@ public class PayService {
 		return map;
 	}
 
-	//부분 환불
+	//환불
 	@Transactional
 	public int refundService(RefundRequestDTO refund) {
 		int result = -1;
@@ -111,11 +112,20 @@ public class PayService {
 		System.out.println("code 2 : "+code);
 		//환불성공시
 		if(code.equals("0")) {
-			//결제상태 변경
-			result = marketDao.updateBuyList(refund);
-			if(result >0) {
-				//결제 총금액 변경
-				result = marketDao.updatePayList(refund);
+			// 부분취소 했으면
+			if(refund.getProductNo() != 0) {
+				//결제상태 변경
+				result = marketDao.updateBuyList(refund);
+				if(result >0) {
+					//결제 총금액 변경
+					result = marketDao.updatePayList(refund);
+				}
+			}else {
+				List<Integer> cancelList = marketDao.selectCancelList(refund.getPayUid());
+				for(int i = 0; i < cancelList.size(); i++) {
+					System.out.println("i : "+i);
+				}
+				result = marketDao.updateBuyList(refund);
 			}
 		}
 		return result;
@@ -163,30 +173,33 @@ public class PayService {
 		int cancelProductNo = refund.getProductNo(); //결제취소할 상품
 		int cancelAmount = refund.getCancelRequestAmount(); //결제취소할 금액
 		
-		//부분 취소
-		//uid로 해당 결제번호에 결제완료된 항목이 몇 개인지 확인
-		int buyCount = marketDao.selectBuyCount(refund.getPayUid());
-		System.out.println(buyCount);
-		if(buyCount > 1) {
-			int totalAmount = pay.getTotalPrice() - refund.getCancelRequestAmount();
-			if(totalAmount < 30000) {
-				cancelAmount -= 3000; //배송비빼고 환불
+		//받아온 productNo가 0이 아니면 부분취소, 0이면 전체취소
+		if(cancelProductNo != 0) {
+			//부분 취소
+			//uid로 해당 결제번호에 결제완료된 항목이 몇 개인지 확인
+			int buyCount = marketDao.selectBuyCount(refund.getPayUid());
+			System.out.println(buyCount);
+			if(buyCount > 1) {
+				int totalAmount = pay.getTotalPrice() - refund.getCancelRequestAmount();
+				if(totalAmount < 30000) {
+					cancelAmount -= 3000; //배송비빼고 환불
+					refund.setCancelRequestAmount(cancelAmount);
+				}
+				System.out.println("부분취소 환불금액(부분) : "+cancelAmount);			
+			}else {
+				cancelAmount += 3000; //배송비까지 환불
 				refund.setCancelRequestAmount(cancelAmount);
+				System.out.println("부분취소 환불금액(전체) : "+cancelAmount);						
 			}
-			System.out.println("부분취소 환불금액(부분) : "+cancelAmount);			
-		}else {
-			cancelAmount += 3000; //배송비까지 환불
-			refund.setCancelRequestAmount(cancelAmount);
-			System.out.println("부분취소 환불금액(전체) : "+cancelAmount);						
+			
+			/*환불 가능 금액 계산*/
+			int cancelableAmount = amount - cancelAmount;
+			if(cancelableAmount < 0) {
+				System.out.println("결제취소가능금액 넘김");
+				return "-1"; //이미 전액 환불
+			}			
 		}
-		
-		
-		/*환불 가능 금액 계산*/
-		int cancelableAmount = amount - cancelAmount;
-		if(cancelableAmount < 0) {
-			System.out.println("결제취소가능금액 넘김");
-			return "-1"; //이미 전액 환불
-		}
+		//아니면 전체취소
 		
 		//포트원에 취소요청보내기
 		String url = "https://api.iamport.kr/payments/cancel";
