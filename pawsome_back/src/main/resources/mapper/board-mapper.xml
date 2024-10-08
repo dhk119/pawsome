@@ -215,4 +215,35 @@
 		order by reply_no desc)
 		 r)
   	</select>
+  	<select id="searchBoardTotalCount" resultType="int">
+  		select count(*) from board where board_content like '%'||#{searchKeyWord}||'%' or board_title like '%'||#{searchKeyWord}||'%'
+  	</select>
+  	<select id="selectSearchBoardList" resultType="board">
+  		select * from 
+			(select rownum as rnum, b.* from 
+    			(select board_no,
+    				    board_tag,
+    				    board_title,
+    				    board_content,
+    				    board_thumb,
+    				    read_count,
+    				    (case  
+							when(trunc((sysdate - reg_date)*24*60)) <![CDATA[ < ]]> 60 
+							then(trunc((sysdate - reg_date)*24*60))||'분 전' 
+							when(trunc((sysdate - reg_date)*24)) <![CDATA[ < ]]> 24 
+							then(trunc((sysdate - reg_date)*24))||'시간 전' 
+							when trunc((sysdate - reg_date)) <![CDATA[ < ]]> 30 
+							then trunc((sysdate - reg_date)) || '일 전' 
+    						when trunc((sysdate - reg_date) / 30) <![CDATA[ < ]]> 12 
+    						then trunc((sysdate - reg_date) / 30) || '개월 전' 
+    						else trunc((sysdate - reg_date) / 365) || '년 전'
+						end)as reg_date,
+    				    member_nickname,
+    				    (select count(*) from board_like where board_like.board_no = board.board_no) board_like,
+    				    (select count(*) from reply where reply.board_no = board.board_no) reply_count
+        		from board
+        		where board_content like '%'||#{searchKeyWord}||'%' or board_title like '%'||#{searchKeyWord}||'%'
+        		) b )
+		where rnum between #{start} and #{end}
+  	</select>
 </mapper>

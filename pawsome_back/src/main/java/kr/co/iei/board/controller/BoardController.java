@@ -172,4 +172,13 @@ public class BoardController {
 		 return ResponseEntity.ok(result == 1);
 	 }
 	 
+	 @GetMapping(value="/searchBoardList/{reqPage}/{searchKeyWord}")
+	 public ResponseEntity<Map> searchBoardList(@PathVariable int reqPage, @PathVariable String searchKeyWord){
+		 System.out.println(searchKeyWord);
+		 Map map = boardService.selectSearchBoardList(reqPage, searchKeyWord);
+		 return ResponseEntity.ok(map);
+	 }
+	 
+	
+	 
 }

@@ -175,5 +175,10 @@ public interface MarketDao {
 
 	List selectProductLike(String memberEmail);
 
+/*대헌*/
+	List selectSearchMarketList(Map<String, Object> m);
 
+	int searchMarketTotalCount(String searchKeyWord);
+
+	List selectMainMarketList();
 }

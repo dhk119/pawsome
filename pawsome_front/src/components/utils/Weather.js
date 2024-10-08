@@ -27,6 +27,7 @@ const Weather = () => {
   const [dailyForecast, setDailyForecast] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [videoUrl, setVideoUrl] = useState("");
 
   const cityName = "Seoul"; // API 요청을 위한 도시 이름
   const apiKey = process.env.REACT_APP_WEATHER_KEY;
@@ -113,16 +114,64 @@ const Weather = () => {
   const icon = currentWeather.weather[0].icon;
   const imgSrc = `https://openweathermap.com/img/w/${icon}.png`;
 
+  const updateVideoUrl = (mainWeather) => {
+    const currentHour = new Date().getHours();
+    if (currentHour >= 18 || currentHour < 6) {
+      // 저녁 시간에 다른 링크를 사용
+      setVideoUrl(
+        "https://videos.pexels.com/video-files/26690702/11987721_2560_1440_60fps.mp4"
+      );
+      return;
+    }
+    switch (mainWeather) {
+      case "Clear":
+        setVideoUrl(
+          "https://videos.pexels.com/video-files/2605326/2605326-uhd_2560_1440_30fps.mp4"
+        );
+        break;
+      case "Clouds":
+        setVideoUrl(
+          "https://videos.pexels.com/video-files/14117658/14117658-uhd_2560_1440_30fps.mp4"
+        );
+        break;
+      case "Rain":
+        setVideoUrl(
+          "https://videos.pexels.com/video-files/8549580/8549580-uhd_2560_1440_25fps.mp4"
+        );
+        break;
+      case "Snow":
+        setVideoUrl(
+          "https://videos.pexels.com/video-files/6620470/6620470-uhd_2732_1440_25fps.mp4"
+        );
+        break;
+      case "Thunderstorm":
+        setVideoUrl(
+          "https://videos.pexels.com/video-files/5908584/5908584-hd_1920_1080_25fps.mp4"
+        );
+        break;
+      case "Mist":
+        setVideoUrl(
+          "https://videos.pexels.com/video-files/28647807/12442307_1080_1920_30fps.mp4"
+        );
+        break;
+      default:
+        setVideoUrl("https://example.com/weather-videos/default.mp4");
+        break;
+    }
+  };
+
   return (
     <Wrapper>
       <VideoContainer>
-        <BackgroundVideo autoPlay muted loop>
-          <source src="image/cloud.mp4" type="video/mp4" />
-        </BackgroundVideo>
+        {videoUrl && (
+          <BackgroundVideo autoPlay muted loop>
+            <source src={videoUrl} type="video/mp4" />
+          </BackgroundVideo>
+        )}
       </VideoContainer>
       <div
         style={{
-          width: "850px",
+          width: "1200px",
           background: "rgba(255, 255, 255, 0.3)",
           borderRadius: "10px",
           padding: "50px",

@@ -5,39 +5,66 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./default.css";
 import BoardList from "../board/BoardList";
 import Weather from "../utils/Weather";
 import VideoList from "./VideoList";
-import MarketViewNav from "./MarketViewNav";
+import { loginEmailState } from "../utils/RecoilData";
+import { useRecoilState } from "recoil";
+import axios from "axios";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const Main = () => {
-  const params = useParams();
-  const productNo = params.productNo;
-  const [product, setProduct] = useState(params);
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const [product, setProduct] = useState("");
   const navigate = useNavigate();
-
+  const [searchKeyWord, setSearchKeyWord] = useState("");
+  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
+  const [like, setLike] = useState(false);
+  const [productList, setProductList] = useState([]);
+  const [reqPage, setReqPage] = useState(1);
+  const changeSearchKeyWord = (e) => {
+    setSearchKeyWord(e.target.value);
+  };
+  useEffect(() => {
+    axios
+      .get(`${backServer}/product/mainMarketList`)
+      .then((res) => {
+        console.log(res);
+        setProductList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <section className="section" style={{ width: "100%" }}>
-      <div className="search-wrap">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <div className="search-wrap">
           <div className="search-input-wrap">
-            <button type="submit" className="search-btn">
+            <button
+              className="search-btn"
+              onClick={() => {
+                navigate(`/searchResult/${searchKeyWord}`);
+              }}
+            >
               <img src="/image/paw.png" className="search-icon" />
             </button>
             <input
               type="text"
               className="search-input"
               placeholder="검색어를 입력하세요"
+              value={searchKeyWord}
+              onChange={changeSearchKeyWord}
             ></input>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
       <div className="commercial-wrap">
         <div className="commercial-text">
           <span>반려동물과 행복한 시간!</span>
@@ -135,10 +162,9 @@ const Main = () => {
           </span>
         </div>
         <div className="main-swiper">
-          <MarketViewNav />
           <>
             <Swiper
-              slidesPerView={4}
+              slidesPerView={5}
               className="Swiper"
               pagination={{
                 type: "fraction",
@@ -146,54 +172,20 @@ const Main = () => {
               navigation={true}
               modules={[Pagination, Navigation]}
             >
-              <SwiperSlide>
-                <img
-                  src="/image/nursecat.png"
-                  onClick={() => {
-                    navigate(`/product/productDetail/${productNo}`);
-                  }}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img
-                  src="/image/nursecat.png"
-                  onClick={() => {
-                    navigate(
-                      `/market/main/productDetail/${product.productNo}/detail`
-                    );
-                  }}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img
-                  src="/image/nursecat.png"
-                  onClick={() => {
-                    navigate(
-                      `/market/main/productDetail/${product.productNo}/detail`
-                    );
-                  }}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img
-                  src="/image/nursecat.png"
-                  onClick={() => {
-                    navigate(
-                      `/market/main/productDetail/${product.productNo}/detail`
-                    );
-                  }}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img
-                  src="/image/nursecat.png"
-                  onClick={() => {
-                    navigate(
-                      `/market/main/productDetail/${product.productNo}/detail`
-                    );
-                  }}
-                />
-              </SwiperSlide>
+              {productList.map((product, i) => (
+                <SwiperSlide
+                  key={`product-${product.productNo}`}
+                  style={{ backgroundColor: "#" }}
+                >
+                  <ProductItem
+                    product={product}
+                    loginEmail={loginEmail}
+                    setLoginEmail={setLoginEmail}
+                    setLike={setLike}
+                    like={like}
+                  />
+                </SwiperSlide>
+              ))}
             </Swiper>
           </>
         </div>
@@ -222,4 +214,54 @@ const Main = () => {
   );
 };
 
+const ProductItem = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
+  const product = props.product;
+  const loginEmail = props.loginEmail;
+  const navigate = useNavigate();
+  const like = props.like;
+  const setLike = props.setLike;
+  const likePush = () => {
+    axios
+      .post(`${backServer}/product/changeLike/${loginEmail}`, product)
+      .then((res) => {
+        console.log(res);
+        if (res.data == 3) {
+          //insert됨
+          product.isLike = 1;
+        } else if (res.data == 2) {
+          //delete됨
+          product.isLike = 0;
+        }
+        setLike(!like);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  return (
+    <div className="product-wrap" style={{ borderRadius: "10px" }}>
+      <div className="product-thumb">
+        <div className="product-like" onClick={likePush}>
+          {product.isLike == 1 ? <FaHeart /> : <FaRegHeart />}
+        </div>
+        <img
+          src={
+            product.productThumb
+              ? `${backServer}/product/thumb/${product.productThumb}`
+              : "/image/basicimage.png"
+          }
+          onClick={() => {
+            navigate(`/market/main/productDetail/${product.productNo}/detail`);
+          }}
+        />
+      </div>
+      <div className="product-info">
+        <div className="product-name">{product.productName}</div>
+        <div className="product-price">{product.productPrice}</div>
+      </div>
+    </div>
+  );
+};
 export default Main;

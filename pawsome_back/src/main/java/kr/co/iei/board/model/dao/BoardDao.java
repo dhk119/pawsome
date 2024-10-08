@@ -70,6 +70,12 @@ public interface BoardDao {
 
 	List selectReReplyList(ReplyDTO reply,String memberNickname);
 
+	int searchBoardTotalCount(String searchKeyWord);
+
+	List selectSearchBoardList(Map<String, Object> m);
+
+
+
 
 
 

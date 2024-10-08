@@ -26,6 +26,7 @@ import ScrollToTop from "react-scroll-to-top";
 import PetUpdate from "./components/member/PetUpdate";
 import KakaoCallback from "./components/member/KakaoCallback";
 import KakaoJoin from "./components/member/KakaoJoin";
+import SearchResult from "./components/common/SearchResult";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -84,6 +85,10 @@ function App() {
           <Route path="/service/*" element={<ServiceMain />} />
           <Route path="/naverjoin" element={<NaverJoin />} />
           <Route path="/kakaojoin" element={<KakaoJoin />} />
+          <Route
+            path="/searchResult/:searchKeyWord"
+            element={<SearchResult />}
+          ></Route>
         </Routes>
       </main>
       <Footer />

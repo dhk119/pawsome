@@ -189,6 +189,25 @@ public class BoardService {
 	}
 
 
+	public Map selectSearchBoardList(int reqPage, String searchKeyWord) {
+		int numPerPage = 5;
+		int pageNaviSize = 5;
+		int totalCount = boardDao.searchBoardTotalCount(searchKeyWord);
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		Map<String, Object> m = new HashMap<String, Object>();
+		m.put("start", pi.getStart());
+		m.put("end", pi.getEnd());
+		m.put("searchKeyWord", searchKeyWord);
+		List list = boardDao.selectSearchBoardList(m);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("pi", pi);
+		System.out.println(map);
+		return map;
+	}
+
+
+
 
 
 
