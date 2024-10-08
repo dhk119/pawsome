@@ -161,4 +161,10 @@ public class ProductController {
 		return null;
 	}
 	
+	 @GetMapping(value="/searchMarketList/{reqPage}/{searchKeyWord}")
+	 public ResponseEntity<Map> searchMarketList(@PathVariable int reqPage, @PathVariable String searchKeyWord){
+		 Map map = productService.selectSearchMarketList(reqPage, searchKeyWord);
+		 return ResponseEntity.ok(map);
+	 }
+	
 }

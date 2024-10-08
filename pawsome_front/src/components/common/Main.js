@@ -15,29 +15,40 @@ import MarketViewNav from "./MarketViewNav";
 const Main = () => {
   const params = useParams();
   const productNo = params.productNo;
-  const [product, setProduct] = useState(params);
+  const [product, setProduct] = useState("");
   const navigate = useNavigate();
+  const [searchKeyWord, setSearchKeyWord] = useState("");
+  const changeSearchKeyWord = (e) => {
+    setSearchKeyWord(e.target.value);
+  };
 
   return (
     <section className="section" style={{ width: "100%" }}>
-      <div className="search-wrap">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <div className="search-wrap">
           <div className="search-input-wrap">
-            <button type="submit" className="search-btn">
+            <button
+              className="search-btn"
+              onClick={() => {
+                navigate(`/searchResult/${searchKeyWord}`);
+              }}
+            >
               <img src="/image/paw.png" className="search-icon" />
             </button>
             <input
               type="text"
               className="search-input"
               placeholder="검색어를 입력하세요"
+              value={searchKeyWord}
+              onChange={changeSearchKeyWord}
             ></input>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
       <div className="commercial-wrap">
         <div className="commercial-text">
           <span>반려동물과 행복한 시간!</span>

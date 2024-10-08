@@ -155,5 +155,20 @@ public class ProductService {
 		return review;
 	}
 	
-	
+	public Map selectSearchMarketList(int reqPage, String searchKeyWord) {
+		int numPerPage = 8;
+		int pageNaviSize = 5;
+		int totalCount = marketDao.searchMarketTotalCount(searchKeyWord);
+		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		Map<String, Object> m = new HashMap<String, Object>();
+		m.put("start", pi.getStart());
+		m.put("end", pi.getEnd());
+		m.put("searchKeyWord", searchKeyWord);
+		List list = marketDao.selectSearchMarketList(m);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("pi", pi);
+		System.out.println(map);
+		return map;
+	}
 }

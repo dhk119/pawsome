@@ -122,7 +122,7 @@ const Weather = () => {
       </VideoContainer>
       <div
         style={{
-          width: "850px",
+          width: "1200px",
           background: "rgba(255, 255, 255, 0.3)",
           borderRadius: "10px",
           padding: "50px",

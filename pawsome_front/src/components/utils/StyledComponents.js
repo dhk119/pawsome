@@ -92,7 +92,7 @@ export const WeatherBox = styled.div`
   display: flex;
   justify-content: space-between; // 내용 정렬
   align-items: center; // 가운데 정렬
-  width: 350px; // 각 박스의 너비
+  width: 400px; // 각 박스의 너비
   height: 30px; // 각 박스의 높이
 `;
 

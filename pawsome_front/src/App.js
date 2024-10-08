@@ -24,6 +24,7 @@ import PetInsert from "./components/member/PetInsert";
 import ForgotPw from "./components/member/ForgotPw";
 import ScrollToTop from "react-scroll-to-top";
 import PetUpdate from "./components/member/PetUpdate";
+import SearchResult from "./components/common/SearchResult";
 
 function App() {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -80,6 +81,10 @@ function App() {
           <Route path="/petUpdate/:petNo" element={<PetUpdate />} />
           <Route path="/service/*" element={<ServiceMain />} />
           <Route path="/naverjoin" element={<NaverJoin />} />
+          <Route
+            path="/searchResult/:searchKeyWord"
+            element={<SearchResult />}
+          ></Route>
         </Routes>
       </main>
       <Footer />
