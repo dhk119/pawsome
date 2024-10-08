@@ -178,6 +178,9 @@ public class MemberController {
 	// 카카오 로그인 처리
 	@GetMapping("/kakao-login")
     public ResponseEntity<Map<String, Object>> kakaoLogin(@RequestParam String code) {
+		
+		System.out.println("test");
+		
         // 1. 카카오 API로 액세스 토큰 요청
         String tokenUrl = String.format(
             "%s?grant_type=authorization_code&client_id=%s&redirect_uri=%s&code=%s", 
