@@ -8,6 +8,7 @@ import ProductList from "../market/ProductList";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { loginEmailState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
+import MorePage from "../utils/MorePage";
 
 const SearchResult = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -21,6 +22,7 @@ const SearchResult = () => {
   const [like, setLike] = useState(false);
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [searchedStatus, setSearchedStatus] = useState();
+  const [pi, setPi] = useState({});
 
   useEffect(() => {
     axios
@@ -89,6 +91,7 @@ const SearchResult = () => {
           <div className="search-result-detail">
             <div className="search-result-title">
               <span>마켓</span>
+
               <div className="productList-content">
                 {productList.length !== 0 ? (
                   productList.map((product, i) => {

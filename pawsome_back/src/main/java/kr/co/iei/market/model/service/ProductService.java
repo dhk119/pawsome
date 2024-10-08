@@ -156,7 +156,7 @@ public class ProductService {
 	}
 	
 	public Map selectSearchMarketList(int reqPage, String searchKeyWord) {
-		int numPerPage = 8;
+		int numPerPage = 4;
 		int pageNaviSize = 5;
 		int totalCount = marketDao.searchMarketTotalCount(searchKeyWord);
 		PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
@@ -170,5 +170,10 @@ public class ProductService {
 		map.put("pi", pi);
 		System.out.println(map);
 		return map;
+	}
+
+	public List selectMainMarketList() {
+		List list = marketDao.selectMainMarketList();
+		return list;
 	}
 }

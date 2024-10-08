@@ -629,4 +629,7 @@
 					)p)
 		where rnum between #{start} and #{end}
  	</select>
+ 	<select id="selectMainMarketList" resultType="product">
+ 		select * from (select rownum as rnum, p. * from (select * from product order by product_no desc)p) where rnum between 1 and 10
+ 	</select>
 </mapper>

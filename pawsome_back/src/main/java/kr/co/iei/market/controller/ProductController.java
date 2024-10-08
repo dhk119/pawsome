@@ -166,5 +166,11 @@ public class ProductController {
 		 Map map = productService.selectSearchMarketList(reqPage, searchKeyWord);
 		 return ResponseEntity.ok(map);
 	 }
+	 
+	 @GetMapping(value="/mainMarketList")
+	 public ResponseEntity<List> mainMarketList(){
+		 List list = productService.selectMainMarketList();
+		 return ResponseEntity.ok(list);
+	 }
 	
 }

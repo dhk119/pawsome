@@ -147,4 +147,6 @@ public interface MarketDao {
 	List selectSearchMarketList(Map<String, Object> m);
 
 	int searchMarketTotalCount(String searchKeyWord);
+
+	List selectMainMarketList();
 }
