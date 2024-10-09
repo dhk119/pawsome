@@ -121,11 +121,16 @@ public class PayService {
 					result = marketDao.updatePayList(refund);
 				}
 			}else {
-				List<Integer> cancelList = marketDao.selectCancelList(refund.getPayUid());
-				for(int i = 0; i < cancelList.size(); i++) {
-					System.out.println("i : "+i);
+				//해당 uid 구매내역 갯수 받아오기
+				int countbuyNo = marketDao.countbuyList(refund.getPayUid());
+				//해당 uid 결제상태 전체 변경
+				result = marketDao.updateBuyState(refund.getPayUid());
+				if(countbuyNo == result) {
+					//해당 uid 결제상태가 전부 변경됐으면 성공
+					result = 1;
+				}else {
+					result = 0;
 				}
-				result = marketDao.updateBuyList(refund);
 			}
 		}
 		return result;

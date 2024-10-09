@@ -100,6 +100,7 @@ const BuyItem = (props) => {
           {/* 부분취소 */}
           <div
             className="cancelBtn"
+            style={{ width: "90px" }}
             onClick={() => {
               Swal.fire({
                 title: "결제를 취소하시겠습니까?",
@@ -128,14 +129,15 @@ const BuyItem = (props) => {
             }}
           >
             <TiDelete />
+            부분취소
           </div>
-          {/* 전체취소 */}
           <div
             className="cancelBtn"
+            style={{ width: "90px" }}
             onClick={() => {
               Swal.fire({
                 title: "결제를 취소하시겠습니까?",
-                html: "부분 결제 취소 후 총 결제금액이 30,000원 이하일 경우,</br>배송비 3,000원을 제외한 금액이 환불됩니다.",
+                html: "해당 주문 건을 전체 취소합니다.</br>취소 후, 철회가 불가능합니다.",
                 icon: "question",
                 showCancelButton: true,
                 confirmButtonColor: "#ffa518",
@@ -160,6 +162,7 @@ const BuyItem = (props) => {
             }}
           >
             <TiDelete />
+            전체취소
           </div>
 
           <div className="product-totalprice">
