@@ -27,7 +27,7 @@ class CancelPay {
           if (res.data == 1) {
             Swal.fire({
               title: "결제 취소 완료",
-              hmtl: "카드사 정책에 따라 환불처리가 영업일기준 3~4일 소요될 수 있습니다.</br>더 좋은 상품으로 찾아뵙겠습니다.",
+              text: "카드사 정책에 따라 환불처리가 영업일기준 3~4일 소요될 수 있습니다.",
               icon: "success",
             });
           } else {

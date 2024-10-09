@@ -628,8 +628,11 @@
 		select count(*) from buy_list where pay_uid=#{payUid} and buy_state=1
 	</select>
 <!-- 전체취소 -->
-	<select id="selectCancelList" resultType="int">
-		select buy_no from buy_list where pay_uid=#{payUid}
+	<update id="updateBuyState">
+		update buy_list set buy_state=2 where pay_uid=#{payUid}
+	</update>
+	<select id="countbuyList" resultType="int">
+		select count(*) from buy_list where pay_uid=#{payUid}
 	</select>
 	
 	
