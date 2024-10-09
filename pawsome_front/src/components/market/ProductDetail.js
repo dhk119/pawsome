@@ -76,103 +76,118 @@ const ProductDetail = () => {
     form.append("productNo", productNo);
     form.append("productCartCount", quantity);
     form.append("memberEmail", loginEmail);
-    console.log(form);
-    axios
-      .get(`${backServer}/cart/searchCart/${productNo}/${loginEmail}`)
-      .then((res) => {
-        console.log(res.data);
-        if (res.data) {
-          Swal.fire({
-            title:
-              "이미 동일한 상품이 있습니다.</br>장바구니에 담으시겠습니까?",
-            html: `상품명 : ${product.productName}</br>상품수량 : ${quantity}`,
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#ffa518",
-            confirmButtonText: "예",
-            cancelButtonText: "아니오",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              axios
-                .patch(
-                  `${backServer}/cart/productCount/${productNo}/${quantity}/${loginEmail}`
-                )
-                .then((res) => {
-                  console.log(res);
-                  if (res.data) {
-                    Swal.fire({
-                      title: "장바구니 담기 성공",
-                      html: "해당 상품을 장바구니에 담았습니다.</br>장바구니로 이동하시겠습니까?",
-                      icon: "success",
-                      showCancelButton: true,
-                      confirmButtonColor: "#ffa518",
-                      confirmButtonText: "장바구니 확인",
-                      cancelButtonText: "계속 쇼핑하기",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        navigate("/market/main/cart");
-                      }
-                    });
-                  } else {
-                    Swal.fire({
-                      title: "장바구니 담기 실패",
-                      text: "나중에 다시 시도해주세요.",
-                      icon: "error",
-                    });
-                  }
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            }
-          });
-        } else {
-          Swal.fire({
-            title: "장바구니에 담으시겠습니까?",
-            html: `상품명 : ${product.productName}</br>상품수량 : ${quantity}`,
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#ffa518",
-            confirmButtonText: "예",
-            cancelButtonText: "아니오",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              axios
-                .post(`${backServer}/cart`, form)
-                .then((res) => {
-                  console.log(res);
-                  if (res.data) {
-                    Swal.fire({
-                      title: "장바구니 담기 성공",
-                      html: "해당 상품을 장바구니에 담았습니다.</br>장바구니로 이동하시겠습니까?",
-                      icon: "success",
-                      showCancelButton: true,
-                      confirmButtonColor: "#ffa518",
-                      confirmButtonText: "예",
-                      cancelButtonText: "아니오",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        navigate("/market/main/cart");
-                      }
-                    });
-                  } else {
-                    Swal.fire({
-                      title: "장바구니 담기 실패",
-                      text: "나중에 다시 시도해주세요.",
-                      icon: "error",
-                    });
-                  }
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            }
-          });
+    if (loginEmail === "test") {
+      Swal.fire({
+        title: "로그인 필요",
+        text: "로그인 후 다시 시도해주세요",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#ffa518",
+        confirmButtonText: "로그인페이지 이동",
+        cancelButtonText: "계속 구경하기",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
         }
-      })
-      .catch((err) => {
-        console.log(err);
       });
+    } else {
+      axios
+        .get(`${backServer}/cart/searchCart/${productNo}/${loginEmail}`)
+        .then((res) => {
+          console.log(res.data);
+          if (res.data) {
+            Swal.fire({
+              title:
+                "이미 동일한 상품이 있습니다.</br>장바구니에 담으시겠습니까?",
+              html: `상품명 : ${product.productName}</br>상품수량 : ${quantity}`,
+              icon: "question",
+              showCancelButton: true,
+              confirmButtonColor: "#ffa518",
+              confirmButtonText: "예",
+              cancelButtonText: "아니오",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                axios
+                  .patch(
+                    `${backServer}/cart/productCount/${productNo}/${quantity}/${loginEmail}`
+                  )
+                  .then((res) => {
+                    console.log(res);
+                    if (res.data) {
+                      Swal.fire({
+                        title: "장바구니 담기 성공",
+                        html: "해당 상품을 장바구니에 담았습니다.</br>장바구니로 이동하시겠습니까?",
+                        icon: "success",
+                        showCancelButton: true,
+                        confirmButtonColor: "#ffa518",
+                        confirmButtonText: "장바구니 확인",
+                        cancelButtonText: "계속 쇼핑하기",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          navigate("/market/main/cart");
+                        }
+                      });
+                    } else {
+                      Swal.fire({
+                        title: "장바구니 담기 실패",
+                        text: "나중에 다시 시도해주세요.",
+                        icon: "error",
+                      });
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }
+            });
+          } else {
+            Swal.fire({
+              title: "장바구니에 담으시겠습니까?",
+              html: `상품명 : ${product.productName}</br>상품수량 : ${quantity}`,
+              icon: "question",
+              showCancelButton: true,
+              confirmButtonColor: "#ffa518",
+              confirmButtonText: "예",
+              cancelButtonText: "아니오",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                axios
+                  .post(`${backServer}/cart`, form)
+                  .then((res) => {
+                    console.log(res);
+                    if (res.data) {
+                      Swal.fire({
+                        title: "장바구니 담기 성공",
+                        html: "해당 상품을 장바구니에 담았습니다.</br>장바구니로 이동하시겠습니까?",
+                        icon: "success",
+                        showCancelButton: true,
+                        confirmButtonColor: "#ffa518",
+                        confirmButtonText: "예",
+                        cancelButtonText: "아니오",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          navigate("/market/main/cart");
+                        }
+                      });
+                    } else {
+                      Swal.fire({
+                        title: "장바구니 담기 실패",
+                        text: "나중에 다시 시도해주세요.",
+                        icon: "error",
+                      });
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   //바로 구매
@@ -182,53 +197,69 @@ const ProductDetail = () => {
     form.append("productNo", productNo);
     form.append("productCartCount", quantity);
     form.append("memberEmail", loginEmail);
-    Swal.fire({
-      title: "바로 구매하시겠습니까?",
-      html: `상품명 : ${product.productName}</br>상품수량 : ${quantity}`,
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#ffa518",
-      confirmButtonText: "예",
-      cancelButtonText: "아니오",
-    })
-      .then((result) => {
+    if (loginEmail === "test") {
+      Swal.fire({
+        title: "로그인 필요",
+        text: "로그인 후 다시 시도해주세요",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#ffa518",
+        confirmButtonText: "로그인페이지 이동",
+        cancelButtonText: "계속 구경하기",
+      }).then((result) => {
         if (result.isConfirmed) {
-          axios
-            .post(`${backServer}/cart`, form)
-            .then((res) => {
-              console.log(res);
-              if (res.data) {
-                axios
-                  .get(`${backServer}/cart/maxCartNo/${loginEmail}`)
-                  .then((res) => {
-                    console.log(res);
-                    maxCartNo = res.data;
-                    navigate(`/market/payment/${maxCartNo}`);
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              } else {
-                Swal.fire({
-                  title: "장바구니 담기 실패",
-                  text: "나중에 다시 시도해주세요.",
-                  icon: "error",
-                });
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          navigate("/login");
         }
-      })
-      .catch((err) => {
-        console.log(err);
       });
+    } else {
+      Swal.fire({
+        title: "바로 구매하시겠습니까?",
+        html: `상품명 : ${product.productName}</br>상품수량 : ${quantity}`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#ffa518",
+        confirmButtonText: "예",
+        cancelButtonText: "아니오",
+      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .post(`${backServer}/cart`, form)
+              .then((res) => {
+                console.log(res);
+                if (res.data) {
+                  axios
+                    .get(`${backServer}/cart/maxCartNo/${loginEmail}`)
+                    .then((res) => {
+                      console.log(res);
+                      maxCartNo = res.data;
+                      navigate(`/market/payment/${maxCartNo}`);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                } else {
+                  Swal.fire({
+                    title: "장바구니 담기 실패",
+                    text: "나중에 다시 시도해주세요.",
+                    icon: "error",
+                  });
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   //좋아요
   const likePush = () => {
-    if (loginEmail == "") {
+    if (loginEmail === "test") {
       Swal.fire({
         title: "로그인 필요",
         text: "로그인 후 다시 시도해주세요",

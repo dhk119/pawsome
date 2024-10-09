@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { memberNicknameState } from "../../utils/RecoilData";
+import { loginEmailState, memberNicknameState } from "../../utils/RecoilData";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import * as DOMPurify from "dompurify";
@@ -19,6 +19,8 @@ const Qna = () => {
   const [pi, setPi] = useState({});
   const [totalCount, setTotalCount] = useState();
   const [qnaDelete, setQnaDelete] = useState(true);
+  const navigate = useNavigate();
+  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   useEffect(() => {
     axios
       .get(`${backServer}/product/qnaList/${productNo}/${reqPage}`)
@@ -33,13 +35,33 @@ const Qna = () => {
       });
   }, [reqPage, qnaDelete]);
 
+  const writeQna = () => {
+    if (loginEmail === "test") {
+      Swal.fire({
+        title: "로그인 필요",
+        text: "로그인 후 다시 시도해주세요",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#ffa518",
+        confirmButtonText: "로그인페이지 이동",
+        cancelButtonText: "계속 구경하기",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
+    } else {
+      navigate(`/market/main/productDetail/${productNo}/qna/writeQna`);
+    }
+  };
+
   return (
     <div className="qna-wrap">
       {/* if 걸어서 관리자면 문의 답변, 일반회원이면 문의작성 뜨게 */}
       <div>
-        <Link to="writeQna" className="qna-wrtie-btn main">
+        <button type="button" className="qna-wrtie-btn main" onClick={writeQna}>
           문의작성
-        </Link>
+        </button>
       </div>
       <div className="list-tbl-wrap">
         <table className="list-tbl">
@@ -51,7 +73,7 @@ const Qna = () => {
               <th style={{ width: "30%" }}>제목</th>
               <th style={{ width: "15%" }}>작성자</th>
               <th style={{ width: "15%" }}>작성일</th>
-              <th style={{ width: "10%" }}>답변</th>
+              <th style={{ width: "10%" }}>답변여부</th>
             </tr>
           </thead>
           <tbody>

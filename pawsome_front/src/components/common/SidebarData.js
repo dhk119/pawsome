@@ -39,39 +39,39 @@ export const SidebarData = [
     sub: [
       {
         title: "전체",
-        path: "#",
+        path: "/market/main/productList/0/all",
       },
       {
         title: "사료",
-        path: "#",
+        path: "/market/main/productList/0/feed",
       },
       {
         title: "간식",
-        path: "#",
+        path: "/market/main/productList/0/snack",
       },
       {
         title: "영양제",
-        path: "#",
+        path: "/market/main/productList/0/nutrient",
       },
       {
         title: "식기용품",
-        path: "#",
+        path: "/market/main/productList/0/tableware",
       },
       {
         title: "위생용품",
-        path: "#",
+        path: "/market/main/productList/0/hygiene",
       },
       {
         title: "장난감",
-        path: "#",
+        path: "/market/main/productList/0/toy",
       },
       {
         title: "패션",
-        path: "#",
+        path: "/market/main/productList/0/fashion",
       },
       {
         title: "하우스",
-        path: "#",
+        path: "/market/main/productList/0/house",
       },
     ],
   },

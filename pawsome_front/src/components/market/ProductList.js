@@ -16,6 +16,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loginEmailState } from "../utils/RecoilData";
 import ScrollPage from "../utils/ScrollPage";
+import Swal from "sweetalert2";
 
 const ProductList = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -187,22 +188,38 @@ const ProductItem = (props) => {
   const like = props.like;
   const setLike = props.setLike;
   const likePush = () => {
-    axios
-      .post(`${backServer}/product/changeLike/${loginEmail}`, product)
-      .then((res) => {
-        console.log(res);
-        if (res.data == 3) {
-          //insert됨
-          product.isLike = 1;
-        } else if (res.data == 2) {
-          //delete됨
-          product.isLike = 0;
+    if (loginEmail === "test") {
+      Swal.fire({
+        title: "로그인 필요",
+        text: "로그인 후 다시 시도해주세요",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#ffa518",
+        confirmButtonText: "로그인페이지 이동",
+        cancelButtonText: "계속 구경하기",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
         }
-        setLike(!like);
-      })
-      .catch((err) => {
-        console.log(err);
       });
+    } else {
+      axios
+        .post(`${backServer}/product/changeLike/${loginEmail}`, product)
+        .then((res) => {
+          console.log(res);
+          if (res.data == 3) {
+            //insert됨
+            product.isLike = 1;
+          } else if (res.data == 2) {
+            //delete됨
+            product.isLike = 0;
+          }
+          setLike(!like);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -222,7 +239,12 @@ const ProductItem = (props) => {
           }}
         />
       </div>
-      <div className="product-info">
+      <div
+        className="product-info"
+        onClick={() => {
+          navigate(`/market/main/productDetail/${product.productNo}/detail`);
+        }}
+      >
         <div className="product-name">{product.productName}</div>
         <div className="product-price">{product.productPrice}</div>
       </div>
