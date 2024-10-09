@@ -38,6 +38,10 @@ public class PetService {
 			return 0;
 		}
 	}
+	public SaveStatusDTO selectPetResult(int petNo) {
+		SaveStatusDTO healthResult = petDao.selectPetResult(petNo);
+		return healthResult;
+	}
 
 
 

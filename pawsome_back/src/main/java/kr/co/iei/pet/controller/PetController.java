@@ -36,4 +36,9 @@ public class PetController {
 		int saveResult = petService.savePetStatus(saveResultStatus);
 	return ResponseEntity.ok(saveResult);
 }
+	@GetMapping("/healthResult/{petNo}")
+	public ResponseEntity<SaveStatusDTO> selectPetResult(@PathVariable int petNo){
+		SaveStatusDTO healthResult = petService.selectPetResult(petNo);
+		return ResponseEntity.ok(healthResult);
+	}
 }

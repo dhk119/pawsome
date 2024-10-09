@@ -3,18 +3,13 @@ import { Link } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginState, loginEmailState } from "../utils/RecoilData";
 import axios from "axios";
-import { Bar, BarChart, CartesianGrid, Legend, XAxis, YAxis } from "recharts";
-import { Tooltip } from "@mui/material";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 import html2canvas from "html2canvas";
 import Swal from "sweetalert2";
 const HealthTest = () => {
   const [selectedWeightManagementTip, setSelectedWeightManagementTip] =
     useState("");
 
-  const [result, setResults] = useState([
-    { name: "dog", count: 0 },
-    { name: "cat", count: 0 },
-  ]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // 현재 질문 인덱스
   const [selectedPet, setSelectedPet] = useState(null);
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -147,7 +142,7 @@ const HealthTest = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // 기본 동작 방지
+    e.preventDefault();
     setSelectedWeightManagementTip(weightManagementTips[formData.weight]);
     setIsTestStarted(true);
   };
@@ -488,12 +483,6 @@ const HealthTest = () => {
     }
   };
 
-  const toggleResultDescription = (key) => {
-    setExpandedResults((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
   const healthLabels = {
     skin: "피부",
     dental: "치아",
@@ -502,24 +491,7 @@ const HealthTest = () => {
     heart: "심장",
     immunity: "면역력",
   };
-  const getBarColor = (key) => {
-    switch (key) {
-      case "skin":
-        return "brown";
-      case "dental":
-        return "orange";
-      case "bone":
-        return "gray";
-      case "eye":
-        return "blue";
-      case "heart":
-        return "red";
-      case "immunity":
-        return "black";
-      default:
-        return "gray";
-    }
-  };
+
   const onClickDownloadButton = () => {
     const target = document.getElementById("result");
     if (!target) {
@@ -836,6 +808,9 @@ const HealthTest = () => {
                     label={{ position: "top" }}
                   />
                 </BarChart>
+                <p className="weight-status">
+                  몸무게 관리 방법: {selectedWeightManagementTip}
+                </p>
                 {Object.keys(finalScores).map((key) => (
                   <div
                     key={key}
@@ -887,28 +862,36 @@ const HealthTest = () => {
                     건강
                   </div>
                 </div>
-                <div>
-                  <span>
+                <div style={{ margin: "0 auto" }}>
+                  <span style={{ color: "red", fontWeight: "bold" }}>
                     매우 위험이나 위험이 나왔으면 꼭 가까운 동물 병원에 바로
                     연락해보세요!
                   </span>
-                  <Link to="/service/allMap"> -주변 동물병원 검색하기-</Link>
+                  <br />
+                  <button className="map-search-btn">
+                    <Link to="/service/allMap" style={{ color: "#5799ff" }}>
+                      {" "}
+                      -주변 동물병원 검색하기-
+                    </Link>
+                  </button>
                 </div>
-                <p className="weight-status">
-                  몸무게 관리 방법: {selectedWeightManagementTip}
-                </p>
+
                 <br />
               </div>
-              <button className="ps-btn2" onClick={onClickDownloadButton}>
-                앨범에 저장
-              </button>
-              {isLogin ? (
-                <div>
-                  <button onClick={saveStatus}>저장하기</button>
-                </div>
-              ) : (
-                <></>
-              )}
+              <div className="lastBtn-box">
+                <button className="ps-btn2" onClick={onClickDownloadButton}>
+                  앨범에 저장
+                </button>
+                {isLogin ? (
+                  <div>
+                    <button className="saveResult-btn" onClick={saveStatus}>
+                      저장하기
+                    </button>
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
           )}
         </div>

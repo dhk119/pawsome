@@ -17,4 +17,6 @@ public interface PetDao {
 
 	int updatePetStatus(SaveStatusDTO saveResultStatus);
 
+	SaveStatusDTO selectPetResult(int petNo);
+
 }

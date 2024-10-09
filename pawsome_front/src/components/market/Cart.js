@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 
 const Cart = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [cartList, setCartList] = useState([]);
   const [checkedArr, setCheckedArr] = useState([]); //선택한 상품 배열
@@ -57,6 +58,12 @@ const Cart = () => {
         console.log(err);
       });
     setState(!state);
+  };
+
+  const buyBtn = () => {
+    if (checkCartNo != "") {
+      navigate(`/market/payment/${checkCartNo}`);
+    }
   };
 
   return (
@@ -115,7 +122,7 @@ const Cart = () => {
                 </div>
               </div>
               <div className="pay-btn">
-                <Link to={`/market/payment/${checkCartNo}`}>
+                <button type="button" onClick={buyBtn}>
                   총 {checkedArr.length}건 주문하기 (
                   {(total >= 30000
                     ? total
@@ -124,7 +131,7 @@ const Cart = () => {
                     : total
                   ).toLocaleString("ko-KR")}
                   원)
-                </Link>
+                </button>
               </div>
             </div>
           </div>
