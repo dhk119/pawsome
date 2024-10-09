@@ -695,56 +695,6 @@
     	select * from product_like JOIN product p USING (product_no)
     </select>
     
-   
-    <!-- 
-	<select id="selectProductLike" resultType="productLike">
-	    SELECT * 
-	    FROM product_like 
-	    WHERE member_email = #{memberEmail}
-	</select>
-	
-    <select id="selectOneBuy" parameterType="int" resultMap="buyListResultMap">
-        SELECT
-            b.buy_no,
-            b.product_no,
-            b.pay_uid,
-            b.buy_count,
-            b.member_email,
-            b.buy_state,
-            p.product_thumb,
-            p.product_name,
-            p.product_price,
-            py.pay_date
-        FROM
-            buy_list b
-        JOIN
-            product p ON b.product_no = p.product_no
-        JOIN
-            pay py ON b.pay_uid = py.pay_uid
-        WHERE
-            b.buy_no = #{buyNo}
-    </select>
-
-    <resultMap id="buyListResultMap" type="buyList">
-        <id property="buyNo" column="buyNo" />
-        <result property="productNo" column="productNo" />
-        <result property="payUid" column="payUid" />
-        <result property="buyCount" column="buyCount" />
-        <result property="memberEmail" column="memberEmail" />
-        <result property="buyState" column="buyState" />
-        
-        <association property="product" javaType="product">
-            <result property="productThumb" column="productThumb" />
-            <result property="productName" column="productName" />
-            <result property="productPrice" column="productPrice" />
-        </association>
-
-        <association property="pay" javaType="pay">
-            <result property="payDate" column="payDate" />
-        </association>
-    </resultMap>
-     -->
-    
     <!-- 대헌 -->
     <select id="searchMarketTotalCount" resultType="int">
   		select count(*) from product where product_name like '%'||#{searchKeyWord}||'%'
