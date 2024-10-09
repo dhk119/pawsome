@@ -442,7 +442,15 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
-.ps-btn2 {
+.lastBtn-box {
+  display: flex;
+  justify-content: center; /* Center buttons */
+  width: 500px;
+  margin: 0 auto;
+}
+
+.ps-btn2,
+.saveResult-btn {
   margin: 15px;
   padding: 5px 20px;
   background-color: white;
@@ -452,10 +460,21 @@
   font-size: medium;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s; /* Added transition for both buttons */
 }
-.ps-btn2:hover {
+
+.ps-btn2:hover,
+.saveResult-btn:hover {
   background-color: #5799ff;
   color: white;
+}
+.map-search-btn {
+  margin: 15px;
+  padding: 5px 20px;
+  background-color: white;
+  color: #5799ff;
+  border: 3px solid #5799ff;
+  font-size: small;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
