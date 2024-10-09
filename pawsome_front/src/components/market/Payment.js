@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { loginEmailState } from "../utils/RecoilData";
 import { useNavigate, useParams } from "react-router-dom";
@@ -26,7 +26,11 @@ const Payment = () => {
   const [totalPrice, setTotalPrice] = useState(0); //총금액
   let paymentTotal = 0; //총금액 더하기위한 옹달샘
   const [payPrice, setPayPrice] = useState(); //결제금액
-  console.log(payPrice);
+  const phoneRequried = useRef();
+  const addrRequired = useRef();
+  const postRequired = useRef();
+  const nameRequired = useRef();
+
   useEffect(() => {
     axios
       .get(`${backServer}/pay/payer/${loginEmail}`)
@@ -94,6 +98,7 @@ const Payment = () => {
 
   //전화번호 변경
   const phoneNum = (e) => {
+    phoneRequried.current.classList.remove("required");
     let input = e.target.value;
     input = input.replace(/[^0-9]/g, "");
     if (input.length > 3 && input.charAt(3) !== "-") {
@@ -102,7 +107,11 @@ const Payment = () => {
     if (input.length > 8 && input.charAt(8) !== "-") {
       input = input.slice(0, 8) + "-" + input.slice(8);
     }
+    if (input.length == 13) {
+      phoneRequried.current.classList.add("required");
+    }
     if (input.length > 13) {
+      phoneRequried.current.classList.add("required");
       return;
     }
     setPayer((prevPayer) => ({
@@ -110,12 +119,19 @@ const Payment = () => {
       payPhone: input,
     }));
   };
+  //이름 변경
   const changeName = (e) => {
     let input = e.target.value;
     setPayer((prevPayer) => ({
       ...prevPayer,
       payName: input,
     }));
+    if (input == "") {
+      nameRequired.current.classList.remove("required");
+    }
+    if (input != "") {
+      nameRequired.current.classList.add("required");
+    }
   };
 
   //베송지변경
@@ -140,6 +156,14 @@ const Payment = () => {
       ...prevPayer,
       payAddr3: input,
     }));
+    if (input == "") {
+      addrRequired.current.classList.remove("required");
+    }
+    if (input != "") {
+      if (payer.payAddr2 != "") {
+        addrRequired.current.classList.add("required");
+      }
+    }
   };
 
   //배송지 관리
@@ -156,6 +180,8 @@ const Payment = () => {
         payAddr2: memberData.memberAddr2,
         payAddr3: memberData.memberAddr3,
       }));
+      nameRequired.current.classList.add("required");
+      addrRequired.current.classList.add("required");
     }
     if (value == 1) {
       setIsAddrBtnDisabled(false);
@@ -167,6 +193,27 @@ const Payment = () => {
         payAddr2: "",
         payAddr3: "",
       }));
+      nameRequired.current.classList.remove("required");
+      addrRequired.current.classList.remove("required");
+    }
+  };
+
+  // 결제 버튼 클릭 시 실행할 함수
+  const handlePayment = (paymentMethod) => {
+    const requiredFields = document.querySelectorAll(".required");
+    if (requiredFields.length === 3) {
+      // 결제 함수 실행
+      if (paymentMethod === "kg") {
+        pay(); // KG 결제 함수
+      } else if (paymentMethod === "toss") {
+        pay2(); // Toss 결제 함수
+      }
+    } else {
+      Swal.fire({
+        title: "주문정보를 확인하세요",
+        text: "모든 항목을 정확히 기입해주세요.",
+        icon: "warning",
+      });
     }
   };
 
@@ -363,6 +410,7 @@ const Payment = () => {
                   <input
                     onChange={changeName}
                     value={payer.payName}
+                    ref={nameRequired}
                     placeholder="배송 받는 사람의 이름을 작성해주세요."
                   />
                 </td>
@@ -395,6 +443,7 @@ const Payment = () => {
                         name="memberAddr2"
                         id="address"
                         value={payer.payAddr2}
+                        ref={postRequired}
                         placeholder="도로명 주소"
                         readonly
                       />
@@ -406,6 +455,7 @@ const Payment = () => {
                         id="detailAddress"
                         value={payer.payAddr3}
                         onChange={changeDetailAddr}
+                        ref={addrRequired}
                         placeholder="상세주소를 작성해주세요."
                       />
                     </div>
@@ -419,6 +469,7 @@ const Payment = () => {
                     id="memberPhone"
                     value={payer.payPhone}
                     onChange={phoneNum}
+                    ref={phoneRequried}
                     placeholder="배송 받는 사람의 전화번호를 작성해주세요."
                   />
                 </td>
@@ -472,8 +523,8 @@ const Payment = () => {
           </div>
         </div>
         <div className="pay-btn">
-          <button onClick={pay}>결제하기</button>
-          <button onClick={pay2}>결제하기</button>
+          <button onClick={() => handlePayment("kg")}>결제하기 (KG)</button>
+          <button onClick={() => handlePayment("toss")}>결제하기 (Toss)</button>
         </div>
       </div>
     </div>

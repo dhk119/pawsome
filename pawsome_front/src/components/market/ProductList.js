@@ -69,16 +69,22 @@ const ProductList = (props) => {
             className="mySwiper"
           >
             <SwiperSlide>
-              <img src="/image/swiper1.png" />
+              <img src="/image/swiper/swiper7.jpg" />
             </SwiperSlide>
             <SwiperSlide>
-              <img src="/image/swiper2.jpg" />
+              <img src="/image/swiper/swiper8.jpg" />
             </SwiperSlide>
             <SwiperSlide>
-              <img src="/image/swiper3.jpg" />
+              <img src="/image/swiper/swiper9.jpg" />
             </SwiperSlide>
             <SwiperSlide>
-              <img src="/image/swiper4.jpg" />
+              <img src="/image/swiper/swiper10.png" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src="/image/swiper/swiper6.jpg" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src="/image/swiper/swiper5.jpg" />
             </SwiperSlide>
           </Swiper>
         </>
