@@ -48,7 +48,7 @@ const ProductDetail = () => {
   };
   const changeMain = () => {
     navigate(
-      `/market/main/productList/${product.typeCategory}/${product.mainCategory}/1`
+      `/market/main/productList/${product.typeCategory}/${product.mainCategory}`
     );
   };
 
