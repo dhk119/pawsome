@@ -63,6 +63,7 @@ public class MemberController {
  	private final String KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
     private final String KAKAO_CLIENT_ID = "655bae51c4f48e73787fb78710604be0";
     private final String KAKAO_REDIRECT_URI = "http://localhost:3000/callback/kakao";
+    private final String USER_INFO_URL2 = "https://kapi.kakao.com/v2/user/me";
 
 	
     // 회원가입
@@ -177,49 +178,50 @@ public class MemberController {
 	
 	// 카카오 로그인 처리
 	@GetMapping("/kakao-login")
-    public ResponseEntity<Map<String, Object>> kakaoLogin(@RequestParam String code) {
-		
-		System.out.println("test");
-		
-        // 1. 카카오 API로 액세스 토큰 요청
-        String tokenUrl = String.format(
-            "%s?grant_type=authorization_code&client_id=%s&redirect_uri=%s&code=%s", 
-            KAKAO_TOKEN_URL, KAKAO_CLIENT_ID, KAKAO_REDIRECT_URI, code
-        );
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Map> tokenResponse = restTemplate.getForEntity(tokenUrl, Map.class);
+	public ResponseEntity<Map<String, Object>> kakaoLogin(@RequestParam String code) {
+	    // 1. 카카오 API로 액세스 토큰 요청
+	    String tokenUrl = String.format("%s?grant_type=authorization_code&client_id=%s&redirect_uri=%s&code=%s",
+	            KAKAO_TOKEN_URL, KAKAO_CLIENT_ID, KAKAO_REDIRECT_URI, code);
+	    
+	    RestTemplate restTemplate = new RestTemplate();
+	    ResponseEntity<Map> tokenResponse = restTemplate.getForEntity(tokenUrl, Map.class);
+	    
+	    String accessToken = (String) tokenResponse.getBody().get("access_token");
+	    System.out.println(accessToken);
 
-        String accessToken = (String) tokenResponse.getBody().get("access_token");
+	    // 2. 액세스 토큰으로 사용자 정보 요청
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.set("Authorization", "Bearer " + accessToken);
+	    HttpEntity<String> entity = new HttpEntity<>(headers);
+	    ResponseEntity<Map> userInfoResponse = restTemplate.exchange(USER_INFO_URL2, HttpMethod.GET, entity, Map.class);
+	    System.out.println(userInfoResponse);
 
-        // 2. 액세스 토큰으로 사용자 정보 요청
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + accessToken);
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<Map> userInfoResponse = restTemplate.exchange(USER_INFO_URL, HttpMethod.GET, entity, Map.class);
+	    Map<String, Object> kakaoAccount = (Map<String, Object>) userInfoResponse.getBody().get("kakao_account");
+	    String memberEmail = (String) kakaoAccount.get("email");
 
-        Map<String, Object> kakaoAccount = (Map<String, Object>) userInfoResponse.getBody().get("kakao_account");
-        String memberEmail = (String) kakaoAccount.get("email");
+	    // 카카오 이메일에 'kakao' 접미사 추가
+	    String kakaoEmail = memberEmail + "_kakao";
 
-        // 3. DB에서 회원 정보 확인 및 처리
-        int isMember = memberService.checkEmail(memberEmail);
+	    // 3. DB에서 회원 정보 확인 및 처리
+	    int isMember = memberService.checkEmail2(kakaoEmail, "kakao"); // 이메일로 회원 확인
 
-        Map<String, Object> result = new HashMap<>();
-        if (isMember == 1) {
-            LoginMemberDTO loginMember = memberService.login(memberEmail);
-            result.put("isMember", true);
-            result.put("memberEmail", loginMember.getMemberEmail());
-            result.put("memberLevel", loginMember.getMemberLevel());
-            result.put("memberNickname", loginMember.getMemberNickname());
-            result.put("accessToken", loginMember.getAccessToken());
-            result.put("refreshToken", loginMember.getRefreshToken());
-            result.put("loginType", loginMember.getLoginType());
-        } else {
-            result.put("isMember", false);
-            result.put("kakaoUserInfo", kakaoAccount);
-        }
+	    Map<String, Object> result = new HashMap<>();
+	    if (isMember == 1) {
+	        LoginMemberDTO loginMember = memberService.login(kakaoEmail); // kakaoEmail로 로그인
+	        result.put("isMember", true);
+	        result.put("memberEmail", loginMember.getMemberEmail());
+	        result.put("memberLevel", loginMember.getMemberLevel());
+	        result.put("memberNickname", loginMember.getMemberNickname());
+	        result.put("accessToken", loginMember.getAccessToken());
+	        result.put("refreshToken", loginMember.getRefreshToken());
+	    } else {
+	        result.put("isMember", false);
+	        result.put("kakaoUserInfo", kakaoAccount);
+	    }
 
-        return ResponseEntity.ok(result);
-    }
+	    return ResponseEntity.ok(result);
+	}
+
 
 	
 	// 마이페이지 프로필 조회
@@ -496,11 +498,15 @@ public class MemberController {
 	}
 	
 	//좋아요한 상품
-	@GetMapping(value = "/product-like")
-	public ResponseEntity<List> selectProductLike(@RequestHeader("Authorization") String token) {
-		MemberDTO member = memberService.selectOneMember(token);
-		List<ProductLikeDTO> productLikeList = memberService.selectProductLike(member.getMemberEmail());
-		System.out.println(productLikeList);
-		return ResponseEntity.ok(productLikeList);
+	@GetMapping(value = "/product-like/{reqPage}")
+	public ResponseEntity<Map<String, Object>> selectProductLike(
+	    @RequestHeader("Authorization") String token, 
+	    @PathVariable int reqPage) {
+
+	    MemberDTO member = memberService.selectOneMember(token);
+	    Map<String, Object> productLikeMap = memberService.selectProductLike(member.getMemberEmail(), reqPage);
+
+	    System.out.println(productLikeMap);
+	    return ResponseEntity.ok(productLikeMap);
 	}
 }

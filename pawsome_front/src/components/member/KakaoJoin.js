@@ -8,7 +8,7 @@ const KakaoJoin = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
   const location = useLocation();
-  const { naverUserInfo } = location.state || {};
+  const { kakaoUserInfo } = location.state || {};
 
   // 주소 관련
   const postcodeRef = useRef(null);
@@ -16,8 +16,8 @@ const KakaoJoin = () => {
   const detailAddressRef = useRef(null);
 
   useEffect(() => {
-    console.log(naverUserInfo); // naverUserInfo가 제대로 들어오는지 확인
-  }, [naverUserInfo]);
+    console.log(kakaoUserInfo);
+  }, [kakaoUserInfo]);
 
   const [member, setMember] = useState({
     memberEmail: "",
@@ -26,17 +26,17 @@ const KakaoJoin = () => {
     memberAddr1: "", // 우편번호
     memberAddr2: "", // 주소
     memberAddr3: "", // 상세주소
-    loginType: "naver",
+    loginType: "kakao",
   });
 
   useEffect(() => {
-    console.log(naverUserInfo);
+    console.log(kakaoUserInfo);
     setMember((prevMember) => ({
       ...prevMember,
-      memberEmail: naverUserInfo.naverUserInfo.email || "",
-      memberName: naverUserInfo.naverUserInfo.name || "",
+      memberEmail: kakaoUserInfo.kakaoUserInfo.email || "",
+      memberName: kakaoUserInfo.kakaoUserInfo.name || "",
     }));
-  }, [naverUserInfo]);
+  }, [kakaoUserInfo]);
 
   const changeMember = (e) => {
     const name = e.target.name;

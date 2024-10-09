@@ -1,6 +1,7 @@
 package kr.co.iei.member.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,8 @@ import kr.co.iei.member.model.dto.MemberDTO;
 import kr.co.iei.member.model.dto.PetDTO;
 import kr.co.iei.member.model.dto.ScheduleDTO;
 import kr.co.iei.util.JwtUtils;
+import kr.co.iei.util.PageInfo;
+import kr.co.iei.util.PageUtil;
 
 @Service
 public class MemberService {
@@ -29,16 +32,25 @@ public class MemberService {
 	private JwtUtils jwtUtil;
 	
 	@Autowired
-	private MarketDao MarketDao;
+	private MarketDao marketDao;
+	
+	@Autowired
+	private PageUtil pageUtil;
 
 	@Transactional
 	public int insertMember(MemberDTO member) {
-		if(member.getMemberPw() != null) {			
-			String encPw = encoder.encode(member.getMemberPw());
-			member.setMemberPw(encPw);
-		}
-		int result = memberDao.insertMember(member);
-		return result;
+	    if (member.getMemberPw() != null) {			
+	        String encPw = encoder.encode(member.getMemberPw());
+	        member.setMemberPw(encPw);
+	    }
+
+	    if ("kakao".equals(member.getLoginType())) {	    	
+	        String emailWithType = member.getMemberEmail() + "_" + member.getLoginType();
+	        member.setMemberEmail(emailWithType);
+	    }
+
+	    int result = memberDao.insertMember(member);
+	    return result;
 	}
 
 	public LoginMemberDTO login(MemberDTO member) {
@@ -195,19 +207,50 @@ public class MemberService {
 
 	public List selectBuyList(String memberEmail) {
 		System.out.println(memberEmail);
-		List<BuyListDTO> buyList = MarketDao.selectBuyList(memberEmail);
+		List<BuyListDTO> buyList = marketDao.selectBuyList(memberEmail);
 		System.out.println(buyList);
 		return buyList;
 	}
 
 	public List selectOneBuy(long payUid) {
-		List buyList = MarketDao.selectOneBuy(payUid);
+		List buyList = marketDao.selectOneBuy(payUid);
 	    return buyList;
 	}
 
-	public List<ProductLikeDTO> selectProductLike(String memberEmail) {
-		List<ProductLikeDTO> list = MarketDao.selectProductLike(memberEmail);
-		return list;
+	public Map<String, Object> selectProductLike(String memberEmail, int reqPage) {
+	    int numPerPage = 2;
+	    int pageNaviSize = 5;
+	    int totalCount = marketDao.productLikeTotalCount(memberEmail);
+
+	    PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+	    
+	    System.out.println(pi);
+
+	    Map<String, Object> p = new HashMap<>();
+	    p.put("memberEmail", memberEmail);
+	    p.put("start", pi.getStart());
+	    p.put("end", pi.getEnd());
+	    
+	    System.out.println(p);
+
+	    List<ProductLikeDTO> list = marketDao.selectProductLike(p);
+	    
+	    System.out.println("테스트");
+	    System.out.println(list);
+
+	    Map<String, Object> result = new HashMap<>();
+	    result.put("list", list); // 좋아요 목록
+	    result.put("pi", pi); // 페이징 정보
+
+	    return result;
 	}
+
+	public int checkEmail2(String memberEmail, String loginType) {
+		int result = memberDao.checkEmail2(memberEmail, loginType);
+		return result;
+	}
+
+
+
 
 }

@@ -498,14 +498,19 @@
 
 .buy-view-info {
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .buy-view-info h2 {
   font-size: 24px;
+  margin: 0;
 }
 
 .buy-view-info p {
   font-size: 16px;
+  margin: 0;
 }
 
 .buy-view-items {
@@ -524,6 +529,8 @@
 
 .buy-view-header {
   display: flex;
+  align-items: center;
+  flex: 2;
 }
 
 .view-thumbnail {
@@ -537,10 +544,44 @@
 .buy-view-price-info {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  padding: 0;
+}
+
+.buy-view-price-info h3 {
+  margin: 0 0 5px 0;
+}
+
+.buy-view-price-info p {
+  margin: 0;
+}
+
+.buy-view-actions {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
 }
 
 .buy-view-state {
   font-family: ns-b;
+  margin-bottom: 10px; /* 버튼과 상태 정보 사이 간격 추가 */
+}
+
+.cancelBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: var(--gray2);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 10px;
 }
 
 .buy-delivery-view {
@@ -563,4 +604,79 @@
   font-weight: bold;
   text-align: right;
   margin-top: 20px;
+}
+
+.delete-buy-list {
+  background-color: var(--gray2);
+  color: #fff;
+  border-radius: 4px;
+  padding: 2px;
+  margin-left: 5px;
+  border: none;
+}
+
+
+/* 좋아요 목록 */
+
+
+/* 상품 목록 스타일 */
+.product-list__title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.product-list__items {
+  list-style-type: none;
+  padding: 0;
+}
+
+.product-list__item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+}
+
+.product-list__name,
+.product-list__price {
+  font-size: 18px;
+}
+
+.product-list__thumb {
+  border-radius: 4px;
+}
+
+/* 좋아요한 상품이 없을 때 */
+.product-list__empty {
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+  margin: 20px 0;
+}
+
+/* 페이지 네비게이션 스타일 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination .page-item {
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.like-page {
+  margin: 0 auto;
+}
+
+.pagination .active {
+  background-color: var(--point1);
 }

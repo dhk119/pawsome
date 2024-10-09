@@ -89,4 +89,6 @@ public interface MemberDao {
 	List<ChartData> petChartBreedCat();
 
 	List<ChartData> petChartGender();
+
+	int checkEmail2(String memberEmail, String loginType);
 }

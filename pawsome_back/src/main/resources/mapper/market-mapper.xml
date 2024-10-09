@@ -691,9 +691,49 @@
         order by b.pay_uid desc
     </select>
     
-    <select id="productLike" resultType="productLike">
-    	select * from product_like JOIN product p USING (product_no)
-    </select>
+    <resultMap id="productLikeMap" type="productLike">
+	    <result property="productNo" column="product_no"/>
+	    <result property="memberEmail" column="member_email"/>
+	    
+	    <association property="product" javaType="product">
+	        <result property="productNo" column="product_no"/>
+	        <result property="productName" column="product_name"/>
+	        <result property="typeCategory" column="type_category"/>
+	        <result property="mainCategory" column="main_category"/>
+	        <result property="productPrice" column="product_price"/>
+	        <result property="productThumb" column="product_thumb"/>
+	        <result property="productDetail" column="product_detail"/>
+	        <result property="productShow" column="product_show"/>
+	    </association>
+	</resultMap>
+	
+	<select id="selectProductLike" parameterType="map" resultMap="productLikeMap">
+	    SELECT * FROM (
+		    SELECT 
+		        ROWNUM rnum, 
+		        l.product_no AS product_like_no,
+		        l.member_email,
+		        p.product_no AS product_no,
+		        p.product_name,
+		        p.product_price,
+		        p.product_thumb
+		    FROM 
+		        product_like l
+		    JOIN 
+		        product p ON l.product_no = p.product_no
+		    WHERE 
+		        l.member_email = #{memberEmail}
+		    ORDER BY 
+		        l.product_no
+		) 
+		WHERE rnum BETWEEN #{start} AND #{end}
+	</select>
+
+	<select id="productLikeTotalCount" resultType="int">
+		select count(*) from product_like where member_email = #{memberEmail}
+	</select>
+
+
     
     <!-- 대헌 -->
     <select id="searchMarketTotalCount" resultType="int">

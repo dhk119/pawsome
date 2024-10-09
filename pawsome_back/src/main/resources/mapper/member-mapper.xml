@@ -35,6 +35,10 @@
 		select count(*) from member where member_email = #{memberEmail}
 	</select>
 	
+	<select id="checkEmail2" resultType="int">
+		select count(*) from member where member_email = #{memberEmail} and login_type = #{loginType}
+	</select>
+	
 	<select id="checkNickname" resultType="int">
 		select count(*) from member where member_nickname = #{memberNickname}
 	</select>

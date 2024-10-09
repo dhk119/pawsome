@@ -9,6 +9,7 @@ import kr.co.iei.market.model.dto.BuyListDTO;
 import kr.co.iei.market.model.dto.CartDTO;
 import kr.co.iei.market.model.dto.PayDTO;
 import kr.co.iei.market.model.dto.ProductDTO;
+import kr.co.iei.market.model.dto.ProductLikeDTO;
 import kr.co.iei.market.model.dto.QnaAnswerDTO;
 import kr.co.iei.market.model.dto.QnaDTO;
 import kr.co.iei.market.model.dto.RefundRequestDTO;
@@ -176,7 +177,9 @@ public interface MarketDao {
 
 	List selectOneBuy(long payUid);
 
-	List selectProductLike(String memberEmail);
+	List<ProductLikeDTO> selectProductLike(Map<String, Object> p);
+
+	int productLikeTotalCount(String memberEmail);
 
 /*대헌*/
 	List selectSearchMarketList(Map<String, Object> m);
@@ -184,4 +187,6 @@ public interface MarketDao {
 	int searchMarketTotalCount(String searchKeyWord);
 
 	List selectMainMarketList();
+
+
 }

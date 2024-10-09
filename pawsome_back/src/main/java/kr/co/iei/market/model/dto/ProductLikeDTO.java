@@ -13,5 +13,6 @@ import lombok.NoArgsConstructor;
 public class ProductLikeDTO {
 	private int productNo;			//상품번호
 	private String memberEmail;		//좋아요한 사람
+	private ProductDTO product;		//상품
 	
 }
