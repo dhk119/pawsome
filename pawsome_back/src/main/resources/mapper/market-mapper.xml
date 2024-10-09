@@ -696,7 +696,7 @@
     </select>
     
    
-    
+    <!-- 
 	<select id="selectProductLike" resultType="productLike">
 	    SELECT * 
 	    FROM product_like 
@@ -743,6 +743,7 @@
             <result property="payDate" column="payDate" />
         </association>
     </resultMap>
+     -->
     
     <!-- 대헌 -->
     <select id="searchMarketTotalCount" resultType="int">
