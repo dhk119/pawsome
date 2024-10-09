@@ -239,8 +239,12 @@ const MypageCalendar = () => {
           tileContent={tileContent} // 각 타일에 일정 표시
         />
         <div className="calendar-list">
+          <div>
+
+            <h3>{moment(value).format("YYYY년 MM월 DD일")} </h3>
+          </div>
           <div className="calendar-list-title">
-            <h2>일정 목록</h2>
+          <h2>일정 목록</h2>
             <IoAddCircle onClick={openAddModal} />
           </div>
           <div className="calendar-schedule-list">
