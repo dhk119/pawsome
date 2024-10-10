@@ -79,7 +79,7 @@ const SearchResult = () => {
               className="search-btn"
               onClick={() => {
                 setSearchedStatus(!searchedStatus);
-                navigate(`/searchResult/${searchKeyWord}`);
+                navigate(`/searchResult/${searched}`);
               }}
             >
               <img src="/image/paw.png" className="search-icon" />
@@ -160,7 +160,7 @@ const SearchResult = () => {
                         borderRadius: "15px",
                         backgroundColor: "#ffbe58",
                         textAlign: "center",
-                        width: "100%",
+                        width: "95%",
                         padding: "30px 30px",
                         color: "#fff",
                         fontWeight: "bold",
