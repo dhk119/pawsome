@@ -64,8 +64,15 @@ const MypageMain = () => {
               <Link to="/mypage/buy-list">주문조회</Link>
             </li>
             <li>
-              <Link to="/mypage/product-like/1">좋아요한 상품</Link>
+              <Link to="/mypage/product-like">좋아요한 상품</Link>
             </li>
+            {memberLevel === 1 ? (
+              <li>
+                <Link to="/admin/main">관리자 페이지</Link>
+              </li>
+            ) : (
+              ""
+            )}
           </ul>
         </div>
       </div>
@@ -78,7 +85,7 @@ const MypageMain = () => {
           <Route path="/pet-view/:petNo" element={<PetView />} />
           <Route path="/deleteMember/:memberEmail" element={<DeleteMember />} />
           <Route path="/buy-list" element={<BuyList />} />
-          <Route path="/product-like/:reqPage" element={<ProductLike />} />
+          <Route path="/product-like" element={<ProductLike />} />
           <Route path="/buy-view/:payUid" element={<BuyView />} />
         </Routes>
       </div>

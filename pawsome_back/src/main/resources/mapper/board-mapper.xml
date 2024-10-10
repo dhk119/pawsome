@@ -246,4 +246,144 @@
         		) b )
 		where rnum between #{start} and #{end}
   	</select>
+  	<select id="totalCountMagnum" resultType="int">
+  		select count(*) from board
+  	</select>
+  	<select id="selectBoardListMagnum" resultType="board">
+  		select * from 
+			(select rownum as rnum, b.* from 
+    			(select board_no,
+    				    board_tag,
+    				    board_title,
+    				    board_thumb,
+    				    read_count,
+    				  	reg_date,
+    				    member_nickname,
+    				    (select count(*) from board_like where board_like.board_no = board.board_no) board_like,
+    				    (select count(*) from reply where reply.board_no = board.board_no) reply_count
+        		from board order by board_no desc) b )
+		where rnum between #{start} and #{end}
+  	</select>
+  	<select id="searchTotalCountBoardMagnum" resultType="int">
+  		select count(*) from board where
+		<choose>
+			<when test="option==0">
+				<choose>
+					<when test="type.equals('all')">
+						board_title like '%'||#{keyword}||'%' or board_content like '%'||#{keyword}||'%' or member_nickname like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('title')">
+						board_title like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('writer')">
+						member_nickname like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('content')">
+						board_content like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				<choose>
+					<when test="type.equals('all')">
+						(board_title like '%'||#{keyword}||'%' or board_content like '%'||#{keyword}||'%' or member_nickname like '%'||#{keyword}||'%')and board_tag=#{option}
+					</when>
+					<when test="type.equals('title')">
+						board_title like '%'||#{keyword}||'%' and board_tag=#{option}
+					</when>
+					<when test="type.equals('writer')">
+						member_nickname like '%'||#{keyword}||'%' and board_tag=#{option}
+					</when>
+					<when test="type.equals('content')">
+						board_content like '%'||#{keyword}||'%' and board_tag=#{option}
+					</when>
+				</choose>
+			</otherwise>
+		</choose>
+  	</select>
+  	<select id="searchBoardListMagnum" resultType="board">
+  		select * from (select rownum as rnum, b.* from(select board_no,
+    				    board_tag,
+    				    board_title,
+    				    board_thumb,
+    				    read_count,
+    				  	reg_date,
+    				    member_nickname,
+    				    (select count(*) from board_like where board_like.board_no = board.board_no) board_like,
+    				    (select count(*) from reply where reply.board_no = board.board_no) reply_count from board where
+		<choose>
+			<when test="option==0">
+				<choose>
+					<when test="type.equals('all')">
+						board_title like '%'||#{keyword}||'%' or board_content like '%'||#{keyword}||'%' or member_nickname like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('title')">
+						board_title like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('writer')">
+						member_nickname like '%'||#{keyword}||'%'
+					</when>
+					<when test="type.equals('content')">
+						board_content like '%'||#{keyword}||'%'
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				<choose>
+					<when test="type.equals('all')">
+						(board_title like '%'||#{keyword}||'%' or board_content like '%'||#{keyword}||'%' or member_nickname like '%'||#{keyword}||'%')and board_tag=#{option}
+					</when>
+					<when test="type.equals('title')">
+						board_title like '%'||#{keyword}||'%' and board_tag=#{option}
+					</when>
+					<when test="type.equals('writer')">
+						member_nickname like '%'||#{keyword}||'%' and board_tag=#{option}
+					</when>
+					<when test="type.equals('content')">
+						board_content like '%'||#{keyword}||'%' and board_tag=#{option}
+					</when>
+				</choose>
+			</otherwise>
+		</choose>
+		order by board_no desc)b) where (rnum BETWEEN #{start} and #{end})
+  	</select>
+  	<select id="searchTotalCountOption" resultType="int">
+		<choose>
+			<when test="option==0">
+				select count(*) from board
+			</when>
+			<otherwise>
+				select count(*) from board where board_tag=#{option}
+			</otherwise>
+		</choose>	
+	</select>
+	<select id="searchBoardListOption" resultType="board">
+		<choose>
+			<when test="option==0">
+				select * from (select rownum as rnum, b.* from(select board_no,
+    				    board_tag,
+    				    board_title,
+    				    board_thumb,
+    				    read_count,
+    				  	reg_date,
+    				    member_nickname,
+    				    (select count(*) from board_like where board_like.board_no = board.board_no) board_like,
+    				    (select count(*) from reply where reply.board_no = board.board_no) reply_count order by board_no desc)b)
+    				    from board
+    				    where (rnum BETWEEN #{start} and #{end})
+			</when>
+			<otherwise>
+				select * from (select rownum as rnum, b.* from(select board_no,
+    				    board_tag,
+    				    board_title,
+    				    board_thumb,
+    				    read_count,
+    				  	reg_date,
+    				    member_nickname,
+    				    (select count(*) from board_like where board_like.board_no = board.board_no) board_like,
+    				    (select count(*) from reply where reply.board_no = board.board_no) reply_count from board where board_tag=#{option} order by board_no desc)b) where (rnum BETWEEN #{start} and #{end})
+			</otherwise>
+		</choose>	
+	</select>	
 </mapper>
+

@@ -711,7 +711,7 @@
 	</resultMap>
 	
 	<select id="selectProductLike" parameterType="map" resultMap="productLikeMap">
-	    SELECT * FROM (
+	   SELECT * FROM (
 		    SELECT 
 		        ROWNUM rnum, 
 		        l.product_no AS product_like_no,
@@ -722,14 +722,13 @@
 		        p.product_thumb
 		    FROM 
 		        product_like l
-		    JOIN 
+		    left JOIN 
 		        product p ON l.product_no = p.product_no
 		    WHERE 
 		        l.member_email = #{memberEmail}
-		    ORDER BY 
-		        l.product_no
 		) 
 		WHERE rnum BETWEEN #{start} AND #{end}
+        order by rnum desc
 	</select>
 
 	<select id="productLikeTotalCount" resultType="int">

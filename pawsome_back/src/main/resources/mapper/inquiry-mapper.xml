@@ -74,7 +74,7 @@
 						member_email like '%'||#{keyword}||'%' and inquiry_type=#{option}
 					</when>
 					<when test="type.equals('titleContent')">
-						(inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%'}) and inquiry_type=#{option}
+						(inquiry_title like '%'||#{keyword}||'%' or inquiry_content like '%'||#{keyword}||'%') and inquiry_type=#{option}
 					</when>
 					<when test="type.equals('content')">
 						inquiry_content like '%'||#{keyword}||'%' and inquiry_type=#{option}

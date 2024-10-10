@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.co.iei.board.model.dao.BoardDao;
 import kr.co.iei.market.model.dao.MarketDao;
 import kr.co.iei.market.model.dto.ProductDTO;
 import kr.co.iei.market.model.dto.QnaAnswerDTO;
@@ -24,6 +25,8 @@ public class AdminService {
 	private MarketDao marketDao;
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private BoardDao boardDao;
 	@Autowired
 	private PageUtil pageUtil;
 	@Transactional
@@ -258,5 +261,43 @@ public class AdminService {
 			}
 		}
 		return list;
+	}
+	public Map selectBoardList(int reqPage) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=boardDao.totalCountMagnum();
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=boardDao.selectBoardListMagnum(pi);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
+	public Map searchBoardList(int reqPage, String type, String keyword, int option) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=boardDao.searchTotalCountBoardMagnum(type, keyword, option);
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=boardDao.searchBoardListMagnum(pi.getStart(), pi.getEnd(), type, keyword, option);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
+	public Map searchBoardList(int reqPage, int option) {
+		int numPerPage=10;
+		int pageNaviSize=5;
+		int totalCount=boardDao.searchTotalCountOption(option);
+		PageInfo pi=pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
+		List list=boardDao.searchBoardListOption(pi.getStart(), pi.getEnd(), option);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("list",list);
+		map.put("pi",pi);
+		return map;
+	}
+	@Transactional
+	public int deleteBoard(int boardNo) {
+		int result=boardDao.deleteBoard(boardNo);
+		return result;
 	}
 }

@@ -10,11 +10,17 @@ const InquirySearch = () => {
   const navigate = useNavigate();
   const [inquiryList, setInquiryList] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [reqPage, setReqPage] = useState(1);
+  const [reqPage, setReqPage] = useState(
+    searchParams.get("reqPage") !== null
+      ? Number(searchParams.get("reqPage"))
+      : 1
+  );
   const [pi, setPi] = useState({});
   const isLogin = useRecoilValue(isLoginState);
   const [search, setSearch] = useState(false);
-  const [type, setType] = useState(searchParams.get("type"));
+  const [type, setType] = useState(
+    searchParams.get("type") ? searchParams.get("type") : "all"
+  );
   const [keyword, setKeyword] = useState(searchParams.get("keyword"));
   const [option, setOption] = useState(Number(searchParams.get("option")));
   useEffect(() => {
@@ -31,7 +37,6 @@ const InquirySearch = () => {
       : axios
           .get(`${backServer}/inquiry/search/${reqPage}/${option}`)
           .then((res) => {
-            console.log(res.data);
             setInquiryList(res.data.list);
             setPi(res.data.pi);
           })
@@ -47,10 +52,10 @@ const InquirySearch = () => {
   const searchInquiry = () => {
     if (keyword) {
       navigate(
-        `/inquiry/search?reqPage=${reqPage}&type=${type}&keyword=${keyword}&option=${option}`
+        `/inquiry/search?reqPage=${1}&type=${type}&keyword=${keyword}&option=${option}`
       );
     } else {
-      navigate(`/inquiry/search?reqPage=${reqPage}&option=${option}`);
+      navigate(`/inquiry/search?reqPage=${1}&option=${option}`);
     }
     search ? setSearch(false) : setSearch(true);
   };
@@ -123,7 +128,15 @@ const InquirySearch = () => {
               <tr
                 key={"inquiry" + i}
                 onClick={() => {
-                  navigate(`/inquiry/view/${inquiry.inquiryNo}`);
+                  if (keyword) {
+                    navigate(
+                      `/inquiry/view/${inquiry.inquiryNo}?reqPage=${reqPage}&type=${type}&keyword=${keyword}&option=${option}`
+                    );
+                  } else {
+                    navigate(
+                      `/inquiry/view/${inquiry.inquiryNo}?reqPage=${reqPage}&option=${option}`
+                    );
+                  }
                 }}
               >
                 <td>{inquiry.inquiryNo}</td>

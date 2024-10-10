@@ -36,14 +36,61 @@ const Weather = () => {
     const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&lang=kr`;
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&lang=kr`;
 
+    const updateVideoUrl = (mainWeather) => {
+      const currentHour = new Date().getHours();
+      if (currentHour >= 18 || currentHour < 6) {
+        // 저녁 시간에 다른 링크를 사용
+        setVideoUrl(
+          "https://videos.pexels.com/video-files/26690702/11987721_2560_1440_60fps.mp4"
+        );
+        return;
+      }
+      switch (mainWeather) {
+        case "Clear":
+          setVideoUrl(
+            "https://videos.pexels.com/video-files/2605326/2605326-uhd_2560_1440_30fps.mp4"
+          );
+          break;
+        case "Clouds":
+          setVideoUrl(
+            "https://videos.pexels.com/video-files/14117658/14117658-uhd_2560_1440_30fps.mp4"
+          );
+          break;
+        case "Rain":
+          setVideoUrl(
+            "https://videos.pexels.com/video-files/8549580/8549580-uhd_2560_1440_25fps.mp4"
+          );
+          break;
+        case "Snow":
+          setVideoUrl(
+            "https://videos.pexels.com/video-files/6620470/6620470-uhd_2732_1440_25fps.mp4"
+          );
+          break;
+        case "Thunderstorm":
+          setVideoUrl(
+            "https://videos.pexels.com/video-files/5908584/5908584-hd_1920_1080_25fps.mp4"
+          );
+          break;
+        case "Mist":
+          setVideoUrl(
+            "https://videos.pexels.com/video-files/28647807/12442307_1080_1920_30fps.mp4"
+          );
+          break;
+        default:
+          setVideoUrl("https://example.com/weather-videos/default.mp4");
+          break;
+      }
+    };
     Promise.all([axios.get(weatherUrl), axios.get(forecastUrl)])
       .then(([weatherResponse, forecastResponse]) => {
         setCurrentWeather(weatherResponse.data);
         groupForecastByDay(forecastResponse.data.list);
         getKoreanWeekday(forecastResponse.data.list);
         setLoading(false);
+        updateVideoUrl(weatherResponse.data.weather[0].main);
       })
       .catch((error) => {
+        console.error("api 호출 에러:", error);
         setError(error);
         setLoading(false);
       });
@@ -103,7 +150,7 @@ const Weather = () => {
   }
 
   if (error) {
-    return <Loading />;
+    return "에러 발생";
   }
 
   const temp = currentWeather.main.temp;
@@ -113,52 +160,6 @@ const Weather = () => {
   const desc = currentWeather.weather[0].description;
   const icon = currentWeather.weather[0].icon;
   const imgSrc = `https://openweathermap.com/img/w/${icon}.png`;
-
-  const updateVideoUrl = (mainWeather) => {
-    const currentHour = new Date().getHours();
-    if (currentHour >= 18 || currentHour < 6) {
-      // 저녁 시간에 다른 링크를 사용
-      setVideoUrl(
-        "https://videos.pexels.com/video-files/26690702/11987721_2560_1440_60fps.mp4"
-      );
-      return;
-    }
-    switch (mainWeather) {
-      case "Clear":
-        setVideoUrl(
-          "https://videos.pexels.com/video-files/2605326/2605326-uhd_2560_1440_30fps.mp4"
-        );
-        break;
-      case "Clouds":
-        setVideoUrl(
-          "https://videos.pexels.com/video-files/14117658/14117658-uhd_2560_1440_30fps.mp4"
-        );
-        break;
-      case "Rain":
-        setVideoUrl(
-          "https://videos.pexels.com/video-files/8549580/8549580-uhd_2560_1440_25fps.mp4"
-        );
-        break;
-      case "Snow":
-        setVideoUrl(
-          "https://videos.pexels.com/video-files/6620470/6620470-uhd_2732_1440_25fps.mp4"
-        );
-        break;
-      case "Thunderstorm":
-        setVideoUrl(
-          "https://videos.pexels.com/video-files/5908584/5908584-hd_1920_1080_25fps.mp4"
-        );
-        break;
-      case "Mist":
-        setVideoUrl(
-          "https://videos.pexels.com/video-files/28647807/12442307_1080_1920_30fps.mp4"
-        );
-        break;
-      default:
-        setVideoUrl("https://example.com/weather-videos/default.mp4");
-        break;
-    }
-  };
 
   return (
     <Wrapper>
@@ -172,7 +173,7 @@ const Weather = () => {
       <div
         style={{
           width: "1200px",
-          background: "rgba(255, 255, 255, 0.3)",
+          background: "rgba(255, 255, 255, 0.1)",
           borderRadius: "10px",
           padding: "50px",
           marginLeft: "200px",

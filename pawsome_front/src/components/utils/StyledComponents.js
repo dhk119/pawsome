@@ -32,7 +32,7 @@ export const BackgroundVideo = styled.video`
 export const Content = styled.div`
   position: relative;
   z-index: 1; /* 콘텐츠를 앞쪽에 표시 */
-  color: white;
+  color: #fff;
   padding: 0 10px;
 `;
 export const SpaceAround = styled.div`
@@ -84,7 +84,7 @@ export const WeatherList = styled.ul`
 `;
 
 export const WeatherBox = styled.div`
-  background: rgba(255, 255, 255, 0.3); // 반투명 배경
+  background: rgba(255, 255, 255, 0.2); // 반투명 배경
   border-radius: 10px; // 모서리 둥글게
   padding: 15px; // 패딩 추가
   margin: 10px; // 좌우 마진

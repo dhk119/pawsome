@@ -18,43 +18,51 @@ const SearchResult = () => {
   const navigate = useNavigate();
   const [boardList, setBoardList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
+  const [reqPage1, setReqPage1] = useState(1);
   const [productList, setProductList] = useState([]);
   const [like, setLike] = useState(false);
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [searchedStatus, setSearchedStatus] = useState();
   const [pi, setPi] = useState({});
-
+  const [pi1, setPi1] = useState({});
+  console.log(reqPage);
+  console.log(reqPage1);
   useEffect(() => {
     axios
       .get(`${backServer}/board/searchBoardList/${reqPage}/${searched}`)
       .then((res) => {
         console.log(res);
         if (reqPage != 1) {
-          setBoardList(res.data.list);
+          const array = boardList.concat(res.data.list);
+          setBoardList(array);
+          setPi(res.data.pi);
         } else {
           setBoardList(res.data.list);
+          setPi(res.data.pi);
         }
       })
       .catch((err) => {
         console.log(err);
       });
   }, [reqPage, searchedStatus]);
-  console.log(boardList);
   useEffect(() => {
     axios
-      .get(`${backServer}/product/searchMarketList/${reqPage}/${searched}`)
+      .get(`${backServer}/product/searchMarketList/${reqPage1}/${searched}`)
       .then((res) => {
         console.log(res);
-        if (reqPage != 1) {
-          setProductList(res.data.list);
+        if (reqPage1 != 1) {
+          const array = productList.concat(res.data.list);
+          setProductList(array);
+          setPi1(res.data.pi);
         } else {
           setProductList(res.data.list);
+          setPi1(res.data.pi);
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [reqPage, searchedStatus]);
+  }, [reqPage1, searchedStatus]);
   const changeSearchKeyWord = (e) => {
     setSearchKeyWord(e.target.value);
   };
@@ -107,9 +115,34 @@ const SearchResult = () => {
                     );
                   })
                 ) : (
-                  <div>조회 할 게시물이 없습니다</div>
+                  <div
+                    style={{
+                      borderRadius: "15px",
+                      backgroundColor: "#ffbe58",
+                      textAlign: "center",
+                      width: "100%",
+                      padding: "30px 30px",
+                      color: "#fff",
+                      fontWeight: "bold",
+                      fontSize: "20px",
+                      margin: "10px auto",
+                    }}
+                  >
+                    조회 된 제품이 없습니다
+                  </div>
                 )}
               </div>
+              {reqPage1 !== pi1.totalPage && productList.length !== 0 ? (
+                <span className="more-list" style={{ width: "100px" }}>
+                  <MorePage
+                    pi={pi1}
+                    reqPage={reqPage1}
+                    setReqPage={setReqPage1}
+                  />
+                </span>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <div className="search-result-detail">
@@ -122,10 +155,31 @@ const SearchResult = () => {
                       return <BoardResult key={"board-" + i} board={board} />;
                     })
                   ) : (
-                    <div>조회 할 게시물이 없습니다</div>
+                    <div
+                      style={{
+                        borderRadius: "15px",
+                        backgroundColor: "#ffbe58",
+                        textAlign: "center",
+                        width: "100%",
+                        padding: "30px 30px",
+                        color: "#fff",
+                        fontWeight: "bold",
+                        fontSize: "20px",
+                        margin: "10px auto",
+                      }}
+                    >
+                      조회 된 게시물이 없습니다
+                    </div>
                   )}
                 </ul>
               </div>
+              {reqPage !== pi.totalPage && boardList.length !== 0 ? (
+                <span className="more-list" style={{ width: "100px" }}>
+                  <MorePage pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+                </span>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
