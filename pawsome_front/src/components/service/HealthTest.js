@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginState, loginEmailState } from "../utils/RecoilData";
 import axios from "axios";
@@ -11,6 +11,7 @@ const HealthTest = () => {
     useState("");
   const [selectedPet, setSelectedPet] = useState(null);
   const backServer = process.env.REACT_APP_BACK_SERVER;
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     no: "",
     name: "",
@@ -535,13 +536,16 @@ const HealthTest = () => {
                     </select>
                     <div>
                       <br />
-                      <h3>이전에 검사하신 기록을 확인하실 수 있어요.</h3>
-                      <button className="record-btn">
-                        <Link to="/service/healthTestRecord">
-                          등록된 반려동물의 건강테스트 기록보기
-                        </Link>
-                      </button>
+                      <h3
+                        className="health-record-sign"
+                        onClick={() => {
+                          navigate(`/mypage/profile`);
+                        }}
+                      >
+                        기록은 마이페이지에서 확인하실 수 있어요.
+                      </h3>
                     </div>
+                    <br />
                     <h2>어떤 반려동물과 함께하고 있나요?</h2>
                     <div className="test-box">
                       <div
