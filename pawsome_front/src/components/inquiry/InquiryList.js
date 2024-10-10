@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { isLoginState } from "../utils/RecoilData";
 import PageNavi from "../utils/PageNavi";
@@ -8,8 +8,11 @@ import PageNavi from "../utils/PageNavi";
 const InquiryList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
-  const [reqPage, setReqPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [inquiryList, setInquiryList] = useState([]);
+  const [reqPage, setReqPage] = useState(
+    searchParams.get("reqPage") ? Number(searchParams.get("reqPage")) : 1
+  );
   const [pi, setPi] = useState({});
   const isLogin = useRecoilValue(isLoginState);
   const [type, setType] = useState("all");
@@ -43,6 +46,10 @@ const InquiryList = () => {
   };
   const changeOption = (e) => {
     setOption(Number(e.target.value));
+  };
+  const changeReqPage = (index) => {
+    setReqPage(index);
+    navigate(`/inquiry/list/?reqPage=${index}`);
   };
   return (
     <section className="section inquiry-list">
@@ -135,7 +142,7 @@ const InquiryList = () => {
       </table>
       <div className="pageNavi-inquiry-list">
         <ul className="pageNavi-ul" id="inquiry-page">
-          <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+          <PageNavi pi={pi} reqPage={reqPage} setReqPage={changeReqPage} />
         </ul>
       </div>
     </section>
