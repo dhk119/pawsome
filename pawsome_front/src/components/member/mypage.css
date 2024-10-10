@@ -615,11 +615,15 @@
   border: none;
 }
 
-
 /* 좋아요 목록 */
 
-
 /* 상품 목록 스타일 */
+.product-like-list {
+  background-color: #fff;
+  padding: 30px;
+  min-height: 500px;
+}
+
 .product-list__title {
   font-size: 24px;
   font-weight: bold;
@@ -633,14 +637,18 @@
 }
 
 .product-list__item {
-  border: 1px solid #ddd;
   padding: 10px;
   margin: 10px 0;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f9f9f9;
+  background-color: #fff;
+  border: 1px solid var(--gray6);
+}
+
+.product-list__item:hover {
+  background-color: var(--gray7);
 }
 
 .product-list__name,
@@ -650,14 +658,19 @@
 
 .product-list__thumb {
   border-radius: 4px;
+  min-width: 150px;
+  min-height: 150px;
+  max-width: 150px;
+  max-height: 150px;
 }
 
 /* 좋아요한 상품이 없을 때 */
 .product-list__empty {
   text-align: center;
   font-size: 18px;
-  color: #888;
+  color: var(--gray2);
   margin: 20px 0;
+  line-height: 500px;
 }
 
 /* 페이지 네비게이션 스타일 */
