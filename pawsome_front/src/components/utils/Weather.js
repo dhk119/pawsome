@@ -173,7 +173,7 @@ const Weather = () => {
       <div
         style={{
           width: "1200px",
-          background: "rgba(255, 255, 255, 0.3)",
+          background: "rgba(255, 255, 255, 0.1)",
           borderRadius: "10px",
           padding: "50px",
           marginLeft: "200px",
