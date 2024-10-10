@@ -116,12 +116,13 @@ const MypageProfile = () => {
             등록된 반려동물이 없습니다.
           </div>
         )}
+
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
             <HealthTestRecord />
           </div>
           <div className="pet-btn-wrap">
-            <Link to="/petinsert">반려동물 등록</Link>
+            <Link to="/mypage/petinsert">반려동물 등록</Link>
           </div>
         </div>
       </div>

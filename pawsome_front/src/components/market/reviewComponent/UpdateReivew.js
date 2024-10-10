@@ -1,23 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ReviewFrm from "./ReviewFrm";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Backspace } from "@mui/icons-material";
+import { useRecoilState } from "recoil";
+import { loginEmailState } from "../../utils/RecoilData";
 
 const UpdateReview = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
-  /* 나중에 연결하면 주소로 번호 받기
   const params = useParams();
   const reviewNo = params.reviewNo;
-  */
-  const reviewNo = 3;
   const [reviewContent, setReviewContent] = useState("");
   const [reviewFile, setReviewFile] = useState([]);
   const [value, setValue] = useState(0); //별점
-  const productNo = 94;
+  const productNo = params.productNo;
   const [product, setProduct] = useState({});
+  const [loginEmail] = useRecoilState(loginEmailState);
 
   //수정
   const [newFile, setNewFile] = useState([]);
@@ -25,7 +25,7 @@ const UpdateReview = () => {
 
   useEffect(() => {
     axios
-      .get(`${backServer}/product/productDetail/${productNo}`)
+      .get(`${backServer}/product/productDetail/${productNo}/${loginEmail}`)
       .then((res) => {
         console.log(res);
         setProduct(res.data);

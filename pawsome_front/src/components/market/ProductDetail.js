@@ -29,9 +29,13 @@ const ProductDetail = () => {
   const [productPrice, setProductPrice] = useState(0);
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [like, setLike] = useState(false); //좋아요 관리
+
   useEffect(() => {
+    const url = loginEmail
+      ? `${backServer}/product/productDetail/${productNo}/${loginEmail}`
+      : `${backServer}/product/productDetail/${productNo}/test`;
     axios
-      .get(`${backServer}/product/productDetail/${productNo}/${loginEmail}`)
+      .get(url)
       .then((res) => {
         console.log(res);
         setProduct(res.data);
@@ -76,7 +80,7 @@ const ProductDetail = () => {
     form.append("productNo", productNo);
     form.append("productCartCount", quantity);
     form.append("memberEmail", loginEmail);
-    if (loginEmail === "test") {
+    if (loginEmail === "") {
       Swal.fire({
         title: "로그인 필요",
         text: "로그인 후 다시 시도해주세요",
@@ -197,7 +201,7 @@ const ProductDetail = () => {
     form.append("productNo", productNo);
     form.append("productCartCount", quantity);
     form.append("memberEmail", loginEmail);
-    if (loginEmail === "test") {
+    if (loginEmail === "") {
       Swal.fire({
         title: "로그인 필요",
         text: "로그인 후 다시 시도해주세요",
@@ -259,7 +263,7 @@ const ProductDetail = () => {
 
   //좋아요
   const likePush = () => {
-    if (loginEmail === "test") {
+    if (loginEmail === "") {
       Swal.fire({
         title: "로그인 필요",
         text: "로그인 후 다시 시도해주세요",

@@ -351,7 +351,7 @@ const Payment = () => {
                 text: "결제를 성공했습니다.",
                 icon: "success",
               });
-              navigate("/market/payment/success");
+              navigate("/mypage/buy-list");
             })
             .catch((err) => {
               console.error(err);

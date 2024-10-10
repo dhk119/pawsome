@@ -5,6 +5,7 @@ import Map from "../board/Map";
 import WalkMap from "./WalkMap";
 
 const BoardFrm = (props) => {
+  const backServer = process.env.REACT_APP_BACK_SERVER;
   const boardTag = props.boardTag;
   const setBoardTag = props.setBoardTag;
   const boardTitle = props.boardTitle;
@@ -42,6 +43,7 @@ const BoardFrm = (props) => {
     }
     setBoardFile([...boardFile, ...fileArr]);
   };
+  console.log(fileList);
   return (
     <div className="board-writeFrm">
       <ul>
@@ -163,6 +165,7 @@ const BoardFrm = (props) => {
             />
             {fileList
               ? fileList.map((boardFile, i) => {
+                  console.log(boardFile);
                   const deleteFile = () => {
                     const newFileList = fileList.filter((item) => {
                       return item !== boardFile;
@@ -175,7 +178,10 @@ const BoardFrm = (props) => {
                   };
                   return (
                     <div className="preview-img" key={"oldFile-" + i}>
-                      <img className="fileimg" src={boardFile.fileimg} />
+                      <img
+                        className="fileimg"
+                        src={`${backServer}/board/thumb/${boardFile.filepath}`}
+                      />
                       <span className="del-file-icon" onClick={deleteFile}>
                         <AiIcons.AiOutlineCloseCircle />
                       </span>

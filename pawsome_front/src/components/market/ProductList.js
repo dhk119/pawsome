@@ -197,7 +197,7 @@ const ProductItem = (props) => {
   const like = props.like;
   const setLike = props.setLike;
   const likePush = () => {
-    if (loginEmail === "test") {
+    if (loginEmail === "") {
       Swal.fire({
         title: "로그인 필요",
         text: "로그인 후 다시 시도해주세요",
