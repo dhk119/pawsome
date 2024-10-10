@@ -25,6 +25,7 @@ const Review = () => {
   const [totalCount, setTotalCount] = useState();
   const [starData, setStarData] = useState([]);
   const [total, setTotal] = useState(0);
+  const [starTotalCount, setStarTotalCount] = useState(0);
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   useEffect(() => {
     axios
@@ -44,10 +45,10 @@ const Review = () => {
     <div className="reviewTotal-wrap">
       <div className="star-wrap">
         <div className="star-wrap-title">
-          <div className="total_star">{total / 5}</div>
+          <div className="total_star">{total / starTotalCount}</div>
           <Rating
             name="half-rating-read"
-            value={total / 5}
+            value={total / starTotalCount}
             precision={0.1}
             readOnly
           />
@@ -57,6 +58,8 @@ const Review = () => {
           setStarData={setStarData}
           total={total}
           setTotal={setTotal}
+          starTotalCount={starTotalCount}
+          setStarTotalCount={setStarTotalCount}
         />
       </div>
       <div className="review-list">
