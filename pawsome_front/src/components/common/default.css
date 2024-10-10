@@ -54,7 +54,6 @@ a {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-width: 800px;
   position: relative;
   background-color: var(--gray8);
 }
@@ -69,7 +68,7 @@ a {
 
 .header > div {
   padding: 10px;
-  max-width: 1400px;
+  max-width: 1470px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -344,7 +343,7 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 50px;
+  margin: 5%;
   z-index: 1; /* 콘텐츠를 앞쪽에 표시 */
 }
 .weather-title {
