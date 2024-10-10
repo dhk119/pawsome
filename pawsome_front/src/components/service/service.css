@@ -261,7 +261,6 @@
 .HT-container {
   display: flex;
   justify-content: center;
-  min-height: 675px;
 }
 
 .service-wrap {
