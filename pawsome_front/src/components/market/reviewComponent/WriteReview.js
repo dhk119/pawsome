@@ -15,11 +15,8 @@ const WriteReview = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [reviewContent, setReviewContent] = useState("");
   const [reviewFile, setReviewFile] = useState([]);
-  /* 나중에 연결하면 주소로 번호 받기
   const params = useParams();
   const productNo = params.productNo;
-  */
-  const productNo = 94;
   const [product, setProduct] = useState({});
   //별점처리
   const [value, setValue] = useState(0);

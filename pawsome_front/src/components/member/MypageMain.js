@@ -38,7 +38,7 @@ const MypageMain = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [loginEmail]);
+  }, [loginEmail, backServer, memberLevel, memberNickname]);
 
   return (
     <div className="mypage-body">
