@@ -28,7 +28,7 @@ const ProductLike = () => {
           console.log(err);
         });
     }
-  }, [loginEmail, reqPage, backServer]);
+  }, [loginEmail, reqPage]);
 
   return (
     <div className="product-like-list">

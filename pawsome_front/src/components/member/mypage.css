@@ -585,7 +585,7 @@
   margin-bottom: 10px; /* 버튼과 상태 정보 사이 간격 추가 */
 }
 
-.cancelBtn {
+.buy-view-items .cancelBtn {
   display: flex;
   align-items: center;
   justify-content: center;
