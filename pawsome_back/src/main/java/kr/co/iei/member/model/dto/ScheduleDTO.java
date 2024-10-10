@@ -17,4 +17,5 @@ public class ScheduleDTO {
 	private String dayEnd; //null이면, start기준  1일치 일정
 	private String dayContent;
 	private String memberEmail;
+	private int petBirth;
 }

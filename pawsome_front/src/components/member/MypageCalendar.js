@@ -27,6 +27,7 @@ const MypageCalendar = () => {
     dayEnd: "",
     dayContent: "",
     memberEmail: loginEmail,
+    petBirth: 0,
   });
 
   useEffect(() => {
@@ -401,10 +402,18 @@ const MypageCalendar = () => {
                   {selectedSchedule.dayContent}
                 </p>
                 <div className="schedule-btns-wrap">
-                  <button onClick={() => setIsUpdateMode(true)}>수정</button>
-                  <button className="close-btn" onClick={deleteSchedule}>
-                    삭제
-                  </button>
+                  {selectedSchedule.petBirth == 0 ? (
+                    <>
+                      <button onClick={() => setIsUpdateMode(true)}>
+                        수정
+                      </button>
+                      <button className="close-btn" onClick={deleteSchedule}>
+                        삭제
+                      </button>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </>
             )}
