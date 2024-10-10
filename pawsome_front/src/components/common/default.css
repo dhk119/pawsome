@@ -395,8 +395,8 @@ a {
   color: var(--point1);
 }
 .market-all-btn {
-  margin-left: 1350px;
-  width: 100px;
+  margin-left: 77%;
+  width: 100%;
   text-align: center;
   padding: 5px 10px;
   border-radius: 5px;
