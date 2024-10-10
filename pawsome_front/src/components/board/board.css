@@ -34,16 +34,16 @@
 .list-board {
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: start;
+  /* display: flex;
+  justify-content: start; */
   width: 60%;
   min-height: 800px;
-  padding: 50px 30px;
+  /* padding: 50px 30px; */
 }
-.board-list-options {
-  width: 400px;
+/* .board-list-options {
+  width: 50%;
   margin-right: 400px;
-}
+} */
 .board-list-options > select {
   border: none;
   border-radius: 30px;
@@ -56,8 +56,20 @@
 /*글쓰기 전용 css*/
 .write-wrap {
   display: flex;
+  /* width: 100%; =>그냥 얘 없애니까 되던데요..?*/
   justify-content: space-between;
-  margin-right: 50px;
+  padding: 30px 20px;
+}
+.write-wrap > div {
+  width: 50%;
+}
+.write-wrap > div:first-child {
+  display: flex;
+  justify-content: start;
+}
+.write-wrap > div:last-child {
+  display: flex;
+  justify-content: end;
 }
 .write-wrap > div > a {
   border-radius: 30px;
@@ -78,9 +90,9 @@
   width: 100%;
 }
 
-.board-all-wrap > div {
+/* .board-all-wrap > div {
   padding: 30px 20px;
-}
+} */
 .list-list {
   border: 2px solid #ffa518;
   border-radius: 15px;
