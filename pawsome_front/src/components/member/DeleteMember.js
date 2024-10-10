@@ -18,9 +18,33 @@ const DeleteMember = () => {
 
   const deleteMember = () => {
     axios
-      .delete(`${backServer}/member/memberEmail/${loginEmail}`)
+      .delete(`${backServer}/member/memberEmail/${loginEmail}`, {
+        memberPw: memberPw,
+      })
       .then((res) => {
         console.log(res.data);
+        if (res.data == 1) {
+          delete axios.defaults.headers.common["Authorization"];
+          window.localStorage.removeItem("refreshToken");
+          Swal.fire(
+            "비밀번호 변경 완료",
+            "성공적으로 비밀번호를 변경하셨습니다.",
+            "success"
+          );
+          navigate(`${backServer}`);
+        } else if (res.data == 2) {
+          Swal.fire(
+            "비밀번호가 옳지 않습니다.",
+            "현재 비밀번호와 같지 않습니다.",
+            "error"
+          );
+        } else {
+          Swal.fire(
+            "비밀번호 변경 실패",
+            "잠시 후 다시 시도해주세요.",
+            "error"
+          );
+        }
       })
       .catch((err) => {
         console.error(err);

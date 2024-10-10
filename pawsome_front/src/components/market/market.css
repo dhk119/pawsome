@@ -328,7 +328,18 @@ td {
 .cart-wrap > .cart-btn-wrap {
   border-bottom: 3px solid #ffa518;
 }
-.cart-wrap > .cart-btn-wrap > button {
+.cart-wrap > .cart-btn-wrap > .cart-btn-wrap-flex {
+  display: flex;
+  justify-content: space-between;
+}
+.cart-wrap > .cart-btn-wrap > .cart-btn-wrap-flex > .deliveryFee {
+  line-height: 54px;
+  padding-left: 20px;
+  font-size: 18px;
+  font-family: ns-b;
+  color: #5799ff;
+}
+.cart-wrap > .cart-btn-wrap button {
   margin: 10px;
   border: 2px solid #ffa518;
   background-color: #fff;
@@ -412,6 +423,9 @@ td {
 .cart-pay-wrap > .content > .content-delivery-wrap {
   padding-bottom: 20px;
   border-bottom: 3px solid var(--gray6);
+}
+.cart-pay-wrap > .content > .content-delivery-wrap span {
+  font-size: 12px;
 }
 .cart-pay-wrap > .content > .pay-btn {
   display: flex;

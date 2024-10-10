@@ -32,57 +32,13 @@ const Weather = () => {
   const cityName = "Seoul"; // API 요청을 위한 도시 이름
   const apiKey = process.env.REACT_APP_WEATHER_KEY;
 
+  const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&lang=kr`;
+  const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&lang=kr`;
   useEffect(() => {
-    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&lang=kr`;
-    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&lang=kr`;
-
-    const updateVideoUrl = (mainWeather) => {
-      const currentHour = new Date().getHours();
-      if (currentHour >= 18 || currentHour < 6) {
-        // 저녁 시간에 다른 링크를 사용
-        setVideoUrl(
-          "https://videos.pexels.com/video-files/26690702/11987721_2560_1440_60fps.mp4"
-        );
-        return;
-      }
-      switch (mainWeather) {
-        case "Clear":
-          setVideoUrl(
-            "https://videos.pexels.com/video-files/2605326/2605326-uhd_2560_1440_30fps.mp4"
-          );
-          break;
-        case "Clouds":
-          setVideoUrl(
-            "https://videos.pexels.com/video-files/14117658/14117658-uhd_2560_1440_30fps.mp4"
-          );
-          break;
-        case "Rain":
-          setVideoUrl(
-            "https://videos.pexels.com/video-files/8549580/8549580-uhd_2560_1440_25fps.mp4"
-          );
-          break;
-        case "Snow":
-          setVideoUrl(
-            "https://videos.pexels.com/video-files/6620470/6620470-uhd_2732_1440_25fps.mp4"
-          );
-          break;
-        case "Thunderstorm":
-          setVideoUrl(
-            "https://videos.pexels.com/video-files/5908584/5908584-hd_1920_1080_25fps.mp4"
-          );
-          break;
-        case "Mist":
-          setVideoUrl(
-            "https://videos.pexels.com/video-files/28647807/12442307_1080_1920_30fps.mp4"
-          );
-          break;
-        default:
-          setVideoUrl("https://example.com/weather-videos/default.mp4");
-          break;
-      }
-    };
+    console.log(weatherUrl, forecastUrl, "111");
     Promise.all([axios.get(weatherUrl), axios.get(forecastUrl)])
       .then(([weatherResponse, forecastResponse]) => {
+        console.log("날씨 API 조회성공");
         setCurrentWeather(weatherResponse.data);
         groupForecastByDay(forecastResponse.data.list);
         getKoreanWeekday(forecastResponse.data.list);
@@ -90,12 +46,56 @@ const Weather = () => {
         updateVideoUrl(weatherResponse.data.weather[0].main);
       })
       .catch((error) => {
-        console.error("api 호출 에러:", error);
+        console.error(error);
         setError(error);
         setLoading(false);
       });
-  }, [cityName, apiKey]);
-
+  }, []);
+  const updateVideoUrl = (mainWeather) => {
+    const currentHour = new Date().getHours();
+    if (currentHour >= 18 || currentHour < 6) {
+      // 저녁 시간에 다른 링크를 사용
+      setVideoUrl(
+        "https://videos.pexels.com/video-files/26690702/11987721_2560_1440_60fps.mp4"
+      );
+      return;
+    }
+    switch (mainWeather) {
+      case "Clear":
+        setVideoUrl(
+          "https://videos.pexels.com/video-files/2605326/2605326-uhd_2560_1440_30fps.mp4"
+        );
+        break;
+      case "Clouds":
+        setVideoUrl(
+          "https://videos.pexels.com/video-files/14117658/14117658-uhd_2560_1440_30fps.mp4"
+        );
+        break;
+      case "Rain":
+        setVideoUrl(
+          "https://videos.pexels.com/video-files/8549580/8549580-uhd_2560_1440_25fps.mp4"
+        );
+        break;
+      case "Snow":
+        setVideoUrl(
+          "https://videos.pexels.com/video-files/6620470/6620470-uhd_2732_1440_25fps.mp4"
+        );
+        break;
+      case "Thunderstorm":
+        setVideoUrl(
+          "https://videos.pexels.com/video-files/5908584/5908584-hd_1920_1080_25fps.mp4"
+        );
+        break;
+      case "Mist":
+        setVideoUrl(
+          "https://videos.pexels.com/video-files/28647807/12442307_1080_1920_30fps.mp4"
+        );
+        break;
+      default:
+        setVideoUrl("https://example.com/weather-videos/default.mp4");
+        break;
+    }
+  };
   const getCurrentDate = () => {
     const today = new Date();
     const options = {

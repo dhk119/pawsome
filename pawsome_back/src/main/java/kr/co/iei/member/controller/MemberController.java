@@ -79,26 +79,35 @@ public class MemberController {
 	
 	// 회원탈퇴
 	@DeleteMapping(value = "/memberEmail/{memberEmail}")
-	public ResponseEntity<Integer> deleteMember(@PathVariable String memberEmail) {
+	public ResponseEntity<Integer> deleteMember(@PathVariable String memberEmail, @RequestBody String memberPw) {
+		System.out.println(memberPw);
+		System.out.println(memberEmail);
+		
 	    // 회원 정보 조회
 	    MemberDTO member = memberService.selectMember(memberEmail);
 	    
-	    if (member != null && member.getMemberProfile() != null) {
-	        // 기본 이미지가 아닌 업로드된 파일이면 삭제
-	        String profileImagePath = root + "/member/profile/" + member.getMemberProfile();
-	        if (!"member_img.png".equals(member.getMemberProfile())) {
-	            File file = new File(profileImagePath);
-	            if (file.exists()) {
-	                file.delete(); // 파일 삭제
-	            }
-	        }
+	    int check = memberService.checkPw(member.getMemberEmail(), memberPw); //1이면 맞는 비번, 0이면 틀린 비번
+	    
+	    System.out.println(check);
+	    
+	    if(check == 1) {
+	    	if (member != null && member.getMemberProfile() != null) {
+	    		// 기본 이미지가 아닌 업로드된 파일이면 삭제
+	    		String profileImagePath = root + "/member/profile/" + member.getMemberProfile();
+	    		if (!"member_img.png".equals(member.getMemberProfile())) {
+	    			File file = new File(profileImagePath);
+	    			if (file.exists()) {
+	    				file.delete(); // 파일 삭제
+	    			}
+	    		}
+	    	}
+	    	// 회원 정보 삭제
+	    	int result = memberService.deleteMember(memberEmail);
+	    	return ResponseEntity.ok(result);
+	    } else {
+	    	return ResponseEntity.ok(2);
 	    }
-
-	    // 회원 정보 삭제
-	    int result = memberService.deleteMember(memberEmail);
-	    return ResponseEntity.ok(result);
 	}
-
 	
 	// 로그인
 	@PostMapping(value = "/login")
@@ -477,6 +486,7 @@ public class MemberController {
 	// 일정 수정
 	@PostMapping(value = "/updateSchedule")
 	public ResponseEntity<Integer> updateSchedule(@RequestBody ScheduleDTO schedule) {
+		System.out.println(schedule);
 		int result = memberService.updateSchedule(schedule);
 		return ResponseEntity.ok(result);
 	}

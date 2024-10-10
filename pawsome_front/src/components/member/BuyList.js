@@ -38,7 +38,7 @@ const BuyList = () => {
           console.error(err);
         });
     }
-  }, [loginEmail, backServer]);
+  }, [loginEmail]);
 
   const groupByPayUid = (data) => {
     return data.reduce((acc, item) => {
@@ -134,7 +134,7 @@ const BuyList = () => {
                           onClick={(e) => {
                             e.stopPropagation();
                             navigate(
-                              `/market/main/productDetail/${item.product.productNo}/review`
+                              `/market/writeReview/${item.product.productNo}`
                             );
                           }}
                         >

@@ -44,7 +44,7 @@ const ProductDetail = () => {
   }, []);
   const navigate = useNavigate();
   const changeType = () => {
-    navigate(`/market/main/productList/${product.typeCategory}/all/1`);
+    navigate(`/market/main/productList/${product.typeCategory}/all`);
   };
   const changeMain = () => {
     navigate(

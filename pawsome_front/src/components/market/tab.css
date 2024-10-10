@@ -31,11 +31,11 @@
   align-items: center;
 }
 .review-detail > .review-content > .img-wrap {
-  width: 700px;
+  width: 500px;
 }
 .review-detail > .review-content > .img-wrap img {
-  width: 500px;
-  height: 500px;
+  width: 300px;
+  height: 300px;
 }
 .review-detail > .review-content > .text-wrap {
   width: 100%;
@@ -46,10 +46,10 @@
   overflow-x: hidden;
 }
 .review-detail > .review-content > .review-style {
-  width: 500px;
-  max-height: 460px;
+  width: 700px;
+  max-height: 260px;
   height: 460px;
-  line-height: 460px;
+  line-height: 260px;
   background-color: #fafafa;
   margin-left: 15px;
   margin-right: 15px;
