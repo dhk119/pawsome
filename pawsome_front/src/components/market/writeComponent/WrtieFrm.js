@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react";
 import QuillEditor from "../../utils/QuillEditor";
+import { useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { loginEmailState } from "../../utils/RecoilData";
+import axios from "axios";
 
 const WriteFrm = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const product = props.product;
   const qnaType = props.qnaType;
   const setQnaType = props.setQnaType;
   const qnaTitle = props.qnaTitle;
@@ -17,7 +21,21 @@ const WriteFrm = (props) => {
   const changeQnaType = (e) => {
     setQnaType(e.target.value);
   };
-  console.log(product);
+  const params = useParams();
+  const productNo = params.productNo;
+  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
+  const [product, setProduct] = useState({});
+  useEffect(() => {
+    axios
+      .get(`${backServer}/product/productDetail/${productNo}/${loginEmail}`)
+      .then((res) => {
+        console.log(res);
+        setProduct(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <>
       <div className="title">

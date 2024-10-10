@@ -234,7 +234,8 @@ const ProductItem = (props) => {
   return (
     <div className="product-wrap">
       <div className="product-thumb">
-        <div className="product-like" onClick={likePush}>
+        <div className="product-like heart" onClick={likePush}>
+          <div className="back"></div>
           {product.isLike == 1 ? <FaHeart /> : <FaRegHeart />}
         </div>
         <img
