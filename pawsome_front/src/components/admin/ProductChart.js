@@ -295,17 +295,21 @@ const ProductChart = () => {
                 <Bar dataKey="count" fill="#ffa518" onClick={viewBarData} />
               </BarChart>
               <div className="chart-reset-button">
-                <button
-                  className="admin-write-submit"
-                  type="button"
-                  onClick={() => {
-                    setChartData([]);
-                    setData([]);
-                    setViewBar(0);
-                  }}
-                >
-                  전체 데이터
-                </button>
+                {viewBar > 0 ? (
+                  <button
+                    className="admin-write-submit"
+                    type="button"
+                    onClick={() => {
+                      setChartData([]);
+                      setData([]);
+                      setViewBar(0);
+                    }}
+                  >
+                    전체 데이터
+                  </button>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="chart-total">
                 <p>{totalTitle}</p>

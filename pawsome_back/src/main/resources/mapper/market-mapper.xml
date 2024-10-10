@@ -55,7 +55,7 @@
 			<when test='option.equals("A")'>
 				<choose>
 					<when test="type.equals('all')">
-						product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price like '%'||#{keyword}||'%'
+						product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price =#{keyword}
 					</when>
 					<when test="type.equals('name')">
 						product_name like '%'||#{keyword}||'%'
@@ -64,14 +64,14 @@
 						main_category like '%'||#{keyword}||'%'
 					</when>
 					<when test="type.equals('price')">
-						product_price like '%'||#{keyword}||'%'
+						product_price=#{keyword}
 					</when>
 				</choose>
 			</when>
 			<otherwise>
 				<choose>
 					<when test="type.equals('all')">
-						(product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price like '%'||#{keyword}||'%')and product_show=#{option}
+						(product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price=#{keyword})and product_show=#{option}
 					</when>
 					<when test="type.equals('name')">
 						product_name like '%'||#{keyword}||'%' and product_show=#{option}
@@ -80,7 +80,7 @@
 						main_category like '%'||#{keyword}||'%' and product_show=#{option}
 					</when>
 					<when test="type.equals('price')">
-						product_price like '%'||#{keyword}||'%' and product_show=#{option}
+						product_price=#{keyword} and product_show=#{option}
 					</when>
 				</choose>
 			</otherwise>
@@ -92,7 +92,7 @@
 			<when test='option.equals("A")'>
 				<choose>
 					<when test="type.equals('all')">
-						product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price like '%'||#{keyword}||'%'
+						product_name like '%'||#{keyword}||'%' or main_category like '%'||#{keyword}||'%' or product_price=#{keyword}
 					</when>
 					<when test="type.equals('name')">
 						product_name like '%'||#{keyword}||'%'
@@ -101,7 +101,7 @@
 						main_category like '%'||#{keyword}||'%'
 					</when>
 					<when test="type.equals('price')">
-						product_price like '%'||#{keyword}||'%'
+						product_price =#{keyword}
 					</when>
 				</choose>
 			</when>
@@ -117,7 +117,7 @@
 						main_category like '%'||#{keyword}||'%' and product_show=#{option}
 					</when>
 					<when test="type.equals('price')">
-						product_price like '%'||#{keyword}||'%' and product_show=#{option}
+						product_price =#{keyword} and product_show=#{option}
 					</when>
 				</choose>
 			</otherwise>
