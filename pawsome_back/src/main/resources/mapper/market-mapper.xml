@@ -551,6 +551,9 @@
 	<update id="updatePayList">
 		update pay set total_price=total_price - #{cancelRequestAmount} where pay_uid=#{payUid}
 	</update>
+	<update id="updatePayPrice">
+		update pay set total_price=total_price + 3000 where pay_uid=#{payUid}
+	</update>
 <!-- 좋아요 -->
 	<delete id="deleteLike">
 		delete from product_like where product_no=#{product.productNo} and member_email=#{loginEmail}

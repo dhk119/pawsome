@@ -153,7 +153,7 @@ const BuyItem = (props) => {
                     setResult
                   );
                   //결제내역확인페이지로 이동
-                  navigate("/market/payment/payCancel");
+                  navigate("/mypage/buy-list");
                 } else {
                   //결제취소화면으로 이동
                   navigate("/market/payment/payCancel");

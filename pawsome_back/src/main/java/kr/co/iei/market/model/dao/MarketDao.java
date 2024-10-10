@@ -128,6 +128,8 @@ public interface MarketDao {
 	int insertLike(String loginEmail, ProductDTO product);
 
 	int updatePayList(RefundRequestDTO refund);
+	
+	int updatePayPrice(RefundRequestDTO refund);
 /*리뷰*/
 	int insertReview(ReviewDTO review);
 	
@@ -187,6 +189,7 @@ public interface MarketDao {
 	int searchMarketTotalCount(String searchKeyWord);
 
 	List selectMainMarketList();
+
 
 
 }

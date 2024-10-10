@@ -119,6 +119,10 @@ public class PayService {
 				if(result >0) {
 					//결제 총금액 변경
 					result = marketDao.updatePayList(refund);
+					PayDTO resultPay = marketDao.selectOnePay(refund.getPayUid());
+					if(resultPay.getTotalPrice() < 30000) {
+						result = marketDao.updatePayPrice(refund);
+					}
 				}
 			}else {
 				//해당 uid 구매내역 갯수 받아오기
@@ -187,8 +191,8 @@ public class PayService {
 			if(buyCount > 1) {
 				int totalAmount = pay.getTotalPrice() - refund.getCancelRequestAmount();
 				if(totalAmount < 30000) {
-					cancelAmount -= 3000; //배송비빼고 환불
 					refund.setCancelRequestAmount(cancelAmount);
+					cancelAmount -= 3000; //배송비빼고 금액을 결제 총금액에서 빼주기
 				}
 				System.out.println("부분취소 환불금액(부분) : "+cancelAmount);			
 			}else {
