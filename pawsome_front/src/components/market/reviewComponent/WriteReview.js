@@ -23,7 +23,7 @@ const WriteReview = () => {
 
   useEffect(() => {
     axios
-      .get(`${backServer}/product/productDetail/94/${loginEmail}`)
+      .get(`${backServer}/product/productDetail/${productNo}/${loginEmail}`)
       .then((res) => {
         console.log(res);
         setProduct(res.data);
