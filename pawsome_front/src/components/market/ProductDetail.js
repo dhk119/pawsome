@@ -29,6 +29,7 @@ const ProductDetail = () => {
   const [productPrice, setProductPrice] = useState(0);
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [like, setLike] = useState(false); //좋아요 관리
+  const [productDetail, setProductDetail] = useState();
 
   useEffect(() => {
     const url = loginEmail
@@ -41,6 +42,7 @@ const ProductDetail = () => {
         setProduct(res.data);
         setTotal(res.data.productPrice);
         setProductPrice(res.data.productPrice);
+        setProductDetail(res.data.productDetail);
       })
       .catch((err) => {
         console.log(err);
@@ -297,6 +299,7 @@ const ProductDetail = () => {
     }
   };
 
+  console.log(product);
   return (
     <section className="section productList-wrap">
       <div className="productDetail-wrap">
@@ -411,7 +414,10 @@ const ProductDetail = () => {
         </div>
         <div className="tab-content">
           <Routes>
-            <Route path="detail" element={<Detail />} />
+            <Route
+              path="detail"
+              element={<Detail productDetail={productDetail} />}
+            />
             <Route path="review" element={<Review />} />
             <Route path="qna" element={<Qna />} />
             <Route path="guide" element={<Guide />} />
