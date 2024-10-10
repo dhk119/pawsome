@@ -63,7 +63,18 @@ const MypageProfile = () => {
           />
         </div>
         <div className="member-name">{member.memberName}</div>
-        <div>{member.memberEmail}</div>
+        <div className="email-wrap">
+          <div>{member.memberEmail}</div>
+          <div>
+            {member.loginType === "kakao" ? (
+              <img src="/image/kakao_btn.png" />
+            ) : member.loginType === "naver" ? (
+              <img src="/image/naver_btn.png" />
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
         <div className="member-addr">
           <div>{member.memberAddr2}</div>
           <div>{member.memberAddr3}</div>

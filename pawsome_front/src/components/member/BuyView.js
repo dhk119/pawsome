@@ -3,13 +3,15 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { TiDelete } from "react-icons/ti";
+import { cancelPay } from "./../market/refund";
 
 const BuyView = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [buyList, setBuyList] = useState([]);
   const { payUid } = useParams();
   const navigate = useNavigate();
-  
+  const [result, setResult] = useState(-1);
+
   useEffect(() => {
     if (payUid) {
       axios
@@ -22,29 +24,9 @@ const BuyView = () => {
           console.error(err);
         });
     }
-  }, [payUid, backServer]);
+  }, [payUid, backServer, result]);
 
   const firstBuyInfo = buyList.length > 0 ? buyList[0] : null;
-
-  // 결제 취소 함수
-  const cancelPay = (buyNo, productNo, payUid, amount) => {
-    axios
-      .post(`${backServer}/pay/cancel`, {
-        buyNo,
-        productNo, // 전체 취소는 0으로 처리
-        payUid,
-        amount, // 취소할 금액
-      })
-      .then((res) => {
-        console.log(res.data);
-        Swal.fire("취소 완료", "결제가 성공적으로 취소되었습니다.", "success");
-        navigate("/market/payment/payCancel");
-      })
-      .catch((err) => {
-        console.error(err);
-        Swal.fire("오류", "결제 취소 중 오류가 발생했습니다.", "error");
-      });
-  };
 
   return (
     <div className="buy-view-wrap">
@@ -76,13 +58,12 @@ const BuyView = () => {
                     firstBuyInfo.buyNo, // 전체 취소 시 결제 시퀀스 번호
                     0, // 상품 번호는 0으로 전체 취소
                     firstBuyInfo.payUid, // 주문 번호
-                    firstBuyInfo.pay.totalPrice // 총 결제 금액
+                    firstBuyInfo.pay.totalPrice, // 총 결제 금액
+                    setResult
                   );
-                   //결제내역확인페이지로 이동
-                   navigate("/market/payment/payCancel");
+                  navigate("/mypage/buy-list");
                 } else {
-                  //결제취소화면으로 이동
-                  navigate("/market/payment/payCancel");
+                  navigate("/mypage/buy-list");
                 }
               });
             }}
@@ -128,7 +109,7 @@ const BuyView = () => {
               {buy.buyState === 1 && (
                 <div>
                   <button
-                  className="delete-buy-list"
+                    className="delete-buy-list"
                     onClick={() => {
                       Swal.fire({
                         title: "결제를 취소하시겠습니까?",
@@ -144,13 +125,14 @@ const BuyView = () => {
                             buy.buyNo, // 결제 시퀀스 번호
                             buy.product.productNo, // 부분 취소를 위한 상품 번호
                             buy.payUid, // 주문 번호
-                            buy.buyCount * buy.product.productPrice // 부분 결제 취소 금액
+                            buy.buyCount * buy.product.productPrice, // 부분 결제 취소 금액
+                            setResult
                           );
                           //결제내역확인페이지로 이동
-                          navigate("/market/payment/payCancel");
+                          navigate("/mypage/buy-list");
                         } else {
                           //결제취소화면으로 이동Z
-                          navigate("/market/payment/payCancel");
+                          navigate("/mypage/buy-list");
                         }
                       });
                     }}

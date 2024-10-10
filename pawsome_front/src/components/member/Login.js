@@ -97,7 +97,7 @@ const Login = () => {
               id="memberEmail"
               value={member.memberEmail}
               onChange={changeMember}
-              onKeyPress={handleKeyPress} // 엔터 키 감지 추가
+              onKeyPress={handleKeyPress}
               placeholder="이메일"
             />
             <input
@@ -106,7 +106,7 @@ const Login = () => {
               id="memberPw"
               value={member.memberPw}
               onChange={changeMember}
-              onKeyPress={handleKeyPress} // 엔터 키 감지 추가
+              onKeyPress={handleKeyPress}
               placeholder="비밀번호"
             />
             <button className="submit" type="submit">
