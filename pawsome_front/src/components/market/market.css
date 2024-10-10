@@ -138,8 +138,6 @@
   position: relative;
 }
 .product-wrap > .product-thumb > img {
-  position: absolute;
-  object-fit: cover;
   width: 100%;
   align-self: center;
 }
@@ -152,8 +150,9 @@
 .product-wrap > .product-info > .product-name {
   border-bottom: 1px solid #ccc;
   padding-bottom: 5px;
+  font-size: 17px;
+  height: 80px;
   overflow-wrap: break-word; /*영단어 줄바꿈*/
-  font-size: 20px;
 }
 .product-wrap > .product-thumb > .product-like {
   text-align: right;

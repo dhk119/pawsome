@@ -255,7 +255,9 @@ const ProductItem = (props) => {
         }}
       >
         <div className="product-name">{product.productName}</div>
-        <div className="product-price">{product.productPrice}</div>
+        <div className="product-price">
+          {product.productPrice.toLocaleString("ko-KR")}원
+        </div>
       </div>
     </div>
   );
