@@ -13,7 +13,7 @@ const Qna = () => {
   const productNo = params.productNo;
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
-  const [qnaList, setQnaList] = useState(null);
+  const [qnaList, setQnaList] = useState([]);
   const [qnaAnswer, setQnaAnswer] = useState([]);
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
@@ -25,8 +25,7 @@ const Qna = () => {
     axios
       .get(`${backServer}/product/qnaList/${productNo}/${reqPage}`)
       .then((res) => {
-        const arr = qnaList.concat(res.data.list);
-        setQnaList(arr);
+        setQnaList(res.data.list);
         setPi(res.data.pi);
         setTotalCount(res.data.totalCount);
       })
@@ -64,7 +63,7 @@ const Qna = () => {
         </button>
       </div>
       <div className="list-tbl-wrap">
-        {qnaList ? (
+        {qnaList != "" ? (
           <>
             <table className="list-tbl">
               <thead>
@@ -296,7 +295,7 @@ const QnaItem = (props) => {
             <td></td>
             <td></td>
             <td>답변</td>
-            <td colSpan={3} className="content-answer-box">
+            <td colSpan={2} className="content-answer-box">
               {qna.qnaAnswerContent && (
                 <div
                   dangerouslySetInnerHTML={{
@@ -304,6 +303,8 @@ const QnaItem = (props) => {
                   }}
                 />
               )}
+            </td>
+            <td className="content-answer-date">
               <div>{qna.qnaAnswerRegDate}</div>
             </td>
             {memberNickname === "관리자" ? (

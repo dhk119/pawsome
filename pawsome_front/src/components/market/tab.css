@@ -140,6 +140,10 @@ td {
 }
 .list-tbl .content-answer-box {
   background-color: var(--gray7);
+  padding: 20px;
+}
+.list-tbl .content-answer-date {
+  background-color: var(--gray7);
 }
 /*page-navi*/
 .list-tbl-wrap > ul {

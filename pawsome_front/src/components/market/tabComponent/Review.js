@@ -19,7 +19,7 @@ const Review = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const productNo = params.productNo;
-  const [reviewList, setReviewList] = useState(null);
+  const [reviewList, setReviewList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
   const [totalCount, setTotalCount] = useState();
@@ -31,8 +31,7 @@ const Review = () => {
     axios
       .get(`${backServer}/product/selectReviewList/${productNo}/${reqPage}`)
       .then((res) => {
-        const arr = reviewList.concat(res.data.list);
-        setReviewList(arr);
+        setReviewList(res.data.list);
         setPi(res.data.pi);
         setTotalCount(res.data.totalCount);
       })
@@ -44,9 +43,10 @@ const Review = () => {
     starTotalCount > 0 ? Math.ceil((total / starTotalCount) * 10) / 10 : 0;
 
   console.log("Average Rating:", averageRating); // 값 확인
+  console.log(reviewList);
   return (
     <div className="reviewTotal-wrap">
-      {reviewList ? (
+      {reviewList != "" ? (
         <>
           <div className="star-wrap">
             <div className="star-wrap-title">

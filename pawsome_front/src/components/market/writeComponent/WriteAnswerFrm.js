@@ -1,12 +1,31 @@
 import DOMPurify from "dompurify";
 import QuillEditor from "./../../utils/QuillEditor";
+import { useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { loginEmailState } from "../../utils/RecoilData";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const WriteAnswerFrm = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
-  const product = props.product;
   const qna = props.qna;
   const qnaAnswerContent = props.qnaAnswerContent;
   const setQnaAnswerContent = props.setQnaAnswerContent;
+  const params = useParams();
+  const productNo = params.productNo;
+  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
+  const [product, setProduct] = useState({});
+  useEffect(() => {
+    axios
+      .get(`${backServer}/product/productDetail/${productNo}/${loginEmail}`)
+      .then((res) => {
+        console.log(res);
+        setProduct(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <>
       <div className="title">
