@@ -94,8 +94,8 @@
 		update board set
 			board_tag = #{boardTag},
 			board_title = #{boardTitle},
-			board_content = #{boardContent},
-			board_thumb = #{boardThumb}
+			board_content = #{boardContent}
+			<if test="boardThumb != null">,board_thumb = #{boardThumb}</if>
 		where board_no = #{boardNo}
 	</update>
 	<select id="selectBoardFile" resultType="boardFile">

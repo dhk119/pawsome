@@ -123,6 +123,7 @@ const BoardItem = (props) => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const board = props.board;
   const navigate = useNavigate();
+  console.log(board.boardThumb);
   return (
     <li
       className="posting-item"

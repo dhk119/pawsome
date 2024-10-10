@@ -84,6 +84,7 @@ public class BoardService {
 	@Transactional
 	public List<BoardFileDTO> updateBoard(BoardDTO board, List<BoardFileDTO> boardFileList) {
 		int result = boardDao.updateBoard(board);
+		System.out.println("board"+ board.getBoardThumb());
 		if(result>0) {
 			List<BoardFileDTO> delFileList = new ArrayList<BoardFileDTO>();
 			if(board.getDelBoardFileNo() != null) {
@@ -183,7 +184,6 @@ public class BoardService {
 
 	@Transactional
 	public int insertReReply(ReplyDTO reply) {
-		System.out.println("reply : "+reply);
 		int result = boardDao.insertReReply(reply);
 		return result;
 	}
@@ -202,7 +202,6 @@ public class BoardService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("pi", pi);
-		System.out.println(map);
 		return map;
 	}
 
