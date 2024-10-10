@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../write.css";
 import WriteFrm from "./WrtieFrm";
 import { useRecoilState } from "recoil";
-import { memberNicknameState } from "../../utils/RecoilData";
+import { loginEmailState, memberNicknameState } from "../../utils/RecoilData";
 import Swal from "sweetalert2";
 
 const WriteQna = () => {
@@ -13,6 +13,7 @@ const WriteQna = () => {
   const navigate = useNavigate();
   const [memberNickname, setMemberNickname] =
     useRecoilState(memberNicknameState);
+  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const params = useParams(); //주소창에 데이터 가져오기
   const [qnaType, setQnaType] = useState(1);
   const [qnaTitle, setQnaTitle] = useState("");
@@ -25,7 +26,7 @@ const WriteQna = () => {
   const [product, setProduct] = useState({});
   useEffect(() => {
     axios
-      .get(`${backServer}/product/productDetail/${productNo}`)
+      .get(`${backServer}/product/productDetail/${productNo}/${loginEmail}`)
       .then((res) => {
         console.log(res);
         setProduct(res.data);

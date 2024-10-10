@@ -4,18 +4,6 @@ import * as IoIcons from "react-icons/io";
 
 export const SidebarData = [
   {
-    title: "다국어",
-    path: "#",
-    icons: <AiIcons.AiOutlineTranslation />,
-    cName: "nav-text",
-    sub: [
-      {
-        title: "",
-        path: "",
-      },
-    ],
-  },
-  {
     title: "커뮤니티",
     path: "#",
     icons: <AiIcons.AiOutlineNotification />,
@@ -24,10 +12,6 @@ export const SidebarData = [
       {
         title: "자유 게시판",
         path: "/board/list",
-      },
-      {
-        title: "오산완",
-        path: "#",
       },
     ],
   },
@@ -96,6 +80,18 @@ export const SidebarData = [
       {
         title: "건강체크",
         path: "/service/healthTest",
+      },
+    ],
+  },
+  {
+    title: "기타",
+    path: "#",
+    icons: <AiIcons.AiOutlineGlobal />,
+    cName: "nav-text",
+    sub: [
+      {
+        title: "문의사항",
+        path: "/inquiry/list",
       },
     ],
   },

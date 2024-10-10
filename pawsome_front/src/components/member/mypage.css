@@ -66,6 +66,21 @@
   padding: 15px;
 }
 
+.email-wrap {
+  height: 30px;
+  line-height: 30px;
+  overflow: hidden;
+}
+.email-wrap div {
+  float: left;
+}
+.email-wrap img {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
 .profile-menu li:hover {
   background-color: var(--gray7);
 }
@@ -570,7 +585,7 @@
   margin-bottom: 10px; /* 버튼과 상태 정보 사이 간격 추가 */
 }
 
-.cancelBtn {
+.buy-view-items .cancelBtn {
   display: flex;
   align-items: center;
   justify-content: center;

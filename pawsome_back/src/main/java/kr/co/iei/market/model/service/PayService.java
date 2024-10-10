@@ -126,8 +126,8 @@ public class PayService {
 				//해당 uid 결제상태 전체 변경
 				result = marketDao.updateBuyState(refund.getPayUid());
 				if(countbuyNo == result) {
-					//해당 uid 결제상태가 전부 변경됐으면 성공
-					result = 1;
+					//해당 uid 결제상태가 전부 변경됐으면 금액 바꾸고 성공
+					result = marketDao.updatePayList(refund);
 				}else {
 					result = 0;
 				}
