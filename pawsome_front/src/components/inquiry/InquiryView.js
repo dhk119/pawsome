@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { isLoginState, loginEmailState } from "../utils/RecoilData";
+import {
+  isLoginState,
+  loginEmailState,
+  memberLevelState,
+} from "../utils/RecoilData";
 import axios from "axios";
 import DOMPurify from "dompurify";
 import Swal from "sweetalert2";
@@ -10,6 +19,12 @@ const InquiryView = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const inquiryNo = params.inquiryNo;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [reqPage, setReqPage] = useState(Number(searchParams.get("reqPage")));
+  const [type, setType] = useState(searchParams.get("type"));
+  const [keyword, setKeyword] = useState(searchParams.get("keyword"));
+  const [option, setOption] = useState(Number(searchParams.get("option")));
+  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
   const [inquiry, setInquiry] = useState({ inquiryCommentList: [] });
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const isLogin = useRecoilValue(isLoginState);
@@ -153,6 +168,17 @@ const InquiryView = () => {
               </Link>
             </div>
           </div>
+        ) : memberLevel === 1 ? (
+          <div className="admin-button-zone">
+            <button
+              id="admin-delete"
+              className="admin-write-undo"
+              type="button"
+              onClick={deleteInquiry}
+            >
+              삭제
+            </button>
+          </div>
         ) : (
           ""
         )}
@@ -160,7 +186,8 @@ const InquiryView = () => {
       <div className="inquiry-comment">
         <div className="inquiry-comment-content-wrap">
           <div className="inquiry-sub-title">댓글</div>
-          {isLogin ? (
+          {isLogin &&
+          (loginEmail === inquiry.memberEmail || memberLevel === 1) ? (
             <div className="inquiry-comment-input">
               <div className="inquiry-comment-left" id="inquiry-input-email">
                 <p>{loginEmail}</p>
@@ -309,7 +336,7 @@ const InquiryView = () => {
                                   type="button"
                                   onClick={finalUpdateInquiryComment}
                                 >
-                                  수정
+                                  수정완료
                                 </button>
                               </div>
                               <button
@@ -318,7 +345,7 @@ const InquiryView = () => {
                                 type="button"
                                 onClick={undoUpdateInquiryComment}
                               >
-                                취소
+                                수정취소
                               </button>
                             </div>
                           </div>
@@ -341,10 +368,16 @@ const InquiryView = () => {
           className="admin-write-submit"
           type="button"
           onClick={() => {
-            navigate("/inquiry/list");
+            if (keyword) {
+              navigate(
+                `/inquiry/search?reqPage=${reqPage}&type=${type}&keyword=${keyword}&option=${option}`
+              );
+            } else {
+              navigate(`/inquiry/search?reqPage=${reqPage}&option=${option}`);
+            }
           }}
         >
-          문의목록
+          이전으로
         </button>
       </div>
     </section>

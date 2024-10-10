@@ -195,4 +195,24 @@ public class AdminController {
 		List<ChartData> list=adminService.barChartIncome(barKey, buyState);
 		return ResponseEntity.ok(list);
 	}
+	@GetMapping(value = "/boardList/{reqPage}")
+	public ResponseEntity<Map> boardList(@PathVariable int reqPage){
+		Map map=adminService.selectBoardList(reqPage);
+		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/searchBoard/{reqPage}/{type}/{keyword}/{option}")
+	public ResponseEntity<Map> searchBoard(@PathVariable int reqPage, @PathVariable String type, @PathVariable String keyword, @PathVariable int option){
+		Map map=adminService.searchBoardList(reqPage, type, keyword, option);
+		return ResponseEntity.ok(map);
+	}
+	@GetMapping(value = "/searchBoard/{reqPage}/{option}")
+	public ResponseEntity<Map> searchBoard(@PathVariable int reqPage, @PathVariable int option){
+		Map map=adminService.searchBoardList(reqPage, option);
+		return ResponseEntity.ok(map);
+	}
+	@DeleteMapping(value = "/deleteBoard/{boardNo}")
+	public ResponseEntity<Integer> deleteBoard(@PathVariable int boardNo){
+		int result=adminService.deleteBoard(boardNo);
+		return ResponseEntity.ok(result);
+	}
 }

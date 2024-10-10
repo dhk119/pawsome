@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { isLoginState } from "../utils/RecoilData";
 import PageNavi from "../utils/PageNavi";
@@ -8,8 +8,8 @@ import PageNavi from "../utils/PageNavi";
 const InquiryList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
-  const [inquiryList, setInquiryList] = useState([]);
   const [reqPage, setReqPage] = useState(1);
+  const [inquiryList, setInquiryList] = useState([]);
   const [pi, setPi] = useState({});
   const isLogin = useRecoilValue(isLoginState);
   const [type, setType] = useState("all");
@@ -110,7 +110,9 @@ const InquiryList = () => {
               <tr
                 key={"inquiry" + i}
                 onClick={() => {
-                  navigate(`/inquiry/view/${inquiry.inquiryNo}`);
+                  navigate(
+                    `/inquiry/view/${inquiry.inquiryNo}?reqPage=${reqPage}`
+                  );
                 }}
               >
                 <td>{inquiry.inquiryNo}</td>
