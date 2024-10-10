@@ -19,7 +19,7 @@ const Review = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const params = useParams();
   const productNo = params.productNo;
-  const [reviewList, setReviewList] = useState([]);
+  const [reviewList, setReviewList] = useState(null);
   const [reqPage, setReqPage] = useState(1);
   const [pi, setPi] = useState({});
   const [totalCount, setTotalCount] = useState();
@@ -31,8 +31,8 @@ const Review = () => {
     axios
       .get(`${backServer}/product/selectReviewList/${productNo}/${reqPage}`)
       .then((res) => {
-        // console.log(res);
-        setReviewList(res.data.list);
+        const arr = reviewList.concat(res.data.list);
+        setReviewList(arr);
         setPi(res.data.pi);
         setTotalCount(res.data.totalCount);
       })
@@ -46,33 +46,51 @@ const Review = () => {
   console.log("Average Rating:", averageRating); // 값 확인
   return (
     <div className="reviewTotal-wrap">
-      <div className="star-wrap">
-        <div className="star-wrap-title">
-          <div className="total_star">{averageRating}</div>
-          <Rating
-            name="half-rating-read"
-            value={averageRating}
-            precision={0.1}
-            readOnly
-          />
+      {reviewList ? (
+        <>
+          <div className="star-wrap">
+            <div className="star-wrap-title">
+              <div className="total_star">{averageRating}</div>
+              <Rating
+                name="half-rating-read"
+                value={averageRating}
+                precision={0.1}
+                readOnly
+              />
+            </div>
+            <StarAvr
+              starData={starData}
+              setStarData={setStarData}
+              total={total}
+              setTotal={setTotal}
+              starTotalCount={starTotalCount}
+              setStarTotalCount={setStarTotalCount}
+            />
+          </div>
+          <div className="review-list">
+            {reviewList.map((review, i) => {
+              return <ReviewItem key={"review-" + i} review={review} />;
+            })}
+          </div>
+          <div className="pagenavi">
+            <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+          </div>
+        </>
+      ) : (
+        <div className="preview-reply">
+          <div>
+            <img src="/image/noreplyimg.png" />
+          </div>
+          <div>
+            <span style={{ color: "#ccc", fontWeight: "bold" }}>
+              아직 리뷰가 없어요!
+            </span>
+          </div>
+          <div>
+            <span style={{ color: "#ccc" }}>첫 리뷰를 작성해주세요</span>
+          </div>
         </div>
-        <StarAvr
-          starData={starData}
-          setStarData={setStarData}
-          total={total}
-          setTotal={setTotal}
-          starTotalCount={starTotalCount}
-          setStarTotalCount={setStarTotalCount}
-        />
-      </div>
-      <div className="review-list">
-        {reviewList.map((review, i) => {
-          return <ReviewItem key={"review-" + i} review={review} />;
-        })}
-      </div>
-      <div className="pagenavi">
-        <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
-      </div>
+      )}
     </div>
   );
 };

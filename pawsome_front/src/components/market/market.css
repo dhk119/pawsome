@@ -138,6 +138,8 @@
   position: relative;
 }
 .product-wrap > .product-thumb > img {
+  position: absolute;
+  object-fit: cover;
   width: 100%;
   align-self: center;
 }
@@ -577,5 +579,9 @@ td {
   width: 100%;
 }
 .payment-success > .text {
+  text-align: center;
+}
+
+.tab-content > .text-wrap {
   text-align: center;
 }
