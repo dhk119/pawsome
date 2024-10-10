@@ -18,6 +18,7 @@ const videoIds = [
   "U8QR08WPTLU",
   "53YcytMbSbg",
   "qwhFQYY4FWs",
+  "92R1rQH16Ho",
 
   // 필요에 따라 더 많은 비디오 ID를 추가할 수 있습니다
 ];
