@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 
 class CancelPay {
   cancelPay = (buyNo, productNo, payUid, cancelRequestAmount, setResult) => {
+    console.log("test");
+    console.log(buyNo, productNo, payUid, cancelRequestAmount, setResult);
     const backServer = process.env.REACT_APP_BACK_SERVER;
     //부분취소
     axios({
