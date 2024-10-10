@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   justify-content: center;
   position: relative;
   overflow: hidden;
-  width: 90%;
+  width: 95%;
   margin-right: 20px;
   height: 550px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
