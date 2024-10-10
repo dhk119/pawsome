@@ -121,20 +121,35 @@ const BoardList = () => {
             <tbody id="admin-member-list-body">
               {boardList.map((board, i) => {
                 const deleteBoard = () => {
-                  const boardNo = board.boardNo;
-                  axios
-                    .delete(`${backServer}/admin/deleteBoard/${boardNo}`)
-                    .then((res) => {
-                      if (res.data > 0) {
-                        setDel(del ? false : true);
-                        Swal.fire({
-                          text: "성공적으로 삭제되었습니다",
-                          icon: "success",
-                          iconColor: "var(--main1)",
-                          confirmButtonColor: "var(--point1)",
+                  Swal.fire({
+                    text: "게시물을 삭제하시겠습니까?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonText: "삭제",
+                    cancelButtonText: "취소",
+                    confirmButtonColor: "var(--point1)",
+                    cancelButtonColor: "var(--main1)",
+                    iconColor: "var(--main2)",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      const boardNo = board.boardNo;
+                      axios
+                        .delete(`${backServer}/admin/deleteBoard/${boardNo}`)
+                        .then((res) => {
+                          if (res.data > 0) {
+                            setDel(del ? false : true);
+                            Swal.fire({
+                              text: "성공적으로 삭제되었습니다",
+                              icon: "success",
+                              iconColor: "var(--main1)",
+                              confirmButtonColor: "var(--point1)",
+                            });
+                          }
                         });
-                      }
-                    });
+                    } else {
+                      navigate(`/admin/boardList`);
+                    }
+                  });
                 };
                 return (
                   <tr key={"board" + i}>

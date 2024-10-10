@@ -680,3 +680,9 @@ tspan {
   font-weight: bold;
   border: none;
 }
+.chart-total {
+  text-align: center;
+  color: var(--point1);
+  margin-top: 100px;
+  font-weight: bold;
+}
