@@ -679,7 +679,7 @@
         JOIN product p ON b.product_no = p.product_no
         JOIN pay pay ON b.pay_uid = pay.pay_uid
         WHERE b.member_email = #{memberEmail}
-        order by b.pay_uid desc
+        order by b.buy_no desc
     </select>
     
     <select id="selectOneBuy" resultMap="buyListMap">

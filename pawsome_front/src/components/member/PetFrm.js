@@ -15,6 +15,7 @@ const PetFrm = ({ pet, setPet }) => {
 
   const petImgRef = useRef(null);
   const [petImgPreview, setPetImgPreview] = useState(null);
+  const [originalPetProfile, setOriginalPetProfile] = useState(null);
 
   // 강아지 및 고양이 품종 목록
   const breeds = {
@@ -81,8 +82,12 @@ const PetFrm = ({ pet, setPet }) => {
   // 사진 미리보기 및 초기 이미지 설정
   useEffect(() => {
     if (pet.petProfile && typeof pet.petProfile === "string") {
-
-      setPetImgPreview(`${backServer}/member/pet/${pet.petProfile}`);
+      // pet.petProfile에 이미 서버 경로가 포함된 경우 다시 붙이지 않도록 확인
+      if (pet.petProfile.startsWith("http")) {
+        setPetImgPreview(pet.petProfile);
+      } else {
+        setPetImgPreview(`${backServer}/member/pet/${pet.petProfile}`);
+      }
     } else if (pet.petProfile instanceof File) {
       // 새로 업로드한 파일인 경우
       const reader = new FileReader();
@@ -110,7 +115,12 @@ const PetFrm = ({ pet, setPet }) => {
         setPetImgPreview(reader.result);
       };
     } else {
-      setPetImgPreview("/images/default-pet.png");
+      // 파일 선택 취소 시 기존 이미지로 돌아감
+      setPetImgPreview(originalPetProfile);
+      setPet((prevPet) => ({
+        ...prevPet,
+        petProfile: originalPetProfile, // 기존 프로필 이미지로 되돌림
+      }));
     }
   };
 
@@ -260,7 +270,7 @@ const PetFrm = ({ pet, setPet }) => {
       <div className="pet-input">
         <label htmlFor="petWeight">몸무게</label>
         <input
-          type="text"
+          type="number"
           id="petWeight"
           name="petWeight"
           value={pet.petWeight || ""}
