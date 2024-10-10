@@ -34,7 +34,7 @@ const InquiryFrm = (props) => {
                 <th>
                   <div>타입</div>
                 </th>
-                {inquiryType !== 1 && inquiryType !== 2 ? (
+                {inquiryType !== 1 && inquiryType !== 2 && inquiryType !== 3 ? (
                   <>
                     <td className="admin-radio-td">
                       <label htmlFor="account">계정 관련</label>

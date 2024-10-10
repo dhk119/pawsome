@@ -53,6 +53,7 @@ const ProductFrm = (props) => {
               onClick={() => {
                 thumbnailRef.current.click();
               }}
+              className="regist-img-width"
             ></img>
           ) : (
             <img
