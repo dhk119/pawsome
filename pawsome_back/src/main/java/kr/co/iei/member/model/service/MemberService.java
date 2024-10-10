@@ -156,7 +156,9 @@ public class MemberService {
 	            pet.getPetBirth(),
 	            null,
 	            pet.getPetBreed() + " "+ pet.getPetName() + "의 생일입니다.",
-	            member.getMemberEmail());
+	            member.getMemberEmail(),
+	            1
+	            );
 	        
 	        scheduleList.add(petSchedule);
 	    }
