@@ -481,10 +481,13 @@ const HealthTest = () => {
       const link = document.createElement("a");
       document.body.appendChild(link);
       link.href = canvas.toDataURL("image/png");
-      link.download = "HealthTest.png"; // 다운로드 이미지 파일 이름
+      link.download = "HealthTest.png";
       link.click();
       document.body.removeChild(link);
     });
+  };
+  const refresh = () => {
+    window.location.href = "/service/healthTest";
   };
   return (
     <>
@@ -892,6 +895,9 @@ const HealthTest = () => {
                 <div className="lastBtn-box">
                   <button className="ps-btn2" onClick={onClickDownloadButton}>
                     사진으로 저장하기
+                  </button>
+                  <button className="ps-btn2" onClick={refresh}>
+                    메인으로 돌아가기
                   </button>
                   {isLogin ? (
                     <div>

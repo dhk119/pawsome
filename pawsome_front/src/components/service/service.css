@@ -261,7 +261,6 @@
 .HT-container {
   display: flex;
   justify-content: center;
-  min-height: 675px;
 }
 
 .service-wrap {
@@ -479,7 +478,7 @@
 .lastBtn-box {
   display: flex;
   justify-content: center;
-  width: 500px;
+  width: 700px;
   margin: 0 auto;
 }
 

@@ -102,7 +102,6 @@ const HealthTestRecord = () => {
       .get(`${backServer}/pet/petList/${memberEmail}`)
       .then((res) => {
         setSessionPets(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -114,7 +113,6 @@ const HealthTestRecord = () => {
       axios
         .get(`${backServer}/pet/healthResult/${selectedPetNo}`)
         .then((res) => {
-          console.log(res.data);
           if (!res.data || Object.keys(res.data).length === 0) {
             // 기록이 없을 경우 알림 띄우기
             return Swal.fire({
@@ -206,6 +204,14 @@ const HealthTestRecord = () => {
     name: healthLabels[key],
     score: finalScores[key],
   }));
+  const close = () => {
+    setSelectedPet(null); // 선택한 반려동물 초기화
+    setSelectedPetNo(null); // 선택한 반려동물 번호 초기화
+    setPetSelectComplete(false); // 선택 완료 상태 초기화
+  };
+  const newTest = () => {
+    navigate("/service/healthTest");
+  };
   return (
     <div>
       <div className="HT-container">
@@ -356,6 +362,12 @@ const HealthTestRecord = () => {
               </div>
               <button className="ps-btn2" onClick={onClickDownloadButton}>
                 사진으로 저장하기
+              </button>
+              <button className="ps-btn2" onClick={close}>
+                다른 반려동물 선택
+              </button>
+              <button className="ps-btn2" onClick={newTest}>
+                건강검진 다시하기
               </button>
             </div>
           )}
