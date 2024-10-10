@@ -245,6 +245,20 @@ const HealthTestRecord = () => {
                 </option>
               ))}
             </select>
+            <h3>
+              기록이 없다면 먼저 테스트를 진행해주세요.
+              <button className="map-search-btn">
+                <Link to="/service/healthTest" style={{ color: "#5799ff" }}>
+                  테스트 진행하러가기
+                </Link>
+              </button>
+            </h3>
+            <div>
+              <img
+                src="/image/service/HealthTest/healthMain2.png"
+                style={{ width: "800px", marginTop: "20px" }}
+              />
+            </div>
           </div>
         ) : (
           <div className="service-wrap">

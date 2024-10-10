@@ -142,9 +142,10 @@ const BoardFrm = (props) => {
                 지도를 마우스로 클릭하면 선 그리기가 시작되고 오른쪽 마우스를
                 클릭하면 선 그리기가 종료됩니다
               </span>
-              <br></br>
-              <span>
-                * 산책코스를 그려 지도를 캡쳐 후 이미지를 첨부해주세요! *
+              <br />
+              <span>산책코스를 그려 지도를 캡쳐 후 이미지를 첨부해주세요!</span>
+              <span style={{ fontSize: "12px" }}>
+                * 캡쳐하는법 window키+ctrl+s를 누르고 드래그 *
               </span>
             </div>
           )}
