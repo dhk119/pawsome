@@ -209,7 +209,9 @@ public class MemberService {
 
 	public List selectBuyList(String memberEmail) {
 		System.out.println(memberEmail);
-		List<BuyListDTO> buyList = marketDao.selectBuyList(memberEmail);
+		MemberDTO member = memberDao.selectOneMember(memberEmail);
+		System.out.println(member.getMemberNickname());
+		List<BuyListDTO> buyList = marketDao.selectBuyList(memberEmail, member.getMemberNickname());
 		System.out.println(buyList);
 		return buyList;
 	}

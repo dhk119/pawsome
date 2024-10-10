@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { loginEmailState } from "../utils/RecoilData";
+import {
+  loginEmailState,
+  memberLevelState,
+  memberNicknameState,
+} from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
 import PageNavi from "../utils/PageNavi";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +16,9 @@ const ProductLike = () => {
   const [loginEmail] = useRecoilState(loginEmailState);
   const [pi, setPi] = useState({}); // PageInfo 객체
   const navigate = useNavigate();
+  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const [memberNickname, setMemberNickname] =
+    useRecoilState(memberNicknameState);
 
   useEffect(() => {
     if (loginEmail) {
@@ -28,7 +35,7 @@ const ProductLike = () => {
           console.log(err);
         });
     }
-  }, [loginEmail, reqPage]);
+  }, [loginEmail, reqPage, memberLevel, memberNickname]);
 
   return (
     <div className="product-like-list">

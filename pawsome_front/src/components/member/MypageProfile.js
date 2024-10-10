@@ -115,7 +115,7 @@ const MypageProfile = () => {
           </div>
         )}
         <div className="pet-btn-wrap">
-          <Link to="/petinsert">반려동물 등록</Link>
+          <Link to="/mypage/petinsert">반려동물 등록</Link>
         </div>
       </div>
     </>

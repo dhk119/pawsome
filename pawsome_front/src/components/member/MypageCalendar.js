@@ -30,19 +30,19 @@ const MypageCalendar = () => {
     petBirth: 0,
   });
 
-  const tileClassName = ({ date, view }) => {
-    const currentMonth = moment().month(); // 현재 월 (0부터 시작)
-    const tileMonth = moment(date).month(); // 타일의 월
+  // const tileClassName = ({ date, view }) => {
+  //   const currentMonth = moment().month(); // 현재 월 (0부터 시작)
+  //   const tileMonth = moment(date).month(); // 타일의 월
 
-    // 타일이 이번 달이면서 토요일인 경우만 'saturday' 클래스 추가
-    if (
-      view === "month" &&
-      tileMonth === currentMonth &&
-      moment(date).day() === 6
-    ) {
-      return "saturday";
-    }
-  };
+  //   // 타일이 이번 달이면서 토요일인 경우만 'saturday' 클래스 추가
+  //   if (
+  //     view === "month" &&
+  //     tileMonth === currentMonth &&
+  //     moment(date).day() === 6
+  //   ) {
+  //     return "saturday";
+  //   }
+  // };
 
   useEffect(() => {
     axios
@@ -264,7 +264,7 @@ const MypageCalendar = () => {
           prev2Label={null} // -1년 & -10년 이동 버튼 숨기기
           minDetail="year" // 10년 단위 년도 숨기기
           tileContent={tileContent} // 각 타일에 일정 표시
-          tileClassName={tileClassName} // 토요일 파랑
+          // tileClassName={tileClassName} // 토요일 파랑
         />
         <div className="calendar-list">
           <div>

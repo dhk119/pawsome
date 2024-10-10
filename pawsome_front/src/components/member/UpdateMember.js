@@ -2,10 +2,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import {
+  loginEmailState,
+  memberLevelState,
+  memberNicknameState,
+} from "../utils/RecoilData";
+import { useRecoilState } from "recoil";
 
 const UpdateMember = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
+  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
+  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const [memberNickname, setMemberNickname] =
+    useRecoilState(memberNicknameState);
 
   // 주소 관련
   const postcodeRef = useRef(null);
@@ -45,7 +55,7 @@ const UpdateMember = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [backServer]);
+  }, [memberLevel, memberNickname]);
 
   // Daum 우편번호 API 스크립트 추가
   useEffect(() => {

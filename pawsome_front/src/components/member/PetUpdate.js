@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { loginEmailState } from "../utils/RecoilData";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import "./member.css";
 
 const PetUpdate = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
