@@ -64,7 +64,6 @@ const BoardView = () => {
         console.log(err);
       });
   }, [reqPage, boardNo, changedComment, type, memberNickname, like]);
-  console.log(replyList);
   useEffect(() => {
     axios
       .get(`${backServer}/board/list/${boardTag}/${reqPage}/${type}`)
