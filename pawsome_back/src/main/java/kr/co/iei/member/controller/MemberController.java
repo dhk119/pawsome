@@ -82,6 +82,7 @@ public class MemberController {
 	public ResponseEntity<Integer> deleteMember(@PathVariable String memberEmail, @RequestBody String memberPw) {
 		System.out.println(memberPw);
 		System.out.println(memberEmail);
+		
 	    // 회원 정보 조회
 	    MemberDTO member = memberService.selectMember(memberEmail);
 	    
@@ -106,32 +107,7 @@ public class MemberController {
 	    } else {
 	    	return ResponseEntity.ok(2);
 	    }
-	    
-
 	}
-
-//	
-//	// 비밀번호 변경
-//		@PostMapping(value = "/changePw")
-//		public ResponseEntity<Integer> changePw(
-//		    @RequestHeader("Authorization") String token, 
-//		    @RequestBody Map<String, String> requestBody) {
-//
-//		    String memberPw = requestBody.get("memberPw");
-//		    String newMemberPw = requestBody.get("newMemberPw");
-//
-//		    MemberDTO member = memberService.selectOneMember(token);
-//		    System.out.println(member);
-//
-//		    int check = memberService.checkPw(member.getMemberEmail(), memberPw);
-//		    if (check == 1) {
-//		        int result = memberService.changePassword(member.getMemberEmail(), newMemberPw);
-//		        return ResponseEntity.ok(result);
-//		    } else {
-//		        return ResponseEntity.ok(2);
-//		    }
-//		}
-
 	
 	// 로그인
 	@PostMapping(value = "/login")
@@ -510,6 +486,7 @@ public class MemberController {
 	// 일정 수정
 	@PostMapping(value = "/updateSchedule")
 	public ResponseEntity<Integer> updateSchedule(@RequestBody ScheduleDTO schedule) {
+		System.out.println(schedule);
 		int result = memberService.updateSchedule(schedule);
 		return ResponseEntity.ok(result);
 	}

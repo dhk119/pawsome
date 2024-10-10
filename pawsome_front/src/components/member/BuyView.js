@@ -61,9 +61,9 @@ const BuyView = () => {
                     firstBuyInfo.pay.totalPrice, // 총 결제 금액
                     setResult
                   );
-                  navigate("/mypage/buy-list");
+                  navigate(`/mypage/buy-view/${firstBuyInfo.payUid}`);
                 } else {
-                  navigate("/mypage/buy-list");
+                  navigate(`/mypage/buy-view/${firstBuyInfo.payUid}`);
                 }
               });
             }}
@@ -128,16 +128,14 @@ const BuyView = () => {
                             buy.buyCount * buy.product.productPrice, // 부분 결제 취소 금액
                             setResult
                           );
-                          //결제내역확인페이지로 이동
-                          navigate("/mypage/buy-list");
+                          navigate(`/mypage/buy-view/${buy.payUid}`);
                         } else {
-                          //결제취소화면으로 이동Z
-                          navigate("/mypage/buy-list");
+                          navigate(`/mypage/buy-view/${buy.payUid}`);
                         }
                       });
                     }}
                   >
-                    결제취소
+                    부분결제취소
                   </button>
                 </div>
               )}
