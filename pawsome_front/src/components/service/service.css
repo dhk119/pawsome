@@ -517,3 +517,13 @@
 .record-btn > * {
   color: #5799ff;
 }
+.health-record-sign {
+  border-radius: 5px;
+  border: 3px solid #5799ff;
+  color: #5799ff;
+}
+.health-record-sign:hover {
+  color: var(--point1);
+  cursor: pointer;
+  border: 3px solid #ffa518;
+}

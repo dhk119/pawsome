@@ -533,7 +533,7 @@ const HealthTest = () => {
                         </option>
                       ))}
                     </select>
-                    <div>
+                    <div style={{ width: "400px", margin: "0 auto" }}>
                       <br />
                       <h3>이전에 검사하신 기록을 확인하실 수 있어요.</h3>
                       <button className="record-btn">
