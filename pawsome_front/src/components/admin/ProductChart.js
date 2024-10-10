@@ -50,7 +50,7 @@ const ProductChart = () => {
           fill: "#ffbe58",
           name: resultData[index].key,
         });
-      } else if (index % 4 === 1) {
+      } else if (index % 10 === 1) {
         chartData.push({
           value: resultData[index].count,
           fill: "#5799ff",
@@ -61,7 +61,7 @@ const ProductChart = () => {
           fill: "#5799ff",
           name: resultData[index].key,
         });
-      } else if (index % 4 === 2) {
+      } else if (index % 10 === 2) {
         chartData.push({
           value: resultData[index].count,
           fill: "#ffd697",
@@ -72,7 +72,7 @@ const ProductChart = () => {
           fill: "#ffd697",
           name: resultData[index].key,
         });
-      } else if (index % 4 === 3) {
+      } else if (index % 10 === 3) {
         chartData.push({
           value: resultData[index].count,
           fill: "#717171",
@@ -81,6 +81,83 @@ const ProductChart = () => {
         data.push({
           value: Math.round((10000 * resultData[index].count) / sum) / 100,
           fill: "#717171",
+          name: resultData[index].key,
+        });
+      } else if (index % 10 === 4) {
+        chartData.push({
+          value: resultData[index].count,
+          fill: "#ffa518",
+          name: resultData[index].key,
+        });
+        data.push({
+          value: Math.round((10000 * resultData[index].count) / sum) / 100,
+          fill: "#ffa518",
+          name: resultData[index].key,
+        });
+      } else if (index % 10 === 5) {
+        chartData.push({
+          value: resultData[index].count,
+          fill: "#ffff00",
+          name: resultData[index].key,
+        });
+        data.push({
+          value: Math.round((10000 * resultData[index].count) / sum) / 100,
+          fill: "#ffff00",
+          name: resultData[index].key,
+        });
+      } else if (index % 10 === 6) {
+        chartData.push({
+          value: resultData[index].count,
+          fill: "#717100",
+          name: resultData[index].key,
+        });
+        data.push({
+          value: Math.round((10000 * resultData[index].count) / sum) / 100,
+          fill: "#717100",
+          name: resultData[index].key,
+        });
+      } else if (index % 10 === 7) {
+        chartData.push({
+          value: resultData[index].count,
+          fill: "#577171",
+          name: resultData[index].key,
+        });
+        data.push({
+          value: Math.round((10000 * resultData[index].count) / sum) / 100,
+          fill: "#577171",
+          name: resultData[index].key,
+        });
+      } else if (index % 10 === 8) {
+        chartData.push({
+          value: resultData[index].count,
+          fill: "#ff0000",
+          name: resultData[index].key,
+        });
+        data.push({
+          value: Math.round((10000 * resultData[index].count) / sum) / 100,
+          fill: "#ff0000",
+          name: resultData[index].key,
+        });
+      } else if (index % 10 === 9) {
+        chartData.push({
+          value: resultData[index].count,
+          fill: "#00ffff",
+          name: resultData[index].key,
+        });
+        data.push({
+          value: Math.round((10000 * resultData[index].count) / sum) / 100,
+          fill: "#00ffff",
+          name: resultData[index].key,
+        });
+      } else {
+        chartData.push({
+          value: resultData[index].count,
+          fill: "#0000ff",
+          name: resultData[index].key,
+        });
+        data.push({
+          value: Math.round((10000 * resultData[index].count) / sum) / 100,
+          fill: "#0000ff",
           name: resultData[index].key,
         });
       }
@@ -218,17 +295,21 @@ const ProductChart = () => {
                 <Bar dataKey="count" fill="#ffa518" onClick={viewBarData} />
               </BarChart>
               <div className="chart-reset-button">
-                <button
-                  className="admin-write-submit"
-                  type="button"
-                  onClick={() => {
-                    setChartData([]);
-                    setData([]);
-                    setViewBar(0);
-                  }}
-                >
-                  전체 데이터
-                </button>
+                {viewBar > 0 ? (
+                  <button
+                    className="admin-write-submit"
+                    type="button"
+                    onClick={() => {
+                      setChartData([]);
+                      setData([]);
+                      setViewBar(0);
+                    }}
+                  >
+                    전체 데이터
+                  </button>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="chart-total">
                 <p>{totalTitle}</p>
