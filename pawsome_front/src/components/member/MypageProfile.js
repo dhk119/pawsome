@@ -33,7 +33,7 @@ const MypageProfile = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [loginEmail]);
+  }, [loginEmail, backServer, memberLevel, memberNickname]);
 
   // 생년월일을 'n년 n개월' 형식으로 변환하는 함수
   const getPetAge = (birthDate) => {
