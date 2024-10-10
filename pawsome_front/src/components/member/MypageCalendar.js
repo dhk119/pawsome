@@ -39,7 +39,7 @@ const MypageCalendar = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [loginEmail]);
+  }, [newSchedule]);
 
   const tileContent = ({ date, view }) => {
     if (view === "month") {
@@ -240,11 +240,10 @@ const MypageCalendar = () => {
         />
         <div className="calendar-list">
           <div>
-
             <h3>{moment(value).format("YYYY년 MM월 DD일")} </h3>
           </div>
           <div className="calendar-list-title">
-          <h2>일정 목록</h2>
+            <h2>일정 목록</h2>
             <IoAddCircle onClick={openAddModal} />
           </div>
           <div className="calendar-schedule-list">

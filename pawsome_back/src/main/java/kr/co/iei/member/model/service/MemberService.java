@@ -218,25 +218,18 @@ public class MemberService {
 	}
 
 	public Map<String, Object> selectProductLike(String memberEmail, int reqPage) {
-	    int numPerPage = 2;
+	    int numPerPage = 5;
 	    int pageNaviSize = 5;
 	    int totalCount = marketDao.productLikeTotalCount(memberEmail);
 
 	    PageInfo pi = pageUtil.getPageInfo(reqPage, numPerPage, pageNaviSize, totalCount);
-	    
-	    System.out.println(pi);
 
-	    Map<String, Object> p = new HashMap<>();
+	    Map<String, Object> p = new HashMap<String, Object>();
 	    p.put("memberEmail", memberEmail);
 	    p.put("start", pi.getStart());
 	    p.put("end", pi.getEnd());
-	    
-	    System.out.println(p);
 
 	    List<ProductLikeDTO> list = marketDao.selectProductLike(p);
-	    
-	    System.out.println("테스트");
-	    System.out.println(list);
 
 	    Map<String, Object> result = new HashMap<>();
 	    result.put("list", list); // 좋아요 목록
