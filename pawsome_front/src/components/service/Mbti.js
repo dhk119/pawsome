@@ -189,65 +189,66 @@ const Mbti = () => {
     const image = matchedContent ? matchedContent.image : null;
     let content = "";
     mc.forEach((element) => {
-      if (element.mbti == result) {
+      if (element.mbti === result) {
         content = element.contents;
       }
     });
     console.log(contentArray);
     // 결과를 계산하여 표시하는 로직
     return (
-      //결과 화면 출력함
-      <div className="results">
-        <div id="results">
-          <h1>테스트 결과</h1>
-          {image && (
-            <img
-              src={image}
-              alt={`${result} 이미지`}
-              style={{ width: "600px" }}
-            />
-          )}
+      <>
+        <div className="results">
+          <div id="results">
+            <h1>- 테스트 결과 -</h1>
+            {image && (
+              <img
+                src={image}
+                alt={`${result} 이미지`}
+                style={{ width: "600px" }}
+              />
+            )}
 
-          <div
-            style={{
-              borderRadius: "20px",
-              border: "10px solid #FFD697",
-              color: "black",
-            }}
-          >
-            <p style={{ fontWeight: "bolder", fontSize: "25px" }}>
-              반려견의 DBTI는? : {result}
-            </p>
+            <div
+              style={{
+                borderRadius: "20px",
+                border: "10px solid #FFD697",
+                color: "black",
+              }}
+            >
+              <p style={{ fontWeight: "bolder", fontSize: "25px" }}>
+                반려견의 DBTI는? : {result}
+              </p>
+              <br></br>
+              <p style={{ fontWeight: "bolder", fontSize: "25px" }}>
+                {contentArray[0]}
+              </p>
+            </div>
             <br></br>
-            <p style={{ fontWeight: "bolder", fontSize: "25px" }}>
-              {contentArray[0]}
-            </p>
+            <div
+              style={{
+                borderRadius: "15px",
+                border: "5px solid #FFD697",
+                color: "black",
+                fontWeight: "bolder",
+                fontSize: "18px",
+                float: "left",
+              }}
+            >
+              <p>{contentArray[1]}</p>
+              <p>{contentArray[2]}</p>
+              <p>{contentArray[3]}</p>
+            </div>
+            <img
+              src="/image/service/MBTI/dbti-graph.png"
+              style={{ width: "600px" }}
+            ></img>
           </div>
-          <br></br>
-          <div
-            style={{
-              borderRadius: "15px",
-              border: "5px solid #FFD697",
-              color: "black",
-              fontWeight: "bolder",
-              fontSize: "18px",
-              float: "left",
-            }}
-          >
-            <p>{contentArray[1]}</p>
-            <p>{contentArray[2]}</p>
-            <p>{contentArray[3]}</p>
-          </div>
-          <img
-            src="/image/service/MBTI/dbti-graph.png"
-            style={{ width: "600px" }}
-          ></img>
-        </div>
 
-        <button className="ps-btn1" onClick={onClickDownloadButton}>
-          사진으로 저장하기
-        </button>
-      </div>
+          <button className="ps-btn1" onClick={onClickDownloadButton}>
+            사진으로 저장하기
+          </button>
+        </div>
+      </>
     );
   };
   const onClickDownloadButton = () => {
@@ -455,46 +456,58 @@ const Mbti = () => {
     return mbti;
   }
   return (
-    <div className="mbti-container">
-      <Link to="/service/petService" style={{ color: "#ffa518" }}>
-        메인으로
-      </Link>
-      <div className="dog-mbti">
-        <h2 style={{ margin: "20px", fontWeight: "bolder", fontSize: "35px" }}>
-          12문제로 알아보는 나의 강아지 유형 MBTI는?
-        </h2>
-        {qNumber === -1 ? ( // 초기 상태에서 시작 버튼 보여주기 (0이되면 1번 문제 시작)
-          <div className="test-main">
-            <img
-              src="/image/service/mbti-main.jpg"
-              style={{ width: "600px" }}
-            />
-            <br />
-            <br />
-            <span className="start-btn" onClick={() => setPage(0)}>
-              테스트 시작하기
-            </span>
-          </div>
-        ) : showResults ? ( // 결과 화면 표시
-          renderResults()
-        ) : (
-          <div className="qna-box" style={{ margin: "20px" }}>
-            <img src="/image/service/siba.png" style={{ width: "500px" }} />
-            <div className="question">{questions[qNumber].question}</div>
-            {questions[qNumber].options.map((option, index) => (
-              <div
-                key={index}
-                className="answer-box"
-                onClick={() => answerClick(option.type)}
-                style={{ margin: "20px" }}
-              >
-                {option.text}
-              </div>
-            ))}
-          </div>
-        )}
+    <>
+      <nav className="nav-box">
+        <ul>
+          <li className="nav-btn">
+            <Link to="/service/allMap">반려동물 시설 검색</Link>
+          </li>
+          <li className="nav-btn">
+            <Link to="/service/mbti">멍BTI</Link>
+          </li>
+          <li className="nav-btn">
+            <Link to="/service/healthTest">건강체크</Link>
+          </li>
+        </ul>
+      </nav>
+      <div className="mbti-container">
+        <div className="dog-mbti">
+          <h2
+            style={{ margin: "20px", fontWeight: "bolder", fontSize: "35px" }}
+          >
+            12문제로 알아보는 나의 강아지 유형 MBTI는?
+          </h2>
+          {qNumber === -1 ? ( // 초기 상태에서 시작 버튼 보여주기 (0이되면 1번 문제 시작)
+            <div className="test-main" style={{ position: "relative" }}>
+              <img
+                src="/image/service/mbti-main.jpg"
+                style={{ width: "600px", position: "relative" }}
+              />
+              <span className="start-btn" onClick={() => setPage(0)}>
+                테스트 시작하기
+              </span>
+            </div>
+          ) : showResults ? ( // 결과 화면 표시
+            renderResults()
+          ) : (
+            <div className="qna-box" style={{ margin: "20px" }}>
+              <img src="/image/service/siba.png" style={{ width: "500px" }} />
+              <div className="question">{questions[qNumber].question}</div>
+              {questions[qNumber].options.map((option, index) => (
+                <div
+                  key={index}
+                  className="answer-box"
+                  onClick={() => answerClick(option.type)}
+                  style={{ margin: "20px" }}
+                >
+                  {option.text}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

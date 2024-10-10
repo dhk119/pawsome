@@ -16,8 +16,10 @@
   text-align: center;
   color: #ffa518;
   width: 1300px;
-  margin: 30px auto;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
   padding: 30px;
   border-radius: 10px;
   z-index: 5;
@@ -26,7 +28,6 @@
 .nav-box {
   display: flex;
   justify-content: center;
-  margin: 15px auto;
 }
 
 .nav-box > ul {
@@ -68,6 +69,7 @@
 
 .service-container {
   width: 1200px;
+  min-height: 480px;
   border-radius: 10px;
   padding: 50px;
   margin: 30px auto;
@@ -108,7 +110,7 @@
 #map {
   margin: 0 auto;
   width: 1300px;
-  height: 700px;
+  height: 550px;
 }
 
 #menu_wrap {
@@ -176,8 +178,9 @@
 .dog-mbti {
   width: 900px;
   border-radius: 10px;
-  padding: 50px;
-  margin: 30px;
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 30px;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
   text-align: center;
   color: #ffa518;
@@ -187,13 +190,18 @@
   font-weight: bolder;
   border-radius: 20px;
   border: 2px solid #ffa518;
+  background-color: #ffa518;
+  color: #fff;
   margin: 20px auto;
   height: 40px;
   padding: 5px 10px;
+  position: absolute;
+  top: 390px;
+  left: 360px;
 }
 .start-btn:hover {
   background-color: #ffa518;
-  color: #fff;
+  color: yellow;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   padding: 5px 10px;
@@ -229,13 +237,15 @@
 .HT-container {
   display: flex;
   justify-content: center;
+  min-height: 675px;
 }
 
 .service-wrap {
   width: 1000px;
   border-radius: 10px;
-  padding: 40px;
-  margin: 30px;
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 30px;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
   text-align: center;
   color: #5799ff;
@@ -397,7 +407,7 @@
 .HT-Select {
   margin-top: 10px;
   margin-bottom: 10px;
-  border: 2px solid #5799ff;
+  border: 3px solid #5799ff;
   font-size: large;
   font-weight: bold;
   color: #5799ff;
@@ -444,7 +454,7 @@
 }
 .lastBtn-box {
   display: flex;
-  justify-content: center; /* Center buttons */
+  justify-content: center;
   width: 500px;
   margin: 0 auto;
 }
@@ -460,7 +470,7 @@
   font-size: medium;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s; /* Added transition for both buttons */
+  transition: background-color 0.3s;
 }
 
 .ps-btn2:hover,
@@ -477,4 +487,17 @@
   font-size: small;
   font-weight: bold;
   cursor: pointer;
+}
+.record-btn {
+  margin: 15px;
+  padding: 5px 20px;
+  background-color: white;
+  color: #5799ff;
+  border: 3px solid #5799ff;
+  font-size: small;
+  font-weight: bold;
+  cursor: pointer;
+}
+.record-btn > * {
+  color: #5799ff;
 }

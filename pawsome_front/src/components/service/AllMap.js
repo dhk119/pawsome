@@ -225,60 +225,66 @@ const Map = () => {
   };
 
   return (
-    <div id="allmap-box">
-      <div>
-        <Link
-          to="/service/petService"
-          style={{ color: "#ffa518", float: "left" }}
-        >
-          메인으로
-        </Link>
-      </div>
-
+    <>
       <nav className="nav-box">
         <ul>
           <li className="nav-btn">
-            <Link to="#" onClick={() => searchClick("서울 동물병원")}>
-              동물병원
-            </Link>
+            <Link to="/service/allMap">반려동물 시설 검색</Link>
           </li>
           <li className="nav-btn">
-            <Link to="#" onClick={() => searchClick("서울 애견용품")}>
-              애견용품
-            </Link>
+            <Link to="/service/mbti">멍BTI</Link>
           </li>
           <li className="nav-btn">
-            <Link to="#" onClick={() => searchClick("서울 애견호텔")}>
-              애견호텔
-            </Link>
-          </li>
-          <li className="nav-btn">
-            <Link to="#" onClick={() => searchClick("서울 공원")}>
-              산책공원
-            </Link>
+            <Link to="/service/healthTest">건강체크</Link>
           </li>
         </ul>
       </nav>
+      <div id="allmap-box">
+        <nav className="nav-box">
+          <ul>
+            <li className="nav-btn">
+              <Link to="#" onClick={() => searchClick("서울 동물병원")}>
+                동물병원
+              </Link>
+            </li>
+            <li className="nav-btn">
+              <Link to="#" onClick={() => searchClick("서울 애견용품")}>
+                애견용품
+              </Link>
+            </li>
+            <li className="nav-btn">
+              <Link to="#" onClick={() => searchClick("서울 애견호텔")}>
+                애견호텔
+              </Link>
+            </li>
+            <li className="nav-btn">
+              <Link to="#" onClick={() => searchClick("서울 공원")}>
+                산책공원
+              </Link>
+            </li>
+          </ul>
+        </nav>
 
-      <h3>
-        검색하실때 주변 지하철역이나 **동,**구를 이용해 검색해주세요. "예)당산
-        동물병원, 영등포구 동물병원"
-      </h3>
+        <h3>
+          검색하실때 주변 지하철역이나 **동,**구를 이용해 검색해주세요. "예)당산
+          동물병원, 영등포구 동물병원"
+        </h3>
 
-      <div id="map">
-        <div id="menu_wrap">
-          <input
-            type="text"
-            id="keyword"
-            ref={keywordInputRef} // ref 추가
-            placeholder="검색어를 입력하세요"
-          />
-          <button id="searchButton">검색</button>
-          <ul id="placesList" style={{}}></ul>
-          <div id="pagination"></div>
+        <div id="map">
+          <div id="menu_wrap">
+            <input
+              type="text"
+              id="keyword"
+              ref={keywordInputRef} // ref 추가
+              placeholder="검색어를 입력하세요"
+            />
+            <button id="searchButton">검색</button>
+            <ul id="placesList" style={{}}></ul>
+            <div id="pagination"></div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
