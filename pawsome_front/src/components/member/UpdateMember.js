@@ -86,6 +86,38 @@ const UpdateMember = () => {
     }
   };
 
+  // 소셜 회원 탈퇴 버튼 클릭 시 처리하는 함수
+const handleSocialMemberDelete = () => {
+  Swal.fire({
+    title: "정말로 탈퇴하시겠습니까?",
+    text: "탈퇴 후에는 복구할 수 없습니다.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "네, 탈퇴할게요",
+    cancelButtonText: "아니요",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // '네'를 누르면 회원 탈퇴 처리
+      axios
+        .delete(`${backServer}/member/socialDelete/${member.memberEmail}`)
+        .then((res) => {
+          if (res.data) {
+            Swal.fire("탈퇴 완료", "성공적으로 탈퇴되었습니다.", "success");
+            navigate("/");
+          } else {
+            Swal.fire("에러", "탈퇴 중 문제가 발생했습니다. 다시 시도해 주세요.", "error");
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          Swal.fire("에러", "서버와의 통신에 실패했습니다.", "error");
+        });
+    }
+  });
+};
+
   //전화번호 유효성 검사
   const phoneMessage = useRef(null);
   const checkPhone = () => {
@@ -351,7 +383,10 @@ const UpdateMember = () => {
                 회원 탈퇴
               </button>
             ) : (
-              <></>
+              <>
+              {/* 소셜 회원 탈퇴 */}
+              <button onClick={handleSocialMemberDelete}>회원 탈퇴</button>
+              </>
             )}
           </form>
         </div>

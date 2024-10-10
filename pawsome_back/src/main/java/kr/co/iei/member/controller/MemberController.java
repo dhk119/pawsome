@@ -79,9 +79,11 @@ public class MemberController {
 	
 	// 회원탈퇴
 	@DeleteMapping(value = "/memberEmail/{memberEmail}")
-	public ResponseEntity<Integer> deleteMember(@PathVariable String memberEmail, @RequestBody String memberPw) {
-		System.out.println(memberPw);
-		System.out.println(memberEmail);
+	public ResponseEntity<Integer> deleteMember(@PathVariable String memberEmail, @RequestParam String memberPw) {
+		System.out.println("test");
+		
+		System.out.println("비번"+memberPw);
+		System.out.println("이메일"+memberEmail);
 		
 	    // 회원 정보 조회
 	    MemberDTO member = memberService.selectMember(memberEmail);

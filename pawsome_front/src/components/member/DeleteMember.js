@@ -3,12 +3,15 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import Swal from "sweetalert2";
-import { loginEmailState } from "../utils/RecoilData";
+import { loginEmailState, memberLevelState, memberNicknameState } from "../utils/RecoilData";
 import "./member.css";
 
 const DeleteMember = () => {
-  const [loginEmail] = useRecoilState(loginEmailState); // 로그인 이메일 값 사용
+  const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState); // 로그인 이메일 값 사용
   const [memberPw, setMemberPw] = useState(""); // 현재 비밀번호
+  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const [memberNickname, setMemberNickname] =
+    useRecoilState(memberNicknameState);
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
 
@@ -16,22 +19,28 @@ const DeleteMember = () => {
     setMemberPw(e.target.value);
   };
 
-  const deleteMember = () => {
+  const deleteMember = (e) => {
+    e.preventDefault();
+  
     axios
       .delete(`${backServer}/member/memberEmail/${loginEmail}`, {
-        memberPw: memberPw,
+        params: { memberPw: memberPw },
       })
       .then((res) => {
         console.log(res.data);
         if (res.data == 1) {
+          setLoginEmail("");
+          setMemberLevel(0);
+          setMemberNickname("");
+
           delete axios.defaults.headers.common["Authorization"];
           window.localStorage.removeItem("refreshToken");
           Swal.fire(
-            "비밀번호 변경 완료",
-            "성공적으로 비밀번호를 변경하셨습니다.",
+            "회원 탈퇴 완료",
+            "성공적으로 회원을 탈퇴하셨습니다.",
             "success"
           );
-          navigate(`${backServer}`);
+          navigate("/");
         } else if (res.data == 2) {
           Swal.fire(
             "비밀번호가 옳지 않습니다.",
@@ -50,6 +59,7 @@ const DeleteMember = () => {
         console.error(err);
       });
   };
+  
 
   return (
     <div className="body">

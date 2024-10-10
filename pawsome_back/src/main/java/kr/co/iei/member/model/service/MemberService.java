@@ -139,6 +139,8 @@ public class MemberService {
 	}
 
 	public int checkPw(String memberEmail, String memberPw) {
+		System.out.println("테스트");
+		System.out.println(memberEmail + memberPw);
 		MemberDTO m = memberDao.selectOneMember(memberEmail);
 		if(m!=null && encoder.matches(memberPw, m.getMemberPw())) {
 			return 1;
