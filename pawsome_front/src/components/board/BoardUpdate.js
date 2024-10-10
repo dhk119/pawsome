@@ -29,7 +29,7 @@ const BoardUpdate = () => {
   };
   useEffect(() => {
     axios
-      .get(`${backServer}/board/boardNo/${boardNo}`)
+      .get(`${backServer}/board/boardNo/${boardNo}/${memberNickname}`)
       .then((res) => {
         console.log(res);
         setBoardTag(
@@ -49,6 +49,7 @@ const BoardUpdate = () => {
         setBoardContent(res.data.boardContent);
         setBoardThumb(res.data.boardThumb);
         setFileList(res.data.fileList);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
