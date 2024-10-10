@@ -224,6 +224,8 @@ public class ProductController {
 		List list = productService.selectStar(productNo);
 		return ResponseEntity.ok(list);
 	}
+	
+//	대헌 
 	 @GetMapping(value="/searchMarketList/{reqPage}/{searchKeyWord}")
 	 public ResponseEntity<Map> searchMarketList(@PathVariable int reqPage, @PathVariable String searchKeyWord){
 		 Map map = productService.selectSearchMarketList(reqPage, searchKeyWord);

@@ -700,7 +700,7 @@
 	    WHERE member_email = #{memberEmail}
 	</select>
 	
-    <select id="selectOneBuy" parameterType="int" resultMap="buyListResultMap">
+    <select id="1" parameterType="int" resultMap="buyListResultMap">
         SELECT
             b.buy_no,
             b.product_no,
