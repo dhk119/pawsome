@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.co.iei.board.model.dto.BoardDTO;
 import kr.co.iei.board.model.dto.BoardFileDTO;
 import kr.co.iei.board.model.dto.ReplyDTO;
+import kr.co.iei.util.PageInfo;
 
 @Mapper
 public interface BoardDao {
@@ -73,6 +74,18 @@ public interface BoardDao {
 	int searchBoardTotalCount(String searchKeyWord);
 
 	List selectSearchBoardList(Map<String, Object> m);
+
+	int totalCountMagnum();
+
+	List selectBoardListMagnum(PageInfo pi);
+
+	int searchTotalCountBoardMagnum(String type, String keyword, int option);
+
+	List searchBoardListMagnum(int start, int end, String type, String keyword, int option);
+
+	int searchTotalCountOption(int option);
+
+	List searchBoardListOption(int start, int end, int option);
 
 
 
