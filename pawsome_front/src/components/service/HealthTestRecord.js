@@ -208,56 +208,38 @@ const HealthTestRecord = () => {
   }));
   return (
     <>
-      <nav className="nav-box">
-        <ul>
-          <li className="nav-btn">
-            <Link to="/service/allMap">반려동물 시설 검색</Link>
-          </li>
-          <li className="nav-btn">
-            <Link to="/service/mbti">멍BTI</Link>
-          </li>
-          <li className="nav-btn">
-            <Link to="/service/healthTest">건강체크</Link>
-          </li>
-        </ul>
-      </nav>
-      <div className="HT-container">
+      <div>
         {!petSelectComplete ? (
-          <div className="service-wrap">
-            <p style={{ fontSize: "x-large", fontWeight: "bold" }}>
-              기록을 확인할 반려동물을 선택해주세요!
-            </p>
-            <select
-              className="HT-Select"
-              onChange={(e) => {
-                const selectedPet = sessionPets.find(
-                  (pet) => pet.petName === e.target.value
-                );
-                if (selectedPet) {
-                  petDataSelection(selectedPet);
-                }
-              }}
-            >
-              <option value="">반려동물 선택</option>
-              {sessionPets.map((pet, index) => (
-                <option key={index} value={pet.petName}>
-                  {pet.petName}
-                </option>
-              ))}
-            </select>
-            <h3>
-              기록이 없다면 먼저 테스트를 진행해주세요.
-              <button className="map-search-btn">
-                <Link to="/service/healthTest" style={{ color: "#5799ff" }}>
-                  테스트 진행하러가기
+          <div style={{ marginLeft: "20px" }}>
+            <div>
+              <p style={{ fontWeight: "bold", color: "#ffa518" }}>
+                건강 결과 확인 할 반려동물을 선택하세요.
+              </p>
+              <select
+                className="map-search-btn1"
+                onChange={(e) => {
+                  const selectedPet = sessionPets.find(
+                    (pet) => pet.petName === e.target.value
+                  );
+                  if (selectedPet) {
+                    petDataSelection(selectedPet);
+                  }
+                }}
+              >
+                <option value="">반려동물 선택</option>
+                {sessionPets.map((pet, index) => (
+                  <option key={index} value={pet.petName}>
+                    {pet.petName}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <button className="map-search-btn1">
+                <Link to="/service/healthTest" style={{ color: "#fff" }}>
+                  기록이 없다면 먼저 테스트를 진행해주세요.
                 </Link>
               </button>
-            </h3>
-            <div>
-              <img
-                src="/image/service/HealthTest/healthMain2.png"
-                style={{ width: "800px", marginTop: "20px" }}
-              />
             </div>
           </div>
         ) : (

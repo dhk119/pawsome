@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { SlArrowRight } from "react-icons/sl";
 import { Link, useNavigate } from "react-router-dom";
+import HealthTestRecord from "../service/HealthTestRecord";
 
 const MypageProfile = () => {
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
@@ -85,37 +86,43 @@ const MypageProfile = () => {
       </div>
       <div className="pet-wrap">
         <h2>반려동물</h2>
-
         {petList.length > 0 ? (
           petList.map((pet, index) => (
-            <div
-              className="pet-body"
-              key={index}
-              onClick={() => navigate(`/mypage/pet-view/${pet.petNo}`)} // 클릭 시 상세보기 페이지로 이동
-            >
-              <div className="pet-img">
-                <img
-                  src={`${backServer}/member/pet/${pet.petProfile}`}
-                  alt="pet-profile"
-                />
+            <>
+              <div
+                className="pet-body"
+                key={index}
+                onClick={() => navigate(`/mypage/pet-view/${pet.petNo}`)} // 클릭 시 상세보기 페이지로 이동
+              >
+                <div className="pet-img">
+                  <img
+                    src={`${backServer}/member/pet/${pet.petProfile}`}
+                    alt="pet-profile"
+                  />
+                </div>
+                <div className="pet-info">
+                  <div className="pet-name">{pet.petName}</div>
+                  <div>{pet.petBreed}</div>
+                  <div>{getPetAge(pet.petBirth)}</div>{" "}
+                </div>
+                <div className="pet-more-view">
+                  <SlArrowRight />
+                </div>
               </div>
-              <div className="pet-info">
-                <div className="pet-name">{pet.petName}</div>
-                <div>{pet.petBreed}</div>
-                <div>{getPetAge(pet.petBirth)}</div>{" "}
-              </div>
-              <div className="pet-more-view">
-                <SlArrowRight />
-              </div>
-            </div>
+            </>
           ))
         ) : (
           <div className="pet-body" onClick={() => navigate("/petinsert")}>
             등록된 반려동물이 없습니다.
           </div>
         )}
-        <div className="pet-btn-wrap">
-          <Link to="/petinsert">반려동물 등록</Link>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
+            <HealthTestRecord />
+          </div>
+          <div className="pet-btn-wrap">
+            <Link to="/petinsert">반려동물 등록</Link>
+          </div>
         </div>
       </div>
     </>
