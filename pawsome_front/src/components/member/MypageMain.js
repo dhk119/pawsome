@@ -18,6 +18,8 @@ import ProductLike from "./ProductLike";
 import BuyView from "./BuyView";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import PetUpdate from "./PetUpdate";
+import PetInsert from "./PetInsert";
 
 const MypageMain = () => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
@@ -87,6 +89,8 @@ const MypageMain = () => {
           <Route path="/buy-list" element={<BuyList />} />
           <Route path="/product-like" element={<ProductLike />} />
           <Route path="/buy-view/:payUid" element={<BuyView />} />
+          <Route path="/petinsert" element={<PetInsert />} />
+          <Route path="/petUpdate/:petNo" element={<PetUpdate />} />
         </Routes>
       </div>
     </div>

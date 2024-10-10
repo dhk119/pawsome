@@ -80,8 +80,6 @@ function App() {
           <Route path="/callback/kakao" element={<KakaoCallback />} />
           <Route path="/market/*" element={<MarketMain />} />
           <Route path="/mypage/*" element={<MypageMain />} />
-          <Route path="/petinsert" element={<PetInsert />} />
-          <Route path="/petUpdate/:petNo" element={<PetUpdate />} />
           <Route path="/service/*" element={<ServiceMain />} />
           <Route path="/naverjoin" element={<NaverJoin />} />
           <Route path="/kakaojoin" element={<KakaoJoin />} />

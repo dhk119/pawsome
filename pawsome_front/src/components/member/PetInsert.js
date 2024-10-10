@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { loginEmailState } from "../utils/RecoilData";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import "./member.css";
 
 const PetInsert = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -23,7 +24,15 @@ const PetInsert = () => {
   });
 
   const insertPet = (e) => {
-    if (!pet.petName || !pet.petBirth || !pet.petBreed || pet.petClasses === "0" || pet.petGender === "0" || pet.neutering === "0" || !pet.petWeight) {
+    if (
+      !pet.petName ||
+      !pet.petBirth ||
+      !pet.petBreed ||
+      pet.petClasses === "0" ||
+      pet.petGender === "0" ||
+      pet.neutering === "0" ||
+      !pet.petWeight
+    ) {
       Swal.fire({
         title: "모두 입력해주세요.",
         text: "입력되지 않은 정보가 있습니다.",
@@ -53,6 +62,11 @@ const PetInsert = () => {
       })
       .then((res) => {
         if (res.data) {
+          Swal.fire({
+            title: "반려동물이 등록되었습니다!",
+            text: "성공적으로 등록되었습니다.",
+            icon: "success",
+          });
           navigate("/mypage/profile");
         } else {
           Swal.fire({

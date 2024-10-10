@@ -674,16 +674,32 @@
             <result property="payName" column="pay_name"/>
             <result property="payState" column="pay_state"/>
         </association>
+        
+        <association property="review" javaType="review">
+        	<result property="reviewNo" column="review_no"/>
+        </association>
     </resultMap>
 
     <select id="selectBuyList" resultMap="buyListMap">
-        SELECT b.*, p.*, pay.*
-        FROM buy_list b
-        JOIN product p ON b.product_no = p.product_no
-        JOIN pay pay ON b.pay_uid = pay.pay_uid
-        WHERE b.member_email = #{memberEmail}
-        order by b.buy_no desc
-    </select>
+	     SELECT 
+	        b.*, 
+	        p.*, 
+	        pay.*, 
+	        r.*
+	    FROM 
+	        buy_list b
+	    LEFT JOIN 
+	        product p ON b.product_no = p.product_no
+	    LEFT JOIN 
+	        pay pay ON b.pay_uid = pay.pay_uid
+	    LEFT JOIN 
+	        review r ON b.product_no = r.product_no AND r.review_writer = #{memberNickname}
+	    WHERE 
+	        b.member_email = #{memberEmail}
+	    ORDER BY 
+	        b.buy_no DESC
+	</select>
+
     
     <select id="selectOneBuy" resultMap="buyListMap">
         SELECT b.*, p.*, pay.*

@@ -1,22 +1,19 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ReviewFrm from "./ReviewFrm";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Backspace } from "@mui/icons-material";
 
 const UpdateReview = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
-  /* 나중에 연결하면 주소로 번호 받기
   const params = useParams();
   const reviewNo = params.reviewNo;
-  */
-  const reviewNo = 3;
   const [reviewContent, setReviewContent] = useState("");
   const [reviewFile, setReviewFile] = useState([]);
   const [value, setValue] = useState(0); //별점
-  const productNo = 94;
+  const productNo = params.productNo;
   const [product, setProduct] = useState({});
 
   //수정

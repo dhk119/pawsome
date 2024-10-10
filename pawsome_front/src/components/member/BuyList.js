@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { loginEmailState } from "../utils/RecoilData";
+import {
+  loginEmailState,
+  memberLevelState,
+  memberNicknameState,
+} from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +27,10 @@ const BuyList = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [buyList, setBuyList] = useState([]);
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
+  const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
+  const [memberNickname, setMemberNickname] =
+    useRecoilState(memberNicknameState);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,7 +46,7 @@ const BuyList = () => {
           console.error(err);
         });
     }
-  }, [loginEmail]);
+  }, [loginEmail, memberNickname, memberLevel]);
 
   const groupByPayUid = (data) => {
     return data.reduce((acc, item) => {
@@ -129,17 +137,31 @@ const BuyList = () => {
                       {item.buyState === 3 ? (
                         <button className="btn btn-track">배송 조회</button>
                       ) : item.buyState === 4 ? (
-                        <button
-                          className="btn btn-review"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(
-                              `/market/writeReview/${item.product.productNo}`
-                            );
-                          }}
-                        >
-                          리뷰 작성
-                        </button>
+                        item.review == null ? (
+                          <button
+                            className="btn btn-review"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(
+                                `/market/writeReview/${item.product.productNo}`
+                              );
+                            }}
+                          >
+                            리뷰 작성
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-review"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(
+                                `/market/updateReview/${item.product.productNo}/${item.review.reviewNo}`
+                              );
+                            }}
+                          >
+                            리뷰 수정
+                          </button>
+                        )
                       ) : null}
                     </div>
                   </div>

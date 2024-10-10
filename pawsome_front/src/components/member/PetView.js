@@ -35,7 +35,7 @@ const PetView = () => {
 
   // 수정하기 버튼 클릭 시 PetUpdate 페이지로 이동
   const handleUpdate = () => {
-    navigate(`/petUpdate/${petNo}`); // 해당 반려동물 번호로 이동
+    navigate(`/mypage/petUpdate/${petNo}`); // 해당 반려동물 번호로 이동
   };
 
   // 반려동물 삭제 기능

@@ -207,177 +207,161 @@ const HealthTestRecord = () => {
     score: finalScores[key],
   }));
   return (
-    <>
-      <nav className="nav-box">
-        <ul>
-          <li className="nav-btn">
-            <Link to="/service/allMap">반려동물 시설 검색</Link>
-          </li>
-          <li className="nav-btn">
-            <Link to="/service/mbti">멍BTI</Link>
-          </li>
-          <li className="nav-btn">
-            <Link to="/service/healthTest">건강체크</Link>
-          </li>
-        </ul>
-      </nav>
+    <div>
       <div className="HT-container">
-        {!petSelectComplete ? (
-          <div className="service-wrap">
-            <p style={{ fontSize: "x-large", fontWeight: "bold" }}>
-              기록을 확인할 반려동물을 선택해주세요!
-            </p>
-            <select
-              className="HT-Select"
-              onChange={(e) => {
-                const selectedPet = sessionPets.find(
-                  (pet) => pet.petName === e.target.value
-                );
-                if (selectedPet) {
-                  petDataSelection(selectedPet);
-                }
-              }}
-            >
-              <option value="">반려동물 선택</option>
-              {sessionPets.map((pet, index) => (
-                <option key={index} value={pet.petName}>
-                  {pet.petName}
-                </option>
-              ))}
-            </select>
-            <h3>
-              기록이 없다면 먼저 테스트를 진행해주세요.
-              <button className="map-search-btn">
-                <Link to="/service/healthTest" style={{ color: "#5799ff" }}>
-                  테스트 진행하러가기
-                </Link>
-              </button>
-            </h3>
-            <div>
-              <img
-                src="/image/service/HealthTest/healthMain2.png"
-                style={{ width: "800px", marginTop: "20px" }}
-              />
-            </div>
-          </div>
-        ) : (
-          <div className="service-wrap">
-            <div className="result-box" id="result">
-              <h1>{selectedPet}의 건강테스트 결과</h1>
-
-              <BarChart
-                width={700}
-                height={400}
-                data={data}
-                barSize={80}
-                barGap={20}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis
-                  domain={[20, 100]} // y축 범위
-                  ticks={[15, 35, 55, 80, 105]} // y축에 표시할 점수
-                  tickFormatter={(value) => {
-                    if (value <= 20) return "매우 위험";
-                    if (value <= 40) return "위험";
-                    if (value <= 60) return "주의";
-                    if (value <= 80) return "양호";
-                    return "건강";
-                  }}
-                />
-                <Tooltip />
-                <Bar
-                  dataKey="score"
-                  fill="#5799ff"
-                  shape={(props) => {
-                    const { score } = props;
-                    let fillColor;
-                    if (score <= 20) fillColor = "#ff0000"; // 매우 위험
-                    else if (score <= 40) fillColor = "#ff9999"; // 위험
-                    else if (score <= 60) fillColor = "#ffcc66"; // 주의
-                    else if (score <= 80) fillColor = "#66cc66"; // 양호
-                    else fillColor = "#5799ff"; // 건강
-                    return <rect {...props} fill={fillColor} />;
-                  }}
-                  label={{ position: "top" }}
-                />
-              </BarChart>
-              <p className="weight-status">
-                몸무게 관리 방법 : {selectedWeightManagementTip}
-              </p>
-              {Object.keys(finalScores).map((key) => (
-                <div
-                  key={key}
-                  className="result-item"
-                  style={{
-                    backgroundColor: getHealthStatusColor(
-                      getHealthStatus(finalScores[key])
-                    ),
+        <div>
+          {!petSelectComplete ? (
+            <div style={{ marginLeft: "20px" }}>
+              <div>
+                <p style={{ fontWeight: "bold", color: "#ffa518" }}>
+                  건강 결과 확인 할 반려동물을 선택하세요.
+                </p>
+                <select
+                  className="map-search-btn1"
+                  onChange={(e) => {
+                    const selectedPet = sessionPets.find(
+                      (pet) => pet.petName === e.target.value
+                    );
+                    if (selectedPet) {
+                      petDataSelection(selectedPet);
+                    }
                   }}
                 >
-                  {healthLabels[key]}: {finalScores[key]}점 <br />
-                  {getHealthStatus(finalScores[key])}
-                  <div className="detail-description">
-                    {healthDescriptions[key][
-                      getHealthStatus(finalScores[key])
-                    ] || "상세 정보가 없습니다."}
-                  </div>
-                </div>
-              ))}
-
-              <div className="color-squares">
-                <div
-                  className="square"
-                  style={{ backgroundColor: "#ff0000", color: "white" }}
-                >
-                  매우 위험
-                </div>
-                <div
-                  className="square"
-                  style={{ backgroundColor: "#ff9999", color: "white" }}
-                >
-                  위험
-                </div>
-                <div
-                  className="square"
-                  style={{ backgroundColor: "#ffcc66", color: "white" }}
-                >
-                  주의
-                </div>
-                <div
-                  className="square"
-                  style={{ backgroundColor: "#66cc66", color: "white" }}
-                >
-                  양호
-                </div>
-                <div
-                  className="square"
-                  style={{ backgroundColor: "#5799ff", color: "white" }}
-                >
-                  건강
-                </div>
+                  <option value="">반려동물 선택</option>
+                  {sessionPets.map((pet, index) => (
+                    <option key={index} value={pet.petName}>
+                      {pet.petName}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div>
-                <span style={{ color: "red", fontWeight: "bold" }}>
-                  매우 위험이나 위험이 나왔으면 꼭 가까운 동물 병원에 바로
-                  연락해보세요!
-                </span>
-                <br />
-                <button className="map-search-btn">
-                  <Link to="/service/allMap" style={{ color: "#5799ff" }}>
-                    {" "}
-                    -주변 동물병원 검색하기-
+                <button className="map-search-btn1">
+                  <Link to="/service/healthTest" style={{ color: "#fff" }}>
+                    기록이 없다면 먼저 테스트를 진행해주세요.
                   </Link>
                 </button>
               </div>
             </div>
-            <button className="ps-btn2" onClick={onClickDownloadButton}>
-              사진으로 저장하기
-            </button>
-          </div>
-        )}
+          ) : (
+            <div className="service-wrap">
+              <div className="result-box" id="result">
+                <h1>{selectedPet}의 건강테스트 결과</h1>
+
+                <BarChart
+                  width={700}
+                  height={400}
+                  data={data}
+                  barSize={80}
+                  barGap={20}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis
+                    domain={[20, 100]} // y축 범위
+                    ticks={[15, 35, 55, 80, 105]} // y축에 표시할 점수
+                    tickFormatter={(value) => {
+                      if (value <= 20) return "매우 위험";
+                      if (value <= 40) return "위험";
+                      if (value <= 60) return "주의";
+                      if (value <= 80) return "양호";
+                      return "건강";
+                    }}
+                  />
+                  <Tooltip />
+                  <Bar
+                    dataKey="score"
+                    fill="#5799ff"
+                    shape={(props) => {
+                      const { score } = props;
+                      let fillColor;
+                      if (score <= 20) fillColor = "#ff0000"; // 매우 위험
+                      else if (score <= 40) fillColor = "#ff9999"; // 위험
+                      else if (score <= 60) fillColor = "#ffcc66"; // 주의
+                      else if (score <= 80) fillColor = "#66cc66"; // 양호
+                      else fillColor = "#5799ff"; // 건강
+                      return <rect {...props} fill={fillColor} />;
+                    }}
+                    label={{ position: "top" }}
+                  />
+                </BarChart>
+                <p className="weight-status">
+                  몸무게 관리 방법 : {selectedWeightManagementTip}
+                </p>
+                {Object.keys(finalScores).map((key) => (
+                  <div
+                    key={key}
+                    className="result-item"
+                    style={{
+                      backgroundColor: getHealthStatusColor(
+                        getHealthStatus(finalScores[key])
+                      ),
+                    }}
+                  >
+                    {healthLabels[key]}: {finalScores[key]}점 <br />
+                    {getHealthStatus(finalScores[key])}
+                    <div className="detail-description">
+                      {healthDescriptions[key][
+                        getHealthStatus(finalScores[key])
+                      ] || "상세 정보가 없습니다."}
+                    </div>
+                  </div>
+                ))}
+
+                <div className="color-squares">
+                  <div
+                    className="square"
+                    style={{ backgroundColor: "#ff0000", color: "white" }}
+                  >
+                    매우 위험
+                  </div>
+                  <div
+                    className="square"
+                    style={{ backgroundColor: "#ff9999", color: "white" }}
+                  >
+                    위험
+                  </div>
+                  <div
+                    className="square"
+                    style={{ backgroundColor: "#ffcc66", color: "white" }}
+                  >
+                    주의
+                  </div>
+                  <div
+                    className="square"
+                    style={{ backgroundColor: "#66cc66", color: "white" }}
+                  >
+                    양호
+                  </div>
+                  <div
+                    className="square"
+                    style={{ backgroundColor: "#5799ff", color: "white" }}
+                  >
+                    건강
+                  </div>
+                </div>
+                <div>
+                  <span style={{ color: "red", fontWeight: "bold" }}>
+                    매우 위험이나 위험이 나왔으면 꼭 가까운 동물 병원에 바로
+                    연락해보세요!
+                  </span>
+                  <br />
+                  <button className="map-search-btn">
+                    <Link to="/service/allMap" style={{ color: "#5799ff" }}>
+                      {" "}
+                      -주변 동물병원 검색하기-
+                    </Link>
+                  </button>
+                </div>
+              </div>
+              <button className="ps-btn2" onClick={onClickDownloadButton}>
+                사진으로 저장하기
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

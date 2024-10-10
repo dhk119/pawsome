@@ -17,9 +17,11 @@ const MarketMain = () => {
       <Route path="payment/:str" element={<Payment />} />
       <Route path="payment/success" element={<PaySuccess />} />
       <Route path="payment/payCancel" element={<PayCancel />} />
-      {/* 나중에 경로 수정 */}
       <Route path="writeReview/:productNo" element={<WriteReview />} />
-      <Route path="updateReview" element={<UpdateReview />} />
+      <Route
+        path="updateReview/:productNo/:reviewNo"
+        element={<UpdateReview />}
+      />
     </Routes>
   );
 };
