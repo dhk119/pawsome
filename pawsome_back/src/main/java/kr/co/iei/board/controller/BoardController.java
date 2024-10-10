@@ -94,6 +94,7 @@ public class BoardController {
 	 }
 	 @PatchMapping
 	 public ResponseEntity<Boolean> updateBoard(@ModelAttribute BoardDTO board, @ModelAttribute MultipartFile[] boardFile){
+		 System.out.println(board);
 		 List<BoardFileDTO> boardFileList = new ArrayList<BoardFileDTO>();
 		 if(boardFile != null) { 
 			 String savepath = root + "/board/";
