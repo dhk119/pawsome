@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
-import Stack from "@mui/material/Stack";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -10,10 +9,11 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import DOMPurify from "dompurify";
 import StarAvr from "./StarAvr";
-import { useRecoilState } from "recoil";
-import { loginEmailState } from "../../utils/RecoilData";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isLoginState, loginEmailState } from "../../utils/RecoilData";
 import PageNavi from "../../utils/PageNavi";
 import { Box } from "@mui/material";
+import Swal from "sweetalert2";
 
 const Review = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -40,15 +40,18 @@ const Review = () => {
         console.log(err);
       });
   }, [reqPage]);
+  const averageRating =
+    starTotalCount > 0 ? Math.ceil((total / starTotalCount) * 10) / 10 : 0;
 
+  console.log("Average Rating:", averageRating); // 값 확인
   return (
     <div className="reviewTotal-wrap">
       <div className="star-wrap">
         <div className="star-wrap-title">
-          <div className="total_star">{total / starTotalCount}</div>
+          <div className="total_star">{averageRating}</div>
           <Rating
             name="half-rating-read"
-            value={total / starTotalCount}
+            value={averageRating}
             precision={0.1}
             readOnly
           />

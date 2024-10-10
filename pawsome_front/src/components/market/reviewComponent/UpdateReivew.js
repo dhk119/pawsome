@@ -4,8 +4,8 @@ import ReviewFrm from "./ReviewFrm";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Backspace } from "@mui/icons-material";
-import { useRecoilState } from "recoil";
-import { loginEmailState } from "../../utils/RecoilData";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isLoginState, loginEmailState } from "../../utils/RecoilData";
 
 const UpdateReview = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -23,7 +23,16 @@ const UpdateReview = () => {
   const [newFile, setNewFile] = useState([]);
   const [delFileNo, setDelFileNo] = useState([]);
 
+  const loginState = useRecoilValue(isLoginState);
   useEffect(() => {
+    if (!loginState) {
+      Swal.fire({
+        title: "로그인 필요",
+        text: "로그인 후 다시 시도해주세요",
+        icon: "warning",
+      });
+      navigate("/");
+    }
     axios
       .get(`${backServer}/product/productDetail/${productNo}/${loginEmail}`)
       .then((res) => {

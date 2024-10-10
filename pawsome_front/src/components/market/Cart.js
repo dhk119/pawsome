@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import QuantityInput from "./QuantityInput";
 import axios from "axios";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginState, loginEmailState } from "../utils/RecoilData";
 import { Form, Link, useNavigate } from "react-router-dom";
 import { TiDelete } from "react-icons/ti";
@@ -14,7 +14,16 @@ const Cart = () => {
   const [cartList, setCartList] = useState([]);
   const [checkedArr, setCheckedArr] = useState([]); //선택한 상품 배열
   const [state, setState] = useState(true); //선택상품 삭제했을 때 리스트 랜더링
+  const loginState = useRecoilValue(isLoginState);
   useEffect(() => {
+    if (!loginState) {
+      Swal.fire({
+        title: "로그인 필요",
+        text: "로그인 후 다시 시도해주세요",
+        icon: "warning",
+      });
+      navigate("/");
+    }
     axios
       .get(`${backServer}/cart/cartList/${loginEmail}`)
       .then((res) => {
