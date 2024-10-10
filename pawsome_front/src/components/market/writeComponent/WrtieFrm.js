@@ -17,6 +17,7 @@ const WriteFrm = (props) => {
   const changeQnaType = (e) => {
     setQnaType(e.target.value);
   };
+  console.log(product);
   return (
     <>
       <div className="title">
