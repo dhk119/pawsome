@@ -149,17 +149,6 @@ const ProductChart = () => {
           fill: "#00ffff",
           name: resultData[index].key,
         });
-      } else {
-        chartData.push({
-          value: resultData[index].count,
-          fill: "#0000ff",
-          name: resultData[index].key,
-        });
-        data.push({
-          value: Math.round((10000 * resultData[index].count) / sum) / 100,
-          fill: "#0000ff",
-          name: resultData[index].key,
-        });
       }
     }
     setChartData([...chartData]);
@@ -346,7 +335,7 @@ const ProductChart = () => {
                 {chartData.map((chart, i) => {
                   return (
                     <>
-                      {i % 4 === 0 ? (
+                      {i % 10 === 0 ? (
                         <>
                           <div className="chart-label-one chart-bottom"></div>
                           <div
@@ -361,7 +350,7 @@ const ProductChart = () => {
                             {chart.name}
                           </div>
                         </>
-                      ) : i % 4 === 1 ? (
+                      ) : i % 10 === 1 ? (
                         <>
                           <div className="chart-label-two chart-bottom"></div>
                           <div
@@ -376,7 +365,7 @@ const ProductChart = () => {
                             {chart.name}
                           </div>
                         </>
-                      ) : i % 4 === 2 ? (
+                      ) : i % 10 === 2 ? (
                         <>
                           <div className="chart-label-three chart-bottom"></div>
                           <div
@@ -391,12 +380,102 @@ const ProductChart = () => {
                             {chart.name}
                           </div>
                         </>
-                      ) : (
+                      ) : i % 10 === 3 ? (
                         <>
                           <div className="chart-label-four chart-bottom"></div>
                           <div
                             style={{
                               color: "#717171",
+                              width: "100px",
+                              height: "20px",
+                              fontWeight: "bold",
+                              textAlign: "center",
+                            }}
+                          >
+                            {chart.name}
+                          </div>
+                        </>
+                      ) : i % 10 === 4 ? (
+                        <>
+                          <div className="chart-label-four chart-bottom"></div>
+                          <div
+                            style={{
+                              color: "#ffa518",
+                              width: "100px",
+                              height: "20px",
+                              fontWeight: "bold",
+                              textAlign: "center",
+                            }}
+                          >
+                            {chart.name}
+                          </div>
+                        </>
+                      ) : i % 10 === 5 ? (
+                        <>
+                          <div className="chart-label-four chart-bottom"></div>
+                          <div
+                            style={{
+                              color: "#ffff00",
+                              width: "100px",
+                              height: "20px",
+                              fontWeight: "bold",
+                              textAlign: "center",
+                            }}
+                          >
+                            {chart.name}
+                          </div>
+                        </>
+                      ) : i % 10 === 6 ? (
+                        <>
+                          <div className="chart-label-four chart-bottom"></div>
+                          <div
+                            style={{
+                              color: "#717100",
+                              width: "100px",
+                              height: "20px",
+                              fontWeight: "bold",
+                              textAlign: "center",
+                            }}
+                          >
+                            {chart.name}
+                          </div>
+                        </>
+                      ) : i % 10 === 7 ? (
+                        <>
+                          <div className="chart-label-four chart-bottom"></div>
+                          <div
+                            style={{
+                              color: "#577171",
+                              width: "100px",
+                              height: "20px",
+                              fontWeight: "bold",
+                              textAlign: "center",
+                            }}
+                          >
+                            {chart.name}
+                          </div>
+                        </>
+                      ) : i % 10 === 8 ? (
+                        <>
+                          <div className="chart-label-four chart-bottom"></div>
+                          <div
+                            style={{
+                              color: "#ff0000",
+                              width: "100px",
+                              height: "20px",
+                              fontWeight: "bold",
+                              textAlign: "center",
+                            }}
+                          >
+                            {chart.name}
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="chart-label-four chart-bottom"></div>
+                          <div
+                            style={{
+                              color: "#00ffff",
                               width: "100px",
                               height: "20px",
                               fontWeight: "bold",
