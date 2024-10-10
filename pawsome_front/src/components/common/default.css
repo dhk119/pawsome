@@ -468,6 +468,7 @@ a {
   background-color: var(--main2);
   border-radius: 10px;
   width: 90%;
+  min-height: 734px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .search-result-detail {
