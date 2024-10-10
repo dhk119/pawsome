@@ -8,12 +8,10 @@ import PageNavi from "../utils/PageNavi";
 const InquirySearch = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const navigate = useNavigate();
-  const [inquiryList, setInquiryList] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [inquiryList, setInquiryList] = useState([]);
   const [reqPage, setReqPage] = useState(
-    searchParams.get("reqPage") !== null
-      ? Number(searchParams.get("reqPage"))
-      : 1
+    searchParams.get("reqPage") ? Number(searchParams.get("reqPage")) : 1
   );
   const [pi, setPi] = useState({});
   const isLogin = useRecoilValue(isLoginState);
@@ -51,16 +49,28 @@ const InquirySearch = () => {
   };
   const searchInquiry = () => {
     if (keyword) {
+      setReqPage(1);
       navigate(
-        `/inquiry/search?reqPage=${1}&type=${type}&keyword=${keyword}&option=${option}`
+        `/inquiry/search?reqPage=1&type=${type}&keyword=${keyword}&option=${option}`
       );
     } else {
-      navigate(`/inquiry/search?reqPage=${1}&option=${option}`);
+      setReqPage(1);
+      navigate(`/inquiry/search?reqPage=1&option=${option}`);
     }
     search ? setSearch(false) : setSearch(true);
   };
   const changeOption = (e) => {
     setOption(Number(e.target.value));
+  };
+  const changeReqPage = (index) => {
+    setReqPage(index);
+    if (keyword) {
+      navigate(
+        `/inquiry/search?reqPage=${reqPage}&type=${type}&keyword=${keyword}&option=${option}`
+      );
+    } else {
+      navigate(`/inquiry/search?reqPage=${reqPage}&option=${option}`);
+    }
   };
   return (
     <section className="section inquiry-list">
@@ -157,9 +167,9 @@ const InquirySearch = () => {
           })}
         </tbody>
       </table>
-      <div className="pageNavi-frm">
+      <div className="pageNavi-inquiry-list">
         <ul className="pageNavi-ul" id="inquiry-page">
-          <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+          <PageNavi pi={pi} reqPage={reqPage} setReqPage={changeReqPage} />
         </ul>
       </div>
     </section>

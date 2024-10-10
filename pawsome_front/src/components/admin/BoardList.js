@@ -179,7 +179,17 @@ const BoardList = () => {
                         navigate(`/board/view/${board.boardNo}`);
                       }}
                     >
-                      {board.boardTag}
+                      {board.boardTag === 1
+                        ? "전체 "
+                        : board.boardTag === 2
+                        ? "댕댕이"
+                        : board.boardTag === 3
+                        ? "냥냥이"
+                        : board.boardTag === 4
+                        ? "일상"
+                        : board.boardTag === 5
+                        ? "정보공유"
+                        : "오산완"}
                     </td>
                     <td
                       onClick={() => {
