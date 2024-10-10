@@ -13,10 +13,13 @@ const StarAvr = (props) => {
   const setStarData = props.setStarData;
   const total = props.total;
   const setTotal = props.setTotal;
+  const starTotalCount = props.starTotalCount;
+  const setStarTotalCount = props.setStarTotalCount;
   useEffect(() => {
     axios
       .get(`${backServer}/product/selectStar/${productNo}`)
       .then((res) => {
+        console.log(res);
         setStarData(res.data);
       })
       .catch((err) => {
@@ -26,11 +29,14 @@ const StarAvr = (props) => {
   useEffect(() => {
     const totalStar = (starData) => {
       let totalSum = 0;
+      let totalCount = 0;
       starData.forEach((item, i) => {
         let c = 5 - i;
         totalSum += item * c;
+        totalCount += item;
       });
       setTotal(totalSum);
+      setStarTotalCount(totalCount);
     };
     if (starData.length) {
       totalStar(starData); // starData가 있을 때 호출
