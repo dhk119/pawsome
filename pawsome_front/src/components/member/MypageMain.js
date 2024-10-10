@@ -66,6 +66,13 @@ const MypageMain = () => {
             <li>
               <Link to="/mypage/product-like">좋아요한 상품</Link>
             </li>
+            {memberLevel === 1 ? (
+              <li>
+                <Link to="/admin/main">관리자 페이지</Link>
+              </li>
+            ) : (
+              ""
+            )}
           </ul>
         </div>
       </div>

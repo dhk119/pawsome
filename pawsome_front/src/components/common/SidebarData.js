@@ -83,4 +83,16 @@ export const SidebarData = [
       },
     ],
   },
+  {
+    title: "기타",
+    path: "#",
+    icons: <AiIcons.AiOutlineGlobal />,
+    cName: "nav-text",
+    sub: [
+      {
+        title: "문의사항",
+        path: "/inquiry/list",
+      },
+    ],
+  },
 ];

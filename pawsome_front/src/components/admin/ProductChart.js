@@ -27,6 +27,9 @@ const ProductChart = () => {
   const [data, setData] = useState([]);
   const [renderChart, setRenderChart] = useState("수입 통계");
   const [viewBar, setViewBar] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [totalTitle, setTotalTitle] = useState("총량:");
+  const [cost, setCost] = useState("");
   const [barKey, setBarKey] = useState("");
   const navigate = useNavigate();
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
@@ -104,6 +107,11 @@ const ProductChart = () => {
           .then((res) => {
             setBarData(res.data);
             result(res.data);
+            let num = 0;
+            res.data.forEach((element) => {
+              num += element.count;
+            });
+            setTotal(num);
           })
       : axios
           .get(
@@ -112,12 +120,18 @@ const ProductChart = () => {
           .then((res) => {
             setBarData(res.data);
             result(res.data);
+            let num = 0;
+            res.data.forEach((element) => {
+              num += element.count;
+            });
+            setTotal(num);
           });
   }, [typeCategory, buyState, renderChart, viewBar]);
   const viewBarData = (e) => {
     setChartData([]);
     setData([]);
     setBarKey(e.key);
+    setTotal(e.count);
     setViewBar(viewBar + 1);
   };
   const changeBuyState = (e) => {
@@ -136,6 +150,8 @@ const ProductChart = () => {
     setChartData([]);
     setData([]);
     setRenderChart(renderChart === "수입 통계" ? "판매량 통계" : "수입 통계");
+    setTotalTitle(totalTitle === "총량:" ? "총 수입:" : "총량:");
+    setCost(cost ? "" : "원");
     setViewBar(0);
   };
   return (
@@ -201,6 +217,23 @@ const ProductChart = () => {
                 <Tooltip />
                 <Bar dataKey="count" fill="#ffa518" onClick={viewBarData} />
               </BarChart>
+              <div className="chart-reset-button">
+                <button
+                  className="admin-write-submit"
+                  type="button"
+                  onClick={() => {
+                    setChartData([]);
+                    setData([]);
+                    setViewBar(0);
+                  }}
+                >
+                  전체 데이터
+                </button>
+              </div>
+              <div className="chart-total">
+                <p>{totalTitle}</p>
+                <p>{total + cost}</p>
+              </div>
             </div>
             <div className="chart-width-fix">
               <div className="inquiry-sub-title">
@@ -213,7 +246,6 @@ const ProductChart = () => {
                   nameKey="name"
                   cx="50%"
                   cy="50%"
-                  tspan={data + "%"}
                   outerRadius={100}
                   label
                 />
