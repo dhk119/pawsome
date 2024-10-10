@@ -74,7 +74,16 @@ const Cart = () => {
         <div className="cartMain-wrap">
           <div className="cart-wrap">
             <div className="cart-btn-wrap">
-              <button onClick={deleteChecked}>선택삭제</button>
+              <div className="cart-btn-wrap-flex">
+                <div className="deliveryFee">
+                  {total < 30000
+                    ? `${(30000 - total).toLocaleString(
+                        "ko-KR"
+                      )}원 추가 결제 시, 배송비 무료!`
+                    : "배송비 무료 혜택이 적용될 예정입니다!"}
+                </div>
+                <button onClick={deleteChecked}>선택삭제</button>
+              </div>
             </div>
             {cartList.map((cart, i) => {
               return (
@@ -100,7 +109,9 @@ const Cart = () => {
                 <div>{total.toLocaleString("ko-KR")}원</div>
               </div>
               <div className="content-delivery-wrap">
-                <div>배송비</div>
+                <div>
+                  배송비 <span>(30,000원 이상 결제 시, 무료)</span>
+                </div>
                 <div>
                   +{" "}
                   {(total >= 30000 ? 0 : total != 0 ? 3000 : 0).toLocaleString(
@@ -181,8 +192,9 @@ const CartItem = (props) => {
     })
       .then((result) => {
         if (result.isConfirmed) {
+          console.log(cartNo);
           axios
-            .delete(`${backServer}/cart/deleteCart/${cartNo}`)
+            .delete(`${backServer}/cart/deleteCartList/${cartNo}`)
             .then((res) => {
               console.log(res);
               const arr = cartList.filter((cart) => {

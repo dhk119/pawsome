@@ -15,7 +15,6 @@ const memberLevelState = atom({
 const memberNicknameState = atom({
   key: "memberNicknameState",
   default: "test2",
-  effects_UNSTABLE: [persistAtom], //새로고침해도 데이터 저장되어있게
 });
 
 const isLoginState = selector({

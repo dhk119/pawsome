@@ -32,11 +32,14 @@ const ProductList = (props) => {
   const [loginEmail, setLoginEmail] = useRecoilState(loginEmailState);
   const [like, setLike] = useState(false);
 
+  console.log(loginEmail);
   useEffect(() => {
+    const url = loginEmail
+      ? `${backServer}/product/productList/${typeCategory}/${mainCategory}/${reqPage}/${filterType}/${loginEmail}`
+      : `${backServer}/product/productList/${typeCategory}/${mainCategory}/${reqPage}/${filterType}/test`;
+
     axios
-      .get(
-        `${backServer}/product/productList/${typeCategory}/${mainCategory}/${reqPage}/${filterType}/${loginEmail}`
-      )
+      .get(url)
       .then((res) => {
         console.log(res);
         if (reqPage != 1) {
