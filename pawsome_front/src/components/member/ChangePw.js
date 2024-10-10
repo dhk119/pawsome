@@ -41,6 +41,22 @@ const ChangePw = () => {
     }
   };
 
+  const pwCheckMessage = useRef(null);
+  const checkPwBlur = () => {
+    pwCheckMessage.current.classList.remove("valid");
+    pwCheckMessage.current.classList.remove("invalid");
+
+    const memPqReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+    if (memPqReg.test(memberPw)) {
+      pwCheckMessage.current.innerText = "비밀번호가 유효합니다.";
+      pwCheckMessage.current.classList.add("valid");
+    } else {
+      pwCheckMessage.current.innerText =
+        "영어, 숫자, 특수문자(!@#$%^*+=-) 포함 8~15글자이여야 합니다.)";
+      pwCheckMessage.current.classList.add("invalid");
+    }
+  };
+
   const changePw = (e) => {
     e.preventDefault();
 
@@ -53,10 +69,10 @@ const ChangePw = () => {
     }
 
     axios
-  .post(`${backServer}/member/changePw`, {
-    memberPw: memberPw,
-    newMemberPw: newMemberPw,
-  })
+      .post(`${backServer}/member/changePw`, {
+        memberPw: memberPw,
+        newMemberPw: newMemberPw,
+      })
       .then((res) => {
         console.log(res.data);
         switch (res.data) {
@@ -106,8 +122,10 @@ const ChangePw = () => {
               value={newMemberPw}
               onChange={handleNewPwChange}
               placeholder="새 비밀번호"
+              onBlur={checkPwBlur}
               required
             />
+            <p className="input-msg" ref={pwCheckMessage}></p>
             <input
               type="password"
               name="newMemberPwRe"

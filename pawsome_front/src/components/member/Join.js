@@ -109,6 +109,22 @@ const Join = () => {
     setMemberPwRe(e.target.value);
   };
 
+  const pwCheckMessage = useRef(null);
+  const checkPwBlur = () => {
+    pwCheckMessage.current.classList.remove("valid");
+    pwCheckMessage.current.classList.remove("invalid");
+
+    const memPqReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+    if (memPqReg.test(member.memberPw)) {
+      pwCheckMessage.current.innerText = "비밀번호가 유효합니다.";
+      pwCheckMessage.current.classList.add("valid");
+    } else {
+      pwCheckMessage.current.innerText =
+        "영어, 숫자, 특수문자(!@#$%^*+=-) 포함 8~15글자이여야 합니다.)";
+      pwCheckMessage.current.classList.add("invalid");
+    }
+  };
+
   //이름 유효성 검사
   const nameMessage = useRef(null);
   const checkName = () => {
@@ -263,10 +279,13 @@ const Join = () => {
             <input
               type="password"
               name="memberPw"
+              id="memberPw"
               value={member.memberPw}
               onChange={changeMember}
               placeholder="비밀번호"
+              onBlur={checkPwBlur}
             />
+            <p className="input-msg" ref={pwCheckMessage}></p>
 
             <input
               type="password"
