@@ -84,15 +84,10 @@ export const SidebarData = [
     ],
   },
   {
-    title: "기타",
-    path: "#",
-    icons: <AiIcons.AiOutlineGlobal />,
+    title: "문의사항",
+    path: "/inquiry/list",
+    icons: <AiIcons.AiOutlineQuestionCircle />,
     cName: "nav-text",
-    sub: [
-      {
-        title: "문의사항",
-        path: "/inquiry/list",
-      },
-    ],
+    sub: [],
   },
 ];
