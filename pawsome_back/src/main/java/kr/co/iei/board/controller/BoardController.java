@@ -95,9 +95,11 @@ public class BoardController {
 	 @PatchMapping
 	 public ResponseEntity<Boolean> updateBoard(@ModelAttribute BoardDTO board, @ModelAttribute MultipartFile[] boardFile){
 		 System.out.println(board);
+		 
 		 List<BoardFileDTO> boardFileList = new ArrayList<BoardFileDTO>();
 		 if(boardFile != null) { 
 			 String savepath = root + "/board/";
+			 int num = 0;
 			 for(MultipartFile file : boardFile) {
 				 BoardFileDTO fileDTO = new BoardFileDTO();
 				 String filename = file.getOriginalFilename();
@@ -105,7 +107,11 @@ public class BoardController {
 				 fileDTO.setFilename(filename);
 				 fileDTO.setFilepath(filepath);
 				 fileDTO.setBoardNo(board.getBoardNo());
-				 boardFileList.add(fileDTO); 
+				 boardFileList.add(fileDTO);
+				 if(num == 0) {
+					 board.setBoardThumb(filepath);
+				 }
+				 num++;
 			}
 		 }
 		 List<BoardFileDTO> delFileList = boardService.updateBoard(board,boardFileList);
