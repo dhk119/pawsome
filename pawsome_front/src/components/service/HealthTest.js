@@ -490,7 +490,10 @@ const HealthTest = () => {
       <nav className="nav-box">
         <ul>
           <li className="nav-btn">
-            <Link to="/service/allMap">반려동물 시설 검색</Link>
+            <Link to="/service/PetService">전체</Link>
+          </li>
+          <li className="nav-btn">
+            <Link to="/service/allMap">시설검색</Link>
           </li>
           <li className="nav-btn">
             <Link to="/service/mbti">멍BTI</Link>

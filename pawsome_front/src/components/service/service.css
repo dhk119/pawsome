@@ -81,6 +81,14 @@
 .sm-btn3 {
   position: absolute;
 }
+.sm-btn1:hover,
+.sm-btn2:hover,
+.sm-btn3:hover {
+  opacity: 0.7;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 4px solid #ffa518;
+  border-radius: 15px;
+}
 .sm-btn1 {
   width: 280px;
   height: 90px;
@@ -100,9 +108,9 @@
 }
 .sm-btn3 {
   width: 280px;
-  height: 100px;
-  top: 220px;
-  right: 130px;
+  height: 110px;
+  top: 210px;
+  right: 125px;
   cursor: pointer;
   opacity: 0;
 }
