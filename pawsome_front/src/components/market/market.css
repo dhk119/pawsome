@@ -381,6 +381,7 @@ td {
   margin: auto 0;
 }
 .product-cart-info > .product-name {
+  width: 250px;
   font-size: 20px;
   font-family: ns-b;
 }
