@@ -69,10 +69,10 @@
 
 .service-container {
   width: 1200px;
-  min-height: 480px;
+  min-height: 491px;
   border-radius: 10px;
   padding: 50px;
-  margin: 30px auto;
+  margin: 20px auto;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.4);
 }
 /*메인 버튼*/
