@@ -6,6 +6,7 @@ import { memberLevelState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
 import Interceptor from "./Interceptor";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const MemberList = () => {
   const [memberList, setMemberList] = useState([]);
@@ -19,26 +20,33 @@ const MemberList = () => {
   const [search, setSearch] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
-    search === 0
-      ? axios.get(`${backServer}/admin/memberList/${reqPage}`).then((res) => {
-          setMemberList(res.data.list);
-          setPi(res.data.pi);
-        })
-      : keyword
-      ? axios
-          .get(
-            `${backServer}/admin/searchMember/${reqPage}/${type}/${keyword}/${option}`
-          )
-          .then((res) => {
+    memberLevel === 1
+      ? search === 0
+        ? axios.get(`${backServer}/admin/memberList/${reqPage}`).then((res) => {
             setMemberList(res.data.list);
             setPi(res.data.pi);
           })
-      : axios
-          .get(`${backServer}/admin/searchMember/${reqPage}/${option}`)
-          .then((res) => {
-            setMemberList(res.data.list);
-            setPi(res.data.pi);
-          });
+        : keyword
+        ? axios
+            .get(
+              `${backServer}/admin/searchMember/${reqPage}/${type}/${keyword}/${option}`
+            )
+            .then((res) => {
+              setMemberList(res.data.list);
+              setPi(res.data.pi);
+            })
+        : axios
+            .get(`${backServer}/admin/searchMember/${reqPage}/${option}`)
+            .then((res) => {
+              setMemberList(res.data.list);
+              setPi(res.data.pi);
+            })
+      : Swal.fire({
+          text: "접근 권한이 없습니다",
+          icon: "info",
+          iconColor: "#ffa518",
+          confirmButtonColor: "#ffa518",
+        });
   }, [reqPage, search]);
   const changeLevel = (i, memberLevel) => {
     memberList[i].memberLevel = memberLevel;

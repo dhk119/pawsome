@@ -36,7 +36,7 @@ const UpdateReview = () => {
     axios
       .get(`${backServer}/product/productDetail/${productNo}/${loginEmail}`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setProduct(res.data);
       })
       .catch((err) => {
@@ -45,7 +45,7 @@ const UpdateReview = () => {
     axios
       .get(`${backServer}/product/selectReview/${reviewNo}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setReviewContent(res.data.reviewContent);
         setValue(res.data.reviewStar);
         setNewFile(res.data.reviewFileList);
@@ -77,7 +77,7 @@ const UpdateReview = () => {
           },
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           Swal.fire({
             title: "리뷰 수정 성공!",
             html: "리뷰 수정에 성공하셨습니다.</br>해당 제품의 상세보기 페이지로 이동합니다.",
@@ -86,7 +86,7 @@ const UpdateReview = () => {
           navigate(`/market/main/productDetail/${productNo}/detail`);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           Swal.fire({
             title: "리뷰 수정 실패...",
             html: "리뷰 수정에 실패하였습니다.</br>잠시 후 다시 시도해주세요.",
@@ -100,12 +100,22 @@ const UpdateReview = () => {
     axios
       .delete(`${backServer}/product/deleteReview/${reviewNo}`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res == 1) {
+          Swal.fire({
+            title: "리뷰 삭제 완료",
+            html: "리뷰를 삭제하였습니다.",
+            icon: "success",
+          });
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
+        Swal.fire({
+          title: "리뷰 삭제 완료",
+          html: "리뷰 삭제에 실패하였습니다.</br>잠시 후 다시 시도해주세요.",
+          icon: "success",
+        });
       });
   };
 

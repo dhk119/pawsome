@@ -22,10 +22,17 @@ const QnaView = () => {
   const [changeQna, setChangeQna] = useState(false);
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
   useEffect(() => {
-    axios.get(`${backServer}/admin/qna/${qnaNo}`).then((res) => {
-      setQna(res.data);
-      setContent(res.data.qnaAnswerContent);
-    });
+    memberLevel === 1
+      ? axios.get(`${backServer}/admin/qna/${qnaNo}`).then((res) => {
+          setQna(res.data);
+          setContent(res.data.qnaAnswerContent);
+        })
+      : Swal.fire({
+          text: "접근 권한이 없습니다",
+          icon: "info",
+          iconColor: "#ffa518",
+          confirmButtonColor: "#ffa518",
+        });
   }, [changeQna]);
   const insertQnaAnswer = () => {
     if (qnaAnswerCon !== "<p><br></p>" && qnaAnswerCon !== "") {

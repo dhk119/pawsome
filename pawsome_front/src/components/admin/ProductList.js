@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { memberLevelState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
 import Interceptor from "./Interceptor";
+import Swal from "sweetalert2";
 
 const ProductList = () => {
   const [productList, setProductList] = useState([]);
@@ -20,26 +21,35 @@ const ProductList = () => {
   const [option, setOption] = useState("A");
   const [search, setSearch] = useState(0);
   useEffect(() => {
-    search === 0
-      ? axios.get(`${backServer}/admin/productList/${reqPage}`).then((res) => {
-          setProductList(res.data.list);
-          setPi(res.data.pi);
-        })
-      : keyword
-      ? axios
-          .get(
-            `${backServer}/admin/searchProduct/${reqPage}/${type}/${keyword}/${option}`
-          )
-          .then((res) => {
-            setProductList(res.data.list);
-            setPi(res.data.pi);
-          })
-      : axios
-          .get(`${backServer}/admin/searchProduct/${reqPage}/${option}`)
-          .then((res) => {
-            setProductList(res.data.list);
-            setPi(res.data.pi);
-          });
+    memberLevel === 1
+      ? search === 0
+        ? axios
+            .get(`${backServer}/admin/productList/${reqPage}`)
+            .then((res) => {
+              setProductList(res.data.list);
+              setPi(res.data.pi);
+            })
+        : keyword
+        ? axios
+            .get(
+              `${backServer}/admin/searchProduct/${reqPage}/${type}/${keyword}/${option}`
+            )
+            .then((res) => {
+              setProductList(res.data.list);
+              setPi(res.data.pi);
+            })
+        : axios
+            .get(`${backServer}/admin/searchProduct/${reqPage}/${option}`)
+            .then((res) => {
+              setProductList(res.data.list);
+              setPi(res.data.pi);
+            })
+      : Swal.fire({
+          text: "접근 권한이 없습니다",
+          icon: "info",
+          iconColor: "#ffa518",
+          confirmButtonColor: "#ffa518",
+        });
   }, [reqPage, search]);
   const changeShow = (i, productShow) => {
     productList[i].productShow = productShow;

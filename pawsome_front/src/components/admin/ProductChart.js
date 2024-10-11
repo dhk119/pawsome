@@ -14,6 +14,7 @@ import {
 import Interceptor from "./Interceptor";
 import { useRecoilState } from "recoil";
 import { memberLevelState } from "../utils/RecoilData";
+import Swal from "sweetalert2";
 const ProductChart = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
   const [typeCategory, setTypeCategory] = useState(0);
@@ -155,43 +156,54 @@ const ProductChart = () => {
     setData([...data]);
   };
   useEffect(() => {
-    viewBar > 0
-      ? renderChart === "수입 통계"
+    memberLevel === 1
+      ? viewBar > 0
+        ? renderChart === "수입 통계"
+          ? axios
+              .get(
+                `${backServer}/admin/barChart/${barKey}/${buyState}/${typeCategory}`
+              )
+              .then((res) => {
+                result(res.data);
+              })
+          : axios
+              .get(
+                `${backServer}/admin/barChartIncome/${barKey}/${buyState}/${typeCategory}`
+              )
+              .then((res) => {
+                result(res.data);
+              })
+        : renderChart === "수입 통계"
         ? axios
-            .get(`${backServer}/admin/barChart/${barKey}/${buyState}`)
+            .get(`${backServer}/admin/productChart/${typeCategory}/${buyState}`)
             .then((res) => {
+              setBarData(res.data);
               result(res.data);
+              let num = 0;
+              res.data.forEach((element) => {
+                num += element.count;
+              });
+              setTotal(num);
             })
         : axios
-            .get(`${backServer}/admin/barChartIncome/${barKey}/${buyState}`)
+            .get(
+              `${backServer}/admin/productIncomeChart/${typeCategory}/${buyState}`
+            )
             .then((res) => {
+              setBarData(res.data);
               result(res.data);
+              let num = 0;
+              res.data.forEach((element) => {
+                num += element.count;
+              });
+              setTotal(num);
             })
-      : renderChart === "수입 통계"
-      ? axios
-          .get(`${backServer}/admin/productChart/${typeCategory}/${buyState}`)
-          .then((res) => {
-            setBarData(res.data);
-            result(res.data);
-            let num = 0;
-            res.data.forEach((element) => {
-              num += element.count;
-            });
-            setTotal(num);
-          })
-      : axios
-          .get(
-            `${backServer}/admin/productIncomeChart/${typeCategory}/${buyState}`
-          )
-          .then((res) => {
-            setBarData(res.data);
-            result(res.data);
-            let num = 0;
-            res.data.forEach((element) => {
-              num += element.count;
-            });
-            setTotal(num);
-          });
+      : Swal.fire({
+          text: "접근 권한이 없습니다",
+          icon: "info",
+          iconColor: "#ffa518",
+          confirmButtonColor: "#ffa518",
+        });
   }, [typeCategory, buyState, renderChart, viewBar]);
   const viewBarData = (e) => {
     setChartData([]);
@@ -275,11 +287,7 @@ const ProductChart = () => {
               >
                 <CartesianGrid strokeDasharray="10 10" />
                 <XAxis dataKey="key" />
-                {renderChart === "수입 통계" ? (
-                  <YAxis />
-                ) : (
-                  <YAxis domain={[0, 1000000]} />
-                )}
+                <YAxis />
                 <Tooltip />
                 <Bar dataKey="count" fill="#ffa518" onClick={viewBarData} />
               </BarChart>
