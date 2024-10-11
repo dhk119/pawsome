@@ -205,9 +205,9 @@ const HealthTestRecord = () => {
     score: finalScores[key],
   }));
   const close = () => {
-    setSelectedPet(null); // 선택한 반려동물 초기화
-    setSelectedPetNo(null); // 선택한 반려동물 번호 초기화
-    setPetSelectComplete(false); // 선택 완료 상태 초기화
+    setSelectedPet(null);
+    setSelectedPetNo(null);
+    setPetSelectComplete(false);
   };
   const newTest = () => {
     navigate("/service/healthTest");
@@ -264,8 +264,8 @@ const HealthTestRecord = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis
-                    domain={[20, 100]} // y축 범위
-                    ticks={[15, 35, 55, 80, 105]} // y축에 표시할 점수
+                    domain={[20, 100]}
+                    ticks={[15, 35, 55, 80, 105]}
                     tickFormatter={(value) => {
                       if (value <= 20) return "매우 위험";
                       if (value <= 40) return "위험";
@@ -281,11 +281,10 @@ const HealthTestRecord = () => {
                     shape={(props) => {
                       const { score } = props;
                       let fillColor;
-                      if (score <= 20) fillColor = "#ff0000"; // 매우 위험
-                      else if (score <= 40) fillColor = "#ff9999"; // 위험
-                      else if (score <= 60) fillColor = "#ffcc66"; // 주의
+                      if (score <= 20) fillColor = "#ff0000";
+                      else if (score <= 40) fillColor = "#ff9999";
+                      else if (score <= 60) fillColor = "#ffcc66";
                       else if (score <= 80) fillColor = "#66cc66"; // 양호
-                      else fillColor = "#5799ff"; // 건강
                       return <rect {...props} fill={fillColor} />;
                     }}
                     label={{ position: "top" }}
