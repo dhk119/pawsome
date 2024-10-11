@@ -36,26 +36,33 @@ const BoardList = () => {
     setOption(Number(e.target.value));
   };
   useEffect(() => {
-    search === 0
-      ? axios.get(`${backServer}/admin/boardList/${reqPage}`).then((res) => {
-          setBoardList(res.data.list);
-          setPi(res.data.pi);
-        })
-      : keyword
-      ? axios
-          .get(
-            `${backServer}/admin/searchBoard/${reqPage}/${type}/${keyword}/${option}`
-          )
-          .then((res) => {
+    memberLevel === 1
+      ? search === 0
+        ? axios.get(`${backServer}/admin/boardList/${reqPage}`).then((res) => {
             setBoardList(res.data.list);
             setPi(res.data.pi);
           })
-      : axios
-          .get(`${backServer}/admin/searchBoard/${reqPage}/${option}`)
-          .then((res) => {
-            setBoardList(res.data.list);
-            setPi(res.data.pi);
-          });
+        : keyword
+        ? axios
+            .get(
+              `${backServer}/admin/searchBoard/${reqPage}/${type}/${keyword}/${option}`
+            )
+            .then((res) => {
+              setBoardList(res.data.list);
+              setPi(res.data.pi);
+            })
+        : axios
+            .get(`${backServer}/admin/searchBoard/${reqPage}/${option}`)
+            .then((res) => {
+              setBoardList(res.data.list);
+              setPi(res.data.pi);
+            })
+      : Swal.fire({
+          text: "접근 권한이 없습니다",
+          icon: "info",
+          iconColor: "#ffa518",
+          confirmButtonColor: "#ffa518",
+        });
   }, [reqPage, search, del]);
   return (
     <section>

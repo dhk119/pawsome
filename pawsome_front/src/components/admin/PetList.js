@@ -5,6 +5,7 @@ import { memberLevelState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
 import Interceptor from "./Interceptor";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const PetList = () => {
   const [reqPage, setReqPage] = useState(1);
@@ -18,26 +19,33 @@ const PetList = () => {
   const navigate = useNavigate();
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
   useEffect(() => {
-    search === 0
-      ? axios.get(`${backServer}/admin/petList/${reqPage}`).then((res) => {
-          setPetList(res.data.list);
-          setPi(res.data.pi);
-        })
-      : keyword
-      ? axios
-          .get(
-            `${backServer}/admin/searchPet/${reqPage}/${type}/${keyword}/${option}`
-          )
-          .then((res) => {
+    memberLevel === 1
+      ? search === 0
+        ? axios.get(`${backServer}/admin/petList/${reqPage}`).then((res) => {
             setPetList(res.data.list);
             setPi(res.data.pi);
           })
-      : axios
-          .get(`${backServer}/admin/searchPet/${reqPage}/${option}`)
-          .then((res) => {
-            setPetList(res.data.list);
-            setPi(res.data.pi);
-          });
+        : keyword
+        ? axios
+            .get(
+              `${backServer}/admin/searchPet/${reqPage}/${type}/${keyword}/${option}`
+            )
+            .then((res) => {
+              setPetList(res.data.list);
+              setPi(res.data.pi);
+            })
+        : axios
+            .get(`${backServer}/admin/searchPet/${reqPage}/${option}`)
+            .then((res) => {
+              setPetList(res.data.list);
+              setPi(res.data.pi);
+            })
+      : Swal.fire({
+          text: "접근 권한이 없습니다",
+          icon: "info",
+          iconColor: "#ffa518",
+          confirmButtonColor: "#ffa518",
+        });
   }, [reqPage, search]);
   const changeKeyword = (e) => {
     setKeyword(e.target.value);
