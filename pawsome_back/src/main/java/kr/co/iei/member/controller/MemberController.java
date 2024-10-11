@@ -62,7 +62,7 @@ public class MemberController {
     // 카카오 API 코드 받아오기
  	private final String KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
     private final String KAKAO_CLIENT_ID = "655bae51c4f48e73787fb78710604be0";
-    private final String KAKAO_REDIRECT_URI = "http://localhost:3000/callback/kakao";
+    private final String KAKAO_REDIRECT_URI = "http://192.168.10.16:3000/callback/kakao";
     private final String USER_INFO_URL2 = "https://kapi.kakao.com/v2/user/me";
 
 	
