@@ -112,12 +112,20 @@ const MypageProfile = () => {
             </>
           ))
         ) : (
-          <div className="pet-body" onClick={() => navigate("/petinsert")}>
+          <div
+            className="pet-body"
+            onClick={() => navigate("/mypage/petinsert")}
+          >
             등록된 반려동물이 없습니다.
           </div>
         )}
 
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
           <div>
             <HealthTestRecord />
           </div>

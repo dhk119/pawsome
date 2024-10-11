@@ -317,7 +317,7 @@ public class MemberController {
 		String emailContent = "<div !important; width: 540px; height: 600px; border-top: 4px solid #ffa518; margin: 100px auto; padding: 30px 0; box-sizing: border-box;\">\r\n" + 
 				"	<h1 style=\"margin: 0; padding: 0 5px; font-size: 28px; font-weight: 400;\">\r\n" + 
 				"		<span style=\"font-size: 15px; margin: 0 0 10px 3px;\">PAWSOME</span><br />\r\n" + 
-				"		<span style=\"color: #ffa518;\">인증 코드</span> 안내입니다.\r\n" + 
+				"		<span style=\"color: #ffa518;\">임시 비밀번호</span> 안내입니다.\r\n" + 
 				"	</h1>\r\n" + 
 				"	<p style=\"font-size: 16px; line-height: 26px; margin-top: 50px; padding: 0 5px;\">\r\n" + 
 				"		안녕하세요.<br />\r\n" + 

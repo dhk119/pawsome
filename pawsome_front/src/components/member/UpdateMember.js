@@ -241,13 +241,13 @@ const UpdateMember = () => {
                   style={{ display: "none" }}
                 />
               </label>
-              <button
+              {/* <button
                 type="button"
                 className="resetProfileImage"
                 onClick={resetProfileImage}
               >
                 기본 이미지로 변경
-              </button>
+              </button> */}
             </div>
 
             <input
