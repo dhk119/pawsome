@@ -150,8 +150,9 @@
 .product-wrap > .product-info > .product-name {
   border-bottom: 1px solid #ccc;
   padding-bottom: 5px;
+  font-size: 17px;
+  height: 80px;
   overflow-wrap: break-word; /*영단어 줄바꿈*/
-  font-size: 20px;
 }
 .product-wrap > .product-thumb > .product-like {
   text-align: right;
@@ -380,6 +381,7 @@ td {
   margin: auto 0;
 }
 .product-cart-info > .product-name {
+  width: 250px;
   font-size: 20px;
   font-family: ns-b;
 }
@@ -577,5 +579,9 @@ td {
   width: 100%;
 }
 .payment-success > .text {
+  text-align: center;
+}
+
+.tab-content > .text-wrap {
   text-align: center;
 }

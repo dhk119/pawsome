@@ -395,8 +395,8 @@ a {
   color: var(--point1);
 }
 .market-all-btn {
-  margin-left: 1350px;
-  width: 100px;
+  margin-left: 77%;
+  width: 100%;
   text-align: center;
   padding: 5px 10px;
   border-radius: 5px;
@@ -468,6 +468,7 @@ a {
   background-color: var(--main2);
   border-radius: 10px;
   width: 90%;
+  min-height: 734px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 .search-result-detail {

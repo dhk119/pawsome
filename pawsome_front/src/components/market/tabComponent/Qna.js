@@ -25,7 +25,6 @@ const Qna = () => {
     axios
       .get(`${backServer}/product/qnaList/${productNo}/${reqPage}`)
       .then((res) => {
-        console.log(res);
         setQnaList(res.data.list);
         setPi(res.data.pi);
         setTotalCount(res.data.totalCount);
@@ -64,34 +63,49 @@ const Qna = () => {
         </button>
       </div>
       <div className="list-tbl-wrap">
-        <table className="list-tbl">
-          <thead>
-            <tr>
-              <th style={{ width: "5%" }}>NO</th>
-              <th style={{ width: "7%" }}>공개여부</th>
-              <th style={{ width: "8%" }}>카테고리</th>
-              <th style={{ width: "30%" }}>제목</th>
-              <th style={{ width: "15%" }}>작성자</th>
-              <th style={{ width: "15%" }}>작성일</th>
-              <th style={{ width: "10%" }}>답변여부</th>
-            </tr>
-          </thead>
-          <tbody>
-            {qnaList.map((qna, i) => {
-              return (
-                <QnaItem
-                  key={"qna-" + i}
-                  qna={qna}
-                  productNo={productNo}
-                  memberNickname={memberNickname}
-                  qnaDelete={qnaDelete}
-                  setQnaDelete={setQnaDelete}
-                />
-              );
-            })}
-          </tbody>
-        </table>
-        <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+        {qnaList != "" ? (
+          <>
+            <table className="list-tbl">
+              <thead>
+                <tr>
+                  <th style={{ width: "5%" }}>NO</th>
+                  <th style={{ width: "7%" }}>공개여부</th>
+                  <th style={{ width: "8%" }}>카테고리</th>
+                  <th style={{ width: "30%" }}>제목</th>
+                  <th style={{ width: "15%" }}>작성자</th>
+                  <th style={{ width: "15%" }}>작성일</th>
+                  <th style={{ width: "10%" }}>답변여부</th>
+                </tr>
+              </thead>
+              <tbody>
+                {qnaList.map((qna, i) => {
+                  return (
+                    <QnaItem
+                      key={"qna-" + i}
+                      qna={qna}
+                      productNo={productNo}
+                      memberNickname={memberNickname}
+                      qnaDelete={qnaDelete}
+                      setQnaDelete={setQnaDelete}
+                    />
+                  );
+                })}
+              </tbody>
+            </table>
+            <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+          </>
+        ) : (
+          <div className="preview-reply">
+            <div>
+              <img src="/image/noreplyimg.png" />
+            </div>
+            <div>
+              <span style={{ color: "#ccc", fontWeight: "bold" }}>
+                아직 문의가 없어요!
+              </span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -281,7 +295,7 @@ const QnaItem = (props) => {
             <td></td>
             <td></td>
             <td>답변</td>
-            <td colSpan={3} className="content-answer-box">
+            <td colSpan={2} className="content-answer-box">
               {qna.qnaAnswerContent && (
                 <div
                   dangerouslySetInnerHTML={{
@@ -289,6 +303,8 @@ const QnaItem = (props) => {
                   }}
                 />
               )}
+            </td>
+            <td className="content-answer-date">
               <div>{qna.qnaAnswerRegDate}</div>
             </td>
             {memberNickname === "관리자" ? (

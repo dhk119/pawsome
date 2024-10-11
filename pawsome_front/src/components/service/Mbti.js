@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import html2canvas from "html2canvas";
+import { Refresh } from "@mui/icons-material";
 const Mbti = () => {
   const [qNumber, setPage] = useState(-1); // 초기값 -1로 설정
   const [results, setResults] = useState([
@@ -176,7 +177,6 @@ const Mbti = () => {
       setPage(qNumber + 1);
     } else {
       setShowResults(true); // 결과 화면 표시
-      console.log("결과:", results);
     }
   };
 
@@ -193,8 +193,10 @@ const Mbti = () => {
         content = element.contents;
       }
     });
-    console.log(contentArray);
-    // 결과를 계산하여 표시하는 로직
+
+    const refresh = () => {
+      window.location.href = "/service/mbti";
+    };
     return (
       <>
         <div className="results">
@@ -243,9 +245,11 @@ const Mbti = () => {
               style={{ width: "600px" }}
             ></img>
           </div>
-
           <button className="ps-btn1" onClick={onClickDownloadButton}>
             사진으로 저장하기
+          </button>
+          <button className="ps-btn1" onClick={refresh}>
+            메인으로 돌아가기
           </button>
         </div>
       </>

@@ -1,8 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
 import ReviewFrm from "./ReviewFrm";
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { loginEmailState, memberNicknameState } from "../../utils/RecoilData";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  isLoginState,
+  loginEmailState,
+  memberNicknameState,
+} from "../../utils/RecoilData";
 import "../write.css";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -20,8 +24,16 @@ const WriteReview = () => {
   const [product, setProduct] = useState({});
   //별점처리
   const [value, setValue] = useState(0);
-
+  const loginState = useRecoilValue(isLoginState);
   useEffect(() => {
+    if (!loginState) {
+      Swal.fire({
+        title: "로그인 필요",
+        text: "로그인 후 다시 시도해주세요",
+        icon: "warning",
+      });
+      navigate("/");
+    }
     axios
       .get(`${backServer}/product/productDetail/${productNo}/${loginEmail}`)
       .then((res) => {

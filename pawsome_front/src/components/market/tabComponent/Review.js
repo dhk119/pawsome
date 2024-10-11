@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Rating from "@mui/material/Rating";
-import Stack from "@mui/material/Stack";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -10,10 +9,11 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import DOMPurify from "dompurify";
 import StarAvr from "./StarAvr";
-import { useRecoilState } from "recoil";
-import { loginEmailState } from "../../utils/RecoilData";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isLoginState, loginEmailState } from "../../utils/RecoilData";
 import PageNavi from "../../utils/PageNavi";
 import { Box } from "@mui/material";
+import Swal from "sweetalert2";
 
 const Review = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -31,7 +31,6 @@ const Review = () => {
     axios
       .get(`${backServer}/product/selectReviewList/${productNo}/${reqPage}`)
       .then((res) => {
-        // console.log(res);
         setReviewList(res.data.list);
         setPi(res.data.pi);
         setTotalCount(res.data.totalCount);
@@ -40,36 +39,58 @@ const Review = () => {
         console.log(err);
       });
   }, [reqPage]);
+  const averageRating =
+    starTotalCount > 0 ? Math.ceil((total / starTotalCount) * 10) / 10 : 0;
 
+  console.log("Average Rating:", averageRating); // 값 확인
+  console.log(reviewList);
   return (
     <div className="reviewTotal-wrap">
-      <div className="star-wrap">
-        <div className="star-wrap-title">
-          <div className="total_star">{total / starTotalCount}</div>
-          <Rating
-            name="half-rating-read"
-            value={total / starTotalCount}
-            precision={0.1}
-            readOnly
-          />
+      {reviewList != "" ? (
+        <>
+          <div className="star-wrap">
+            <div className="star-wrap-title">
+              <div className="total_star">{averageRating}</div>
+              <Rating
+                name="half-rating-read"
+                value={averageRating}
+                precision={0.1}
+                readOnly
+              />
+            </div>
+            <StarAvr
+              starData={starData}
+              setStarData={setStarData}
+              total={total}
+              setTotal={setTotal}
+              starTotalCount={starTotalCount}
+              setStarTotalCount={setStarTotalCount}
+            />
+          </div>
+          <div className="review-list">
+            {reviewList.map((review, i) => {
+              return <ReviewItem key={"review-" + i} review={review} />;
+            })}
+          </div>
+          <div className="pagenavi">
+            <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
+          </div>
+        </>
+      ) : (
+        <div className="preview-reply">
+          <div>
+            <img src="/image/noreplyimg.png" />
+          </div>
+          <div>
+            <span style={{ color: "#ccc", fontWeight: "bold" }}>
+              아직 리뷰가 없어요!
+            </span>
+          </div>
+          <div>
+            <span style={{ color: "#ccc" }}>첫 리뷰를 작성해주세요</span>
+          </div>
         </div>
-        <StarAvr
-          starData={starData}
-          setStarData={setStarData}
-          total={total}
-          setTotal={setTotal}
-          starTotalCount={starTotalCount}
-          setStarTotalCount={setStarTotalCount}
-        />
-      </div>
-      <div className="review-list">
-        {reviewList.map((review, i) => {
-          return <ReviewItem key={"review-" + i} review={review} />;
-        })}
-      </div>
-      <div className="pagenavi">
-        <PageNavi pi={pi} reqPage={reqPage} setReqPage={setReqPage} />
-      </div>
+      )}
     </div>
   );
 };

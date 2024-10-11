@@ -64,7 +64,6 @@ const BoardView = () => {
         console.log(err);
       });
   }, [reqPage, boardNo, changedComment, type, memberNickname, like]);
-  console.log(replyList);
   useEffect(() => {
     axios
       .get(`${backServer}/board/list/${boardTag}/${reqPage}/${type}`)
@@ -712,12 +711,13 @@ const ReplyItem = (props) => {
             {editType ? (
               <>
                 <div>
-                  <button className="" onClick={updateReply}>
+                  <button className="change-btn" onClick={updateReply}>
                     수정완료
                   </button>
                 </div>
                 <div>
                   <button
+                    className="change-btn"
                     onClick={() => {
                       setEditType(!editType);
                       editRef.current.style.display = "none";
@@ -732,6 +732,7 @@ const ReplyItem = (props) => {
               <>
                 <div>
                   <button
+                    className="change-btn"
                     onClick={() => {
                       setEditType(!editType);
                       editRef.current.style.display = "block";
@@ -742,7 +743,9 @@ const ReplyItem = (props) => {
                   </button>
                 </div>
                 <div>
-                  <button onClick={deleteReply}>삭제하기</button>
+                  <button className="change-btn" onClick={deleteReply}>
+                    삭제하기
+                  </button>
                 </div>
               </>
             )}
@@ -1051,10 +1054,13 @@ const ReReplyItem = (props) => {
           {editType ? (
             <>
               <div>
-                <button onClick={updateReply}>수정완료</button>
+                <button className="change-btn" onClick={updateReply}>
+                  수정완료
+                </button>
               </div>
               <div>
                 <button
+                  className="change-btn"
                   onClick={() => {
                     setEditType(!editType);
                     editRef.current.style.display = "none";
@@ -1069,6 +1075,7 @@ const ReReplyItem = (props) => {
             <>
               <div>
                 <button
+                  className="change-btn"
                   onClick={() => {
                     setEditType(!editType);
                     editRef.current.style.display = "block";
@@ -1079,7 +1086,9 @@ const ReReplyItem = (props) => {
                 </button>
               </div>
               <div>
-                <button onClick={deleteReply}>삭제하기</button>
+                <button className="change-btn" onClick={deleteReply}>
+                  삭제하기
+                </button>
               </div>
             </>
           )}

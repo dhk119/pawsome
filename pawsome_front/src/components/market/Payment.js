@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-import { useRecoilState } from "recoil";
-import { loginEmailState } from "../utils/RecoilData";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isLoginState, loginEmailState } from "../utils/RecoilData";
 import { useNavigate, useParams } from "react-router-dom";
 import { length } from "./../../../node_modules/stylis/src/Tokenizer";
 import { charat, replace } from "./../../../node_modules/stylis/src/Utility";
@@ -30,8 +30,16 @@ const Payment = () => {
   const addrRequired = useRef();
   const postRequired = useRef();
   const nameRequired = useRef();
-
+  const loginState = useRecoilValue(isLoginState);
   useEffect(() => {
+    if (!loginState) {
+      Swal.fire({
+        title: "로그인 필요",
+        text: "로그인 후 다시 시도해주세요",
+        icon: "warning",
+      });
+      navigate("/");
+    }
     axios
       .get(`${backServer}/pay/payer/${loginEmail}`)
       .then((res) => {
