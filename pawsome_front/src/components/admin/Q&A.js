@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { memberLevelState } from "../utils/RecoilData";
 import Interceptor from "./Interceptor";
+import Swal from "sweetalert2";
 
 const Qna = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -20,28 +21,35 @@ const Qna = () => {
   const [search, setSearch] = useState(0);
   const [memberLevel, setMemberLevel] = useRecoilState(memberLevelState);
   useEffect(() => {
-    search === 0
-      ? axios
-          .get(`${backServer}/admin/qnaList/${reqPage}/${answer}`)
-          .then((res) => {
-            setQnaList(res.data.list);
-            setPi(res.data.pi);
-          })
-      : keyword
-      ? axios
-          .get(
-            `${backServer}/admin/searchQna/${reqPage}/${answer}/${type}/${keyword}/${option}`
-          )
-          .then((res) => {
-            setQnaList(res.data.list);
-            setPi(res.data.pi);
-          })
-      : axios
-          .get(`${backServer}/admin/searchQna/${reqPage}/${answer}/${option}`)
-          .then((res) => {
-            setQnaList(res.data.list);
-            setPi(res.data.pi);
-          });
+    memberLevel === 1
+      ? search === 0
+        ? axios
+            .get(`${backServer}/admin/qnaList/${reqPage}/${answer}`)
+            .then((res) => {
+              setQnaList(res.data.list);
+              setPi(res.data.pi);
+            })
+        : keyword
+        ? axios
+            .get(
+              `${backServer}/admin/searchQna/${reqPage}/${answer}/${type}/${keyword}/${option}`
+            )
+            .then((res) => {
+              setQnaList(res.data.list);
+              setPi(res.data.pi);
+            })
+        : axios
+            .get(`${backServer}/admin/searchQna/${reqPage}/${answer}/${option}`)
+            .then((res) => {
+              setQnaList(res.data.list);
+              setPi(res.data.pi);
+            })
+      : Swal.fire({
+          text: "접근 권한이 없습니다",
+          icon: "info",
+          iconColor: "#ffa518",
+          confirmButtonColor: "#ffa518",
+        });
   }, [reqPage, answer, search]);
   const switchAnswer = () => {
     setAnswer(answer === true ? false : true);

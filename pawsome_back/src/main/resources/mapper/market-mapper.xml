@@ -363,7 +363,7 @@
 		</choose>
 		group by main_category
 	</select>
-	<select id="producIncomeChart" resultType="chartData">
+	<select id="productIncomeChart" resultType="chartData">
 		select main_category as key, sum(product_price*(buy_count)) as count from buy_list join product using(product_no) where buy_state
 		<choose>
 			<when test="typeCategory==0">
@@ -393,11 +393,26 @@
 	<select id="barChart" resultType="chartData">
 		select product.type_category as key, sum(buy_count) as count from buy_list join product using(product_no) where main_category=#{barKey} and buy_state
 		<choose>
-			<when test="buyState==2">
-				=2
+			<when test="typeCategory==0">
+				<choose>
+					<when test="buyState==2">
+						=2
+					</when>
+					<otherwise>
+						!=2
+					</otherwise>
+				</choose>
 			</when>
 			<otherwise>
-				!=2
+				<choose>
+					<when test="buyState==2">
+						=2
+					</when>
+					<otherwise>
+						!=2
+					</otherwise>
+				</choose>
+				and type_category=#{typeCategory}
 			</otherwise>
 		</choose>
 		 group by product.type_category
@@ -405,11 +420,26 @@
 	<select id="barChartIncome" resultType="chartData">
 		select type_category as key, sum(product_price*(buy_count)) as count from buy_list join product using(product_no) where buy_state
 		<choose>
-			<when test="buyState==2">
-				=2
+			<when test="typeCategory==0">
+				<choose>
+					<when test="buyState==2">
+						=2
+					</when>
+					<otherwise>
+						!=2
+					</otherwise>
+				</choose>
 			</when>
 			<otherwise>
-				!=2
+				<choose>
+					<when test="buyState==2">
+						=2
+					</when>
+					<otherwise>
+						!=2
+					</otherwise>
+				</choose>
+				and type_category=#{typeCategory}
 			</otherwise>
 		</choose>
 		 group by product.type_category

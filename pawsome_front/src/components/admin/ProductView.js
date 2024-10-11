@@ -44,37 +44,44 @@ const ProductView = () => {
     setProduct({ ...product, productShow: e.target.value });
   };
   useEffect(() => {
-    axios
-      .get(`${backServer}/admin/productNo/${productNo}`)
-      .then((res) => {
-        if (res.data) {
-          setProductName(res.data.productName);
-          setProductDetail(res.data.productDetail);
-          setProductPrice(res.data.productPrice);
-          setProductShow(res.data.productShow);
-          setProductThumb(res.data.productThumb);
-          setMainCategory(res.data.mainCategory);
-          setTypeCategory(res.data.typeCategory);
-          setMemberEmail(res.data.memberEmail);
-        } else {
-          Swal.fire({
-            text: "삭제되거나 존재하지 않는 페이지입니다",
-            icon: "info",
-            iconColor: "var(--main1)",
-            confirmButtonColor: "var(--point1)",
-          });
-          navigate("/admin/productList");
-        }
-      })
-      .catch(() => {
-        Swal.fire({
-          text: "페이지를 불러오는데 문제가 발생하였습니다",
+    memberLevel === 1
+      ? axios
+          .get(`${backServer}/admin/productNo/${productNo}`)
+          .then((res) => {
+            if (res.data) {
+              setProductName(res.data.productName);
+              setProductDetail(res.data.productDetail);
+              setProductPrice(res.data.productPrice);
+              setProductShow(res.data.productShow);
+              setProductThumb(res.data.productThumb);
+              setMainCategory(res.data.mainCategory);
+              setTypeCategory(res.data.typeCategory);
+              setMemberEmail(res.data.memberEmail);
+            } else {
+              Swal.fire({
+                text: "삭제되거나 존재하지 않는 페이지입니다",
+                icon: "info",
+                iconColor: "var(--main1)",
+                confirmButtonColor: "var(--point1)",
+              });
+              navigate("/admin/productList");
+            }
+          })
+          .catch(() => {
+            Swal.fire({
+              text: "페이지를 불러오는데 문제가 발생하였습니다",
+              icon: "info",
+              iconColor: "var(--main1)",
+              confirmButtonColor: "var(--point1)",
+            });
+            navigate("/admin/productList");
+          })
+      : Swal.fire({
+          text: "접근 권한이 없습니다",
           icon: "info",
-          iconColor: "var(--main1)",
-          confirmButtonColor: "var(--point1)",
+          iconColor: "#ffa518",
+          confirmButtonColor: "#ffa518",
         });
-        navigate("/admin/productList");
-      });
   }, []);
   const updateProduct = () => {
     if (productPrice && !Number(productPrice)) {

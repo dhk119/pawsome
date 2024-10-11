@@ -5,6 +5,7 @@ import { memberLevelState } from "../utils/RecoilData";
 import { useRecoilState } from "recoil";
 import Interceptor from "./Interceptor";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const PetChart = () => {
   const backServer = process.env.REACT_APP_BACK_SERVER;
@@ -68,8 +69,8 @@ const PetChart = () => {
     }
   };
   useEffect(() => {
-    {
-      option === 0
+    memberLevel === 1
+      ? option === 0
         ? axios.get(`${backServer}/admin/petChartClass`).then((res) => {
             result(res.data);
             setChartData([...chartData]);
@@ -95,8 +96,13 @@ const PetChart = () => {
             setChartData([...chartData]);
             setData([...data]);
             setSubTitle("펫 성별 비율");
-          });
-    }
+          })
+      : Swal.fire({
+          text: "접근 권한이 없습니다",
+          icon: "info",
+          iconColor: "#ffa518",
+          confirmButtonColor: "#ffa518",
+        });
   }, [option]);
   const changeOption = (e) => {
     setOption(Number(e.target.value));
