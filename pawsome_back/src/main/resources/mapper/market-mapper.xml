@@ -447,7 +447,7 @@
 
 
 
-	<!-- 원희 -->
+<!-- 원희 -->
 	<select id="totalCount" resultType="int">
 		select count(*) from product where product_show='Y'
 		<if test= "typeCategory!=0">
